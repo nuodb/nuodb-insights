@@ -1,0 +1,37 @@
+# You will need to change the two paths below and args.
+#
+# hostPath:
+#  path:
+#
+#
+
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: load
+spec:
+  template:
+    spec:
+      containers:
+        - name: load
+          image: nuodb/nuodb-ce:latest
+          args: [ "batch",  "-H", "influxdb", "/data/monitor-20200107-034803.log.gz" ]
+          volumeMounts:
+            - mountPath: /data
+              name: mount-0
+            - mountPath: /opt/nuodb/etc/nuoca/lib/batch.py
+              name: mount-1
+              subPath: batch.py
+            - mountPath: /usr/local/bin/batch
+              name: mount-1
+              subPath: batch
+      restartPolicy: Never
+      volumes:
+      - name: mount-0
+        hostPath:
+          path: /Users/dbutson/home/dev/nuodb-dashboards-influx/data
+          type: ""
+      - name: mount-1
+        hostPath:
+          path: /Users/dbutson/home/dev/nuodb-dashboards-influx/image
+          type: ""

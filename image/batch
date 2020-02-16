@@ -1,0 +1,25 @@
+#!/bin/sh
+#
+# (C) Copyright NuoDB, Inc. 2018  All Rights Reserved
+unalias -a
+
+# Find the installation directory.
+CMD=${0##*/}
+DIR=`cd "${0%$CMD}." && pwd`
+
+. "$NUODB_HOME"/etc/nuodb_setup.sh
+
+# The following is needed until OA-3288 is addressed. For now we just
+# add a __init__.py to the drivers directory
+export PYTHONPATH=${NUODB_HOME}/drivers:${NUODB_HOME}/etc/nuoca/lib:$PYTHONPATH
+
+python="$NUODB_HOME"/etc/python/nuopython
+if [ ! -x "$python" ]; then
+    python=`which python2.7` || python=`which python` \
+        || die "Python must be installed"
+fi
+
+nuoca="$NUODB_HOME"/etc/nuoca/lib/batch.py
+[ -f "$nuoca" ] || die "Invalid NuoDB installation ($NUODB_HOME)"
+
+exec "$python" "$nuoca" "$@"

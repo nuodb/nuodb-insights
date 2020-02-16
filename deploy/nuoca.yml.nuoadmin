@@ -1,0 +1,12 @@
+NUOCA_LOGFILE: /var/log/nuodb/nuoca.log
+
+INPUT_PLUGINS:
+- NuoAdminNuoMon:
+    description : Collection from NuoDB engines (nuoadmin)
+    nuocaCollectionName: NuoMon
+    api_server: ${NUODB_API_SERVER}
+    client_key: ${NUODB_INSIGHTS_KEY}
+    host_uuid_shortname: True
+OUTPUT_PLUGINS:
+- InfluxDB:
+    url: http://influxdb:8086/write?db=nuodb
