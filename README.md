@@ -120,7 +120,7 @@ and specifically the `nuoca:` section.
         - "owner=${USER}"
         environment:
         # change NUODB_API_SERVER
-        - NUODB_API_SERVER=http://nuoadmin.local:8888 
+        - NUODB_API_SERVER=https://nuoadmin.local:8888 
         - NUODB_INSIGHTS_KEY=/etc/nuodb/keys/nuocmd.pem
         - DOMAIN_USER=domain
         - DOMAIN_PASSWORD=bird
