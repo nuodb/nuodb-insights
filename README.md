@@ -94,7 +94,7 @@ and specifically the `nuoca:` section.
         labels:
         - "owner=${USER}"
         environment:
-		# change NUODB_API_SERVER
+        # change NUODB_API_SERVER
         - NUODB_API_SERVER=http://nuoadmin.local:8888 
         - NUODB_INSIGHTS_KEY=/etc/nuodb/keys/nuocmd.pem
         - DOMAIN_USER=domain
@@ -119,7 +119,7 @@ and specifically the `nuoca:` section.
         labels:
         - "owner=${USER}"
         environment:
-		# change NUODB_API_SERVER
+        # change NUODB_API_SERVER
         - NUODB_API_SERVER=http://nuoadmin.local:8888 
         - NUODB_INSIGHTS_KEY=/etc/nuodb/keys/nuocmd.pem
         - DOMAIN_USER=domain
@@ -148,7 +148,7 @@ and specifically the `nuoca:` section.
         environment:
         - NUODB_API_SERVER=http://nuoadmin.local:8888 
         - NUODB_INSIGHTS_KEY=/etc/nuodb/keys/nuocmd.pem
-		# change DOMAIN_USER, DOMAIN_PASSWORD, DOMAIN_BROKER
+        # change DOMAIN_USER, DOMAIN_PASSWORD, DOMAIN_BROKER
         - DOMAIN_USER=domain
         - DOMAIN_PASSWORD=bird
         - DOMAIN_BROKER=nuoagent.local
@@ -189,27 +189,27 @@ spec:
   template:
     spec:
       containers:
-	  - name: load
-	    image: nuodb/nuodb-ce:latest
-	    args: [ "batch",  "-H", "influxdb", "/data/monitor-20200107-034803.log.gz" ]
-	    volumeMounts:
-		- mountPath: /data
-	      name: mount-0
-		- mountPath: /opt/nuodb/etc/nuoca/lib/batch.py
-	      name: mount-1
-		  subPath: batch.py
-		- mountPath: /usr/local/bin/batch
-	      name: mount-1
-		  subPath: batch
-	  restartPolicy: Never
-	  volumes:
+      - name: load
+        image: nuodb/nuodb-ce:latest
+        args: [ "batch",  "-H", "influxdb", "/data/monitor-20200107-034803.log.gz" ]
+        volumeMounts:
+        - mountPath: /data
+          name: mount-0
+        - mountPath: /opt/nuodb/etc/nuoca/lib/batch.py
+          name: mount-1
+          subPath: batch.py
+        - mountPath: /usr/local/bin/batch
+          name: mount-1
+          subPath: batch
+      restartPolicy: Never
+      volumes:
       - name: mount-0
-	    hostPath:
-		  path: /Users/dbutson/home/dev/nuodb-dashboards-influx/data
-		  type: ""
-	  - name: mount-1
         hostPath:
-	      path: /Users/dbutson/home/dev/nuodb-dashboards-influx/image
+          path: /Users/dbutson/home/dev/nuodb-dashboards-influx/data
+          type: ""
+      - name: mount-1
+        hostPath:
+          path: /Users/dbutson/home/dev/nuodb-dashboards-influx/image
           type: ""
 ```
 
