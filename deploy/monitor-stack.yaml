@@ -33,7 +33,6 @@ services:
       - ../deploy/nuoca.yml.nuoadmin:/tmp/nuoca.yml.template
 #      - ../deploy/nuocmd.pem:/etc/nuodb/keys/nuocmd.pem
 #      - ../deploy/nuoca.yml.nuoagent:/tmp/nuoca.yml.template
-
-
-      
-      
+networks:
+  default:
+    driver: bridge

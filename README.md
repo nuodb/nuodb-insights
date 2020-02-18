@@ -7,7 +7,7 @@ plugin NuoMon or NuoAdminNuoMon.
 The dashboards are located in the conf sub directory.
 
 A *docker stack* can be created with grafana, insights, and nuoca with
-the configuration file **deploy/monitor-stack.yaml**.  nuoca can be
+the compose file **deploy/monitor-stack.yaml**.  nuoca can be
 configured to point to either an existing nuoadmin or nuoagent
 domain.  Or comment out, nuoca and deploy a batch.job to load an
 existing `nuodbmgr monitor database` output file.  The output file can
@@ -164,12 +164,26 @@ kubernetes cluster with:
 
 `docker stack deploy monitor -c deploy/monitor-stack.yaml`
 
-To undeploy
+If you are not _using docker for desktop_ you can try and start the stack with `docker compose`.
 
-`docker stack rm monitor`
+```
+docker-compose -p ${USER} -f deploy/monitor-stack.yaml up > ${USER}-stack.yaml &
+```
+
+To undeploy with `docker stack`
+
+```
+docker stack rm monitor
+```
 
 Note, if you use *kubectl* to delete the deployments docker stacks
 will reinstall.
+
+To undeploy with `docker-compose`
+
+```
+docker-compose -p ${USER} -f deploy/monitor-stack.yaml down
+```
 
 Any data loaded is persisted in the directory lib/influxdb.  On
 restart the data should still be available.  remove lib/influxdb to
@@ -178,7 +192,8 @@ reset the influx database.
 ## Loading Monitor Files 
 
 To load a monitor file into Influx,  you will need to modify the
-_deploy/load.yaml_ file. 
+_deploy/load.yaml_ file if you are using `docker stack` mapped to
+local kubernetes.
 
 ```yaml
 apiVersion: batch/v1
@@ -217,14 +232,60 @@ You will need to modify `args:` to your monitor filename, and the
 `hostPath.path:` to the absolute path of the data and image
 directories.  Put your monitor file in the data directory.
 
-To run the batch job:
+If you are using docker-compose then make modifications to the docker
+compose file `deploy/load-compose.yaml`.  Unfortunately,  I've been
+unable to use `docker stack` to fire a batch.job. Thus, the need for
+two different load files.
+
+```
+version: '3'
+services:
+  load:
+    image: nuodb/nuodb-ce:latest
+    labels:
+      - "owner=${USER}"
+    command: [ "batch",  "-H", "influxdb", "/data/monitor-20200107-034803.log.gz" ]
+    volumes:
+      - /Users/dbutson/home/dev/nuodb-dashboards-influx/data:/data
+      - /Users/dbutson/home/dev/nuodb-dashboards-influx/image/batch.py:/opt/nuodb/etc/nuoca/lib/batch.py
+      - /Users/dbutson/home/dev/nuodb-dashboards-influx/image/batch:/usr/local/bin/batch
+networks:
+  default:
+    driver: bridge
+```
+
+You will modify the `command:` and `volumes:`.
+
+
+To run the batch job with `docker stack` deployment.
 
 ```
 $ kubectl create -f deploy/load.yaml
 ```
 
-To remove the deployment:
+To run the batch job with `docker-compose` deployment.
+
+```
+$ docker-compose -p ${USER} -f deploy/load-compose.yaml
+```
+
+The -p option is important to get the same network.  You'll see warns
+such as below that you can ignore.
+
+```
+nuodb-dashboards-influx git:(master) ✗ docker-compose -p dbutson -f deploy/load-compose.yaml up
+
+WARNING: Found orphan containers (dbutson_grafana_1, dbutson_nuoca_1, dbutson_influxdb_1) for this project. If you removed or renamed this service in your compose file, you can run this command with the --remove-orphans flag to clean it up.
+Creating dbutson_load_1 ... done
+Attaching to dbutson_load_1
+```
+
+
+To remove the `docker stack` deployment
 
 ```
 $ kubectl delete -f deploy/load.yaml
 ```
+
+To remote the `docker-compose` deployment
+
