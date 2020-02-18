@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1581605310226,
+  "iteration": 1582041030705,
   "links": [
     {
       "asDropdown": true,
@@ -541,7 +541,7 @@
       "tooltip": {
         "msResolution": false,
         "shared": true,
-        "sort": 0,
+        "sort": 2,
         "value_type": "individual"
       },
       "type": "graph",
@@ -770,6 +770,12 @@
               "key": "db",
               "operator": "=~",
               "value": "/^$database$/"
+            },
+            {
+              "condition": "AND",
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
             }
           ]
         },
@@ -799,7 +805,7 @@
           "measurement": "SqlListenerSqlProcTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT -SUM(X) FROM (SELECT mean(\"value\") as X FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction') AND (\"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT -SUM(X) FROM (SELECT mean(\"value\") as X FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction') AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -882,8 +888,11 @@
         "allValue": ".*",
         "current": {
           "selected": true,
+          "tags": [],
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\"\tWHERE \"nodetype\" = 'Transaction'",
@@ -907,10 +916,10 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "tags": [],
-          "text": "T24",
-          "value": "T24"
+          "text": "",
+          "value": ""
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES WITH KEY = \"db\"",
@@ -934,7 +943,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
