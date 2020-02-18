@@ -246,16 +246,17 @@ services:
       - "owner=${USER}"
     command: [ "batch",  "-H", "influxdb", "/data/monitor-20200107-034803.log.gz" ]
     volumes:
-      - /Users/dbutson/home/dev/nuodb-dashboards-influx/data:/data
-      - /Users/dbutson/home/dev/nuodb-dashboards-influx/image/batch.py:/opt/nuodb/etc/nuoca/lib/batch.py
-      - /Users/dbutson/home/dev/nuodb-dashboards-influx/image/batch:/usr/local/bin/batch
+      - ../data:/data
+      - ../image/batch.py:/opt/nuodb/etc/nuoca/lib/batch.py
+      - ../image/batch:/usr/local/bin/batch
 networks:
   default:
     driver: bridge
 ```
 
-You will modify the `command:` and `volumes:`.
-
+You will modify the `command:` to reference your monitor file.  You
+might need to change version from 3 to 2 if you are running an older
+version of docker or docker-compose.
 
 To run the batch job with `docker stack` deployment.
 
@@ -266,7 +267,7 @@ $ kubectl create -f deploy/load.yaml
 To run the batch job with `docker-compose` deployment.
 
 ```
-$ docker-compose -p ${USER} -f deploy/load-compose.yaml
+$ docker-compose -p ${USER} -f deploy/load-compose.yaml up
 ```
 
 The -p option is important to get the same network.  You'll see warns
@@ -288,4 +289,8 @@ $ kubectl delete -f deploy/load.yaml
 ```
 
 To remote the `docker-compose` deployment
+
+```
+$ docker-compose -p ${USER} -f deploy/load-compose.yaml down
+```
 

@@ -6,9 +6,9 @@ services:
       - "owner=${USER}"
     command: [ "batch",  "-H", "influxdb", "/data/monitor-20200107-034803.log.gz" ]
     volumes:
-      - /Users/dbutson/home/dev/nuodb-dashboards-influx/data:/data
-      - /Users/dbutson/home/dev/nuodb-dashboards-influx/image/batch.py:/opt/nuodb/etc/nuoca/lib/batch.py
-      - /Users/dbutson/home/dev/nuodb-dashboards-influx/image/batch:/usr/local/bin/batch
+      - ../data:/data
+      - ../image/batch.py:/opt/nuodb/etc/nuoca/lib/batch.py
+      - ../image/batch:/usr/local/bin/batch
 networks:
   default:
     driver: bridge
