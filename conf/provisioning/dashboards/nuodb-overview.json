@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1582041030705,
+  "iteration": 1582130580371,
   "links": [
     {
       "asDropdown": true,
@@ -630,7 +630,13 @@
           "alias": "current",
           "bars": true,
           "color": "#E24D42",
-          "lines": false
+          "lines": false,
+          "yaxis": 2
+        },
+        {
+          "alias": "on TE",
+          "steppedLine": true,
+          "yaxis": 2
         }
       ],
       "spaceLength": 10,
@@ -862,16 +868,17 @@
           "show": true
         },
         {
+          "decimals": null,
           "format": "short",
-          "label": null,
+          "label": "",
           "logBase": 1,
-          "max": "1000000",
-          "min": "0",
-          "show": false
+          "max": null,
+          "min": null,
+          "show": true
         }
       ],
       "yaxis": {
-        "align": false,
+        "align": true,
         "alignLevel": null
       }
     }
@@ -888,11 +895,8 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "tags": [],
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\"\tWHERE \"nodetype\" = 'Transaction'",
@@ -916,10 +920,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
-          "tags": [],
-          "text": "",
-          "value": ""
+          "selected": false
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES WITH KEY = \"db\"",
@@ -971,8 +972,8 @@
       "30d"
     ]
   },
-  "timezone": "",
+  "timezone": "utc",
   "title": "NuoDB Overview",
   "uid": "_AZFIHGZk",
-  "version": 1
+  "version": 2
 }

@@ -2251,10 +2251,7 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "text": "NUODB",
-          "value": "NUODB"
-        },
+        "current": { },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES WITH KEY = \"db\"  ",
         "hide": 0,
