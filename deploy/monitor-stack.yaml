@@ -6,10 +6,9 @@ services:
       - "owner=${USER}"
     ports:
       - "8086:8086"
-    environment:
-      - INFLUXDB_DB=nuodb
     volumes:
       - ../lib/influxdb:/var/lib/influxdb
+      - ../scripts/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
   grafana:
     image: grafana/grafana:latest
     labels:
