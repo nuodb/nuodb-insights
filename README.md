@@ -22,7 +22,7 @@ be optionally be compressed.  An example exists in the data directory.
 | deploy    | yaml configuration files for the monitor stack, nuoca setup and batch job for processing monitor output      |
 | doc       | contains png included in this README |
 | image     | scripts for batch processing, these are mounted into batch.job |
-
+| systemd   | files to set up nuoca to collect on bare metal |
 
 ## Dashboards
 
@@ -293,4 +293,44 @@ To remote the `docker-compose` deployment
 ```
 $ docker-compose -p ${USER} -f deploy/load-compose.yaml down
 ```
+
+## SystemD
+
+In the directory systemd are the three files needed to setup nuoca as a systemd unit.
+
+* **nuoca.yml.template**
+
+nuoca configuration file.  The default location for this file is
+`/etc/nuodb/nuodb.yml.template`.  Modify this file to set influxdb url
+and nuoadmin api-server and client-key.
+
+
+* **nuoca**
+
+executable script which runs nuoca as configured in **nuoca.yml.template**. This file is called from the systemd unit file
+**nuoca.service**.
+
+By default `nuoca` is expected to be put in /etc/nuodb/nuoca and
+executable as user nuodb.
+
+* **nuoca.service**
+
+the systemd unit file.  This file will be copied to
+/usr/lib/systemd/system/nuoca.service.  After installing
+nuoca.service.
+
+```
+$ sudo systemctl enable nuoca.service
+$ sudo systemctl start nuoca.service
+```
+
+If you don't put `nuoca` script in /etc/nuodb you'll need to modify
+`nuoca.service` file.
+
+
+
+
+
+
+
 

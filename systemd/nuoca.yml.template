@@ -1,0 +1,16 @@
+NUOCA_LOGFILE: /var/log/nuodb/nuoca.log
+
+INPUT_PLUGINS:
+- NuoAdminNuoMon:
+    description : Collection from NuoDB engines
+    nuocaCollectionName: NuoMon
+    # change http to https if ssl is enabled in nuoadmin
+    api_server: http://localhost:8888
+    # uncomment and point to client key file if ssl is enabled
+    #client_key: /etc/nuodb/keys/nuocmd.pem
+    host_uuid_shortname: True
+
+OUTPUT_PLUGINS:
+- InfluxDB:
+  # change influxdb to hostname running influxdb
+    url: http://influxdb:8086/write?db=nuodb

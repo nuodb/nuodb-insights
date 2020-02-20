@@ -1,0 +1,16 @@
+[Unit]
+Description=start and stop nuoca process
+After=syslog.target network.target network-online.target
+
+[Service]
+Type=simple
+User=nuodb
+Group=nuodb
+StandardOutput=journal
+ExecStart=/etc/nuodb/nuoca
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
+
