@@ -16,7 +16,7 @@
   "editable": true,
   "gnetId": 928,
   "graphTooltip": 1,
-  "iteration": 1570454067069,
+  "iteration": 1582317828617,
   "links": [
     {
       "asDropdown": true,
@@ -44,6 +44,7 @@
   "panels": [
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -101,6 +102,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -221,6 +223,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -341,6 +344,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -461,6 +465,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -581,6 +586,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -700,6 +706,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -831,6 +838,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -951,6 +959,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -1071,6 +1080,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -1197,6 +1207,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -1269,7 +1280,6 @@
       ],
       "thresholds": "30,40,50",
       "title": "IOWait",
-      "transparent": false,
       "type": "singlestat",
       "valueFontSize": "100%",
       "valueMaps": [
@@ -1283,6 +1293,7 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1554,6 +1565,7 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1705,6 +1717,7 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2164,6 +2177,7 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2325,6 +2339,7 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2370,7 +2385,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -2510,7 +2525,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -2652,7 +2667,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -2794,7 +2809,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -2936,7 +2951,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -3078,7 +3093,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -3220,7 +3235,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -3362,7 +3377,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -3504,7 +3519,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -3646,7 +3661,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -3788,7 +3803,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -3930,7 +3945,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -4072,7 +4087,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -4214,7 +4229,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -4356,7 +4371,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -4498,7 +4513,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 12,
+          "maxPerRow": 2,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -4610,6 +4625,7 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -6982,6 +6998,7 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -7770,11 +7787,12 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 12
+        "y": 34
       },
       "id": 62054,
       "panels": [
@@ -8048,11 +8066,12 @@
     },
     {
       "collapsed": true,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 13
+        "y": 35
       },
       "id": 62055,
       "panels": [
@@ -8091,7 +8110,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 8,
+          "maxPerRow": 3,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -8291,7 +8310,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 8,
+          "maxPerRow": 3,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -8489,7 +8508,7 @@
           "lines": true,
           "linewidth": 1,
           "links": [],
-          "minSpan": 8,
+          "maxPerRow": 3,
           "nullPointMode": "connected",
           "percentage": false,
           "pointradius": 5,
@@ -8654,647 +8673,12 @@
         }
       ],
       "repeat": "disk",
-      "scopedVars": {
-        "disk": {
-          "selected": true,
-          "text": "md1",
-          "value": "md1"
-        }
-      },
       "title": "Disk IOPS for /dev/$disk",
       "type": "row"
-    },
-    {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 14
-      },
-      "id": 62109,
-      "panels": [],
-      "repeat": null,
-      "repeatIteration": 1570454067069,
-      "repeatPanelId": 62055,
-      "scopedVars": {
-        "disk": {
-          "selected": true,
-          "text": "md2",
-          "value": "md2"
-        }
-      },
-      "title": "Disk IOPS for /dev/$disk",
-      "type": "row"
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "telegraf",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "grid": {},
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 0,
-        "y": 15
-      },
-      "id": 62110,
-      "interval": "$inter",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": true,
-        "max": true,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "minSpan": 8,
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatIteration": 1570454067069,
-      "repeatPanelId": 13782,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "disk": {
-          "selected": true,
-          "text": "md2",
-          "value": "md2"
-        }
-      },
-      "seriesOverrides": [
-        {
-          "alias": "/.*write$/",
-          "transform": "negative-Y"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$tag_host: $tag_name: $col",
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "key": "path",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "io_reads",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(reads),1s) as \"read\" FROM \"diskio\" WHERE \"host\" =~ /$server$/ AND \"name\" =~ /$disk$/ AND $timeFilter GROUP BY time($interval), *",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "$tag_host: $tag_name: $col",
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "key": "path",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "io_reads",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(writes),1s) as \"write\" FROM \"diskio\" WHERE \"host\" =~ /$server$/ AND \"name\" =~ /$disk$/  AND $timeFilter GROUP BY time($interval), *",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Disk I/O requests for /dev/$disk",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "iops",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "telegraf",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "grid": {},
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 8,
-        "y": 15
-      },
-      "id": 62111,
-      "interval": "$inter",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": true,
-        "max": true,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "minSpan": 8,
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatIteration": 1570454067069,
-      "repeatPanelId": 60200,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "disk": {
-          "selected": true,
-          "text": "md2",
-          "value": "md2"
-        }
-      },
-      "seriesOverrides": [
-        {
-          "alias": "/.*write$/",
-          "transform": "negative-Y"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$tag_host: $tag_name: $col",
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "key": "path",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "io_reads",
-          "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(read_bytes),1s) as \"read\" FROM \"diskio\" WHERE \"host\" =~ /$server$/ AND \"name\" =~ /$disk$/  AND $timeFilter GROUP BY time($interval), *",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "$tag_host: $tag_name: $col",
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "key": "path",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "io_reads",
-          "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(write_bytes),1s) as \"write\" FROM \"diskio\" WHERE \"host\" =~ /$server$/ AND \"name\" =~ /$disk$/ AND $timeFilter GROUP BY time($interval), *",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Disk I/O bytes for /dev/$disk",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "bytes",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "telegraf",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "grid": {},
-      "gridPos": {
-        "h": 7,
-        "w": 8,
-        "x": 16,
-        "y": 15
-      },
-      "id": 62112,
-      "interval": "$inter",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": true,
-        "max": true,
-        "min": false,
-        "rightSide": false,
-        "show": true,
-        "sort": "current",
-        "sortDesc": true,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 1,
-      "links": [],
-      "minSpan": 8,
-      "nullPointMode": "connected",
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatIteration": 1570454067069,
-      "repeatPanelId": 56720,
-      "repeatedByRow": true,
-      "scopedVars": {
-        "disk": {
-          "selected": true,
-          "text": "md2",
-          "value": "md2"
-        }
-      },
-      "seriesOverrides": [
-        {
-          "alias": "/.*write$/",
-          "transform": "negative-Y"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$tag_host: $tag_name: $col",
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "key": "path",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "io_reads",
-          "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(read_time),1s) as \"read\" FROM \"diskio\" WHERE \"host\" =~ /$server$/ AND \"name\" =~ /$disk$/  AND $timeFilter GROUP BY time($interval), *",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "$tag_host: $tag_name: $col",
-          "dsType": "influxdb",
-          "function": "mean",
-          "groupBy": [
-            {
-              "interval": "auto",
-              "params": [
-                "auto"
-              ],
-              "type": "time"
-            },
-            {
-              "key": "host",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            },
-            {
-              "key": "path",
-              "params": [
-                "tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "io_reads",
-          "policy": "default",
-          "query": "SELECT non_negative_derivative(mean(write_time),1s) as \"write\" FROM \"diskio\" WHERE \"host\" =~ /$server$/ AND \"name\" =~ /$disk$/ AND $timeFilter GROUP BY time($interval), *",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Disk I/O time for /dev/$disk",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "ms",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "format": "short",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
     }
   ],
   "refresh": false,
-  "schemaVersion": 16,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [
     "influxdb",
@@ -9305,6 +8689,7 @@
     "list": [
       {
         "current": {
+          "selected": true,
           "text": "telegraf",
           "value": "telegraf"
         },
@@ -9327,6 +8712,7 @@
         "auto_count": 100,
         "auto_min": "30s",
         "current": {
+          "selected": true,
           "text": "10s",
           "value": "10s"
         },
@@ -9391,9 +8777,9 @@
       {
         "allValue": ".*",
         "current": {
-          "tags": [],
-          "text": "",
-          "value": "",
+          "selected": true,
+          "text": "ip-10-1-154-125.eu-west-1.compute.internal",
+          "value": "ip-10-1-154-125.eu-west-1.compute.internal"
         },
         "datasource": "telegraf",
         "definition": "",
@@ -9418,7 +8804,9 @@
         "allValue": ".*",
         "current": {
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "$datasource",
         "definition": "",
@@ -9443,7 +8831,9 @@
         "allValue": ".*",
         "current": {
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "$datasource",
         "definition": "",
@@ -9467,11 +8857,9 @@
       {
         "allValue": ".*",
         "current": {
-          "tags": [],
-          "text": "md1 + md2",
+          "text": "",
           "value": [
-            "md1",
-            "md2"
+            ""
           ]
         },
         "datasource": "$datasource",
@@ -9497,7 +8885,9 @@
         "allValue": ".*",
         "current": {
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "$datasource",
         "definition": "",
@@ -9517,12 +8907,32 @@
         "tagsQuery": null,
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "selected": false,
+          "text": "",
+          "value": ""
+        },
+        "hide": 2,
+        "label": null,
+        "name": "database",
+        "options": [
+          {
+            "selected": true,
+            "text": "",
+            "value": ""
+          }
+        ],
+        "query": "",
+        "skipUrlSync": false,
+        "type": "constant"
       }
     ]
   },
   "time": {
-    "from": "2019-10-01T16:28:49.147Z",
-    "to": "2019-10-01T17:59:31.799Z"
+    "from": "now-15m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -9549,8 +8959,8 @@
       "30d"
     ]
   },
-  "timezone": "",
+  "timezone": "browser",
   "title": "System Overview",
   "uid": "RS0vgVqiz",
-  "version": 9
+  "version": 1
 }
