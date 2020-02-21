@@ -29,7 +29,6 @@ _parser.add_option("-p", "--port", dest="port",
                   help="InfluxDB port", type="int", default=8086)
 _parser.add_option("-H", "--hostname", dest="hostname",
                   help="Hostname", default="influxdb")
-_parser.add_option("-F", "--full", action="store_false", dest="full", default=True)
 _parser.add_option("-D", "--database", dest="db", default="nuodb")
 
 (options, args) = _parser.parse_args()
