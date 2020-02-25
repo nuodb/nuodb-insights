@@ -3512,21 +3512,16 @@
       },
       {
         "allValue": ".*",
-        "current": {
-          "text": "COB3",
-          "value": [
-            "COB3"
-          ]
-        },
+        "current": {},
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"\t",
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": true,
         "label": "Database",
         "multi": true,
         "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"\t",
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "refresh": 2,
         "regex": ".*",
         "skipUrlSync": false,

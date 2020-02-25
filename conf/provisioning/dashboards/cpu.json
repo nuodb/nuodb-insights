@@ -8275,26 +8275,6 @@
             "selected": true,
             "text": "All",
             "value": "$__all"
-          },
-          {
-            "selected": false,
-            "text": "COB",
-            "value": "COB"
-          },
-          {
-            "selected": false,
-            "text": "DES",
-            "value": "DES"
-          },
-          {
-            "selected": false,
-            "text": "NUODB",
-            "value": "NUODB"
-          },
-          {
-            "selected": false,
-            "text": "T24",
-            "value": "T24"
           }
         ],
         "query": "SHOW TAG VALUES WITH KEY = \"db\"",
