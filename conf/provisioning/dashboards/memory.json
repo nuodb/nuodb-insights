@@ -1841,7 +1841,7 @@
       },
       {
         "allValue": ".*",
-        "current": { },
+        "current": {},
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "hide": 0,

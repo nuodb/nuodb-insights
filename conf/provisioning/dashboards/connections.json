@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1564709846825,
+  "iteration": 1582319874775,
   "links": [
     {
       "asDropdown": true,
@@ -86,6 +86,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -256,6 +257,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -378,6 +380,7 @@
     },
     {
       "content": "",
+      "datasource": null,
       "editable": true,
       "error": false,
       "gridPos": {
@@ -389,6 +392,7 @@
       "id": 9,
       "links": [],
       "mode": "markdown",
+      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
@@ -437,6 +441,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -625,6 +630,7 @@
     },
     {
       "content": "",
+      "datasource": null,
       "editable": true,
       "error": false,
       "gridPos": {
@@ -636,6 +642,7 @@
       "id": 10,
       "links": [],
       "mode": "markdown",
+      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
@@ -684,6 +691,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -855,6 +863,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -991,6 +1000,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 4,
@@ -998,6 +1008,7 @@
         "x": 0,
         "y": 3
       },
+      "hiddenSeries": false,
       "id": 12,
       "interval": ">10s",
       "legend": {
@@ -1015,6 +1026,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1141,6 +1155,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 4,
@@ -1148,6 +1163,7 @@
         "x": 12,
         "y": 3
       },
+      "hiddenSeries": false,
       "id": 19,
       "interval": ">10s",
       "legend": {
@@ -1165,6 +1181,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1494,6 +1513,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 4,
@@ -1501,6 +1521,7 @@
         "x": 0,
         "y": 7
       },
+      "hiddenSeries": false,
       "id": 13,
       "legend": {
         "avg": false,
@@ -1515,6 +1536,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1697,6 +1721,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 4,
@@ -1704,6 +1729,7 @@
         "x": 12,
         "y": 7
       },
+      "hiddenSeries": false,
       "id": 2,
       "legend": {
         "avg": false,
@@ -1720,6 +1746,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1843,6 +1872,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 4,
@@ -1850,6 +1880,7 @@
         "x": 0,
         "y": 11
       },
+      "hiddenSeries": false,
       "id": 3,
       "legend": {
         "avg": false,
@@ -1864,6 +1895,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -2043,6 +2077,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 4,
@@ -2050,6 +2085,7 @@
         "x": 12,
         "y": 11
       },
+      "hiddenSeries": false,
       "id": 15,
       "legend": {
         "avg": false,
@@ -2064,6 +2100,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -2180,7 +2219,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 16,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [
     "nuodb",
@@ -2192,7 +2231,6 @@
         "allValue": ".*",
         "current": {
           "selected": true,
-          "tags": [],
           "text": "host",
           "value": "host"
         },
@@ -2228,7 +2266,9 @@
         "allValue": ".*",
         "current": {
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES WITH KEY = \"host\"  WHERE db =~ /^$database$/  AND nodetype = 'Transaction' AND $timeFilter",
@@ -2251,17 +2291,22 @@
       },
       {
         "allValue": ".*",
-        "current": { },
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES WITH KEY = \"db\"  ",
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": true,
         "label": "Database",
         "multi": true,
         "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"db\"  ",
-        "refresh": 2,
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+        "refresh": 1,
         "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
@@ -2305,5 +2350,5 @@
   "timezone": "",
   "title": "Connections",
   "uid": "dAWKSHGWk",
-  "version": 2
+  "version": 1
 }

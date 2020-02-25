@@ -1741,7 +1741,6 @@
         "type": "query",
         "useTags": false
       },
-
       {
         "allValue": ".*",
         "current": {

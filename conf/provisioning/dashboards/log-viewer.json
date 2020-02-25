@@ -423,7 +423,7 @@
         "allValue": ".*",
         "current": {
           "text": "",
-          "value": "",
+          "value": ""
         },
         "datasource": "syslog",
         "definition": "SHOW TAG VALUES FROM \"syslog\" WITH KEY = \"host\"\t",
@@ -557,8 +557,8 @@
     ]
   },
   "time": {
-    "from": "2019-10-17T08:13:59.578Z",
-    "to": "2019-10-17T09:13:59.578Z"
+    "from": "now-30m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [

@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1570790651346,
+  "iteration": 1582321224344,
   "links": [
     {
       "asDropdown": true,
@@ -43,6 +43,7 @@
   "panels": [
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -57,6 +58,7 @@
     },
     {
       "content": "<h4 style=\"text-align:right;\">Send</h4>",
+      "datasource": null,
       "editable": true,
       "error": false,
       "gridPos": {
@@ -68,6 +70,7 @@
       "id": 19,
       "links": [],
       "mode": "html",
+      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
@@ -117,6 +120,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -260,6 +264,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -375,6 +380,7 @@
     },
     {
       "content": "",
+      "datasource": null,
       "editable": true,
       "error": false,
       "gridPos": {
@@ -386,12 +392,14 @@
       "id": 11,
       "links": [],
       "mode": "markdown",
+      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
     },
     {
       "content": "<h4 style=\"text-align:right\">Received</h4>",
+      "datasource": null,
       "editable": true,
       "error": false,
       "gridPos": {
@@ -403,6 +411,7 @@
       "id": 20,
       "links": [],
       "mode": "html",
+      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
@@ -452,6 +461,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -590,6 +600,7 @@
       "maxDataPoints": 100,
       "nullPointMode": "connected",
       "nullText": null,
+      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -685,6 +696,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -707,6 +719,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 8,
@@ -714,6 +727,7 @@
         "x": 0,
         "y": 5
       },
+      "hiddenSeries": false,
       "id": 4,
       "interval": ">10s",
       "legend": {
@@ -733,6 +747,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -875,6 +892,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 8,
@@ -882,6 +900,7 @@
         "x": 12,
         "y": 5
       },
+      "hiddenSeries": false,
       "id": 21,
       "interval": ">10s",
       "legend": {
@@ -901,6 +920,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1033,6 +1055,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -1055,6 +1078,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 8,
@@ -1062,6 +1086,7 @@
         "x": 0,
         "y": 14
       },
+      "hiddenSeries": false,
       "id": 1,
       "interval": ">10s",
       "legend": {
@@ -1080,6 +1105,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1220,6 +1248,7 @@
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 8,
@@ -1227,6 +1256,7 @@
         "x": 12,
         "y": 14
       },
+      "hiddenSeries": false,
       "id": 10,
       "interval": ">10s",
       "legend": {
@@ -1245,6 +1275,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1377,7 +1410,7 @@
     }
   ],
   "refresh": false,
-  "schemaVersion": 16,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [
     "nuodb",
@@ -1388,7 +1421,7 @@
       {
         "allValue": ".*",
         "current": {
-          "tags": [],
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
@@ -1414,6 +1447,7 @@
       {
         "allValue": ".*",
         "current": {
+          "selected": true,
           "text": "All",
           "value": "$__all"
         },
@@ -1439,7 +1473,6 @@
       {
         "allValue": ".*",
         "current": {
-          "tags": [],
           "text": "All",
           "value": [
             "$__all"
@@ -1467,21 +1500,20 @@
       {
         "allValue": ".*",
         "current": {
-          "tags": [],
           "text": "All",
           "value": [
             "$__all"
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\" ",
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": true,
         "label": "Database",
         "multi": true,
         "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\" ",
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "refresh": 1,
         "regex": ".*",
         "skipUrlSync": false,
@@ -1495,8 +1527,8 @@
     ]
   },
   "time": {
-    "from": "2019-10-10T21:27:16.006Z",
-    "to": "2019-10-10T21:34:38.252Z"
+    "from": "now-30m",
+    "to": "now"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -1526,5 +1558,5 @@
   "timezone": "",
   "title": "Communication",
   "uid": "jdWFSHMWk",
-  "version": 10
+  "version": 1
 }
