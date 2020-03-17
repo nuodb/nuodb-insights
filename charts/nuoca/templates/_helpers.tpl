@@ -80,6 +80,5 @@ NuoAdmin URL
 {{- define "nuoca.influxdb_url" -}}
 {{- $hostname := default (printf "%s-influxdb" .Release.Name) .Values.influxdb.host -}}
 {{- $port     := default 8086 .Values.influxdb.port -}}
-{{- $db       := default "nuodb" .Values.influxdb.dbname -}}
-{{- printf "http://%s:%d/write?db=%s" $hostname $port $db -}}
+{{- printf "http://%s:%d" $hostname $port -}}
 {{- end -}}

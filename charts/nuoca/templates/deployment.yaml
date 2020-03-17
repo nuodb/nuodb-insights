@@ -55,7 +55,7 @@ spec:
           {{- end }}
           {{- end }}
           - name: INFLUXDB_URL
-            value: {{ include "nuoca.influxdb_url" . }}
+            value: {{ include "nuoca.influxdb_url" . }}/write?db={{ default "nuodb" .Values.influxdb.dbname }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
