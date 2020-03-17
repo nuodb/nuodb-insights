@@ -31,16 +31,22 @@ influxdb:
         /usr/bin/influx -execute 'CREATE DATABASE nuodb WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'        
 
 nuoca:
+  #nuoadmin plugin will collect metrics using nuoadmin protocol
   nuoadmin:
     enabled: true
     host:    nuodb
     port:    8888
     tls:
        enabled: true
+
+  # currently nuoagent plugin is not supported.
   nuoagent: {}
   #  enabled: false
   #  host:
   #  port: 48004
+
+  # influxdb plugin will output metrics collected to influxdb via http using line protocol.
+  # currently this plugin does not support credentials.
   influxdb: {}
   #  host: influxdb
   #  port: 8086
