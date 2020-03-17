@@ -1,0 +1,30 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Release.Name }}-datasource-nuodb
+  labels:
+    {{ .Values.grafana.sidecar.datasources.label | default "grafana_datasource" }}: "nuodb"
+    {{- include "monitoring-influx.labels" . | nindent 4 }}
+data:
+  nuodb.yaml: |-
+    apiVersion: 1
+    datasources:
+      - name: nuodb
+        type: influxdb
+        access: proxy
+        orgId: 1
+        url: {{ include "monitoring-influx.influxdb_url" . }}
+        password: ''
+        user: ''
+        database: 'nuodb'
+        basicAuth: false
+        basicAuthUser: ''
+        basicAuthPassword: ''
+        withCredentials: false
+        isDefault: true
+        jsonData:
+          timeInterval: '10s'
+        secureJsonData: {}
+        version: 1
+        editable: true

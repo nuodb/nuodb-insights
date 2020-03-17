@@ -1,0 +1,16 @@
+{{- $rname := .Release.Name }}
+{{- $dlabel := .Values.grafana.sidecar.dashboards.label }}
+{{- $labels := include "monitoring-influx.labels" . | nindent 4 }}
+---
+{{- range $path, $bytes := .Files.Glob "files/dashboards/*.json" }}
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: "{{ $rname }}-dashboard-{{ base $path | trimSuffix ".json" }}"
+  labels:
+    {{ $dlabel | default "grafana_dashboard" }}: "nuodb"
+    {{- $labels }}
+data:
+{{ ($.Files.Glob ($path)).AsConfig | indent 2 }}
+---
+{{- end }}

@@ -1,0 +1,85 @@
+grafana:
+  enabled: true
+  # For complete list of configuration options for  
+  # grafana see the documentation @ https://github.com/helm/charts/tree/master/stable/grafana.
+  # sidecar setup here is for custom dashboards and datasource for nuoca pushing metrics
+  # to influx
+  sidecar:
+    dashboards:
+      enabled: true
+      label: 'grafana_dashboard'
+      searchNamespace: null
+      folder: "/var/lib/grafana/dashboards"
+      provider:
+        name:           "nuodb"
+        folder:         "nuodb"
+        allowUiUpdates: true
+    datasources:
+      enabled: true
+      label: 'grafana_datasource'
+      searchNamespace: null
+      
+influxdb:
+  enabled: true
+  # For complete list of configuration options for  
+  # influxdb see the documentation @ https://github.com/influxdata/helm-charts/tree/master/charts/influxdb
+  # the initScript here is to initialize a database for metrics from nuoca.
+  initScripts:
+    enabled: true
+    scripts:
+      init-nuodb.sh: |+
+        /usr/bin/influx -execute 'CREATE DATABASE nuodb WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'        
+
+nuoca:
+  nuoadmin:
+    enabled: true
+    host:    nuodb
+    port:    8888
+    tls:
+       enabled: true
+  nuoagent: {}
+  #  enabled: false
+  #  host:
+  #  port: 48004
+  influxdb: {}
+  #  host: influxdb
+  #  port: 8086
+  #  dbname: nuodb
+
+  # replicaCount: 1
+  # image:
+  #   registry: docker.io
+  #   repository: nuodb/nuodb-ce
+  #   tag: 4.0.4
+  #   pullPolicy: IfNotPresent
+  # imagePullSecrets: []
+  # nameOverride: ""
+  # fullnameOverride: ""
+  # serviceAccount:
+  #   creae: true
+  #   annotation: {}
+  #   name:
+  # podSecurityContext: {}
+  #   # fsGroup: 2000
+  # securityContext: {}
+  #   # capabilities:
+  #   #   drop:
+  #   #   - ALL
+  #   # readOnlyRootFilesystem: true
+  #   # runAsNonRoot: true
+  #   # runAsUser: 1000
+  # resources: {}
+  #   # We usually recommend not to specify default resources and to leave this as a conscious
+  #   # choice for the user. This also increases chances charts run on environments with little
+  #   # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  #   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  #   # limits:
+  #   #   cpu: 100m
+  #   #   memory: 128Mi
+  #   # requests:
+  #   #   cpu: 100m
+  #   #   memory: 128Mi
+  # nodeSelector: {}
+  # tolerations: []
+  # affinity: {}
+  # env: {}
