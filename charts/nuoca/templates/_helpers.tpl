@@ -66,13 +66,14 @@ Create the name of the service account to use
 NuoAdmin URL
 */}}
 {{- define "nuoca.nuodb_api_server" -}}
-{{- $hostname := default .Values.nuoadmin.host "nuodb" -}}
-{{- $port     := default .Values.nuoadmin.port 8888 -}}
-{{- if .Values.nuoadmin.tls.enabled -}}
-{{-   printf "https://%s:%d" $hostname $port -}}
+{{- $hostname := default "nuodb" .Values.nuoadmin.host -}}
+{{- $port     := default 8888 .Values.nuoadmin.port -}}
+{{- if and .Values.nuoadmin.tls .Values.nuoadmin.tls.enabled -}}
+   https://{{- $hostname -}}:{{- $port -}}
 {{- else -}}
-{{-   printf "http://%s:%d" $hostname $port -}}
+   http://{{- $hostname -}}:{{- $port -}}
 {{- end -}}
+
 {{- end -}}
 
 
