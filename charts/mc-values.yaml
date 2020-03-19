@@ -1,0 +1,29 @@
+config:
+  enabled: false
+  
+grafana:
+  enabled: false
+
+influxdb:
+  enabled: true
+
+nuoca:
+  enabled: true
+  image:
+    repository: nuodb/nuodb-ce
+    tag: 4.0.4-2-mc
+
+  securityContext:
+    capabilities:
+      add:
+        - NET_ADMIN
+
+  envFrom:
+  - configMapRef:
+      name: cluster-config
+  - configMapRef:
+      name: cluster-global
+
+  nuoadmin:
+    # host is in default namespace of same cluster as nuoca 
+    host: nuodb.default.svc
