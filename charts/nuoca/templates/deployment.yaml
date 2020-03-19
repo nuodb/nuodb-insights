@@ -24,6 +24,10 @@ spec:
       containers:
         - name: {{ .Chart.Name }}
           args: [ "nuoca", "--no-verify", "start" , "nuoca", "--collection-interval", "10" ]
+        {{- with .Values.envFrom }}
+          envFrom:
+            {{- toYaml . | nindent 10 }}
+        {{- end }}
           env:
           - name: NUOCMD_API_SERVER
             value: {{ include "nuoca.nuodb_api_server" . }}
@@ -58,8 +62,10 @@ spec:
             value: {{ include "nuoca.influxdb_url" . }}/write?db={{ default "nuodb" .Values.influxdb.dbname }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
-          image: "{{ .Values.image.repository }}:{{ .Chart.AppVersion }}"
+          image: {{ include "nuoca.image" . | quote }}
+          {{- if .Values.image.pullPolicy }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
+          {{- end }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           volumeMounts:

@@ -78,7 +78,17 @@ NuoAdmin URL
 
 
 {{- define "nuoca.influxdb_url" -}}
-{{- $hostname := default (printf "%s-influxdb" .Release.Name) .Values.influxdb.host -}}
+{{- $hostname := default (printf "%s-influxdb.%s" .Release.Name .Release.Namespace) .Values.influxdb.host -}}
 {{- $port     := default 8086 .Values.influxdb.port -}}
 {{- printf "http://%s:%d" $hostname $port -}}
+{{- end -}}
+
+{{/*
+Return the proper NuoDB image name
+*/}}
+{{- define "nuoca.image" -}}
+{{- $registryName := (default "docker.io" .Values.image.registry) -}}
+{{- $repositoryName := .Values.image.repository -}}
+{{- $tag := default .Chart.AppVersion .Values.image.tag | toString -}}
+{{- printf "%s/%s:%s" $registryName $repositoryName $tag -}}
 {{- end -}}
