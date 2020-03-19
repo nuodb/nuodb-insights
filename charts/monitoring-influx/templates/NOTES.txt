@@ -1,4 +1,5 @@
-The following dashboards have been deployed as configmaps in namespace {{ .Release.Namespace }}.
+{{ if and .Values.config .Values.config.enabled }}
+The following dashboards and datasource have been deployed as configmaps in namespace {{ include "monitoring-influx.namespace" . }}.
 
 {{ $rname := .Release.Name }}
 {{- range $path, $bytes := .Files.Glob "files/dashboards/*.json" }}
@@ -17,7 +18,7 @@ The grafana datasource is defined in configmap/{{ .Release.Name }}-datasource-nu
 #####   WARNING: Currently access is influxdb does not require      #####
 #####            credentials.                                       #####
 #########################################################################
-
+{{ end }}
 
 
 

@@ -1,25 +1,7 @@
-apiVersion: v2
+apiVersion: v1
 appVersion: 4.0.3
 description: Deploying nuoca collector to influx and associated grafana dashboards.
 name: monitoring-influx
 type: application
 version: 1.0.0
 
-dependencies:
-- name: grafana
-  condition: grafana.enabled
-  tags:
-    - backend
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: ~5.0.0
-- name: influxdb
-  condition: influxdb.enabled
-  tags:
-    - backend
-  repository: https://helm.influxdata.com/
-  version: ~4.3.6
-- name: nuoca
-  condition: nuoca.enabled
-  repository: file://../nuoca
-  version: ~1.0.0
-    

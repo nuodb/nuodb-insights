@@ -25,11 +25,10 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "monitoring-influx.influxdb_url" -}}
-{{- if and .Values.nuoca .Values.nuoca.enabled -}}
-{{- include "nuoca.influxdb_url" . }}
-{{- else -}}
-{{- printf "http://%s-influxdb.%s:8086" .Release.Name .Release.Namespace | trimSuffix "-" -}}
-{{- end -}}
+{{- $cluster  := "cluster.local" -}}
+{{- $hostname := default (printf "%s-influxdb.%s.svc.%s" .Release.Name .Release.Namespace $cluster) .Values.nuoca.influxdb.host -}}
+{{- $port     := default 8086 .Values.nuoca.influxdb.port -}}
+{{- printf "http://%s:%d" $hostname $port -}}
 {{- end -}}
 
 {{/*
@@ -59,3 +58,10 @@ app.kubernetes.io/name: {{ include "monitoring-influx.name" . }}
 app.kubernetes.io/instance: {{ .Release.Name }}
 {{- end -}}
 
+{{/*
+Namespace for the dashboards, this should be same as namespace for
+grafana is grafana location is overridded.
+*/}}
+{{- define "monitoring-influx.namespace" -}}
+  {{ default .Release.Namespace .Values.grafana.namespaceOverride }}
+{{- end -}}

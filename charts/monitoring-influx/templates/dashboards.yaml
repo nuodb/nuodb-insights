@@ -1,4 +1,6 @@
+{{- if and .Values.config .Values.config.enabled -}}
 {{- $rname := .Release.Name }}
+{{- $nspace := include "monitoring-influx.namespace" . }}
 {{- $dlabel := .Values.grafana.sidecar.dashboards.label }}
 {{- $labels := include "monitoring-influx.labels" . | nindent 4 }}
 ---
@@ -7,10 +9,12 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: "{{ $rname }}-dashboard-{{ base $path | trimSuffix ".json" }}"
+  namespace: "{{ $nspace }}"
   labels:
     {{ $dlabel | default "grafana_dashboard" }}: "nuodb"
     {{- $labels }}
 data:
 {{ ($.Files.Glob ($path)).AsConfig | indent 2 }}
 ---
+{{- end }}
 {{- end }}
