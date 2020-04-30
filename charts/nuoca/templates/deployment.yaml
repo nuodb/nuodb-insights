@@ -90,7 +90,7 @@ spec:
       volumes:
         - name: config-volume
           configMap:
-            name: {{ include "nuoca.fullname" . }}-configmap
+            name: {{ include "nuoca.fullname" . }}
         {{- if and .Values.nuoadmin.tls .Values.nuoadmin.tls.enabled .Values.nuoadmin.tls.secret }}
         - name: tls-client-pem
           secret:

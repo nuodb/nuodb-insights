@@ -76,7 +76,7 @@ nuoca:
   # influxdb plugin will output metrics collected to influxdb via http using line protocol.
   # currently this plugin does not support credentials.
   influxdb: {}
-  #  host: influxdb
+  #  host: "{{ .Release.Name }}-influxdb.{{ .Release.Namespace }}.svc"
   #  port: 8086
   #  dbname: nuodb
 
