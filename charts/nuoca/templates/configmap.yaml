@@ -30,7 +30,7 @@ data:
 {{- end }}
     OUTPUT_PLUGINS:
     - InfluxDB:
-        url: ${INFLUXDB_URL}
+        url: {{ include "nuoca.influxdb_url" . }}/write?db={{ default "nuodb" .Values.influxdb.dbname }}
 
 
   

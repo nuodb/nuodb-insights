@@ -58,8 +58,6 @@ spec:
                 key:  {{ .Values.nuoagent.domainPasswordKey | default "domain-password" }}
           {{- end }}
           {{- end }}
-          - name: INFLUXDB_URL
-            value: {{ include "nuoca.influxdb_url" . }}/write?db={{ default "nuodb" .Values.influxdb.dbname }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
           image: {{ include "nuoca.image" . | quote }}
