@@ -5,7 +5,7 @@ config:
 # uses database telegraf.  Also need to enable dashboardProviders in
 # grafana 
 #  dashboards:
-#    - addons
+#    - k8s
 #  databases:
 #    - telegraf
 

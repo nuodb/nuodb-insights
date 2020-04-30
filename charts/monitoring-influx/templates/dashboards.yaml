@@ -14,7 +14,7 @@ metadata:
 data:
 {{ ($.Files.Glob ($path)).AsConfig | indent 2 }}
 {{- end }}
-{{ range $path, $bytes := .Files.Glob "files/dashboards/*/*.json" }}
+{{ range $path, $bytes := .Files.Glob "files/dashboards.ext/*/*.json" }}
 {{ $subdir := base (dir $path) }}
 {{- if and $dot.Values.config.dashboards (has $subdir $dot.Values.config.dashboards) }}
 ---
