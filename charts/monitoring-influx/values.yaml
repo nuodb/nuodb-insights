@@ -1,6 +1,14 @@
 config:
   enabled: true
 
+# add additional dashboards stored in addons sub-directory
+# uses database telegraf.  Also need to enable dashboardProviders in
+# grafana 
+#  dashboards:
+#    - addons
+#  databases:
+#    - telegraf
+
 grafana:
   enabled: true
   # For complete list of configuration options for  
@@ -13,6 +21,7 @@ grafana:
       label: 'grafana_dashboard'
       searchNamespace: null
       folder: "/var/lib/grafana/dashboards"
+      defaultFolderName: "default"
       provider:
         name:           "nuodb"
         folder:         "nuodb"
@@ -21,6 +30,22 @@ grafana:
       enabled: true
       label: 'grafana_datasource'
       searchNamespace: null
+  # dashboardProviders:
+  #   dashboardproviders.yaml:
+  #     apiVersion: 1
+  #     providers:
+  #       - name: 'addon'
+  #         orgId: 1
+  #         folder: 'addon'
+  #         type: file
+  #         disableDeletion: false
+  #         editable: true
+  #         options:
+  #           # needs to be subdir of sidecar.dashboards.folder
+  #           # if sidecar.dashboards.folder is changed then
+  #           # this must be changed also.
+  #           path: /var/lib/grafana/dashboards/addons
+
       
 influxdb:
   enabled: true
@@ -59,7 +84,7 @@ nuoca:
   # image:
   #   registry: docker.io
   #   repository: nuodb/nuodb-ce
-  #   tag: 4.0.4
+  #   tag: 4.0.5
   #   pullPolicy: IfNotPresent
   # imagePullSecrets: []
   # nameOverride: ""

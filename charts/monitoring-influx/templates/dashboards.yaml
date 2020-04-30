@@ -1,20 +1,35 @@
 {{- if and .Values.config .Values.config.enabled -}}
-{{- $rname := .Release.Name }}
-{{- $nspace := include "monitoring-influx.namespace" . }}
-{{- $dlabel := .Values.grafana.sidecar.dashboards.label }}
-{{- $labels := include "monitoring-influx.labels" . | nindent 4 }}
----
+{{- $dot := . }}
+{{- $basedir := default "/tmp/dashboards" .Values.grafana.sidecar.dashboards.folder -}}
 {{- range $path, $bytes := .Files.Glob "files/dashboards/*.json" }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: "{{ $rname }}-dashboard-{{ base $path | trimSuffix ".json" }}"
-  namespace: "{{ $nspace }}"
+  name: {{ printf "%s-dashboard-%s" $dot.Release.Name (base $path | trimSuffix ".json") | quote }}
+  namespace: {{ include "monitoring-influx.namespace" $dot | quote }}
   labels:
-    {{ $dlabel | default "grafana_dashboard" }}: "nuodb"
-    {{- $labels }}
+    {{ $dot.Values.grafana.sidecar.dashboards.label | default "grafana_dashboard" }}: "nuodb"
+    {{- include "monitoring-influx.labels" $dot | nindent 4 }}
 data:
 {{ ($.Files.Glob ($path)).AsConfig | indent 2 }}
+{{- end }}
+{{ range $path, $bytes := .Files.Glob "files/dashboards/*/*.json" }}
+{{ $subdir := base (dir $path) }}
+{{- if and $dot.Values.config.dashboards (has $subdir $dot.Values.config.dashboards) }}
 ---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-dashboard-%s" $dot.Release.Name (base $path | trimSuffix ".json") | quote }}
+  namespace: {{ include "monitoring-influx.namespace" $dot | quote }}
+  labels:
+    {{ $dot.Values.grafana.sidecar.dashboards.label | default "grafana_dashboard" }}: "nuodb"
+    {{- include "monitoring-influx.labels" $dot | nindent 4 }}
+  annotations:
+    k8s-sidecar-target-directory: {{ printf "%s/%s" $basedir $subdir | quote }}
+data:
+{{ ($.Files.Glob ($path)).AsConfig | indent 2 }}
+{{- end -}}
 {{- end }}
 {{- end }}
