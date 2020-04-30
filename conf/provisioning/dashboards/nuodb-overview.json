@@ -894,19 +894,17 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
+          "selected": false
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\"\tWHERE \"nodetype\" = 'Transaction'",
+        "definition": "SHOW TAG VALUES WITH KEY = \"db\"",
         "hide": 0,
-        "includeAll": true,
-        "label": "Host",
-        "multi": true,
-        "name": "host",
+        "includeAll": false,
+        "label": "Database",
+        "multi": false,
+        "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\"\tWHERE \"nodetype\" = 'Transaction'",
+        "query": "SHOW TAG VALUES WITH KEY = \"db\"",
         "refresh": 1,
         "regex": ".*",
         "skipUrlSync": false,
@@ -920,17 +918,19 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false
+          "selected": true,
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES WITH KEY = \"db\"",
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ AND nodetype = 'Transaction' ",
         "hide": 0,
-        "includeAll": false,
-        "label": "Database",
-        "multi": false,
-        "name": "database",
+        "includeAll": true,
+        "label": "Host",
+        "multi": true,
+        "name": "host",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"db\"",
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ AND nodetype = 'Transaction' ",
         "refresh": 1,
         "regex": ".*",
         "skipUrlSync": false,

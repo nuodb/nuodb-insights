@@ -15,8 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 17,
-  "iteration": 1554259084051,
+  "id": 8,
+  "iteration": 1588288203084,
   "links": [
     {
       "asDropdown": true,
@@ -71,6 +71,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -251,6 +252,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -431,6 +433,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -611,6 +614,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -791,6 +795,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -971,6 +976,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1151,6 +1157,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1331,6 +1338,7 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1484,7 +1492,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 16,
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [
     "overview"
@@ -1718,23 +1726,24 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
-          "text": "All",
-          "value": "$__all"
+          "text": "NUODB",
+          "value": [
+            "NUODB"
+          ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES WITH KEY = \"host\" ",
-        "hide": 0,
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+        "hide": 2,
         "includeAll": true,
         "label": null,
         "multi": true,
-        "name": "host",
+        "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"host\" ",
-        "refresh": 1,
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+        "refresh": 2,
         "regex": ".*",
         "skipUrlSync": false,
-        "sort": 0,
+        "sort": 1,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -1744,32 +1753,22 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
-          "tags": [],
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"\t",
-        "hide": 0,
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"db\" =~ /$database$/ ",
+        "hide": 2,
         "includeAll": true,
         "label": null,
         "multi": true,
-        "name": "database",
-        "options": [
-          {
-            "selected": true,
-            "text": "All",
-            "value": "$__all"
-          }
-        ],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"\t",
-        "refresh": 0,
+        "name": "host",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"db\" =~ /$database$/ ",
+        "refresh": 2,
         "regex": ".*",
         "skipUrlSync": false,
-        "sort": 1,
+        "sort": 0,
         "tagValuesQuery": "",
         "tags": [],
         "tagsQuery": "",
@@ -1810,5 +1809,5 @@
   "timezone": "",
   "title": "Adhoc Query",
   "uid": "Uc9eW33mk",
-  "version": 2
+  "version": 1
 }
