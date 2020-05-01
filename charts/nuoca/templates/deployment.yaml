@@ -1,3 +1,4 @@
+{{- $dot := . -}}
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -70,6 +71,13 @@ spec:
           - name: config-volume
             mountPath: /etc/nuodb/nuoca.yml.template
             subPath: nuoca.yml.template
+          {{- range $path, $bytes := .Files.Glob "files/nuoca/**" }}
+          {{-   $file   := $path | trimPrefix "files/nuoca/" }}
+          {{-  $fileid := sha1sum $file | trunc 8 }}
+          - name: config-{{ $fileid }}
+            mountPath: /opt/nuodb/etc/nuoca/{{ $file }}
+            subPath: {{ base $file }}
+          {{- end -}}
           {{- if and .Values.nuoadmin.tls .Values.nuoadmin.tls.enabled .Values.nuoadmin.tls.key }}
           - name: tls-client-pem
             mountPath: /etc/nuodb/keys/nuocmd.pem
@@ -91,6 +99,13 @@ spec:
         - name: config-volume
           configMap:
             name: {{ include "nuoca.fullname" . }}
+        {{- range $path, $bytes := .Files.Glob "files/nuoca/**" -}}
+        {{- $file   := $path | trimPrefix "files/nuoca/" -}}
+        {{- $fileid := sha1sum $file | trunc 8 }}
+        - name: config-{{ $fileid }}
+          configMap:
+            name: {{ include "nuoca.fullname" $dot }}-{{ $fileid }}
+        {{- end }}
         {{- if and .Values.nuoadmin.tls .Values.nuoadmin.tls.enabled .Values.nuoadmin.tls.secret }}
         - name: tls-client-pem
           secret:
