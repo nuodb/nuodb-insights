@@ -3,8 +3,14 @@ appVersion: 4.0.5
 description: Deploying nuoca collector to influx, associated grafana dashboards.
 name: monitoring-influx
 #type: application
-version: 1.0.0
+version: 1.0.1
 home: https://github.com/nuodb/nuodb-dashboards-influx/charts/monitoring-influx
+keywords:
+- monitoring
+- nuodb
+- nuoca
+- influxdb
+- grafana
 maintainers:
 - name: NuoDB
   email: k8s@nuodb.com

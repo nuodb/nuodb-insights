@@ -7,7 +7,7 @@ replicaCount: 1
 image:
   registry: docker.io
   repository: nuodb/nuodb-ce
-  tag: 4.0.4
+  tag: 4.0.5
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
