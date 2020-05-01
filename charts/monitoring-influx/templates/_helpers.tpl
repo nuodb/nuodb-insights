@@ -26,10 +26,16 @@ If release name contains chart name it will be used as a full name.
 
 {{- define "monitoring-influx.influxdb_url" -}}
 {{- $context  := dict "Values" .Values.influxdb "Chart" (dict "Name" "influxdb") "Release" .Release  "Capabilities" .Capabilities -}}
-{{- $influxdb := include "influxdb.fullname" $context -}}
-{{- $hostname := default (printf "%s.%s.svc" $influxdb .Release.Namespace) .Values.nuoca.influxdb.host -}}
-{{- $port     := default 8086 .Values.nuoca.influxdb.port -}}
-{{- printf "http://%s:%d" $hostname $port -}}
+{{- if and .Values.influxdb .Values.influxdb.enabled -}}
+{{-   $influxdb := include "influxdb.fullname" $context -}}
+{{-   $hostname := default (printf "%s.%s.svc" $influxdb .Release.Namespace) .Values.nuoca.influxdb.host -}}
+{{-   $port     := default 8086 .Values.nuoca.influxdb.port -}}
+{{-   printf "http://%s:%d" $hostname $port -}}
+{{- else -}}
+{{-   $hostname := default (printf "influxdb.%s.svc" .Release.Namespace) .Values.nuoca.influxdb.host -}}
+{{-   $port     := default 8086 .Values.nuoca.influxdb.port -}}
+{{-   printf "http://%s:%d" $hostname $port -}}
+{{- end -}}
 {{- end -}}
 
 {{/*
