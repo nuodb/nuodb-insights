@@ -82,7 +82,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -94,6 +94,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -132,7 +138,7 @@
           ]
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -144,6 +150,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -263,7 +275,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -275,6 +287,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -313,7 +331,7 @@
           ]
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -325,6 +343,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -444,7 +468,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -456,6 +480,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -494,7 +524,7 @@
           ]
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -506,6 +536,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -625,7 +661,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -637,6 +673,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -675,7 +717,7 @@
           ]
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -687,6 +729,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -806,7 +854,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -818,6 +866,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -856,7 +910,7 @@
           ]
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -868,6 +922,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -987,7 +1047,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -999,6 +1059,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -1037,7 +1103,7 @@
           ]
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1049,6 +1115,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -1168,7 +1240,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1180,6 +1252,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -1218,7 +1296,7 @@
           ]
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1230,6 +1308,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -1349,7 +1433,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1361,6 +1445,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },
@@ -1399,7 +1489,7 @@
           ]
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1411,6 +1501,12 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
               ],
               "type": "tag"
             },

@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:449",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -16,9 +17,11 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1582130580371,
+  "id": 8,
+  "iteration": 1588371243618,
   "links": [
     {
+      "$$hashKey": "object:522",
       "asDropdown": true,
       "icon": "external link",
       "includeVars": true,
@@ -30,6 +33,7 @@
       "type": "dashboards"
     },
     {
+      "$$hashKey": "object:523",
       "asDropdown": true,
       "icon": "external link",
       "includeVars": true,
@@ -43,35 +47,24 @@
   ],
   "panels": [
     {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 0
-      },
-      "id": 3,
-      "panels": [],
-      "repeat": null,
-      "title": "Summary",
-      "type": "row"
-    },
-    {
       "aliasColors": {},
       "bars": true,
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "A glance of where time is spent relative to TEs of the database.  Averaged over all TEs so inactive TEs will make numbers look smaller.  Use Host filter to look at just one TE.",
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 6,
         "w": 24,
         "x": 0,
-        "y": 1
+        "y": 0
       },
+      "hiddenSeries": false,
       "id": 1,
       "legend": {
         "alignAsTable": true,
@@ -90,13 +83,17 @@
       "lines": false,
       "linewidth": 2,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:1088",
           "alias": "Active",
           "bars": false,
           "lines": true,
@@ -104,6 +101,7 @@
           "zindex": 3
         },
         {
+          "$$hashKey": "object:1089",
           "alias": "Active",
           "fill": 1,
           "steppedLine": true
@@ -537,7 +535,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "",
+      "title": "Summary",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -554,6 +552,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1116",
           "format": "short",
           "label": "",
           "logBase": 1,
@@ -562,6 +561,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1117",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -576,35 +576,24 @@
       }
     },
     {
-      "collapsed": false,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 7
-      },
-      "id": 4,
-      "panels": [],
-      "repeat": null,
-      "title": "Commits",
-      "type": "row"
-    },
-    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Commits per second,  active transactions (red) and average number of transactions active in database (blue). Host filter will show commits and transaction active in database for just those Host.  average number of transactions active is not affected as that is over all TEs.",
       "editable": true,
       "error": false,
       "fill": 1,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 6
       },
+      "hiddenSeries": false,
       "id": 2,
       "interval": "10s",
       "legend": {
@@ -620,13 +609,17 @@
       "lines": true,
       "linewidth": 2,
       "links": [],
-      "nullPointMode": "connected",
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:845",
           "alias": "current",
           "bars": true,
           "color": "#E24D42",
@@ -634,6 +627,7 @@
           "yaxis": 2
         },
         {
+          "$$hashKey": "object:846",
           "alias": "on TE",
           "steppedLine": true,
           "yaxis": 2
@@ -664,7 +658,7 @@
           "measurement": "Commits",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM( A ) FROM (SELECT mean(\"rate\")  AS A FROM \"Commits\" WHERE \"nodetype\" = 'Transaction' AND $timeFilter AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/ GROUP BY \"host\",\"pid\", time($interval) fill(null)) WHERE $timeFilter GROUP BY time($interval)",
+          "query": "SELECT SUM( A ) FROM (SELECT mean(\"rate\")  AS A FROM \"Commits\" WHERE \"nodetype\" = 'Transaction' AND $timeFilter AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ GROUP BY \"host\",\"pid\", time($interval) fill(linear)) WHERE $timeFilter GROUP BY time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -741,7 +735,7 @@
             },
             {
               "params": [
-                "null"
+                "linear"
               ],
               "type": "fill"
             }
@@ -782,6 +776,12 @@
               "key": "host",
               "operator": "=~",
               "value": "/^$host$/"
+            },
+            {
+              "condition": "AND",
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
             }
           ]
         },
@@ -811,7 +811,7 @@
           "measurement": "SqlListenerSqlProcTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT -SUM(X) FROM (SELECT mean(\"value\") as X FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction') AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT -SUM(X) FROM (SELECT mean(\"value\") as X FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction') AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(linear)) WHERE $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -842,7 +842,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Commits",
+      "title": "Commits / Transactions",
       "tooltip": {
         "msResolution": true,
         "shared": true,
@@ -860,6 +860,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:873",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -868,6 +869,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:874",
           "decimals": null,
           "format": "short",
           "label": "",
@@ -884,7 +886,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 16,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [
     "overview"
@@ -894,19 +896,22 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false
+          "tags": [],
+          "text": "ycsb",
+          "value": "ycsb"
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": false,
+        "index": -1,
         "label": "Database",
         "multi": false,
         "name": "database",
         "options": [],
         "query": "SHOW TAG VALUES WITH KEY = \"db\"",
         "refresh": 1,
-        "regex": ".*",
+        "regex": "",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
@@ -918,14 +923,17 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "tags": [],
           "text": "All",
-          "value": "$__all"
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ AND nodetype = 'Transaction' ",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
@@ -975,5 +983,8 @@
   "timezone": "",
   "title": "NuoDB Overview",
   "uid": "_AZFIHGZk",
-  "version": 2
+  "variables": {
+    "list": []
+  },
+  "version": 1
 }

@@ -83,7 +83,7 @@
           "type": "dashboard"
         }
       ],
-      "nullPointMode": "null as zero",
+      "nullPointMode": "null",
       "percentage": false,
       "pointradius": 5,
       "points": false,
