@@ -90,8 +90,24 @@ class BaseMetricsCollector(BaseCollector):
         new_values['Database'] = self.process.db_name
         new_values['Region'] = self.process.region_name
         new_values['StartId'] = self.process.start_id
+        new_values['TimeStamp'] = int(time.time() * 1000.0)
         self.__first = False
-      new_values['TimeStamp'] = int(time.time() * 1000.0)
+      else:
+        expected_change = new_values['Milliseconds']
+        expected_time = self.values['TimeStamp'] + expected_change
+        now_time      = int(time.time() * 1000.0)
+        drift_time    = now_time - expected_time
+        new_values['Time.Received'] = now_time
+        new_values['Time.Drift'] = drift_time
+        # use now time if within 5 ms toleration or it looks like
+        # we missed a time window.  This should allow for a slow
+        # buffer read by nuoca since TimeStamp is done in nuoca
+        # instead of in engine.  We can only guess at what engine
+        # time is.
+        if drift_time > expected_change or abs(drift_time) < 5:
+          new_values['TimeStamp' ] = now_time
+        else:
+          new_values['TimeStamp' ] = expected_time
       self.onChange(new_values)
       return None
 
