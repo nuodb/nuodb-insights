@@ -1,0 +1,48 @@
+# 1. create namespace monitoring
+# 2. install chart with this values file
+#    
+grafana:
+  enabled: true
+  namespaceOverride: monitoring
+  
+  # if adminPassword not specified a default will be generated
+  adminPassword: "insights"
+  service:
+    type: ClusterIP
+    port: 3000
+    targetPort: 3000
+    portName: service
+  ingress:
+    enabled: true
+    annotations: 
+      kubernetes.io/ingress.class: nginx
+    path: /
+    hosts:
+    - dashboard.local
+  persistence:
+    enabled: true
+  dashboardProviders:
+    # additional dashboard providers, folder for k8s dashboards
+    dashboardproviders.yaml:
+      apiVersion: 1
+      providers:
+      - name: 'k8s'
+        orgId: 1
+        folder: 'k8s'
+        type: file
+        disableDeletion: false
+        editable: true
+        options:
+          path: /var/lib/grafana/dashboards/k8s
+
+influxdb:
+  enabled: true
+  namespaceOverride: monitoring
+
+nuoca:
+  enabled: false
+
+config:
+  enabled: false
+  
+

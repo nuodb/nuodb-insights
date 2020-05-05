@@ -1,0 +1,9 @@
+# if monitoring was installed with
+# helm -n nuodb install insights monitoring-influx
+#
+# helm install influxdata/telegraf-ds -f telegraf-ds-values.yaml
+config:
+  outputs:
+    - influxdb:
+        urls:
+          - "http://insights-influxdb.nuodb.svc:8086"
