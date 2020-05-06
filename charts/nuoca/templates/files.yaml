@@ -1,7 +1,6 @@
 # look in files/nuoca and make a configmap for each file
 # found.  Can easily make changes to nuoca configuration
 # by dropping in updated filein files/nuoca
-{{ $dot := . }}
 {{ range $path, $bytes := .Files.Glob "files/nuoca/**" }}
 {{ $file   := $path | trimPrefix "files/nuoca/" }}
 {{- $fileid := sha1sum $file | trunc 8 }}
@@ -9,11 +8,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ include "nuoca.fullname" $dot }}-{{ $fileid }}
+  name: {{ include "nuoca.fullname" $ }}-{{ $fileid }}
   labels:
-    {{- include "nuoca.labels" $dot | nindent 4 }}
+    {{- include "nuoca.labels" $ | nindent 4 }}
   annotations:
     directory: {{ dir $file | quote }}
 data:
-{{ ( $dot.Files.Glob $path ).AsConfig | indent 2 }}
+{{ ( $.Files.Glob $path ).AsConfig | indent 2 }}
 {{ end }}
