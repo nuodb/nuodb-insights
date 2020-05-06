@@ -30,17 +30,16 @@ data:
         secureJsonData: {}
         version: 1
         editable: true
-{{- $dot := . -}}
 {{- range $db := .Values.config.databases }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $dot.Release.Name }}-datasource-{{ $db }}
-  namespace: {{ include "monitoring-influx.namespace" $dot }}
+  name: {{ $.Release.Name }}-datasource-{{ $db }}
+  namespace: {{ include "monitoring-influx.namespace" $ }}
   labels:
-    {{ $dot.Values.grafana.sidecar.datasources.label | default "grafana_datasource" }}: "nuodb"
-    {{- include "monitoring-influx.labels" $dot | nindent 4 }}
+    {{ $.Values.grafana.sidecar.datasources.label | default "grafana_datasource" }}: "nuodb"
+    {{- include "monitoring-influx.labels" $ | nindent 4 }}
 data:
   {{ $db }}.yaml: |-
     apiVersion: 1
@@ -49,7 +48,7 @@ data:
         type: influxdb
         access: proxy
         orgId: 1
-        url: {{ include "monitoring-influx.influxdb_url" $dot }}
+        url: {{ include "monitoring-influx.influxdb_url" $ }}
         password: ''
         user: ''
         database: '{{ $db }}'
