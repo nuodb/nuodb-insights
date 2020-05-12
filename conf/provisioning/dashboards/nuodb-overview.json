@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:449",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -17,11 +16,9 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 8,
-  "iteration": 1588371243618,
+  "iteration": 1589308501624,
   "links": [
     {
-      "$$hashKey": "object:522",
       "asDropdown": true,
       "icon": "external link",
       "includeVars": true,
@@ -33,7 +30,6 @@
       "type": "dashboards"
     },
     {
-      "$$hashKey": "object:523",
       "asDropdown": true,
       "icon": "external link",
       "includeVars": true,
@@ -47,64 +43,65 @@
   ],
   "panels": [
     {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "nuodb",
-      "description": "A glance of where time is spent relative to TEs of the database.  Averaged over all TEs so inactive TEs will make numbers look smaller.  Use Host filter to look at just one TE.",
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {},
+      "collapsed": false,
       "gridPos": {
-        "h": 6,
+        "h": 1,
         "w": 24,
         "x": 0,
         "y": 0
       },
+      "id": 8,
+      "panels": [],
+      "title": "Summary",
+      "type": "row"
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 1
+      },
       "hiddenSeries": false,
-      "id": 1,
+      "id": 6,
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "hideEmpty": true,
-        "hideZero": true,
-        "max": true,
-        "min": true,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
         "show": false,
-        "sort": "current",
-        "sortDesc": true,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": false,
-      "linewidth": 2,
-      "links": [],
+      "linewidth": 1,
       "nullPointMode": "null",
       "options": {
         "dataLinks": []
       },
+      "paceLength": 10,
       "percentage": false,
-      "pointradius": 5,
+      "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:1088",
-          "alias": "Active",
+          "alias": "NumberCores",
           "bars": false,
           "lines": true,
-          "stack": false,
-          "zindex": 3
-        },
-        {
-          "$$hashKey": "object:1089",
-          "alias": "Active",
-          "fill": 1,
-          "steppedLine": true
+          "stack": false
         }
       ],
       "spaceLength": 10,
@@ -112,8 +109,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Commit",
-          "dsType": "influxdb",
+          "alias": "$measurement",
           "groupBy": [
             {
               "params": [
@@ -128,10 +124,10 @@
               "type": "fill"
             }
           ],
-          "measurement": "Summary.Commit",
+          "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"percent\") FROM \"Summary.Commit\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT sum(nthreads) as \"nthreads\" FROM (SELECT mean(nthreads) as \"nthreads\" FROM \"Summary.Fetch\",\"Summary.Commit\",\"Summary.Sync\",\"Summary.Lock\",\"Summary.NtwkSend\",\"Summary.Throttle\",\"Summary.CPU\",\"NumberCores\" WHERE $timeFilter AND nodetype = 'Transaction' AND host =~ /^$host$/ AND db =~ /^$database$/ GROUP BY time($__interval), \"pid\" fill(null)) GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -139,7 +135,7 @@
             [
               {
                 "params": [
-                  "percent"
+                  "value"
                 ],
                 "type": "field"
               },
@@ -149,23 +145,10 @@
               }
             ]
           ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
+          "tags": []
         },
         {
-          "alias": "Sync",
-          "dsType": "influxdb",
+          "alias": "$measurement",
           "groupBy": [
             {
               "params": [
@@ -180,62 +163,11 @@
               "type": "fill"
             }
           ],
-          "measurement": "Summary.Sync",
+          "hide": false,
+          "measurement": "NumberCores",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"percent\") FROM \"Summary.Sync\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "percent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        },
-        {
-          "alias": "Fetch",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Summary.Fetch",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"percent\") FROM \"Summary.Fetch\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/  AND \"db\" =~ /^$database/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "query": "SELECT sum(ncores) FROM (SELECT mean(\"raw\") as ncores FROM \"NumberCores\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/ AND \"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval), \"pid\" fill(null)) GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -243,290 +175,33 @@
             [
               {
                 "params": [
-                  "percent"
+                  "raw"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               }
             ]
           ],
           "tags": [
             {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
             },
             {
               "condition": "AND",
               "key": "host",
               "operator": "=~",
               "value": "/^$host$/"
-            }
-          ]
-        },
-        {
-          "alias": "Lock",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Summary.Lock",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"percent\") FROM \"Summary.Lock\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
-          "refId": "D",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "percent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
             },
             {
               "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        },
-        {
-          "alias": "Network Send",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Summary.NtwkSend",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"percent\") FROM \"Summary.NtwkSend\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
-          "refId": "E",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "percent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
               "key": "nodetype",
               "operator": "=",
               "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        },
-        {
-          "alias": "Throttle",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "Summary.Throttle",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"percent\") FROM \"Summary.Throttle\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
-          "refId": "F",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "percent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        },
-        {
-          "alias": "CPU",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "Summary.CPU",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"percent\") FROM \"Summary.CPU\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
-          "refId": "G",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "percent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        },
-        {
-          "alias": "Active",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "Summary.Active",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"percent\") FROM \"Summary.Active\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/) AND $timeFilter GROUP BY time($__interval) fill(null)",
-          "rawQuery": true,
-          "refId": "H",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "percent"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
             }
           ]
         }
@@ -537,9 +212,8 @@
       "timeShift": null,
       "title": "Summary",
       "tooltip": {
-        "msResolution": false,
         "shared": true,
-        "sort": 2,
+        "sort": 0,
         "value_type": "individual"
       },
       "type": "graph",
@@ -552,16 +226,14 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:1116",
           "format": "short",
-          "label": "",
+          "label": null,
           "logBase": 1,
-          "max": 100,
-          "min": 0,
+          "max": null,
+          "min": null,
           "show": true
         },
         {
-          "$$hashKey": "object:1117",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -576,14 +248,33 @@
       }
     },
     {
+      "collapsed": false,
+      "gridPos": {
+        "h": 1,
+        "w": 24,
+        "x": 0,
+        "y": 9
+      },
+      "id": 4,
+      "panels": [],
+      "repeat": null,
+      "title": "Commits",
+      "type": "row"
+    },
+    {
       "aliasColors": {},
       "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Commits per second,  active transactions (red) and average number of transactions active in database (blue). Host filter will show commits and transaction active in database for just those Host.  average number of transactions active is not affected as that is over all TEs.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -591,7 +282,7 @@
         "h": 7,
         "w": 24,
         "x": 0,
-        "y": 6
+        "y": 10
       },
       "hiddenSeries": false,
       "id": 2,
@@ -609,17 +300,17 @@
       "lines": true,
       "linewidth": 2,
       "links": [],
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "options": {
         "dataLinks": []
       },
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "$$hashKey": "object:845",
           "alias": "current",
           "bars": true,
           "color": "#E24D42",
@@ -627,7 +318,6 @@
           "yaxis": 2
         },
         {
-          "$$hashKey": "object:846",
           "alias": "on TE",
           "steppedLine": true,
           "yaxis": 2
@@ -658,7 +348,7 @@
           "measurement": "Commits",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM( A ) FROM (SELECT mean(\"rate\")  AS A FROM \"Commits\" WHERE \"nodetype\" = 'Transaction' AND $timeFilter AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ GROUP BY \"host\",\"pid\", time($interval) fill(linear)) WHERE $timeFilter GROUP BY time($interval)",
+          "query": "SELECT SUM( A ) FROM (SELECT mean(\"rate\")  AS A FROM \"Commits\" WHERE \"nodetype\" = 'Transaction' AND $timeFilter AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/ GROUP BY \"host\",\"pid\", time($interval) fill(null)) WHERE $timeFilter GROUP BY time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -735,7 +425,7 @@
             },
             {
               "params": [
-                "linear"
+                "null"
               ],
               "type": "fill"
             }
@@ -776,12 +466,6 @@
               "key": "host",
               "operator": "=~",
               "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
             }
           ]
         },
@@ -811,7 +495,7 @@
           "measurement": "SqlListenerSqlProcTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT -SUM(X) FROM (SELECT mean(\"value\") as X FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction') AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(linear)) WHERE $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT -SUM(X) FROM (SELECT mean(\"value\") as X FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction') AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -842,7 +526,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Commits / Transactions",
+      "title": "Commits",
       "tooltip": {
         "msResolution": true,
         "shared": true,
@@ -860,7 +544,6 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:873",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -869,7 +552,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:874",
           "decimals": null,
           "format": "short",
           "label": "",
@@ -886,7 +568,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 22,
+  "schemaVersion": 18,
   "style": "dark",
   "tags": [
     "overview"
@@ -896,22 +578,22 @@
       {
         "allValue": ".*",
         "current": {
+          "selected": false,
           "tags": [],
-          "text": "ycsb",
-          "value": "ycsb"
+          "text": "LOG",
+          "value": "LOG"
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": false,
-        "index": -1,
         "label": "Database",
         "multi": false,
         "name": "database",
         "options": [],
         "query": "SHOW TAG VALUES WITH KEY = \"db\"",
         "refresh": 1,
-        "regex": "",
+        "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
@@ -923,22 +605,18 @@
       {
         "allValue": ".*",
         "current": {
-          "tags": [],
           "text": "All",
-          "value": [
-            "$__all"
-          ]
+          "value": "$__all"
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ AND nodetype = 'Transaction' ",
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\"\tWHERE \"nodetype\" = 'Transaction' AND \"db\" = $database",
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ AND nodetype = 'Transaction' ",
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\"\tWHERE \"nodetype\" = 'Transaction' AND \"db\" = $database",
         "refresh": 1,
         "regex": ".*",
         "skipUrlSync": false,
@@ -983,8 +661,5 @@
   "timezone": "",
   "title": "NuoDB Overview",
   "uid": "_AZFIHGZk",
-  "variables": {
-    "list": []
-  },
   "version": 1
 }
