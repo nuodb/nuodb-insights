@@ -91,7 +91,7 @@ def influx_send(values, tags, timestamp):
 
     return tags
 
-for line in fileinput.input(args.files):
+for line in fileinput.input(args.files, openhook=fileinput.hook_compressed):
     startId = -1
     matches = re.findall(r'"(.+?)"', line)
 

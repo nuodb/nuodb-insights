@@ -237,23 +237,6 @@ compose file `deploy/load-compose.yaml`.  Unfortunately,  I've been
 unable to use `docker stack` to fire a batch.job. Thus, the need for
 two different load files.
 
-```
-version: '3'
-services:
-  load:
-    image: nuodb/nuodb-ce:latest
-    labels:
-      - "owner=${USER}"
-    command: [ "batch",  "-H", "influxdb", "/data/monitor-20200107-034803.log.gz" ]
-    volumes:
-      - ../data:/data
-      - ../image/batch.py:/opt/nuodb/etc/nuoca/lib/batch.py
-      - ../image/batch:/usr/local/bin/batch
-networks:
-  default:
-    driver: bridge
-```
-
 You will modify the `command:` to reference your monitor file.  You
 might need to change version from 3 to 2 if you are running an older
 version of docker or docker-compose.
@@ -266,8 +249,16 @@ $ kubectl create -f deploy/load.yaml
 
 To run the batch job with `docker-compose` deployment.
 
+* Using NuoAgent monitor file:
+
 ```
-$ docker-compose -p ${USER} -f deploy/load-compose.yaml up
+$ docker-compose -p ${USER} -f deploy/load-compose.yaml run load-nuoagent
+```
+
+* Using NuoAdmin stats file:
+
+```
+$ docker-compose -p ${USER} -f deploy/load-compose.yaml run load-nuoadmin
 ```
 
 The -p option is important to get the same network.  You'll see warns

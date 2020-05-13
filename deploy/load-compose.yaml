@@ -1,6 +1,6 @@
 version: '3'
 services:
-  load:
+  load-nuoagent:
     image: nuodb/nuodb-ce:latest
     labels:
       - "owner=${USER}"
@@ -9,6 +9,16 @@ services:
       - ../data:/data
       - ../image/batch.py:/opt/nuodb/etc/nuoca/lib/batch.py
       - ../image/batch:/usr/local/bin/batch
+  load-nuoadmin:
+    environment:
+      - PYTHONPATH='/opt/nuodb/drivers:/opt/nuodb/etc/nuoca/lib'
+    image: nuodb/nuodb-ce:latest
+    labels:
+      - "owner=${USER}"
+    command: [ "/opt/nuodb/etc/python/nuopython", "/opt/nuodb/etc/nuoca/lib/stats_influx.py", "--host", "influxdb", "-d", "nuodb",  "/data/nuoadmin-stats-20200512-134125.gz" ]
+    volumes:
+      - ../data:/data
+      - ../image/stats_influx.py:/opt/nuodb/etc/nuoca/lib/stats_influx.py
 networks:
   default:
     driver: bridge
