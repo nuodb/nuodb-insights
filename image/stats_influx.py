@@ -91,7 +91,7 @@ def influx_send(values, tags, timestamp):
 
     return tags
 
-for line in fileinput.input(args.files):
+for line in fileinput.input(args.files, openhook=fileinput.hook_compressed):
     startId = -1
     matches = re.findall(r'"(.+?)"', line)
 
@@ -103,6 +103,9 @@ for line in fileinput.input(args.files):
             if startId in previousValues:
                 previousValues[startId].update(values)
                 values = previousValues[startId]
+            else:
+                # Only happends once on the first occurrance of stats from this startId
+                previousValues[startId] = values.copy()
             tags = influx_send(values, tags, timestamp)
             if not startId in tagMap:
                 tagMap[startId] = tags
