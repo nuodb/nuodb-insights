@@ -1,0 +1,17 @@
+dependencies:
+- name: grafana
+  condition: grafana.enabled
+  tags:
+    - backend
+  repository: https://kubernetes-charts.storage.googleapis.com
+  version: 5.0.23
+- name: influxdb
+  condition: influxdb.enabled
+  tags:
+    - backend
+  repository: https://helm.influxdata.com/
+  version: 4.4.7
+- name: nuoca
+  condition: nuoca.enabled
+  repository: file://../nuoca
+  version: ~1.0.0

@@ -3,19 +3,26 @@ import sys,os
 import fileinput,time,requests,optparse,logging
 from dateutil import parser
 import metrics_influx
+from urlparse import urlparse
 
 counters = {}
 metrics = {}
 id = None
 _URL=None
+_OUTPUT=None
+
+os.environ['TZ'] = 'GMT'
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s:%(levelname)s %(message)s')
 logging.getLogger("requests").setLevel(logging.WARNING)
 
 def post(contentType,msg):
-    if _URL is not None:
+    if _URL:
         requests.post(_URL, data = msg)
-        
+    elif _OUTPUT:
+        print >> _OUTPUT,msg,
+
+
 def formatTimeStamp(timestr):
     """ return timestr as number of milliseconds since epoch"""
     dt = parser.parse(timestr)
@@ -25,18 +32,35 @@ def formatTimeStamp(timestr):
 
 usage = "usage: %prog [options] filename"
 _parser = optparse.OptionParser(usage=usage)
-_parser.add_option("-p", "--port", dest="port",
-                  help="InfluxDB port", type="int", default=8086)
-_parser.add_option("-H", "--hostname", dest="hostname",
-                  help="Hostname", default="influxdb")
+_parser.add_option("-o", "--output", dest="output",
+                   help="url to file (file://filename, stdout:) or influx server (http://server:8086)",
+                   default="http://influxdb:8086")
+# _parser.add_option("-p", "--port", dest="port",
+#                   help="InfluxDB port", type="int", default=8086)
+# _parser.add_option("-H", "--hostname", dest="hostname",
+#                   help="Hostname", default="influxdb")
 _parser.add_option("-D", "--database", dest="db", default="nuodb")
 
 (options, args) = _parser.parse_args()
     
-_URL='http://%s:%d/write?db=%s' % (options.hostname,options.port,options.db)
 
-
+o = urlparse(options.output)
+if o.scheme == 'http' or o.scheme == 'https':
+    _URL="%s/write?db=%s" % (options.output,options.db)
+elif o.scheme == '' or o.scheme == 'file':
+    if o.path == 'stdout':
+        _OUTPUT = sys.stdout
+    else:
+        _OUTPUT = open(o.path,'wb')
+elif o.scheme == 'stdout':
+    _OUTPUT = sys.stdout
+    
 logging.info("Timezone being used GMT%s." % time.strftime('%z'))
+
+if _URL is None:
+    print >> _OUTPUT, "# DML"
+    print >> _OUTPUT, "# CONTEXT-DATABASE: nuodb"
+    print >> _OUTPUT, "# CONTEXT-RETENTION-POLICY: nuodbrp\n"
 
 _count = 0
 for line in fileinput.input(args,openhook=fileinput.hook_compressed):
@@ -67,4 +91,6 @@ for line in fileinput.input(args,openhook=fileinput.hook_compressed):
         metrics[key] = value
         
 post(*metrics_influx.format(metrics))
+if _OUTPUT:
+    _OUTPUT.close()
 sys.exit(0)

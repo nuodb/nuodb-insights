@@ -12,18 +12,22 @@ import logging
 from datetime import datetime
 from dateutil import parser
 import argparse
-import time
+import time,sys,os
 from metrics_influx import metrics, summary
+from urlparse import urlparse
+
+os.environ['TZ'] = 'GMT'
 
 logging.basicConfig(level=logging.INFO,format='%(asctime)s:%(levelname)s %(message)s')
 logging.getLogger("requests").setLevel(logging.WARNING)
 
 argparser = argparse.ArgumentParser()
-argparser.add_argument("-d", "--db",  dest="db", default=None, help="Influx database name, if none just print to stdout")
+argparser.add_argument("-d", "--db",  dest="db", default="nuodb", help="Influx database name.")
 argparser.add_argument("-t", "--tag", dest="tags", action="append", help="Influx extra tag.")
 argparser.add_argument("-D", "--debug",dest="debug", action="store_true", default=False, help="Print out extra info.")
-argparser.add_argument("--host", dest="host", default="localhost", help="Influx db host")
-argparser.add_argument("-p", "--port", dest="port", default=8086, type=int, help="Influx db port")
+argparser.add_argument("-o", "--output", dest="output",
+                       help="url to file (file://filename, stdout:) or influx server (http://server:8086)",
+                       default="http://influxdb:8086")
 argparser.add_argument('files', metavar='FILE', nargs='*', help='files to read, if empty, stdin is used')
 args = argparser.parse_args()
 
@@ -34,7 +38,19 @@ previousValues = {}
 # values, we don't clear them so if value doesn't change
 values = {}
 timestamp = None
-influxURL ='http://%s:%d/write?db=%s&precision=ms' % (args.host,args.port,args.db)
+
+influxURL=None
+
+o = urlparse(args.output)
+if o.scheme == 'http' or o.scheme == 'https':
+    influxURL="%s/write?db=%s&precision=ms" % (args.output,args.db)
+elif o.scheme == '' or o.scheme == 'file':
+    if o.path == 'stdout':
+        _OUTPUT = sys.stdout
+    else:
+        _OUTPUT = open(o.path,'wb')
+elif o.scheme == 'stdout':
+    _OUTPUT = sys.stdout
 
 lines = []
 
@@ -45,10 +61,10 @@ def formatTimeStamp(timestr):
     return tstamp
 
 def output(data):
-    if args.db is not None:
+    if influxURL:
         requests.post(influxURL, data = data)
-    else:
-        print(data)
+    elif _OUTPUT:
+        print >> _OUTPUT,data
 
 # format monitor values into: metric,<identity tags> <fields> timestamp
 def influx_send(values, tags, timestamp):
@@ -114,7 +130,7 @@ for line in fileinput.input(args.files, openhook=fileinput.hook_compressed):
             timestamp = formatTimeStamp(matches[1])
         else:
             if args.debug:
-                print("%s=%s" % (matches[0], matches[1]))
+                print >> sys.stderr,"%s=%s" % (matches[0], matches[1])
             values[matches[0]] = matches[1]
 
 # make sure to flush any remaining lines
