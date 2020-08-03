@@ -4,9 +4,11 @@ try:
 except:
     from StringIO import StringIO
 
+"""
 def MONITOR_COUNT(k,values):
     raw = values[k]
     return "raw=%si" % (raw)
+"""
 
 def MONITOR_DELTA(k,values):
     raw = int(values[k])
@@ -16,6 +18,8 @@ def MONITOR_DELTA(k,values):
         rate = raw*1000./ms if ms != 0 else 0.
         rvalues += ",rate=%f" % (rate)
     return rvalues
+
+MONITOR_COUNT=MONITOR_DELTA
 
 def MONITOR_MILLISECONDS(k,values):
     raw = int(values[k])
