@@ -1,16 +1,3 @@
-config:
-  enabled: true
-
-# add additional dashboards stored in addons sub-directory
-# uses database telegraf.  Also need to enable dashboardProviders in
-# grafana 
-#  dashboards:
-#    - k8s
-  dashboards:
-    - nuodb_ext
-  databases:
-    - nuodb_internal
-
 grafana:
   enabled: true
   # For complete list of configuration options for  
@@ -23,33 +10,14 @@ grafana:
       label: 'grafana_dashboard'
       searchNamespace: null
       folder: "/var/lib/grafana/dashboards"
-      defaultFolderName: "default"
       provider:
         name:           "nuodb"
-        folder:         "nuodb"
         allowUiUpdates: true
     datasources:
       enabled: true
       label: 'grafana_datasource'
       searchNamespace: null
-  dashboardProviders:
-    dashboardproviders.yaml:
-      apiVersion: 1
-      providers:
-        - name: 'addon'
-          orgId: 1
-          folder: 'addon'
-          type: file
-          disableDeletion: false
-          editable: true
-          allowUiUpdates: true
-          options:
-            # needs to be subdir of sidecar.dashboards.folder
-            # if sidecar.dashboards.folder is changed then
-            # this must be changed also.
-            path: /var/lib/grafana/dashboards/nuodb_ext
 
-      
 influxdb:
   enabled: true
   # For complete list of configuration options for  
@@ -62,62 +30,101 @@ influxdb:
         /usr/bin/influx -execute 'CREATE DATABASE nuodb WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'        
         /usr/bin/influx -execute 'CREATE DATABASE nuodb_internal WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp2'
 
-nuoca:
-  #nuoadmin plugin will collect metrics using nuoadmin protocol
-  nuoadmin:
-    enabled: false
-    host:    nuodb
-    port:    8888
-    tls:
-       enabled: true
+config:
+  grafana:
+    # enabled: false - to not load dashboards nor datasources but do start grafana (grafana.enabled: true)
+    #                - true only loads dashboards if grafana.enabled: true or grafana.overrideNamespace is set.
+    enabled: true
+    datasources:
+      nuodb:
+        database: nuodb
+        timeInterval: 10s
+        isDefault: true
+      nuodb_ext:
+        database: nuodb_internal
+        timeInterval: 30s
+      addons:
+        database: telegraf
+        timeInterval: 10s
+  nuoca:
+    # enabled: false - will not setup nuoca configuration  set to false when starting grafana and insights
+    #                  only - in another namespace.
+    enabled: true
+    # these are default plugins they can be disabled individually in user values file via:
+    #  plugins:
+    #    metrics: ~
+    #    msgtrace: ~
+    #    syntrace: ~
+    #    threads: ~
+    # influx output plugin is generated automatically iff
+    #    influxdb.enabled: true or influxdb.host: <hostname>
+    # other plugins can be enabled if users value files include plugin:
+    # e.g.:
+    # plugins:
+    #   stdout: 
+    #     [[outputs.file]]
+    #       files = ["stdout"]
+    #       data_format = "json"
+    plugins:
+      metrics: |-
+        [[inputs.execd]]
+          command = [ "python", "/opt/nuoca/nuodb_adminquery.py", "-i", "0", "metrics" ]
+          signal = "none"
+          restart_delay = "10s"
+          data_format = "influx"
+          [inputs.execd.tags]
+            db_tag = "nuodb"
+      msgtrace: |-
+        [[inputs.execd]]
+          command = [ "python", "/opt/nuoca/nuodb_adminquery.py", "-i", "30", "msgtrace" ]
+          signal = "none"
+          restart_delay = "10s"
+          data_format = "csv"
+          csv_column_names = [ "time", "id", "startId", "host",   "pid",    "dbname", "timedelta", "totalSumStalls", "msg_trace_metric", "numStalls","totalTimeStalls","maxStallTime" ]
+          csv_column_types = [ "int" , "string" , "string", "string", "string", "string", "int",   "int",           "string",  "int",      "int", "int" ]
+          csv_comment = "#"
+          csv_tag_columns = [ "id", "startId", "host", "dbname", "msg_trace_metric"]
+          csv_timestamp_column = "time"
+          csv_timestamp_format = "unix"
+          fielddrop = ["time", "pid", "path"]
+          name_override = "nuodb_msgtrace"
+          [inputs.execd.tags]
+            db_tag = "nuodb_internal"
+      synctrace: |-
+        [[inputs.execd]]
+          command = [ "python", "/opt/nuoca/nuodb_adminquery.py", "-i", "30", "synctrace" ]
+          signal = "none"
+          restart_delay = "10s"
+          data_format = "csv"
+          csv_column_names = [ "time", "id",      "startId", "host",  "pid",    "dbname", "timedelta","totalSumStalls","sync_trace_metric",    "numLocks", "numUnlocks", "numStalls","totalTimeStalls", "maxStallTime" ]
+          csv_column_types = [ "int" , "string" , "string", "string", "string", "string", "int",      "int",           "string",  "int",      "int",        "int",      "int", "int" ]
+          csv_comment = "#"
+          csv_tag_columns = [ "startId", "id", "host", "dbname", "sync_trace_metric"]
+          csv_timestamp_column = "time"
+          csv_timestamp_format = "unix"
+          fielddrop = ["time", "pid"]
+          name_override = "nuodb_synctrace"
+          [inputs.execd.tags]
+            db_tag = "nuodb_internal"
+      threads: |-
+        [[inputs.execd]]
+          command = [ "python", "/opt/nuoca/nuodb_threads.py" ]
+          signal = "none"
+          restart_delay = "10s"
+          data_format = "csv"
+          csv_column_names = [ "host", "processid", "threadid", "state", "exe", "lcpu", "utime", "stime", "ttime", "minf", "maxf", "time" ]
+          csv_column_types = [ "string", "string", "string", "string", "string", "int", "float", "float", "float", "int", "int", "int" ]
+          csv_comment = "#"
+          csv_tag_columns = [ "host", "processid", "threadid", "state", "exe", "lcpu"]
+          csv_timestamp_column = "time"
+          csv_timestamp_format = "unix_us"
+          fielddrop = ["time"]
+          name_override = "nuodb_thread"
+          [inputs.execd.tags]
+            db_tag = "nuodb_internal"
+    
+    
 
-  # currently nuoagent plugin is not supported.
-  nuoagent: {}
-  #  enabled: false
-  #  host:
-  #  port: 48004
 
-  # influxdb plugin will output metrics collected to influxdb via http using line protocol.
-  # currently this plugin does not support credentials.
-  influxdb: {}
-  #  host: "{{ .Release.Name }}-influxdb.{{ .Release.Namespace }}.svc"
-  #  port: 8086
-  #  dbname: nuodb
-
-  # replicaCount: 1
-  # image:
-  #   registry: docker.io
-  #   repository: nuodb/nuodb-ce
-  #   tag: 4.0.5
-  #   pullPolicy: IfNotPresent
-  # imagePullSecrets: []
-  # nameOverride: ""
-  # fullnameOverride: ""
-  # serviceAccount:
-  #   creae: true
-  #   annotation: {}
-  #   name:
-  # podSecurityContext: {}
-  #   # fsGroup: 2000
-  # securityContext: {}
-  #   # capabilities:
-  #   #   drop:
-  #   #   - ALL
-  #   # readOnlyRootFilesystem: true
-  #   # runAsNonRoot: true
-  #   # runAsUser: 1000
-  # resources: {}
-  #   # We usually recommend not to specify default resources and to leave this as a conscious
-  #   # choice for the user. This also increases chances charts run on environments with little
-  #   # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  #   # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  #   # limits:
-  #   #   cpu: 100m
-  #   #   memory: 128Mi
-  #   # requests:
-  #   #   cpu: 100m
-  #   #   memory: 128Mi
-  # nodeSelector: {}
-  # tolerations: []
-  # affinity: {}
-  # env: {}
+  
+      
