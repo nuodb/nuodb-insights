@@ -10,6 +10,7 @@ import traceback
 from datetime import datetime
 import importlib
 import os
+import fileinput
 
 def get_admin_conn(pid):
     """ search for NUOCMD_ variable settings of running process then set api-server, etc """
@@ -17,16 +18,28 @@ def get_admin_conn(pid):
     try:
         env = {}
         try:
-            with open('/proc/%s/environ' % (pid,) ,'r') as e:
+            # starting with 4.1 you can no longer getenv from nuodb process.  So look at parent
+            # process. docker.py
+            ppid = None
+            with open('/proc/%s/status' % (pid,) , 'r') as e:
+                for l in e:
+                    k,v = l[:-1].split(":\t")
+                    if k == "PPid":
+                        ppid = v
+                        break
+            if ppid is None:
+                raise "Unable to determine ppid for %s" % (pid)
+            with open('/proc/%s/environ' % (ppid,) ,'r') as e:
                 x = e.read()
                 env = dict([ tuple(y.split('=',1)) for y in x.split('\0') if '=' in y and y.startswith('NUOCMD_')])
             ROOT = '/proc/%s/root' % (pid,)
         except IOError:
+            print >> sys.stderr, "Error reading: %s\n" % (pid,)
+            traceback.print_exc()
             env =  {}
             ROOT = ""
         
-        api_server = env.get('NUOCMD_API_SERVER',os.environ.get('NUOCMD_API_SERVER'))
-
+        api_server = env.get('NUOCMD_API_SERVER' , os.environ.get('NUOCMD_API_SERVER'))
         if api_server is None:
             # look in /etc/nuodb/nuoadmin.conf to see if ssl is enabled.
             pass
@@ -60,7 +73,7 @@ def get_admin_conn(pid):
         nuodb_mgmt.disable_ssl_warnings()
         admin_conn = nuodb_mgmt.AdminConnection(api_server, client_key=client_key,verify=server_cert)
     except Exception as x:
-        print x
+        print "Exception:",x
     finally:
         return admin_conn
     
@@ -144,14 +157,14 @@ while True:
             except:
                 del running_local_processes[key]
     except subprocess.CalledProcessError:
-        print 'nuodb not running'
+        print >> sys.stderr,'nuodb not running'
         pass
     except KeyboardInterrupt:
         for key in list(running_local_processes):
             del running_local_processes[key]
         raise
     except:
-        print 'unknown exception'
+        print >> sys.stderr,'unknown exception'
         traceback.print_exc()
     finally:
         sys.stdout.flush()
