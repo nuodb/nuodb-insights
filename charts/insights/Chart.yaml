@@ -8,7 +8,6 @@ home: https://github.com/nuodb/nuodb-dashboards-influx/charts/insights
 keywords:
 - monitoring
 - nuodb
-- nuoca
 - influxdb
 - grafana
 maintainers:

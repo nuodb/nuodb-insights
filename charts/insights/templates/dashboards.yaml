@@ -1,27 +1,14 @@
-{{- if and .Values.config .Values.config.enabled -}}
-{{- $basedir := default "/tmp/dashboards" .Values.grafana.sidecar.dashboards.folder -}}
-{{- range $path, $bytes := .Files.Glob "files/dashboards/*.json" }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ printf "%s-dashboard-%s" $.Release.Name (base $path | trimSuffix ".json") | quote }}
-  namespace: {{ include "insights.namespace" $ | quote }}
-  labels:
-    {{ $.Values.grafana.sidecar.dashboards.label | default "grafana_dashboard" }}: "nuodb"
-    {{- include "insights.labels" $ | nindent 4 }}
-data:
-{{ ($.Files.Glob ($path)).AsConfig | indent 2 }}
-{{- end }}
-{{ range $path, $bytes := .Files.Glob "files/dashboards.ext/*/*.json" }}
+{{ $namespace := include "insights.namespace" $ }}
+{{- if ne $namespace "!" -}}
+{{ $basedir := default "/tmp/dashboards" .Values.grafana.sidecar.dashboards.folder }}
+{{- range $path, $bytes := .Files.Glob "files/dashboards/*/*.json" }}
 {{ $subdir := base (dir $path) }}
-{{- if and $.Values.config.dashboards (has $subdir $.Values.config.dashboards) }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: {{ printf "%s-dashboard-%s" $.Release.Name (base $path | trimSuffix ".json") | quote }}
-  namespace: {{ include "insights.namespace" $ | quote }}
+  namespace: {{ $namespace }}
   labels:
     {{ $.Values.grafana.sidecar.dashboards.label | default "grafana_dashboard" }}: "nuodb"
     {{- include "insights.labels" $ | nindent 4 }}
@@ -29,6 +16,24 @@ metadata:
     k8s-sidecar-target-directory: {{ printf "%s/%s" $basedir $subdir | quote }}
 data:
 {{ ($.Files.Glob ($path)).AsConfig | indent 2 }}
-{{- end -}}
 {{- end }}
+
+{{ range $path, $bytes := .Files.Glob "files/dashboards.ext/*/*.json" }}
+{{ $subdir := base (dir $path) }}
+{{- if and $.Values.config.grafana.dashboards (has $subdir $.Values.config.grafana.dashboards) }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ printf "%s-dashboard-%s" $.Release.Name (base $path | trimSuffix ".json") | quote }}
+  namespace: {{ $namespace }}
+  labels:
+    {{ $.Values.grafana.sidecar.dashboards.label | default "grafana_dashboard" }}: "nuodb"
+    {{- include "insights.labels" $ | nindent 4 }}
+  annotations:
+    k8s-sidecar-target-directory: {{ printf "%s/%s" $basedir $subdir | quote }}
+data:
+{{ ($.Files.Glob ($path)).AsConfig | indent 2 }}
+{{ end }}
+{{ end }}
 {{- end }}

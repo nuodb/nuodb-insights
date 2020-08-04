@@ -1,66 +1,36 @@
-{{- if and .Values.config .Values.config.enabled -}}
+{{ $namespace := include "insights.namespace" $ }}
+{{- if ne $namespace "!" -}}
+{{- range $key, $val := .Values.config.grafana.datasources }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ .Release.Name }}-datasource-nuodb
-  namespace: {{ include "insights.namespace" . }}
-  labels:
-    {{ .Values.grafana.sidecar.datasources.label | default "grafana_datasource" }}: "nuodb"
-    {{- include "insights.labels" . | nindent 4 }}
-data:
-  nuodb.yaml: |-
-    apiVersion: 1
-    datasources:
-      - name: nuodb
-        type: influxdb
-        access: proxy
-        orgId: 1
-        url: {{ include "insights.influxdb_url" . }}
-        password: ''
-        user: ''
-        database: 'nuodb'
-        basicAuth: false
-        basicAuthUser: ''
-        basicAuthPassword: ''
-        withCredentials: false
-        isDefault: true
-        jsonData:
-          timeInterval: '10s'
-        secureJsonData: {}
-        version: 1
-        editable: true
-{{- range $db := .Values.config.databases }}
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: {{ $.Release.Name }}-datasource-{{ $db | replace "_" "." | lower }}
-  namespace: {{ include "insights.namespace" $ }}
+  name: {{ $.Release.Name }}-datasource-{{ $key | replace "_" "." | lower }}
+  namespace: {{ $namespace }}
   labels:
     {{ $.Values.grafana.sidecar.datasources.label | default "grafana_datasource" }}: "nuodb"
     {{- include "insights.labels" $ | nindent 4 }}
 data:
-  {{ $db }}.yaml: |-
+  {{ $key }}.yaml: |-
     apiVersion: 1
     datasources:
-      - name: {{ $db }}
+      - name: '{{ get $val "database" }}'
         type: influxdb
         access: proxy
         orgId: 1
         url: {{ include "insights.influxdb_url" $ }}
         password: ''
         user: ''
-        database: '{{ $db }}'
+        database: '{{ get $val "database" }}'
         basicAuth: false
         basicAuthUser: ''
         basicAuthPassword: ''
         withCredentials: false
-        isDefault: false
+        isDefault: {{ and (hasKey $val "isDefault") (get $val "isDefault") }}
         jsonData:
-          timeInterval: '10s'
+          timeInterval: '{{ get $val "timeInterval" }}'
         secureJsonData: {}
         version: 1
         editable: true
-{{- end -}}
-{{- end -}}
+{{ end }}
+{{- end }}

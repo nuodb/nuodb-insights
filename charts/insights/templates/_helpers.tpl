@@ -28,12 +28,12 @@ If release name contains chart name it will be used as a full name.
 {{- $context  := dict "Values" .Values.influxdb "Chart" (dict "Name" "influxdb") "Release" .Release  "Capabilities" .Capabilities -}}
 {{- if and .Values.influxdb .Values.influxdb.enabled -}}
 {{-   $influxdb := include "influxdb.fullname" $context -}}
-{{-   $hostname := default (printf "%s.%s.svc" $influxdb .Release.Namespace) .Values.nuoca.influxdb.host -}}
-{{-   $port     := default 8086 .Values.nuoca.influxdb.port -}}
+{{-   $hostname := default (printf "%s.%s.svc" $influxdb .Release.Namespace) .Values.influxdb.host -}}
+{{-   $port     := default 8086 .Values.influxdb.port -}}
 {{-   printf "http://%s:%d" $hostname $port -}}
 {{- else -}}
-{{-   $hostname := default (printf "influxdb.%s.svc" .Release.Namespace) .Values.nuoca.influxdb.host -}}
-{{-   $port     := default 8086 .Values.nuoca.influxdb.port -}}
+{{-   $hostname := default (printf "influxdb.%s.svc" .Release.Namespace) .Values.influxdb.host -}}
+{{-   $port     := default 8086 .Values.influxdb.port -}}
 {{-   printf "http://%s:%d" $hostname $port -}}
 {{- end -}}
 {{- end -}}
@@ -68,7 +68,16 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 Namespace for the dashboards, this should be same as namespace for
 grafana is grafana location is overridded.
-*/}}
 {{- define "insights.namespace" -}}
   {{ default .Release.Namespace .Values.grafana.namespaceOverride }}
+{{- end -}}
+*/}}
+
+
+{{- define "insights.namespace" -}}
+{{-  if and .Values.grafana.enabled .Values.config.grafana.enabled -}}
+{{    printf "%s" (default .Release.Namespace .Values.grafana.namespaceOverride) }}
+{{-  else -}}
+{{    default "!" .Values.grafana.namespaceOverride }}
+{{-  end }}
 {{- end -}}

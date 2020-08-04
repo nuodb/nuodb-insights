@@ -11,7 +11,3 @@ dependencies:
     - backend
   repository: https://helm.influxdata.com/
   version: 4.4.7
-- name: nuoca
-  condition: nuoca.enabled
-  repository: file://../nuoca
-  version: ~1.0.0
