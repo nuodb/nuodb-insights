@@ -2,15 +2,15 @@
 {{/*
 Install influx output plugin, if influx is enabled or influx is referenced.
 */}}
-{{ if (hasKey .Values.config "nuoca") }}
-{{ if not (empty .Values.config.nuoca)  }}
-{{ if .Values.config.nuoca.enabled  }}
+{{ if (hasKey .Values.config "nuocd") }}
+{{ if not (empty .Values.config.nuocd)  }}
+{{ if .Values.config.nuocd.enabled  }}
 {{- if and .Values.influxdb (or .Values.influxdb.enabled .Values.influxdb.host) -}}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $.Release.Name }}-nuoca-influxdb
+  name: {{ $.Release.Name }}-nuocd-influxdb
   namespace: {{ $.Release.Namespace }}
   labels:
      insights-plugins: "influxdb.conf"
@@ -29,13 +29,13 @@ data:
       ## If not provided, will default to 5s. 0s means no timeout (not recommended).
       timeout = "5s"
 {{- end }}
-{{- range $file, $content := .Values.config.nuoca.plugins }}
+{{- range $file, $content := .Values.config.nuocd.plugins }}
 {{- if $content }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $.Release.Name }}-nuoca-{{ $file | replace "_" "." | lower }}
+  name: {{ $.Release.Name }}-nuocd-{{ $file | replace "_" "." | lower }}
   namespace: {{ $.Release.Namespace }}
   labels:
      insights-plugins: "{{ $file }}"

@@ -46,7 +46,10 @@ config:
       addons:
         database: telegraf
         timeInterval: 10s
-  nuoca:
+
+  # Configure the NuoDB collector daemon.  A sidecar that collects metrics from the engine process and
+  # forwards to configurable output.  Addition input plugins and processors can be added also.
+  nuocd:
     # enabled: false - will not setup nuoca configuration  set to false when starting grafana and insights
     #                  only - in another namespace.
     enabled: true
