@@ -1,7 +1,7 @@
 FROM python:2.7.18-slim-stretch
 
-COPY  --chown=1000:0 nuoca /opt/nuoca
-WORKDIR /opt/nuoca
+COPY  --chown=1000:0 nuocd /opt/nuocd
+WORKDIR /opt/nuocd
 COPY --chown=1000:0 requirements.txt ./
 COPY pylib/* /usr/local/lib/python2.7/site-packages/
 
@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r requirements.txt && \
     curl -sL https://repos.influxdata.com/influxdb.key | apt-key add - && \
     echo "deb https://repos.influxdata.com/debian stretch stable" > /etc/apt/sources.list.d/influxdb.list && \
     apt-get update -y && \
-    useradd -d /opt/nuoca -g 0 -u 1000 -s /bin/false telegraf && \
+    useradd -d /opt/nuocd -g 0 -u 1000 -s /bin/false telegraf && \
     apt-get -y install telegraf && \
     apt-get clean
 
@@ -25,5 +25,5 @@ COPY --chown=telegraf:0 conf/outputs.conf   /etc/telegraf/telegraf.d/outputs.con
 USER 1000:0
 
 CMD ["telegraf", "--config", "/etc/telegraf/telegraf.conf", "--config-directory", "/etc/telegraf/telegraf.d"]
-#CMD ["/opt/nuoca/docker-entrypoint.sh"]
+#CMD ["/opt/nuocd/docker-entrypoint.sh"]
 
