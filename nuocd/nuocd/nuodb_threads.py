@@ -26,6 +26,7 @@ from datetime import datetime
 import subprocess
 import socket
 import re
+from six import *
 
 import signal
 def signal_handler(sig, frame):
@@ -36,7 +37,7 @@ signal.signal(signal.SIGINT, signal_handler)
 #timefmt="%s%f000"
 lineformat = "%s,%s,%s,%s,%s,%d,%f,%f,%f,%d,%d,%s"
 timefmt="%s%f"
-print "#host,processid,threadid,state,exe,lcpu,utime,stime,ttime,minf,majf,time"
+print("#host,processid,threadid,state,exe,lcpu,utime,stime,ttime,minf,majf,time")
 
 hostname=socket.gethostname()
 clk_tck = os.sysconf(os.sysconf_names['SC_CLK_TCK'])
@@ -59,8 +60,8 @@ while True:
       _pid = subprocess.check_output(["pgrep", process_name ])
       _pids = _pid[:-1].split()
    except:
-      print >> sys.stderr, "Unexpected error:", sys.exc_info()[0]
-      sys.stdout.flush()
+      print_("Unexpected error: %s" % sys.exc_info()[0],file=sys.stderr)
+      sys.stderr.flush()
       time.sleep(10)
       continue
    
@@ -103,7 +104,7 @@ while True:
             utime = (( float(args[13]) - float(prev_measurement[13]))/clk_tck)*100./dt
             stime = (( float(args[14]) - float(prev_measurement[14]))/clk_tck)*100./dt
             ttime = utime + stime
-            print lineformat % (hostname, _pid, pid,state,exe,lcpu,utime,stime,ttime,minf,majf,now.strftime(timefmt)) 
+            print(lineformat % (hostname, _pid, pid,state,exe,lcpu,utime,stime,ttime,minf,majf,now.strftime(timefmt)))
          last_measurements[pid] = args
 
       tbd = [ k for k in last_measurements.iterkeys() if last_measurements[k][0] != now ]

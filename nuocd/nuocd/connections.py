@@ -1,4 +1,4 @@
-import nuodb_mgmt
+from pynuoadmin import nuodb_mgmt
 from xml.etree import ElementTree
 from datetime import datetime
 

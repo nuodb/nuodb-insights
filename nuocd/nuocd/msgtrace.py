@@ -1,4 +1,4 @@
-import nuodb_mgmt
+from pynuoadmin import nuodb_mgmt
 from xml.etree import ElementTree
 from datetime import datetime
 
@@ -25,7 +25,7 @@ class Monitor:
         self._relative = relative
         self._lastnow = None
         self._stalls = {}
-        print Monitor.header
+        print(Monitor.header)
 
     def execute_query(self):
         session = nuodb_mgmt._get_authorized_session(self._process.address,self._dbkey, 'Query')
@@ -73,12 +73,12 @@ class Monitor:
                     if name in ostalls:
                         numStalls -= ostalls[name][0]
                         totalTimeStalls -= ostalls[name][1]
-                        print Monitor.format % (ntime,id, startId,hostname,pid,dbname,timedelta,
-                                                total-ototal,name,numStalls,totalTimeStalls,maxStallTime)
+                        print(Monitor.format % (ntime,id, startId,hostname,pid,dbname,timedelta,
+                                                total-ototal,name,numStalls,totalTimeStalls,maxStallTime))
         else:
             if self._lastnow != None:
                 timedelta = int((now-self._lastnow).total_seconds()*1000000)
             else:
                 timedelta = 0
             for name,(numStalls,totalTimeStalls,maxStallTime) in stalls.iteritems():
-                print Monitor.format % (ntime,id, startId,hostname,pid,dbname,timedelta,total,name,numStalls,totalTimeStalls,maxStallTime)
+                print(Monitor.format % (ntime,id, startId,hostname,pid,dbname,timedelta,total,name,numStalls,totalTimeStalls,maxStallTime))

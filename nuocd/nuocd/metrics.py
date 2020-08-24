@@ -2,7 +2,8 @@ from xml.etree import ElementTree
 from datetime import datetime
 import traceback
 import time,sys
-import nuodb_mgmt
+from pynuoadmin import nuodb_mgmt
+from six import *
 
 def value(v):
     if str(v):
@@ -147,7 +148,7 @@ class Monitor:
                     self._items[name] = units_mapper[unit]
                 else:
                     self._items[name] = None
-                    print >> sys.stderr,"WARN: don't know how to handle item %s..." % (name,)
+                    print_("WARN: don't know how to handle item %s..." % (name,),file=sys.stderr)
             xml_msg = next(self.__session)
 
         if xml_msg.tag == 'Status':
@@ -165,7 +166,7 @@ class Monitor:
 
     def send(self,lines):
         for line in lines:
-            print line
+            print_(line)
 
     def format(self,values):
         # timestamp is in seconds

@@ -1,7 +1,6 @@
-import nuodb_mgmt
+from pynuoadmin import nuodb_mgmt
 from xml.etree import ElementTree
 from datetime import datetime
-import pprint
 
 """
 <SyncTrace NodeId="1" PID="1313" SampleTime="255193801">
@@ -36,7 +35,7 @@ class Monitor:
             msg=session.recv()
             now = datetime.now()
             st = ElementTree.fromstring(msg)
-            print ElementTree.tostring(st)
+            print(ElementTree.tostring(st))
             #self.process(now,total,stalls,ototal,ostalls)
             self._lastnow    = now
         finally:

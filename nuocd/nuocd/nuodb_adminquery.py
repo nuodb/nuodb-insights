@@ -1,8 +1,8 @@
 #!/usr/bin/python
-
+from six import *
 import optparse
 import re
-import nuodb_mgmt
+from pynuoadmin import nuodb_mgmt
 import subprocess
 import socket
 import sys, time
@@ -34,7 +34,7 @@ def get_admin_conn(pid):
                 env = dict([ tuple(y.split('=',1)) for y in x.split('\0') if '=' in y and y.startswith('NUOCMD_')])
             ROOT = '/proc/%s/root' % (pid,)
         except IOError:
-            print >> sys.stderr, "Error reading: %s\n" % (pid,)
+            print_("Error reading: %s" % (pid,),file=sys.stderr)
             traceback.print_exc()
             env =  {}
             ROOT = ""
@@ -73,7 +73,7 @@ def get_admin_conn(pid):
         nuodb_mgmt.disable_ssl_warnings()
         admin_conn = nuodb_mgmt.AdminConnection(api_server, client_key=client_key,verify=server_cert)
     except Exception as x:
-        print "Exception:",x
+        print_("Exception: %s" % x,file=sys.stderr)
     finally:
         return admin_conn
     
@@ -112,7 +112,7 @@ os.environ['NUOCMD_API_SERVER'] = options.api_server
 os.environ['NUOCMD_VERIFY_SERVER'] = options.verify_server
 
 if len(module_args) == 0:
-    parser.usage()
+    parser.print_help(sys.stderr)
     sys.exit(1)
 
 module = module_args.pop(0)
@@ -157,17 +157,18 @@ while True:
             except:
                 del running_local_processes[key]
     except subprocess.CalledProcessError:
-        print >> sys.stderr,'nuodb not running'
+        print_('nuodb not running',file=sys.stderr)
         pass
     except KeyboardInterrupt:
         for key in list(running_local_processes):
             del running_local_processes[key]
         raise
     except:
-        print >> sys.stderr,'unknown exception'
+        print_('unknown exception',file=sys.stderr)
         traceback.print_exc()
     finally:
         sys.stdout.flush()
+        sys.stderr.flush()
         _sleep = options.interval-(datetime.now()-latency).total_seconds()
         try:
             # this might not work in Python3 but, does then most of this

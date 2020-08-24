@@ -1,4 +1,4 @@
-import nuodb_mgmt
+from pynuoadmin import nuodb_mgmt
 from xml.etree import ElementTree
 from datetime import datetime
 
@@ -15,7 +15,7 @@ class Monitor:
         self._relative = relative
         self._lastnow = None
         self._stalls = {}
-        #print Monitor.header
+        #print(Monitor.header)
 
     def execute_query(self):
         session = None
@@ -28,10 +28,10 @@ class Monitor:
                 msg=session.recv()
                 now = datetime.now()
                 st = ElementTree.fromstring(msg)
-                #print ElementTree.tostring(st)
+                #print(ElementTree.tostring(st))
                 for option in st.findall('Option'):
-                    print option
-                print ElementTree.tostring(st)
+                    print(option)
+                print(ElementTree.tostring(st))
                 self._lastnow = now
         finally:
             if session:
