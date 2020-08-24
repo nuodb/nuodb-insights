@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:2852",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -15,7 +16,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1582319874775,
+  "id": null,
+  "iteration": 1596124845722,
   "links": [
     {
       "asDropdown": true,
@@ -86,7 +88,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -257,7 +258,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -392,7 +392,6 @@
       "id": 9,
       "links": [],
       "mode": "markdown",
-      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
@@ -441,7 +440,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -642,7 +640,6 @@
       "id": 10,
       "links": [],
       "mode": "markdown",
-      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
@@ -691,7 +688,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -863,7 +859,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -1010,7 +1005,7 @@
       },
       "hiddenSeries": false,
       "id": 12,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -1165,7 +1160,7 @@
       },
       "hiddenSeries": false,
       "id": 19,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -1523,6 +1518,7 @@
       },
       "hiddenSeries": false,
       "id": 13,
+      "interval": ">$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -1731,6 +1727,7 @@
       },
       "hiddenSeries": false,
       "id": 2,
+      "interval": ">$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -1882,6 +1879,7 @@
       },
       "hiddenSeries": false,
       "id": 3,
+      "interval": ">$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -2087,6 +2085,7 @@
       },
       "hiddenSeries": false,
       "id": 15,
+      "interval": ">$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -2228,6 +2227,100 @@
   "templating": {
     "list": [
       {
+        "auto": true,
+        "auto_count": 50,
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "text": "auto",
+          "value": "$__auto_interval_interval"
+        },
+        "hide": 0,
+        "label": "interval",
+        "name": "interval",
+        "options": [
+          {
+            "selected": true,
+            "text": "auto",
+            "value": "$__auto_interval_interval"
+          },
+          {
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "15m",
+            "value": "15m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "10s,30s,1m,5m,10m,15m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
         "allValue": ".*",
         "current": {
           "selected": true,
@@ -2274,6 +2367,7 @@
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Database",
         "multi": true,
         "name": "database",
@@ -2301,6 +2395,7 @@
         "definition": "SHOW TAG VALUES WITH KEY = \"host\"  WHERE db =~ /^$database$/  AND nodetype = 'Transaction' ",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
@@ -2349,6 +2444,9 @@
   },
   "timezone": "",
   "title": "Connections",
-  "uid": "dAWKSHGWk",
+  "uid": null,
+  "variables": {
+    "list": []
+  },
   "version": 1
 }

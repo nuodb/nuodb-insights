@@ -15,7 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 8,
+  "id": null,
   "iteration": 1588288203084,
   "links": [
     {
@@ -1904,6 +1904,6 @@
   },
   "timezone": "",
   "title": "Adhoc Query",
-  "uid": "Uc9eW33mk",
+  "uid": null,
   "version": 1
 }

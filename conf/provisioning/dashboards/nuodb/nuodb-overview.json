@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:65",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -9,6 +10,20 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
+      },
+      {
+        "$$hashKey": "object:2934",
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": false,
+        "iconColor": "rgba(255, 96, 96, 1)",
+        "limit": 100,
+        "name": "test",
+        "showIn": 0,
+        "tags": [
+          "test"
+        ],
+        "type": "tags"
       }
     ]
   },
@@ -16,7 +31,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1589308501624,
+  "id": null,
+  "iteration": 1595421242783,
   "links": [
     {
       "asDropdown": true,
@@ -44,6 +60,7 @@
   "panels": [
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -60,6 +77,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fieldConfig": {
         "defaults": {
           "custom": {}
@@ -98,10 +116,12 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:133",
           "alias": "NumberCores",
           "bars": false,
           "lines": true,
-          "stack": false
+          "stack": false,
+          "yaxis": 2
         }
       ],
       "spaceLength": 10,
@@ -127,7 +147,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(nthreads) as \"nthreads\" FROM (SELECT mean(nthreads) as \"nthreads\" FROM \"Summary.Fetch\",\"Summary.Commit\",\"Summary.Sync\",\"Summary.Lock\",\"Summary.NtwkSend\",\"Summary.Throttle\",\"Summary.CPU\",\"NumberCores\" WHERE $timeFilter AND nodetype = 'Transaction' AND host =~ /^$host$/ AND db =~ /^$database$/ GROUP BY time($__interval), \"pid\" fill(null)) GROUP BY time($__interval)",
+          "query": "SELECT sum(nthreads) as \"nthreads\" FROM (SELECT mean(raw) / 10000. as \"nthreads\" FROM \"Summary.Fetch\",\"Summary.Commit\",\"Summary.Sync\",\"Summary.Lock\",\"Summary.NtwkSend\",\"Summary.Throttle\",\"Summary.CPU\" WHERE $timeFilter AND nodetype = 'Transaction' AND host =~ /^$host$/ AND db =~ /^$database$/ GROUP BY time($__interval), \"pid\" fill(null)) GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -226,16 +246,19 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:150",
+          "decimals": 1,
           "format": "short",
-          "label": null,
+          "label": "measurement relative to vCPU",
           "logBase": 1,
           "max": null,
-          "min": null,
+          "min": "0",
           "show": true
         },
         {
+          "$$hashKey": "object:151",
           "format": "short",
-          "label": null,
+          "label": "total number of vCPU",
           "logBase": 1,
           "max": null,
           "min": null,
@@ -249,6 +272,7 @@
     },
     {
       "collapsed": false,
+      "datasource": null,
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -565,10 +589,233 @@
         "align": true,
         "alignLevel": null
       }
+    },
+    {
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "nuodb",
+      "description": "How many transactions are Busy (in database) relative to Idle (not in database) during the collection interval.",
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 8,
+        "w": 24,
+        "x": 0,
+        "y": 17
+      },
+      "hiddenSeries": false,
+      "id": 9,
+      "interval": "10s",
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "max": true,
+        "min": true,
+        "show": true,
+        "total": false,
+        "values": true
+      },
+      "lines": false,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "connected",
+      "options": {
+        "dataLinks": []
+      },
+      "paceLength": 10,
+      "percentage": true,
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:3672",
+          "alias": "Busy",
+          "color": "rgba(186, 75, 90, 0.97)"
+        },
+        {
+          "$$hashKey": "object:3673",
+          "alias": "Idle",
+          "color": "rgba(150, 217, 141, 0.86)"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "Busy",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "SqlListenerSqlProcTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(X) FROM (SELECT mean(\"value\") AS X FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            },
+            {
+              "condition": "AND",
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
+        },
+        {
+          "alias": "Idle",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "SqlListenerSqlProcTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(X) FROM (SELECT mean(\"value\") as X FROM \"SqlListenerIdleTransactionTime\" WHERE (\"nodetype\" = 'Transaction') AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Workload",
+      "tooltip": {
+        "msResolution": true,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "transparent": true,
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:3700",
+          "decimals": 1,
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:3701",
+          "decimals": null,
+          "format": "short",
+          "label": "",
+          "logBase": 1,
+          "max": "1",
+          "min": "0",
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": true,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 18,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [
     "overview"
@@ -587,6 +834,7 @@
         "definition": "SHOW TAG VALUES WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": false,
+        "index": -1,
         "label": "Database",
         "multi": false,
         "name": "database",
@@ -609,14 +857,15 @@
           "value": "$__all"
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\"\tWHERE \"nodetype\" = 'Transaction' AND \"db\" = $database",
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"db\" = '$database' AND \"nodetype\" = 'Transaction'",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\"\tWHERE \"nodetype\" = 'Transaction' AND \"db\" = $database",
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"db\" = '$database' AND \"nodetype\" = 'Transaction'",
         "refresh": 1,
         "regex": ".*",
         "skipUrlSync": false,
@@ -660,6 +909,9 @@
   },
   "timezone": "",
   "title": "NuoDB Overview",
-  "uid": "_AZFIHGZk",
+  "uid": null,
+  "variables": {
+    "list": []
+  },
   "version": 1
 }

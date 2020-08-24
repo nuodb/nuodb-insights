@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:2495",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -9,13 +10,28 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
+      },
+      {
+        "$$hashKey": "object:5008",
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": false,
+        "iconColor": "rgba(255, 96, 96, 1)",
+        "limit": 100,
+        "name": "test",
+        "showIn": 0,
+        "tags": [
+          "test"
+        ],
+        "type": "tags"
       }
     ]
   },
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1582320233686,
+  "id": null,
+  "iteration": 1595427252978,
   "links": [
     {
       "asDropdown": true,
@@ -100,7 +116,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "20%",
       "prefix": "",
@@ -225,7 +240,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -350,7 +364,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -476,7 +489,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -602,7 +614,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -728,7 +739,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -854,7 +864,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -980,7 +989,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -1106,7 +1114,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -1231,7 +1238,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -1347,7 +1353,7 @@
       },
       "hiddenSeries": false,
       "id": 4,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1367,6 +1373,7 @@
       "options": {
         "dataLinks": []
       },
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1661,7 +1668,7 @@
       "hiddenSeries": false,
       "hideTimeOverride": false,
       "id": 14,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1681,6 +1688,7 @@
       "options": {
         "dataLinks": []
       },
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1893,7 +1901,7 @@
       },
       "hiddenSeries": false,
       "id": 26,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1913,6 +1921,7 @@
       "options": {
         "dataLinks": []
       },
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1942,62 +1951,12 @@
             },
             {
               "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "0"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "ArchiveQueue",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "raw"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "last"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
+          "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT SUM(M) FROM (SELECT last(\"raw\") AS M FROM \"ArchiveQueue\" WHERE (\"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND \"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
@@ -2037,24 +1996,25 @@
               "type": "fill"
             }
           ],
-          "measurement": "WriteThrottleSetting",
+          "hide": false,
+          "measurement": "WriteThrottleTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(\"raw\") AS B FROM \"WriteThrottleSetting\" WHERE (\"nodetype\" = 'Transaction') AND \"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time($__interval) fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
-          "rawQuery": true,
-          "refId": "B",
+          "query": "SELECT mean(B) FROM (SELECT mean(\"value\") AS B FROM \"WriteThrottleTime\" WHERE (\"nodetype\" = 'Transaction') AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time($__interval) fill(null)) WHERE $timeFilter GROUP BY time($__interval) ",
+          "rawQuery": false,
+          "refId": "D",
           "resultFormat": "time_series",
           "select": [
             [
               {
                 "params": [
-                  "raw"
+                  "value"
                 ],
                 "type": "field"
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "max"
               }
             ]
           ],
@@ -2128,7 +2088,7 @@
       },
       "hiddenSeries": false,
       "id": 25,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -2148,6 +2108,7 @@
       "options": {
         "dataLinks": []
       },
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -2353,7 +2314,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -2479,7 +2439,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -2605,7 +2564,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -2730,7 +2688,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -2855,7 +2812,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -2980,7 +2936,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": " wps",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -3095,7 +3050,7 @@
       },
       "hiddenSeries": false,
       "id": 23,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -3104,7 +3059,7 @@
         "hideZero": true,
         "max": true,
         "min": true,
-        "show": true,
+        "show": false,
         "total": false,
         "values": true
       },
@@ -3115,6 +3070,7 @@
       "options": {
         "dataLinks": []
       },
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 1,
       "points": false,
@@ -3236,6 +3192,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:5107",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -3244,6 +3201,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:5108",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -3276,7 +3234,7 @@
       },
       "hiddenSeries": false,
       "id": 24,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -3285,7 +3243,7 @@
         "hideZero": true,
         "max": true,
         "min": true,
-        "show": true,
+        "show": false,
         "total": false,
         "values": true
       },
@@ -3296,6 +3254,7 @@
       "options": {
         "dataLinks": []
       },
+      "paceLength": 10,
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -3504,6 +3463,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:5199",
           "format": "percent",
           "label": null,
           "logBase": 1,
@@ -3512,6 +3472,381 @@
           "show": true
         },
         {
+          "$$hashKey": "object:5200",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "nuodb",
+      "editable": true,
+      "error": false,
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 0,
+        "y": 24
+      },
+      "hiddenSeries": false,
+      "id": 32,
+      "interval": ">$interval",
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "show": false,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "paceLength": 10,
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_host",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "0"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "JrnlBytes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"rate\") FROM \"JrnlWrites\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(0)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        },
+        {
+          "alias": "$tag_host",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"JrnlBytes\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Writes / Sec",
+      "tooltip": {
+        "msResolution": true,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:5107",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:5108",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "nuodb",
+      "editable": true,
+      "error": false,
+      "fill": 1,
+      "fillGradient": 0,
+      "grid": {},
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "hiddenSeries": false,
+      "id": 31,
+      "interval": ">$interval",
+      "legend": {
+        "alignAsTable": true,
+        "avg": true,
+        "current": true,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": true,
+        "min": true,
+        "show": false,
+        "total": false,
+        "values": true
+      },
+      "lines": true,
+      "linewidth": 2,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "paceLength": 10,
+      "percentage": false,
+      "pointradius": 1,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_host",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "0"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "JrnlBytes",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"rate\") FROM \"JrnlBytes\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(0)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        },
+        {
+          "alias": "$tag_host",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"JrnlBytes\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Bytes / Sec",
+      "tooltip": {
+        "msResolution": true,
+        "shared": true,
+        "sort": 0,
+        "value_type": "cumulative"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:5107",
+          "format": "Bps",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:5108",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -3536,6 +3871,95 @@
   "templating": {
     "list": [
       {
+        "auto": true,
+        "auto_count": 50,
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "text": "auto",
+          "value": "$__auto_interval_interval"
+        },
+        "hide": 0,
+        "label": "interval",
+        "name": "interval",
+        "options": [
+          {
+            "selected": false,
+            "text": "auto",
+            "value": "$__auto_interval_interval"
+          },
+          {
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": true,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "10s,30s,1m,5m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
         "allValue": ".*",
         "current": {
           "text": "All",
@@ -3547,11 +3971,12 @@
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Database",
         "multi": true,
         "name": "database",
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "options": [],
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "refresh": 1,
         "regex": ".*",
         "skipUrlSync": false,
@@ -3574,6 +3999,7 @@
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ AND nodetype = 'Storage' ",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
@@ -3622,6 +4048,9 @@
   },
   "timezone": "",
   "title": "Disk",
-  "uid": "JzTY5p6mk",
-  "version": 1
+  "uid": null,
+  "variables": {
+    "list": []
+  },
+  "version": 11
 }

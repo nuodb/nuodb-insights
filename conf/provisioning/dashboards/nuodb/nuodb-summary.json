@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:2435",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -9,13 +10,28 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
+      },
+      {
+        "$$hashKey": "object:2517",
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": false,
+        "iconColor": "rgba(255, 96, 96, 1)",
+        "limit": 100,
+        "name": "test",
+        "showIn": 0,
+        "tags": [
+          "test"
+        ],
+        "type": "tags"
       }
     ]
   },
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1581609586323,
+  "id": null,
+  "iteration": 1594735609885,
   "links": [
     {
       "asDropdown": true,
@@ -51,6 +67,7 @@
       "editable": true,
       "error": false,
       "fill": 7,
+      "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 7,
@@ -58,6 +75,7 @@
         "x": 0,
         "y": 0
       },
+      "hiddenSeries": false,
       "id": 14,
       "interval": ">10s",
       "legend": {
@@ -75,15 +93,14 @@
       "linewidth": 0,
       "links": [
         {
-          "dashUri": "db/connections",
-          "dashboard": "Connections",
-          "includeVars": true,
-          "keepTime": true,
           "title": "Connections",
-          "type": "dashboard"
+          "url": "dashboard/db/connections?$__url_time_range&$__all_variables"
         }
       ],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -813,13 +830,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 7,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 0,
         "y": 7
       },
+      "hiddenSeries": false,
       "id": 15,
       "interval": ">10s",
       "legend": {
@@ -836,6 +856,9 @@
       "linewidth": 2,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1048,13 +1071,16 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
+      "datasource": null,
       "fill": 1,
+      "fillGradient": 0,
       "gridPos": {
         "h": 7,
         "w": 12,
         "x": 12,
         "y": 7
       },
+      "hiddenSeries": false,
       "id": 16,
       "interval": ">10s",
       "legend": {
@@ -1073,6 +1099,9 @@
       "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
       "percentage": false,
       "pointradius": 5,
       "points": false,
@@ -1356,7 +1385,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 16,
+  "schemaVersion": 22,
   "style": "dark",
   "tags": [
     "overview"
@@ -1377,6 +1406,7 @@
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"db\"",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Database",
         "multi": true,
         "name": "database",
@@ -1403,6 +1433,7 @@
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"nodetype\" = 'Transaction' AND \"db\" =~ /$database$/ ",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": null,
         "multi": true,
         "name": "host",
@@ -1451,6 +1482,9 @@
   },
   "timezone": "",
   "title": "NuoDB Summary",
-  "uid": "fyZFIHGWk",
-  "version": 3
+  "uid": null,
+  "variables": {
+    "list": []
+  },
+  "version": 1
 }

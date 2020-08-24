@@ -2,6 +2,7 @@
   "annotations": {
     "list": [
       {
+        "$$hashKey": "object:21",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -9,13 +10,28 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
+      },
+      {
+        "$$hashKey": "object:141",
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": false,
+        "iconColor": "rgba(255, 96, 96, 1)",
+        "limit": 100,
+        "name": "test",
+        "showIn": 0,
+        "tags": [
+          "test"
+        ],
+        "type": "tags"
       }
     ]
   },
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "iteration": 1582321224344,
+  "id": null,
+  "iteration": 1596126686708,
   "links": [
     {
       "asDropdown": true,
@@ -70,7 +86,6 @@
       "id": 19,
       "links": [],
       "mode": "html",
-      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
@@ -120,7 +135,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -138,7 +152,7 @@
         "lineColor": "rgb(20, 99, 163)",
         "show": false
       },
-      "tableColumn": "sum",
+      "tableColumn": "",
       "targets": [
         {
           "groupBy": [
@@ -264,7 +278,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -392,7 +405,6 @@
       "id": 11,
       "links": [],
       "mode": "markdown",
-      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
@@ -411,7 +423,6 @@
       "id": 20,
       "links": [],
       "mode": "html",
-      "options": {},
       "title": "",
       "transparent": true,
       "type": "text"
@@ -461,7 +472,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -479,7 +489,7 @@
         "lineColor": "rgb(20, 99, 163)",
         "show": false
       },
-      "tableColumn": "A",
+      "tableColumn": "",
       "targets": [
         {
           "dsType": "influxdb",
@@ -606,7 +616,6 @@
       "maxDataPoints": 100,
       "nullPointMode": "null",
       "nullText": null,
-      "options": {},
       "postfix": "",
       "postfixFontSize": "50%",
       "prefix": "",
@@ -741,7 +750,7 @@
       },
       "hiddenSeries": false,
       "id": 4,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -914,7 +923,7 @@
       },
       "hiddenSeries": false,
       "id": 21,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1100,7 +1109,7 @@
       },
       "hiddenSeries": false,
       "id": 1,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1270,7 +1279,7 @@
       },
       "hiddenSeries": false,
       "id": 10,
-      "interval": ">10s",
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -1431,9 +1440,119 @@
   "templating": {
     "list": [
       {
+        "auto": true,
+        "auto_count": 50,
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "tags": [],
+          "text": "30s",
+          "value": "30s"
+        },
+        "hide": 0,
+        "label": "interval",
+        "name": "interval",
+        "options": [
+          {
+            "$$hashKey": "object:5663",
+            "selected": true,
+            "text": "auto",
+            "value": "$__auto_interval_interval"
+          },
+          {
+            "$$hashKey": "object:5664",
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "$$hashKey": "object:5665",
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "$$hashKey": "object:5666",
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "$$hashKey": "object:5667",
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "$$hashKey": "object:5668",
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "$$hashKey": "object:5669",
+            "selected": false,
+            "text": "15m",
+            "value": "15m"
+          },
+          {
+            "$$hashKey": "object:5670",
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "$$hashKey": "object:5671",
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "$$hashKey": "object:5672",
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "$$hashKey": "object:5673",
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "$$hashKey": "object:5674",
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "$$hashKey": "object:5675",
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "$$hashKey": "object:5676",
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "$$hashKey": "object:5677",
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "10s,30s,1m,5m,10m,15m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -1441,6 +1560,7 @@
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"nodetype\"",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Sent",
         "multi": false,
         "name": "sent",
@@ -1459,7 +1579,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "All",
           "value": "$__all"
         },
@@ -1467,6 +1587,7 @@
         "definition": "",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Received",
         "multi": false,
         "name": "received",
@@ -1494,6 +1615,7 @@
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Database",
         "multi": true,
         "name": "database",
@@ -1521,6 +1643,7 @@
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ ",
         "hide": 0,
         "includeAll": true,
+        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
@@ -1569,6 +1692,9 @@
   },
   "timezone": "",
   "title": "Communication",
-  "uid": "jdWFSHMWk",
+  "uid": null,
+  "variables": {
+    "list": []
+  },
   "version": 1
 }
