@@ -66,7 +66,7 @@ and specifically the `nuoca:` section.
     ...
 
   #   nuoca:
-  #      image: nuodb/nuodb-ce:latestn
+  #      image: nuodb/nuodb-ce:latest
   #      labels:
   #      - "owner=${USER}"
   #      environment:
@@ -90,7 +90,7 @@ and specifically the `nuoca:` section.
     ...
 
      nuoca:
-        image: nuodb/nuodb-ce:latestn
+        image: nuodb/nuodb-ce:latest
         labels:
         - "owner=${USER}"
         environment:
@@ -115,7 +115,7 @@ and specifically the `nuoca:` section.
     ...
 
      nuoca:
-        image: nuodb/nuodb-ce:latestn
+        image: nuodb/nuodb-ce:latest
         labels:
         - "owner=${USER}"
         environment:
@@ -142,7 +142,7 @@ and specifically the `nuoca:` section.
     ...
 
      nuoca:
-        image: nuodb/nuodb-ce:latestn
+        image: nuodb/nuodb-ce:latest
         labels:
         - "owner=${USER}"
         environment:
