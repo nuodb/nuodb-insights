@@ -2,7 +2,7 @@ grafana:
   enabled: true
   # For complete list of configuration options for  
   # grafana see the documentation @ https://github.com/helm/charts/tree/master/stable/grafana.
-  # sidecar setup here is for custom dashboards and datasource for nuoca pushing metrics
+  # sidecar setup here is for custom dashboards and datasource for nuocd pushing metrics
   # to influx
   sidecar:
     dashboards:
@@ -22,7 +22,7 @@ influxdb:
   enabled: true
   # For complete list of configuration options for  
   # influxdb see the documentation @ https://github.com/influxdata/helm-charts/tree/master/charts/influxdb
-  # the initScript here is to initialize a database for metrics from nuoca.
+  # the initScript here is to initialize a database for metrics from nuocd.
   initScripts:
     enabled: true
     scripts:
@@ -50,7 +50,7 @@ config:
   # Configure the NuoDB collector daemon.  A sidecar that collects metrics from the engine process and
   # forwards to configurable output.  Addition input plugins and processors can be added also.
   nuocd:
-    # enabled: false - will not setup nuoca configuration  set to false when starting grafana and insights
+    # enabled: false - will not setup nuocd configuration  set to false when starting grafana and insights
     #                  only - in another namespace.
     enabled: true
     # these are default plugins they can be disabled individually in user values file via:
@@ -71,7 +71,7 @@ config:
     plugins:
       metrics: |-
         [[inputs.execd]]
-          command = [ "python", "/opt/nuoca/nuodb_adminquery.py", "-i", "0", "metrics" ]
+          command = [ "python", "/opt/nuocd/nuodb_adminquery.py", "-i", "0", "metrics" ]
           signal = "none"
           restart_delay = "10s"
           data_format = "influx"
@@ -79,7 +79,7 @@ config:
             db_tag = "nuodb"
       msgtrace: |-
         [[inputs.execd]]
-          command = [ "python", "/opt/nuoca/nuodb_adminquery.py", "-i", "30", "msgtrace" ]
+          command = [ "python", "/opt/nuocd/nuodb_adminquery.py", "-i", "30", "msgtrace" ]
           signal = "none"
           restart_delay = "10s"
           data_format = "csv"
@@ -95,7 +95,7 @@ config:
             db_tag = "nuodb_internal"
       synctrace: |-
         [[inputs.execd]]
-          command = [ "python", "/opt/nuoca/nuodb_adminquery.py", "-i", "30", "synctrace" ]
+          command = [ "python", "/opt/nuocd/nuodb_adminquery.py", "-i", "30", "synctrace" ]
           signal = "none"
           restart_delay = "10s"
           data_format = "csv"
@@ -111,7 +111,7 @@ config:
             db_tag = "nuodb_internal"
       threads: |-
         [[inputs.execd]]
-          command = [ "python", "/opt/nuoca/nuodb_threads.py" ]
+          command = [ "python", "/opt/nuocd/nuodb_threads.py" ]
           signal = "none"
           restart_delay = "10s"
           data_format = "csv"
