@@ -18,6 +18,22 @@ datasources:
   url: http://influxdb:8086
   user: ''
   withCredentials: false
+- name: nuodb_internal
+  access: proxy
+  basicAuth: false
+  basicAuthPassword: ''
+  basicAuthUser: ''
+  database: nuodb_internal
+  isDefault: false
+  jsonData: {timeInterval: 30s}
+  orgId: 1
+  password: ''
+  secureJsonFields: {}
+  type: influxdb
+  typeLogoUrl: ''
+  url: http://influxdb:8086
+  user: ''
+  withCredentials: false
 - name: telegraf
   access: proxy
   basicAuth: false
