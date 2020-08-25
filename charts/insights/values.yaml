@@ -30,6 +30,20 @@ influxdb:
         /usr/bin/influx -execute 'CREATE DATABASE nuodb WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'        
         /usr/bin/influx -execute 'CREATE DATABASE nuodb_internal WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp2'
 
+# Configure the legacy NuoDB collector agent.
+nuoca:
+  enabled: false
+  nuoadmin:
+    enabled: false
+    host:    nuodb
+    port:    8888
+    tls:
+      enabled: true
+  influxdb: {}
+    #host: influxdb
+    #port: 8086
+    #dbname: nuodb
+    
 config:
   grafana:
     # enabled: false - to not load dashboards nor datasources but do start grafana (grafana.enabled: true)
