@@ -13,10 +13,13 @@ import os
 import fileinput
 
 def get_admin_conn(pid):
-    """ search for NUOCMD_ variable settings of running process then set api-server, etc """
+    """ searches for NUOCMD_ variables in nuoadmin or nuodocker then overrides whatever is set from
+        command line or environment.  If unable to read environment from nuoadmin or nuodocker then
+        defaults to settings passed in or environment variables."""
     admin_conn = None
     try:
         env = {}
+        ROOT = ""
         try:
             # starting with 4.1 you can no longer getenv from nuodb process.  So look at parent
             # process. docker.py
@@ -34,10 +37,7 @@ def get_admin_conn(pid):
                 env = dict([ tuple(y.split('=',1)) for y in x.split('\0') if '=' in y and y.startswith('NUOCMD_')])
             ROOT = '/proc/%s/root' % (pid,)
         except IOError:
-            print_("Error reading: %s" % (pid,),file=sys.stderr)
-            traceback.print_exc()
-            env =  {}
-            ROOT = ""
+            pass
         
         api_server = env.get('NUOCMD_API_SERVER' , os.environ.get('NUOCMD_API_SERVER'))
         if api_server is None:
