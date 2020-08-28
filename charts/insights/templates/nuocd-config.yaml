@@ -1,10 +1,14 @@
 {{/* vim: set filetype=mustache: */}}
-{{/*
-Install influx output plugin, if influx is enabled or influx is referenced.
-*/}}
+
+{{/* -- Install nuocd configmaps if labels exists and nuocd is enabled  -- */}}
 {{ if (hasKey .Values.config "nuocd") }}
 {{ if not (empty .Values.config.nuocd)  }}
 {{ if .Values.config.nuocd.enabled  }}
+{{ if .Values.config.nuocd.labels }}
+{{ if not (empty .Values.config.nuocd.labels) }}
+
+{{/* -- Install influx output plugin, if influx is enabled or influx is referenced. -- */}}
+
 {{- if and .Values.influxdb (or .Values.influxdb.enabled .Values.influxdb.host) -}}
 ---
 apiVersion: v1
@@ -13,7 +17,12 @@ metadata:
   name: {{ $.Release.Name }}-nuocd-influxdb
   namespace: {{ $.Release.Namespace }}
   labels:
-     insights-plugins: "influxdb.conf"
+    {{- if not (empty .Values.config.nuocd.labels.admin) }}
+    {{ .Values.config.nuocd.labels.admin }}: "influxdb.conf"
+    {{- end }}
+    {{- if not (empty .Values.config.nuocd.labels.database) }}
+    {{ .Values.config.nuocd.labels.database }}: "influxdb.conf"
+    {{- end }}
 data:
   influxdb.conf: |-
     [[ outputs.influxdb ]]
@@ -29,19 +38,66 @@ data:
       ## If not provided, will default to 5s. 0s means no timeout (not recommended).
       timeout = "5s"
 {{- end }}
-{{- range $file, $content := .Values.config.nuocd.plugins }}
+
+{{- if and .Values.config.nuocd.plugins.admin .Values.config.nuocd.labels.admin -}}
+{{- range $file, $content := .Values.config.nuocd.plugins.admin }}
 {{- if $content }}
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: {{ $.Release.Name }}-nuocd-{{ $file | replace "_" "." | lower }}
+  name: {{ $.Release.Name }}-nuocd-{{ randAlphaNum 8 | lower }}
   namespace: {{ $.Release.Namespace }}
   labels:
-     insights-plugins: "{{ $file }}"
+    {{ $.Values.config.nuocd.labels.admin }}: "{{ $file }}.conf"
 data:
   {{ $file }}.conf: |-
-    {{ tpl $content $ | nindent 4}}
+    {{- tpl $content $ | nindent 4}}
+{{ end }}
+{{ end }}
+{{ end }}
+
+{{- if .Values.config.nuocd.plugins.all -}}
+{{- range $file, $content := .Values.config.nuocd.plugins.all }}
+{{- if $content }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $.Release.Name }}-nuocd-{{ randAlphaNum 8 | lower }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{- if $.Values.config.nuocd.labels.admin }}
+    {{ $.Values.config.nuocd.labels.admin }}: "{{ $file }}.conf"
+    {{- end }}
+    {{- if $.Values.config.nuocd.labels.database }}
+    {{ $.Values.config.nuocd.labels.database }}: "{{ $file }}.conf"
+    {{- end }}
+data:
+  all-{{ $file }}.conf: |-
+    {{- tpl $content $ | nindent 4}}
+{{ end }}
+{{ end }}
+{{ end }}
+
+{{- if and .Values.config.nuocd.plugins.database .Values.config.nuocd.labels.database -}}
+{{- range $file, $content := .Values.config.nuocd.plugins.database }}
+{{- if $content }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ $.Release.Name }}-nuocd-{{ randAlphaNum 8 | lower }}
+  namespace: {{ $.Release.Namespace }}
+  labels:
+    {{ $.Values.config.nuocd.labels.database }}: "{{ $file }}.conf"
+data:
+  {{ $file }}.conf: |-
+    {{- tpl $content $ | nindent 4}}
+{{ end }}
+{{ end }}
+{{ end }}
+
 {{ end }}
 {{ end }}
 {{ end }}

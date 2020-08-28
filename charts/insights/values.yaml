@@ -65,14 +65,24 @@ config:
   # forwards to configurable output.  Addition input plugins and processors can be added also.
   nuocd:
     # enabled: false - will not setup nuocd configuration  set to false when starting grafana and insights
-    #                  only - in another namespace.
+    #                  only - say in a different namespace.
     enabled: true
+    
+    # label generated plugins with given label to be found by pods deployed by database or admin helm charts
+    # these labels should match the admin.insights and database.insights used in deploying the charts.
+    labels:
+      admin:    "insights-ap-plugin"
+      database: "insights-db-plugin"
+
     # these are default plugins they can be disabled individually in user values file via:
     #  plugins:
-    #    metrics: ~
-    #    msgtrace: ~
-    #    syntrace: ~
-    #    threads: ~
+    #    admin: {}
+    #    all: {}
+    #    database: 
+    #      metrics: ~
+    #      msgtrace: ~
+    #      syntrace: ~
+    #      threads: ~
     # influx output plugin is generated automatically iff
     #    influxdb.enabled: true or influxdb.host: <hostname>
     # other plugins can be enabled if users value files include plugin:
@@ -83,63 +93,65 @@ config:
     #       files = ["stdout"]
     #       data_format = "json"
     plugins:
-      metrics: |-
-        [[inputs.execd]]
-          command = [ "python", "/opt/nuocd/nuodb_adminquery.py", "-i", "0", "metrics" ]
-          signal = "none"
-          restart_delay = "10s"
-          data_format = "influx"
-          [inputs.execd.tags]
-            db_tag = "nuodb"
-      msgtrace: |-
-        [[inputs.execd]]
-          command = [ "python", "/opt/nuocd/nuodb_adminquery.py", "-i", "30", "msgtrace" ]
-          signal = "none"
-          restart_delay = "10s"
-          data_format = "csv"
-          csv_column_names = [ "time", "id", "startId", "host",   "pid",    "dbname", "timedelta", "totalSumStalls", "msg_trace_metric", "numStalls","totalTimeStalls","maxStallTime" ]
-          csv_column_types = [ "int" , "string" , "string", "string", "string", "string", "int",   "int",           "string",  "int",      "int", "int" ]
-          csv_comment = "#"
-          csv_tag_columns = [ "id", "startId", "host", "dbname", "msg_trace_metric"]
-          csv_timestamp_column = "time"
-          csv_timestamp_format = "unix"
-          fielddrop = ["time", "pid", "path"]
-          name_override = "nuodb_msgtrace"
-          [inputs.execd.tags]
-            db_tag = "nuodb_internal"
-      synctrace: |-
-        [[inputs.execd]]
-          command = [ "python", "/opt/nuocd/nuodb_adminquery.py", "-i", "30", "synctrace" ]
-          signal = "none"
-          restart_delay = "10s"
-          data_format = "csv"
-          csv_column_names = [ "time", "id",      "startId", "host",  "pid",    "dbname", "timedelta","totalSumStalls","sync_trace_metric",    "numLocks", "numUnlocks", "numStalls","totalTimeStalls", "maxStallTime" ]
-          csv_column_types = [ "int" , "string" , "string", "string", "string", "string", "int",      "int",           "string",  "int",      "int",        "int",      "int", "int" ]
-          csv_comment = "#"
-          csv_tag_columns = [ "startId", "id", "host", "dbname", "sync_trace_metric"]
-          csv_timestamp_column = "time"
-          csv_timestamp_format = "unix"
-          fielddrop = ["time", "pid"]
-          name_override = "nuodb_synctrace"
-          [inputs.execd.tags]
-            db_tag = "nuodb_internal"
-      threads: |-
-        [[inputs.execd]]
-          command = [ "python", "/opt/nuocd/nuodb_threads.py" ]
-          signal = "none"
-          restart_delay = "10s"
-          data_format = "csv"
-          csv_column_names = [ "host", "processid", "threadid", "state", "exe", "lcpu", "utime", "stime", "ttime", "minf", "maxf", "time" ]
-          csv_column_types = [ "string", "string", "string", "string", "string", "int", "float", "float", "float", "int", "int", "int" ]
-          csv_comment = "#"
-          csv_tag_columns = [ "host", "processid", "threadid", "state", "exe", "lcpu"]
-          csv_timestamp_column = "time"
-          csv_timestamp_format = "unix_us"
-          fielddrop = ["time"]
-          name_override = "nuodb_thread"
-          [inputs.execd.tags]
-            db_tag = "nuodb_internal"
-    
+      admin: {}
+      all: {}
+      database:
+        metrics: |-
+          [[inputs.execd]]
+            command = [ "python", "/opt/nuocd/nuodb_adminquery.py", "-i", "0", "metrics" ]
+            signal = "none"
+            restart_delay = "10s"
+            data_format = "influx"
+            [inputs.execd.tags]
+              db_tag = "nuodb"
+        msgtrace: |-
+          [[inputs.execd]]
+            command = [ "python", "/opt/nuocd/nuodb_adminquery.py", "-i", "30", "msgtrace" ]
+            signal = "none"
+            restart_delay = "10s"
+            data_format = "csv"
+            csv_column_names = [ "time", "id", "startId", "host",   "pid",    "dbname", "timedelta", "totalSumStalls", "msg_trace_metric", "numStalls","totalTimeStalls","maxStallTime" ]
+            csv_column_types = [ "int" , "string" , "string", "string", "string", "string", "int",   "int",           "string",  "int",      "int", "int" ]
+            csv_comment = "#"
+            csv_tag_columns = [ "id", "startId", "host", "dbname", "msg_trace_metric"]
+            csv_timestamp_column = "time"
+            csv_timestamp_format = "unix"
+            fielddrop = ["time", "pid", "path"]
+            name_override = "nuodb_msgtrace"
+            [inputs.execd.tags]
+              db_tag = "nuodb_internal"
+        synctrace: |-
+          [[inputs.execd]]
+            command = [ "python", "/opt/nuocd/nuodb_adminquery.py", "-i", "30", "synctrace" ]
+            signal = "none"
+            restart_delay = "10s"
+            data_format = "csv"
+            csv_column_names = [ "time", "id",      "startId", "host",  "pid",    "dbname", "timedelta","totalSumStalls","sync_trace_metric",    "numLocks", "numUnlocks", "numStalls","totalTimeStalls", "maxStallTime" ]
+            csv_column_types = [ "int" , "string" , "string", "string", "string", "string", "int",      "int",           "string",  "int",      "int",        "int",      "int", "int" ]
+            csv_comment = "#"
+            csv_tag_columns = [ "startId", "id", "host", "dbname", "sync_trace_metric"]
+            csv_timestamp_column = "time"
+            csv_timestamp_format = "unix"
+            fielddrop = ["time", "pid"]
+            name_override = "nuodb_synctrace"
+            [inputs.execd.tags]
+              db_tag = "nuodb_internal"
+        threads: |-
+          [[inputs.execd]]
+            command = [ "python", "/opt/nuocd/nuodb_threads.py" ]
+            signal = "none"
+            restart_delay = "10s"
+            data_format = "csv"
+            csv_column_names = [ "host", "processid", "threadid", "state", "exe", "lcpu", "utime", "stime", "ttime", "minf", "maxf", "time" ]
+            csv_column_types = [ "string", "string", "string", "string", "string", "int", "float", "float", "float", "int", "int", "int" ]
+            csv_comment = "#"
+            csv_tag_columns = [ "host", "processid", "threadid", "state", "exe", "lcpu"]
+            csv_timestamp_column = "time"
+            csv_timestamp_format = "unix_us"
+            fielddrop = ["time"]
+            name_override = "nuodb_thread"
+            [inputs.execd.tags]
+              db_tag = "nuodb_internal"
     
 
 
