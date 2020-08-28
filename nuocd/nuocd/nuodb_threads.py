@@ -56,18 +56,19 @@ while True:
    _pids = None
    try:
       # assume only one process by given name
-      #_pid = subprocess.check_output(["pidof", process_name ])
-      _pid = subprocess.check_output(["pgrep", process_name ])
+      _pid = subprocess.check_output(["pidof", process_name ])
+      #_pid = subprocess.check_output(["pgrep", process_name ])
       _pids = _pid[:-1].split()
+   except subprocess.CalledProcessError:
+      print_('nuodb not running',file=sys.stderr)
+      pass
    except:
       print_("Unexpected error: %s" % sys.exc_info()[0],file=sys.stderr)
-      sys.stderr.flush()
-      time.sleep(10)
-      continue
-   
+      pass
+ 
    last_measurements = {}
 
-   while True:
+   while _pids is not None:
       lines = []
       now = datetime.now()
       tasks = []
