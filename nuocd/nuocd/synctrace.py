@@ -90,5 +90,5 @@ class Monitor:
             else:
                 timedelta = 0
             for name,(numLocks,numUnlocks,numStalls,totalTimeStalls,maxStallTime) in stalls.iteritems():
-                print_(Monitor.format % (ntime,startId,hostname,pid,dbname,timedelta,total,name,
+                print_(Monitor.format % (ntime,nodeId,startId,hostname,pid,dbname,timedelta,total,name,
                                          numLocks,numUnlocks,numStalls,totalTimeStalls,maxStallTime))

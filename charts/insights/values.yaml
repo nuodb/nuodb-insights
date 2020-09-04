@@ -28,6 +28,7 @@ influxdb:
     scripts:
       init-nuodb.sh: |+
         /usr/bin/influx -execute 'CREATE DATABASE nuodb WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'        
+        /usr/bin/influx -execute 'CREATE DATABASE nuolog WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuologrp'        
         /usr/bin/influx -execute 'CREATE DATABASE nuodb_internal WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp2'
 
 # Configure the legacy NuoDB collector agent.
@@ -56,6 +57,9 @@ config:
         isDefault: true
       nuodb_ext:
         database: nuodb_internal
+        timeInterval: 30s
+      nuolog:
+        database: nuolog
         timeInterval: 30s
       addons:
         database: telegraf
@@ -93,7 +97,19 @@ config:
     #       files = ["stdout"]
     #       data_format = "json"
     plugins:
-      admin: {}
+      admin:
+        logs: |-
+          [[inputs.tail]]
+            files = ["/var/log/nuodb/nuoadmin*.log"]
+            from_beginning = true
+            name_override= "logfile"
+            data_format = "grok"
+            grok_patterns= [ "%{CUSTOM_LOGLINE}" ]
+            grok_custom_patterns = '''
+            CUSTOM_LOGLINE %{TIMESTAMP_ISO8601:timestamp:ts-"2006-01-02T15:04:05.000-0700"}%{SPACE}(?:%{LOGLEVEL:loglevel:tag}%{SPACE}(?:%{NOTSPACE:logger:tag}%{SPACE})?)?%{GREEDYDATA:message}
+            '''
+            [inputs.tail.tags]
+               db_tag = "nuolog"
       all: {}
       database:
         metrics: |-
@@ -110,10 +126,10 @@ config:
             signal = "none"
             restart_delay = "10s"
             data_format = "csv"
-            csv_column_names = [ "time", "id", "startId", "host",   "pid",    "dbname", "timedelta", "totalSumStalls", "msg_trace_metric", "numStalls","totalTimeStalls","maxStallTime" ]
-            csv_column_types = [ "int" , "string" , "string", "string", "string", "string", "int",   "int",           "string",  "int",      "int", "int" ]
+            csv_column_names = [ "time", "id",      "nodeId", "listenerId", "startId", "host",   "pid",    "dbname", "timedelta", "totalSumStalls", "msg_trace_metric", "numStalls","totalTimeStalls","maxStallTime" ]
+            csv_column_types = [ "int" , "string" , "string", "string",     "string",  "string", "string", "string", "int",       "int",            "string",           "int",      "int",            "int" ]
             csv_comment = "#"
-            csv_tag_columns = [ "id", "startId", "host", "dbname", "msg_trace_metric"]
+            csv_tag_columns = [ "id", "startId", "nodeId", "listenerId", "host", "dbname", "msg_trace_metric"]
             csv_timestamp_column = "time"
             csv_timestamp_format = "unix"
             fielddrop = ["time", "pid", "path"]
@@ -142,10 +158,10 @@ config:
             signal = "none"
             restart_delay = "10s"
             data_format = "csv"
-            csv_column_names = [ "host", "processid", "threadid", "state", "exe", "lcpu", "utime", "stime", "ttime", "minf", "maxf", "time" ]
+            csv_column_names = [ "host", "pid", "threadid", "state", "exe", "lcpu", "utime", "stime", "ttime", "minf", "maxf", "time" ]
             csv_column_types = [ "string", "string", "string", "string", "string", "int", "float", "float", "float", "int", "int", "int" ]
             csv_comment = "#"
-            csv_tag_columns = [ "host", "processid", "threadid", "state", "exe", "lcpu"]
+            csv_tag_columns = [ "host", "state", "exe" ]
             csv_timestamp_column = "time"
             csv_timestamp_format = "unix_us"
             fielddrop = ["time"]

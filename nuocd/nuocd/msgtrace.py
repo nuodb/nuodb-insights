@@ -16,8 +16,8 @@ from datetime import datetime
 class Monitor:
 
     #(ntime,startId,hostname,pid,dbname,timedelta,fromNodeId,total-ototal,name,numStalls,totalTimeStalls,maxStallTime)
-    format="%s,%s,%d,%s,%d,%s,%d,%d,%s,%d,%d,%d"
-    header="#time,id,startId,host,pid,dbname,timedelta,totalSumStalls,message,numStalls,totalTimeStalls,maxStallTime"
+    format="%s,%s,%s,%s,%d,%s,%d,%s,%d,%d,%s,%d,%d,%d"
+    header="#time,id,nodeId,listenerId,startId,host,pid,dbname,timedelta,totalSumStalls,message,numStalls,totalTimeStalls,maxStallTime"
 
     def __init__(self,nuodb_process,conn,relative,args):
         self._process = nuodb_process
@@ -64,6 +64,8 @@ class Monitor:
         hostname = self._process.get('hostname')
         ntime    = now.strftime("%s")
         id       = "%s:%s" % (self._process.node_id,fromNodeId)
+        node_id  = self._process.node_id
+        listener_id = fromNodeId
 
         if self._relative:
             if self._lastnow != None:
@@ -73,7 +75,7 @@ class Monitor:
                     if name in ostalls:
                         numStalls -= ostalls[name][0]
                         totalTimeStalls -= ostalls[name][1]
-                        print(Monitor.format % (ntime,id, startId,hostname,pid,dbname,timedelta,
+                        print(Monitor.format % (ntime,id, node_id, listener_id, startId,hostname,pid,dbname,timedelta,
                                                 total-ototal,name,numStalls,totalTimeStalls,maxStallTime))
         else:
             if self._lastnow != None:
@@ -81,4 +83,4 @@ class Monitor:
             else:
                 timedelta = 0
             for name,(numStalls,totalTimeStalls,maxStallTime) in stalls.iteritems():
-                print(Monitor.format % (ntime,id, startId,hostname,pid,dbname,timedelta,total,name,numStalls,totalTimeStalls,maxStallTime))
+                print(Monitor.format % (ntime,id, node_id, listener_id, startId,hostname,pid,dbname,timedelta,total,name,numStalls,totalTimeStalls,maxStallTime))

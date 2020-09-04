@@ -13,6 +13,8 @@ services:
     image: grafana/grafana:6.0.2
     labels:
       - "owner=${USER}"
+    environment:
+      - INFLUX_HOST=influxdb
     volumes:
       - ../conf/provisioning:/etc/grafana/provisioning
     ports:
