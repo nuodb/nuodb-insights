@@ -4,6 +4,7 @@ import fileinput,time,requests,optparse,logging
 from dateutil import parser
 import metrics_influx
 from urlparse import urlparse
+from urlparse import urljoin
 
 counters = {}
 metrics = {}
@@ -46,7 +47,7 @@ _parser.add_option("-D", "--database", dest="db", default="nuodb")
 
 o = urlparse(options.output)
 if o.scheme == 'http' or o.scheme == 'https':
-    _URL="%s/write?db=%s" % (options.output,options.db)
+    _URL= urljoin(options.output, "/write?db=%s" % (options.db))
 elif o.scheme == '' or o.scheme == 'file':
     if o.path == 'stdout':
         _OUTPUT = sys.stdout
@@ -54,6 +55,7 @@ elif o.scheme == '' or o.scheme == 'file':
         _OUTPUT = open(o.path,'wb')
 elif o.scheme == 'stdout':
     _OUTPUT = sys.stdout
+
     
 logging.info("Timezone being used GMT%s." % time.strftime('%z'))
 
