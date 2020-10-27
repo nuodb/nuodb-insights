@@ -3,4 +3,7 @@ lib
 **/*.tgz
 **/Chart.lock
 
+stable/charts/*
+**/requirements.lock
 
+.idea/

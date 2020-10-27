@@ -1,19 +1,18 @@
-apiVersion: v1
-appVersion: 4.0.5
-description: Deploying nuoca collector to influx, associated grafana dashboards.
+apiVersion: "v1"
 name: insights
-#type: application
-version: 1.0.4
-home: https://github.com/nuodb/nuodb-dashboards-influx/charts/insights
+version: 1.0.0
+description: NuoDB Insights - Visual Monitoring
 keywords:
 - monitoring
 - nuodb
 - influxdb
 - grafana
+home: https://github.com/nuodb/nuodb-dashboards-influx/stable/insights
 maintainers:
 - name: NuoDB
-  email: k8s@nuodb.com
+  email: support@nuodb.com
 engine: gotpl
 icon: https://www.nuodb.com/sites/all/themes/nuodb/logo.svg
+appVersion: 4.0.0
 tillerVersion: ">=2.9"
 
