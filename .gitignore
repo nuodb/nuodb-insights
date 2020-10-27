@@ -4,6 +4,5 @@ lib
 **/Chart.lock
 
 stable/charts/*
-**/requirements.lock
 
 .idea/

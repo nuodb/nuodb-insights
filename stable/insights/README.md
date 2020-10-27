@@ -2,24 +2,22 @@
 
 ## Description
 
-This helm3 chart will deploy the grafana dashboards and datasources to display nuodb metrics stored in influxdb (in database nuodb).
-Optionally the chart can deploy grafana and influxdb instances.
-If an existing grafana instance exist, the dashboards can be labelled such that that instance can retrieve (with the dashboard sidecard) the dashboards.   
+This chart starts a NuoDB Insights deployment on a Kubernetes cluster using the Helm package manager.
 
-## Install Dependencies
+## Software Version Prerequisites
 
-In order to use this helm chart locally you will need to first update
-the dependencies.
-
-```
-$ cd monitoring-influx
-$ helm dep update stable/insights
-```
+| Software   | Release Requirements                           | 
+|------------|------------------------------------------------|
+| Kubernetes |  1.15 or newer |
+| Managed Kubernetes Distributions |  OpenShift 4.x, Google GKE, Amazon EKS, Azure AKS, or Rancher RKE. Charts may also work on other Kubernetes distributions. The distributions listed here are tested regularly. |
+| Helm       |  Version 2 and 3 are supported, v2.9 or greater. v3.2 is the main development environment   |
+| NuoDB      |  Version [4.0.4](https://hub.docker.com/r/nuodb/nuodb-ce/tags) and onwards. |
+| NuoDB Helm | NuoDB Helm Charts [3.0.0](https://github.com/nuodb/nuodb-helm-charts) or newer |
 
 ## Command
 
 ```
-helm install stable/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
+helm install nuodb/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
 ```
 
 ## Grafana Default Password
@@ -28,7 +26,6 @@ To retrieve the password, you can read the Kubernetes secret as such:
 ```
 kubectl get secret <grafana-secret-name>  -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
-
 
 ## Installing the Chart
 All configurable parameters for each top-level scope are detailed below, organized by scope.
@@ -39,25 +36,20 @@ All configurable parameters for each top-level scope are detailed below, organiz
 | ----- | ----------- | ------ |
 | `enabed` | Enable the 3rd party Grafana Installation | `true` |
 
+By default, if the grafana chart is enabled a sidecar is created to collect the dashboards and datasource configmaps.
+The dashboards will be deployed to grafana in the nuodb folder for ordId 1.
+
 ### influxdb.*
 
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
 | `enabed` | Enable the 3rd party InfluxDB Installation | `true` |
 
+
+By default, if the influxdb chart is enabled an initscript is created that will initialize an influxdb database named nuodb.
+
 ### config.*
 
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
 | `grafana.enabled` | Load NuoDB Dashboards on start | `true` |
-
-By default, if the grafana chart is enabled a sidecar is created to collect the dashboards and datasource configmaps.
-The dashboards will be deployed to grafana in the nuodb folder for ordId 1.
-
-Likewise by default, if the influxdb chart is enabled an initscript is created that will initialize an influxdb database named nuodb.
-
-
-
-
-
-
