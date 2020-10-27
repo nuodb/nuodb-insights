@@ -1,1 +1,0 @@
-../../../../../image/metrics_influx.py
