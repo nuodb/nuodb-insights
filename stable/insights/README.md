@@ -53,3 +53,13 @@ By default, if the influxdb chart is enabled an initscript is created that will 
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
 | `grafana.enabled` | Load NuoDB Dashboards on start | `true` |
+
+## Uninstalling the Chart
+
+To uninstall/delete the deployment:
+
+```bash
+helm del --purge insights
+```
+
+The command removes all the Kubernetes components associated with the chart and deletes the release.
