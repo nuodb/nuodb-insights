@@ -20,8 +20,7 @@ be optionally be compressed.  An example exists in the data directory.
 | conf      | dashboards and datasources for provisioning in grafana |
 | data      | contains an example monitor file to demonstrate batch loading |
 | deploy    | yaml configuration files for the monitor stack, nuoca setup and batch job for processing monitor output      |
-| doc       | contains png included in this README |
-| image     | scripts for batch processing, these are mounted into batch.job |
+| images    | contains png included in this README |
 | systemd   | files to set up nuoca to collect on bare metal |
 
 ## Dashboards
@@ -52,7 +51,7 @@ To run the stack of grafana, influxdb, and nuoca you can use `docker stack`.
 
 With _docker for desktop_ configure your docker stack to run in kubernetes.
 
-![Configure stack to use kubernetes](doc/docker-for-desktop.png)
+![Configure stack to use kubernetes](images/docker-for-desktop.png)
 
 You'll need to make some modifications to the compose file
 **deploy/monitor-stack.yaml** that is used to define the monitor stack
