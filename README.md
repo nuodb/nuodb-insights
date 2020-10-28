@@ -1,4 +1,8 @@
+<img src="images/nuodb.svg" width="200" height="200" /> 
+
 # NuoDB Insights - Visual Monitoring
+
+[![Build Status](https://travis-ci.com/nuodb/nuodb-insights.svg?token=nYo6yHzhBM9syBKXYk7y&branch=master)](https://travis-ci.com/nuodb/nuodb-insights)
 
 ## Introduction
 
