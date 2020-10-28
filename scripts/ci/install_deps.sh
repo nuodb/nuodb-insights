@@ -30,49 +30,9 @@ if [[ -n "$REQUIRES_MINIKUBE" ]]; then
   helm version
 
   kubectl version
-
-  # get the helm repo for upgrade testing
-  helm repo add nuodb https://storage.googleapis.com/nuodb-charts
-
-elif [[ -n "$REQUIRES_MINISHIFT" ]]; then
-  wget https://github.com/openshift/origin/releases/download/v3.11.0/openshift-origin-client-tools-v3.11.0-0cbc58b-linux-64bit.tar.gz -O /tmp/oc.tar.gz
-  tar xzf /tmp/oc.tar.gz -C /tmp --strip-components=1 && chmod +x /tmp/oc && sudo mv /tmp/oc /usr/local/bin
-
-  oc version
-
-  sudo apt install libvirt-bin qemu-kvm
-  sudo usermod -a -G libvirtd "$(whoami)"
-
-  curl -L https://github.com/dhiltgen/docker-machine-kvm/releases/download/v0.10.0/docker-machine-driver-kvm-ubuntu14.04 -o /tmp/docker-machine-driver-kvm
-  chmod +x /tmp/docker-machine-driver-kvm && sudo mv /tmp/docker-machine-driver-kvm /usr/local/bin
-
-  wget https://github.com/minishift/minishift/releases/download/v"${MINISHIFT_VERSION}"/minishift-"${MINISHIFT_VERSION}"-linux-amd64.tgz -O /tmp/minishift.tar.gz
-  tar xzf /tmp/minishift.tar.gz -C /tmp --strip-components=1 && chmod +x /tmp/minishift && sudo mv /tmp/minishift /usr/local/bin
-
-  sudo minishift start --openshift-version=v"${OPENSHIFT_VERSION}" --memory=8000 --cpus=4
-
-  oc login -u system:admin
-  oc status
-
-  kubectl cluster-info
-
-  kubectl -n kube-system create serviceaccount tiller-system
-  kubectl create clusterrolebinding tiller-system --clusterrole cluster-admin --serviceaccount=kube-system:tiller-system
-
-  helm version
-
-  kubectl version
-
-  # disable THP to match minikube
-  kubectl create namespace nuodb
-  kubectl -n nuodb create serviceaccount nuodb
-  oc apply -f deploy/nuodb-scc.yaml -n nuodb
-  oc adm policy add-scc-to-user nuodb-scc system:serviceaccount:nuodb:nuodb -n nuodb
-  oc adm policy add-scc-to-user nuodb-scc system:serviceaccount:nuodb:default -n nuodb
-  helm install stable/transparent-hugepage/ --namespace nuodb
-
-  # get the helm repo for upgrade testing
-  helm repo add nuodb https://storage.googleapis.com/nuodb-charts
 else
   echo "Skipping installation steps"
 fi
+
+echo "Downloading dependencies"
+helm dep update stable/insights
