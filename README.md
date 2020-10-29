@@ -25,7 +25,84 @@
 
 ## Quickstart with Docker compose
 
+For a complete example on how to set up the NuoDB domain with NuoDB Insights, you can use `docker compose`.
+This repository contains a Docker Compose file (`deploy/docker-compose.yml`) which will start:
+
+- 1 Admin Processes
+- 1 Storage Manager
+- 2 Transaction Engines
+- 2 NuoDB Collector containers (1 for SM, 1 for TE)
+- InfluxDB database
+- Grafana and NuoDB Dashboards
+
+Clone the NuoDB Collector repository and `cd` into it:
+
+```
+gitclone git@github.com:nuodb/nuodb-insights.git
+cd nuodb-insights
+```
+
+Then run `docker-compose up` to start the processes specified in the Docker Compose file:
+```
+docker-compose -f deploy/docker-compose.yml up -d
+```
+
+Stop processes started with `docker-compose up` by running the following command:
+
+```
+docker-compose -f deploy/docker-compose.yml down
+```
+
+If you already have a NuoDB domain running, and you only need NuoDB insights, you can use the `deploy/monitor-stack.yaml` file instead.
+
 ## Setup manually in Docker
+
+### Download the Docker Images
+
+```
+docker pull nuodb/nuodb-ce:latest
+docker pull nuodb/nuodb-collector:latest
+docker pull influxdb:latest
+docker pull grafana/grafana:latest
+```
+
+### Get NuoDB Insights
+```
+gitclone git@github.com:nuodb/nuodb-insights.git
+cd nuodb-insights
+```
+
+### Starting NuoDB Insights
+First, you should create a Docker network.
+All NuoDB components should be running on this network.
+```
+docker network create nuodb-net
+```
+
+Second, start an InfluxDB server.
+We will use an init script that will generate the required databases.
+
+```
+docker run -d --name influxdb \
+      --network nuodb-net \
+      -p 8086:8086 \
+      -p 8082:8082 \
+      -v $PWD/deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh \
+      influxdb:latest
+```
+
+As the final step, we will start Grafana with NuoDB dashboards.
+```
+docker run -d --name grafana \
+      --network nuodb-net \
+      -p 3000:3000 \
+      --env INFLUX_HOST=influxdb \
+      -v $PWD/conf/provisioning:/etc/grafana/provisioning \
+      grafana/grafana:latest
+```
+
+You can now start your NuoDB domain with the NuoDB Collector.
+For more info on how to start your domain, please refer to the [NuoDB Docker Blog Part I](https://nuodb.com/blog/deploy-nuodb-database-docker-containers-part-i) and the readme for [NuoDB Collector](https://github.com/nuodb/nuodb-collector).
 
 ## Setup in Kubernetes
 
@@ -43,7 +120,7 @@ This Helm project does not currently contain any `incubator` Charts.
 
 If you are new to Kubernetes and Helm please read the [high-level description](stable/README.md) of this Helm repository.
 
-If you are looking for specific configuration options see the [Insights Helm Chart Readme](stable/insights/README.md)
+If you are looking for specific configuration options see the [Insights Helm Chart Readme](stable/insights/README.md).
 
 ## Setup on Bare Metal
 

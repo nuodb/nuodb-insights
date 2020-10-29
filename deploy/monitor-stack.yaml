@@ -1,39 +1,20 @@
 version: '3'
 services:
   influxdb:
-    image: influxdb:alpine
-    labels:
-      - "owner=${USER}"
-    # ports:
-    #   - "8086:8086"
+    image: influxdb:latest
+    ports:
+      # The API for InfluxDB is served on port 8086
+      - "8086:8086"
+      - "8082:8082"
     volumes:
-      - ../lib/${USER}/influxdb:/var/lib/influxdb
       - ../deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
   grafana:
-    image: grafana/grafana:6.0.2
-    labels:
-      - "owner=${USER}"
+    image: grafana/grafana:latest
+    depends_on:
+      - influxdb
     environment:
       - INFLUX_HOST=influxdb
     volumes:
       - ../conf/provisioning:/etc/grafana/provisioning
     ports:
       - "3000:3000"
-#   nuoca:
-#     image: nuodb/nuodb-ce:latest
-#     labels:
-#       - "owner=${USER}"
-#     environment:
-#       - NUODB_API_SERVER=http://nuoadmin.local:8888
-#       - NUODB_INSIGHTS_KEY=/etc/nuodb/keys/nuocmd.pem
-#       - DOMAIN_USER=domain
-#       - DOMAIN_PASSWORD=bird
-#       - DOMAIN_BROKER=nuoagent.local
-#     command: [ "nuoca", "start" , "nuoca", "--collection-interval", "10", "--config-template", "/tmp/nuoca.yml.template" ]
-#     volumes:
-#       - ../deploy/nuoca.yml.nuoadmin:/tmp/nuoca.yml.template
-# #      - ../deploy/nuocmd.pem:/etc/nuodb/keys/nuocmd.pem
-# #      - ../deploy/nuoca.yml.nuoagent:/tmp/nuoca.yml.template
-networks:
-  default:
-    driver: bridge

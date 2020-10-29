@@ -1,0 +1,65 @@
+version: '3'
+services:
+  nuoadmin1:
+    image: nuodb/nuodb-ce:latest
+    environment:
+      NUODB_DOMAIN_ENTRYPOINT: nuoadmin1
+    hostname: nuoadmin1
+    command: [ "nuoadmin" ]
+  sm:
+    image: nuodb/nuodb-ce:latest
+    hostname: sm
+    environment:
+      NUOCMD_API_SERVER: https://nuoadmin1:8888
+    depends_on:
+      - nuoadmin1
+    command: [ "nuodocker", "start", "sm", "--db-name", "hockey", "--server-id", "nuoadmin1", "--dba-user", "dba", "--dba-password", "goalie" ]
+  te:
+    image: nuodb/nuodb-ce:latest
+    hostname: te
+    environment:
+      NUOCMD_API_SERVER: https://nuoadmin1:8888
+    depends_on:
+      - nuoadmin1
+      - sm
+    command: [ "nuodocker", "start", "te", "--db-name", "hockey", "--server-id", "nuoadmin1" ]
+  influxdb:
+    image: influxdb:latest
+    ports:
+      # The API for InfluxDB is served on port 8086
+      - "8086:8086"
+      - "8082:8082"
+    volumes:
+      - ../deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
+  nuocd-sm:
+    image: nuodb/nuodb-collector:latest
+    depends_on:
+      - nuoadmin1
+      - sm
+      - influxdb
+    environment:
+      INFLUXURL: http://influxdb:8086
+      NUOCMD_API_SERVER: https://nuoadmin1:8888
+      NUOCD_HOSTNAME: sm
+    pid: 'service:sm'
+  nuocd-te:
+    image: nuodb/nuodb-collector:latest
+    depends_on:
+      - nuoadmin1
+      - sm
+      - influxdb
+    environment:
+      INFLUXURL: http://influxdb:8086
+      NUOCMD_API_SERVER: https://nuoadmin1:8888
+      NUOCD_HOSTNAME: te
+    pid: 'service:te'
+  grafana:
+    image: grafana/grafana:latest
+    depends_on:
+      - influxdb
+    environment:
+      - INFLUX_HOST=influxdb
+    volumes:
+      - ../conf/provisioning:/etc/grafana/provisioning
+    ports:
+      - "3000:3000"
