@@ -63,3 +63,13 @@ services:
       - ../conf/provisioning:/etc/grafana/provisioning
     ports:
       - "3000:3000"
+  ycsb-demo:
+    image: nuodb/ycsb:latest
+    depends_on:
+      - te
+    environment:
+      PEER_ADDRESS: nuoadmin1
+      DB_NAME: hockey
+      DB_USER: dba
+      DB_PASSWORD: goalie
+    command: ["/driver/startup.sh"]

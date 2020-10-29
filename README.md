@@ -32,8 +32,9 @@ This repository contains a Docker Compose file (`deploy/docker-compose.yml`) whi
 - 1 Storage Manager
 - 2 Transaction Engines
 - 2 NuoDB Collector containers (1 for SM, 1 for TE)
-- InfluxDB database
-- Grafana and NuoDB Dashboards
+- 1 InfluxDB database
+- 1 Grafana and NuoDB Dashboards
+- 1 YCSB Demo Workload
 
 Clone the NuoDB Collector repository and `cd` into it:
 
@@ -103,6 +104,18 @@ docker run -d --name grafana \
 
 You can now start your NuoDB domain with the NuoDB Collector.
 For more info on how to start your domain, please refer to the [NuoDB Docker Blog Part I](https://nuodb.com/blog/deploy-nuodb-database-docker-containers-part-i) and the readme for [NuoDB Collector](https://github.com/nuodb/nuodb-collector).
+
+You can use the example NuoDB YCSB workload generator to explore the various dashboards.
+```
+docker run -dit --name ycsb1 \
+      --hostname ycsb1 \
+      --network nuodb-net \
+      --env PEER_ADDRESS=nuoadmin1 \
+      --env DB_NAME=test \
+      --env DB_USER=dba \
+      --env DB_PASSWORD=goalie \
+      nuodb/ycsb:latest /driver/startup.sh
+```
 
 ## Setup in Kubernetes
 
