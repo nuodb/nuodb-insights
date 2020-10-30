@@ -5,6 +5,7 @@ go 1.14
 require (
 	cloud.google.com/go v0.61.0 // indirect
 	github.com/aws/aws-sdk-go v1.33.9 // indirect
+	github.com/docker/docker v17.12.0-ce-rc1.0.20200916142827-bd33bbf0497b+incompatible
 	github.com/ghodss/yaml v1.0.0
 	github.com/go-errors/errors v1.1.1 // indirect
 	github.com/google/go-cmp v0.5.0
