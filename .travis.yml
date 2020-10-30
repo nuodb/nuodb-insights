@@ -13,7 +13,7 @@ services:
 
 env:
   jobs:
-    - TEST_SUITE=minikube REQUIRES_MINIKUBE=true
+    - TEST_SUITE=Kubernetes
     - TEST_SUITE=docker
   global:
     - HELM_VERSION="v3.2.4"
