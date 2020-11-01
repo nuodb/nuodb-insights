@@ -22,7 +22,7 @@ influxdb:
   enabled: true
   # For complete list of configuration options for  
   # influxdb see the documentation @ https://github.com/influxdata/helm-charts/tree/master/charts/influxdb
-  # the initScript here is to initialize a database for metrics from nuocd.
+  # the initScript here is to initialize a database for metrics from nuocollector.
   initScripts:
     enabled: true
     scripts:
@@ -50,3 +50,9 @@ config:
       addons:
         database: telegraf
         timeInterval: 10s
+  # Configure the NuoDB collector daemon.  A sidecar that collects metrics from the engine process and
+  # forwards to configurable output.
+  nuocollector:
+    # enabled: false - will not setup nuocollector configuration  set to false when starting grafana and insights
+    #                  only - say in a different namespace.
+    enabled: true
