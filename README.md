@@ -36,10 +36,10 @@ This repository contains a Docker Compose file (`deploy/docker-compose.yml`) whi
 - 1 Grafana and NuoDB Dashboards
 - 1 YCSB Demo Workload
 
-Clone the NuoDB Collector repository and `cd` into it:
+Clone the NuoDB Insights repository and `cd` into it:
 
 ```
-gitclone git@github.com:nuodb/nuodb-insights.git
+git clone https://github.com/nuodb/nuodb-insights.git
 cd nuodb-insights
 ```
 
@@ -69,7 +69,7 @@ docker pull grafana/grafana:latest
 
 ### Get NuoDB Insights
 ```
-gitclone git@github.com:nuodb/nuodb-insights.git
+git clone https://github.com/nuodb/nuodb-insights.git
 cd nuodb-insights
 ```
 
@@ -136,6 +136,57 @@ If you are new to Kubernetes and Helm please read the [high-level description](s
 If you are looking for specific configuration options see the [Insights Helm Chart Readme](stable/insights/README.md).
 
 ## Setup on Bare Metal
+
+The following installation instructions apply to RedHat and CentOS distributions. For other platforms, see [InfluxDB](https://docs.influxdata.com/influxdb/latest/introduction/install/) and [Grafana](https://grafana.com/docs/grafana/latest/installation/) installation instructions.
+
+### 1) Download and install `influxdb`
+
+First install `influxdb` on some host (the same one referred to by `<hostinflux>` in the [NuoDB Collector](https://github.com/nuodb/nuodb-collector#configuration) installation instructions).
+
+```
+wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.3.x86_64.rpm
+sudo yum localinstall -y influxdb-1.8.3.x86_64.rpm
+sudo systemctl start influxdb
+```
+
+If not using `systemd`, `influxdb` can be started directly as follows:
+
+```
+env $(cat /etc/default/influxdb | xargs) influxd -config /etc/influxdb/influxdb.conf
+```
+
+### 2) Download and install `grafana` with NuoDB-Insights dashboards
+
+On some host, install `grafana` and configure it to use the NuoDB-Insights dashboards.
+
+```
+wget https://dl.grafana.com/oss/release/grafana-7.3.1-1.x86_64.rpm
+sudo yum localinstall -y grafana-7.3.1-1.x86_64.rpm
+
+git clone https://github.com/nuodb/nuodb-insights.git
+rm -rf /etc/grafana/provisioning
+cp -r nuodb-insights/conf/provisioning /etc/grafana/
+```
+
+Once installed, `grafana` can be started with `influxdb` as a datasource by using the `INFLUX_HOST` environment variable.
+
+```
+echo "export INFLUX_HOST=<hostinflux>" >> /etc/sysconfig/grafana-server
+sudo systemctl daemon-reload
+sudo systemctl start grafana-server
+```
+
+If not using `systemd`, `grafana` can be started as follows:
+
+```
+sudo /etc/rc.d/init.d/grafana-server start
+```
+
+### 3) Install NuoDB Collector on all hosts with database processes
+
+See the instructions for installing [NuoDB Collector](https://github.com/nuodb/nuodb-collector#setup-on-bare-metal) on bare-metal. NuoDB Collector should be set up on all hosts that have database processes.
+
+Once all components have been set up, NuoDB performance can be visualized by navigating to `http://<hostgrafana>:3000` where `<hostgrafana>` is the host that the Grafana server was started on.
 
 ## Status of the Project
 
