@@ -53,6 +53,6 @@ config:
   # Configure the NuoDB collector daemon.  A sidecar that collects metrics from the engine process and
   # forwards to configurable output.
   nuocollector:
-    # enabled: false - will not setup nuocollector configuration  set to false when starting grafana and insights
+    # enabled: false - will not setup nuocollector configuration; set to false when starting grafana and insights
     #                  only - say in a different namespace.
     enabled: true
