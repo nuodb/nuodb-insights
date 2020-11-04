@@ -7,7 +7,7 @@ keywords:
 - nuodb
 - influxdb
 - grafana
-home: https://github.com/nuodb/nuodb-dashboards-influx/stable/insights
+home: https://github.com/nuodb/nuodb-insights/stable/insights
 maintainers:
 - name: NuoDB
   email: support@nuodb.com

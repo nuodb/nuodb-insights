@@ -44,6 +44,7 @@ The dashboards will be deployed to grafana in the nuodb folder for ordId 1.
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
 | `enabed` | Enable the 3rd party InfluxDB Installation | `true` |
+| `host` | FQDN of InfluxDB in case it is installed in different namespace | `nil` |
 
 
 By default, if the influxdb chart is enabled an initscript is created that will initialize an influxdb database named nuodb.
@@ -53,6 +54,7 @@ By default, if the influxdb chart is enabled an initscript is created that will 
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
 | `grafana.enabled` | Load NuoDB Dashboards on start | `true` |
+| `nuocollector.enabled` | Create NuoDB collector output plugin for InfluxDB | `true` |
 
 ## Uninstalling the Chart
 
