@@ -61,7 +61,7 @@ By default, if the influxdb chart is enabled an initscript is created that will 
 To uninstall/delete the deployment:
 
 ```bash
-helm delete <releaseName>
+helm del --purge insights
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.
