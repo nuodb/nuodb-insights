@@ -8,7 +8,7 @@ This chart starts a NuoDB Insights deployment on a Kubernetes cluster using the 
 
 | Software   | Release Requirements                           | 
 |------------|------------------------------------------------|
-| Kubernetes |  1.15 or newer |
+| Kubernetes |  The latest and previous minor versions of Kubernetes. For example, if the latest minor release of Kubernetes is 1.16 then 1.16 and 1.15 are offically supported. Charts may still work on previous versions of Kubernertes even though they are outside the target support window. To provide that support the API versions of objects should be those that work for both the latest minor release and the previous one.|
 | Managed Kubernetes Distributions |  OpenShift 4.x, Google GKE, Amazon EKS, Azure AKS, or Rancher RKE. Charts may also work on other Kubernetes distributions. The distributions listed here are tested regularly. |
 | Helm       |  Version 2 and 3 are supported, v2.9 or greater. v3.2 is the main development environment   |
 | NuoDB      |  Version [4.0.4](https://hub.docker.com/r/nuodb/nuodb-ce/tags) and onwards. |
@@ -20,48 +20,45 @@ This chart starts a NuoDB Insights deployment on a Kubernetes cluster using the 
 helm install nuodb/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
 ```
 
-## Grafana Default Password
-By default, Grafana generates a random password when the instance is started.
-To retrieve the password, you can read the Kubernetes secret as such:
-```
-kubectl get secret <grafana-secret-name>  -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
-```
-
 ## Installing the Chart
+
 All configurable parameters for each top-level scope are detailed below, organized by scope.
 
 ### grafana.*
 
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
-| `enabed` | Enable the 3rd party Grafana Installation | `true` |
+| `enabled` | Enable the 3rd party Grafana Installation | `true` |
 
+For a complete list of configuration variables supported by the 3-rd party chart refer to [Grafana Helm Chart](https://github.com/grafana/helm-charts/tree/main/charts/grafana).
 By default, if the grafana chart is enabled a sidecar is created to collect the dashboards and datasource configmaps.
-The dashboards will be deployed to grafana in the nuodb folder for ordId 1.
+The dashboards will be deployed to grafana in `/var/lib/grafana/dashboards/nuodb` and `/var/lib/grafana/dashboards/nuodb` directories with `orgId` of 1.
 
 ### influxdb.*
 
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
-| `enabed` | Enable the 3rd party InfluxDB Installation | `true` |
-| `host` | FQDN of InfluxDB in case it is installed in different namespace | `nil` |
+| `enabled` | Enable the 3rd party InfluxDB Installation | `true` |
+| `host` | InfluxDB FQDN in case it is installed in different namespace | `nil` |
+| `port` | InfluxDB port in case it is installed in different namespace | `8086` |
 
+For a complete list of configuration variables supported by the 3-rd party chart refer to [InfluxDB Helm Chart](https://github.com/influxdata/helm-charts/tree/master/charts/influxdb).
+By default, if the influxdb chart is enabled `init-nuodb.sh` is created that will initialize all InfluxDB databases used by NuoDB Insights.
 
-By default, if the influxdb chart is enabled an initscript is created that will initialize an influxdb database named nuodb.
-
-### config.*
+### insights.*
 
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
 | `grafana.enabled` | Load NuoDB Dashboards on start | `true` |
 | `nuocollector.enabled` | Create NuoDB collector output plugin for InfluxDB | `true` |
 
+
 ## Uninstalling the Chart
 
 To uninstall/delete the deployment:
 
 ```bash
-helm del --purge insights
+helm delete <releaseName>
 ```
 
 The command removes all the Kubernetes components associated with the chart and deletes the release.

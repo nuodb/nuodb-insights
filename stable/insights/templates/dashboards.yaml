@@ -20,7 +20,7 @@ data:
 
 {{ range $path, $bytes := .Files.Glob "files/dashboards.ext/*/*.json" }}
 {{ $subdir := base (dir $path) }}
-{{- if and $.Values.config.grafana.dashboards (has $subdir $.Values.config.grafana.dashboards) }}
+{{- if and $.Values.insights.grafana.dashboards (has $subdir $.Values.insights.grafana.dashboards) }}
 ---
 apiVersion: v1
 kind: ConfigMap

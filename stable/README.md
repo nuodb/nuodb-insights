@@ -57,12 +57,10 @@ You are now ready to install the NuoDB components.
 
 # Deploying NuoDB using Helm Charts
 
-The minimal suppported version of NuoDB and the NuoDB helm charts is specified in the [Insights Helm Chart Readme](insights/README.md).
+The minimal supported version of NuoDB and the NuoDB helm charts is specified in the [Insights Helm Chart Readme](insights/README.md).
 
 For steps to install the NuoDB database please read the documentation in the [NuoDB Helm Charts][8] repository.
-All components must be installed in the same namespace.
-At a bare minimum you will need the [Admin Chart](https://github.com/nuodb/nuodb-helm-charts/stable/admin) and at least one [Database Chart](https://github.com/nuodb/nuodb-helm-charts/stable/database).
-The Database chart will have to be started with `global.insights.enabled`.
+At a bare minimum you will need the [Admin Chart](https://github.com/nuodb/nuodb-helm-charts/tree/master/stable/admin) and at least one [Database Chart](https://github.com/nuodb/nuodb-helm-charts/tree/master/stable/database). They have to be installed with `nuocollector.enabled` set to `true`.
 
 # Deploying NuoDB Insights using Helm Charts
 
@@ -70,7 +68,7 @@ The following section outlines the steps in order to deploy NuoDB Insights using
 
 ## Configuration Parameters
 
-The `Insights` Helm Chart has a default [`values.yaml`](insights/values.yaml) parameter file that contains configuration parameters specific to that chart.
+The `insights` Helm Chart has a default [`values.yaml`](insights/values.yaml) parameter file that contains configuration parameters specific to that chart.
 For configuration options please see the [Insights Helm Chart Readme](insights/README.md).
 
 ## Deployment Steps
@@ -104,8 +102,8 @@ helm install nuodb/insights [--generate-name | --name releaseName] [--set parame
 
 Clone NuoDB Insights and cd into it:
 ```
-$ git clone git@github.com:nuodb/nuodb-helm-charts.git
-$ cd monitoring-influx
+$ git clone https://github.com/nuodb/nuodb-insights
+$ cd nuodb-insights
 ```
 
 In order to use this helm chart locally you will need to first update the dependencies:
@@ -116,6 +114,51 @@ $ helm dep update stable/insights
 You can now install the chart:
 ```
 helm install stable/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
+```
+
+### Installing in different namespace
+
+If NuoDB Insights is installed in the same namespace with NuoDB database, no additional steps are needed.
+Otherwise it is required to create NuoDB Collector configuration for Insights in all namespaces where NuoDB admin and database services are running. This can be done by installing the chart and setting `insights.influxdb.host` to the InfluxDB fully qualified domain name. For example:
+
+```bash
+helm install nuodb/insights --generate-name -n nuodb \
+  --set grafana.enabled=false \
+  --set influxdb.enabled=false \
+  --set insights.grafana.enabled=false \
+  --set influxdb.host=<InfluxDB FQDN> \
+  --set insights.nuocollector.enabled=true
+```
+
+## Accessing NuoDB Insights
+
+By default Grafana will be available within the Kubernetes cluster via ClusterIP service. One way to access Grafana dashboards is to use port forwarding and navigate to http://localhost:8080/.
+
+```
+kubectl port-forward service/<release-name>-grafana 8080:80
+```
+
+Grafana 3-rd party chart supports ingress with Grafana 6.3 and above. Configure ingress during NuoDB Insights chart installation and navigate to one of the hosts specified in `grafana.ingress.hosts` variable.
+For example:
+
+```
+helm install insights nuodb/insights -n nuodb \
+  --set grafana.ingress.enabled=true \
+  --set grafana.ingress.hosts='{"insights.example.com"}'
+```
+
+For OCP deployments the service can be exposed via route.
+
+```
+oc expose svc/<release-name>-grafana
+```
+
+### Grafana Default Password
+
+By default, Grafana generates a random password when the instance is started.
+To retrieve the password, you can read the Kubernetes secret as such:
+```
+kubectl get secret <release-name>-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
 
 ## Cleanup

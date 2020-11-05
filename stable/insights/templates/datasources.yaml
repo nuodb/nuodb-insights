@@ -1,6 +1,6 @@
 {{ $namespace := include "insights.namespace" $ }}
 {{- if ne $namespace "!" -}}
-{{- range $key, $val := .Values.config.grafana.datasources }}
+{{- range $key, $val := .Values.insights.grafana.datasources }}
 ---
 apiVersion: v1
 kind: ConfigMap
