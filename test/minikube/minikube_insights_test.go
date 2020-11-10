@@ -119,7 +119,12 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 	adminReleaseName, namespaceName := testlib.StartAdmin(t, &options, 1, "")
 	admin0 := fmt.Sprintf("%s-nuodb-cluster0-0", adminReleaseName)
 	testlib.StartDatabase(t, namespaceName, admin0, &options)
-	helmChartReleaseName, _ := StartInsights(t, &helm.Options{}, namespaceName)
+	helmChartReleaseName, _ := StartInsights(t, &helm.Options{
+		SetValues: map[string]string{
+			// Disable Grafana as we don't use it in this test
+			"grafana.enabled": "false",
+		},
+	}, namespaceName)
 	testlib.StartYCSBWorkload(t, namespaceName, &options)
 
 	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
