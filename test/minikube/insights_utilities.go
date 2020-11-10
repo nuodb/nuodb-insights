@@ -14,7 +14,6 @@ import (
 	"github.com/gruntwork-io/terratest/modules/k8s"
 	"github.com/gruntwork-io/terratest/modules/random"
 	"github.com/nuodb/nuodb-helm-charts/test/testlib"
-	"github.com/stretchr/testify/require"
 	v1 "k8s.io/api/core/v1"
 )
 
@@ -90,12 +89,10 @@ func InjectNuoDBHelmChartsVersion(t *testing.T, options *helm.Options) {
 	}
 }
 
-func ExcuteInfluxDBQuery(t *testing.T, namespace string, influxPodName string, query string, influxArgs ...string) string {
+func ExcuteInfluxDBQueryE(t *testing.T, namespace string, influxPodName string, query string, influxArgs ...string) (string, error) {
 	kubectlOptions := k8s.NewKubectlOptions("", "", namespace)
 	var kubectlArgs []string
 	kubectlArgs = append(kubectlArgs, "exec", influxPodName, "--", "influx", "-execute", query)
 	kubectlArgs = append(kubectlArgs, influxArgs...)
-	output, err := k8s.RunKubectlAndGetOutputE(t, kubectlOptions, kubectlArgs...)
-	require.NoError(t, err)
-	return output
+	return k8s.RunKubectlAndGetOutputE(t, kubectlOptions, kubectlArgs...)
 }

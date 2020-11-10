@@ -41,7 +41,11 @@ func checkMetricPresent(t *testing.T, namespace string, influxPodName string, in
 		// There is no db tag for nuodb_thread measurement
 		queryString = fmt.Sprintf("%s and %s = '%s'", queryString, dbTagName, database)
 	}
-	output := ExcuteInfluxDBQuery(t, namespace, influxPodName, queryString, "-database", influxDatabase, "-format", "csv")
+	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, queryString, "-database", influxDatabase, "-format", "csv")
+	if err != nil {
+		t.Logf("Unexpected error received from InfluxDB: %s", err)
+		return false
+	}
 	lines := strings.Split(output, "\n")
 	if len(lines) > 1 {
 		// The output format will be `name,time,count`
@@ -56,17 +60,32 @@ func checkMetricPresent(t *testing.T, namespace string, influxPodName string, in
 	return false
 }
 
-func checkMeasurementPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string, measurement string) bool {
-	output := ExcuteInfluxDBQuery(t, namespace, influxPodName, "show measurements", "-database", influxDatabase)
-	if strings.Contains(output, measurement) {
-		t.Logf("Measurement %s in database %s found", measurement, influxDatabase)
-		return true
+func checkMeasurementsPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string, measurements []string) bool {
+	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, "show measurements", "-database", influxDatabase)
+	if err != nil {
+		t.Logf("Unexpected error received from InfluxDB: %s", err)
+		return false
 	}
-	return false
+	matches := 0
+	for _, m := range measurements {
+		if strings.Contains(output, m) {
+			t.Logf("Measurement %s in database %s found", m, influxDatabase)
+			matches++
+		}
+	}
+	return len(measurements) == matches
+}
+
+func verifyMeasurementsPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string,
+	measurements []string, timeout time.Duration) {
+	testlib.Await(t, func() bool {
+		return checkMeasurementsPresent(t, namespace, influxPodName, influxDatabase, measurements)
+	}, timeout)
 }
 
 func verifyNuoDBDatabasesPresent(t *testing.T, namespace string, influxPodName string) {
-	output := ExcuteInfluxDBQuery(t, namespace, influxPodName, "show databases")
+	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, "show databases")
+	require.NoError(t, err)
 	assert.Contains(t, output, "nuodb")
 	assert.Contains(t, output, "nuodb_internal")
 	assert.Contains(t, output, "nuolog")
@@ -75,9 +94,6 @@ func verifyNuoDBDatabasesPresent(t *testing.T, namespace string, influxPodName s
 
 func verifyEngineMetricsPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string,
 	measurement string, database string, metric string, timeout time.Duration) {
-	testlib.Await(t, func() bool {
-		return checkMeasurementPresent(t, namespace, influxPodName, influxDatabase, measurement)
-	}, timeout)
 	options := k8s.NewKubectlOptions("", "", namespace)
 	pods := k8s.ListPods(t, options, metav1.ListOptions{
 		LabelSelector: fmt.Sprintf("database=%s,component in (sm, te)", database),
@@ -128,7 +144,7 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 	}
 	InjectNuoDBHelmChartsVersion(t, &options)
 
-	adminReleaseName, namespaceName := testlib.StartAdmin(t, &options, 1, "")
+	adminReleaseName, namespaceName := testlib.StartAdmin(t, &helm.Options{}, 1, "")
 	admin0 := fmt.Sprintf("%s-nuodb-cluster0-0", adminReleaseName)
 	testlib.StartDatabase(t, namespaceName, admin0, &options)
 	helmChartReleaseName, _ := StartInsights(t, &helm.Options{
@@ -145,6 +161,8 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 
 	t.Run("verifyNuoDBMetricsStored", func(t *testing.T) {
 		// Verify 6 out of 190+ measurements
+		verifyMeasurementsPresent(t, namespaceName, influxPodName, "nuodb",
+			[]string{"Objects", "SqlListenerThrottleTime", "CurrentCommittedTransactions", "PercentCpuTime", "ChairmanMigration", "Summary.CPU"}, 60*time.Second)
 		// Objects measurement has unit type 1 (MONITOR_COUNT)
 		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Objects", "demo", "raw", 60*time.Second)
 		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Objects", "demo", "rate", 60*time.Second)
@@ -179,6 +197,8 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 	})
 
 	t.Run("verifyNuoDBInternalMetricsStored", func(t *testing.T) {
+		verifyMeasurementsPresent(t, namespaceName, influxPodName, "nuodb_internal",
+			[]string{"nuodb_msgtrace", "nuodb_thread", "nuodb_synctrace"}, 60*time.Second)
 		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb_internal", "nuodb_msgtrace", "demo", "maxStallTime", 60*time.Second)
 		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb_internal", "nuodb_thread", "demo", "stime", 60*time.Second)
 		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb_internal", "nuodb_synctrace", "demo", "numLocks", 60*time.Second)
