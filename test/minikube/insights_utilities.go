@@ -63,17 +63,19 @@ func startInsightsTemplate(t *testing.T, options *helm.Options, namespace string
 		helm.Delete(t, options, helmChartReleaseName, true)
 	})
 
-	testlib.AwaitNrReplicasScheduled(t, namespaceName, "grafana", 1)
-	grafanaPodName := testlib.GetPodName(t, namespaceName, "grafana")
-	testlib.AwaitPodUp(t, namespaceName, grafanaPodName, 300*time.Second)
-	go testlib.GetAppLog(t, namespaceName, grafanaPodName, "datasources",
-		&v1.PodLogOptions{Follow: true, Container: "grafana-sc-datasources"})
-
-	testlib.AwaitNrReplicasScheduled(t, namespaceName, "influxdb", 1)
-	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
-	testlib.AwaitPodUp(t, namespaceName, influxPodName, 300*time.Second)
-	go testlib.GetAppLog(t, namespaceName, influxPodName, "", &v1.PodLogOptions{Follow: true})
-
+	if options.SetValues["grafana.enabled"] != "false" {
+		testlib.AwaitNrReplicasScheduled(t, namespaceName, "grafana", 1)
+		grafanaPodName := testlib.GetPodName(t, namespaceName, "grafana")
+		testlib.AwaitPodUp(t, namespaceName, grafanaPodName, 300*time.Second)
+		go testlib.GetAppLog(t, namespaceName, grafanaPodName, "datasources",
+			&v1.PodLogOptions{Follow: true, Container: "grafana-sc-datasources"})
+	}
+	if options.SetValues["influxdb.enabled"] != "false" {
+		testlib.AwaitNrReplicasScheduled(t, namespaceName, "influxdb", 1)
+		influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
+		testlib.AwaitPodUp(t, namespaceName, influxPodName, 300*time.Second)
+		go testlib.GetAppLog(t, namespaceName, influxPodName, "", &v1.PodLogOptions{Follow: true})
+	}
 	return
 }
 
