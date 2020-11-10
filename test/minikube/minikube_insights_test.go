@@ -124,6 +124,11 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 
 	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
 
+	// DEBUG
+	kubectlOptions := k8s.NewKubectlOptions("", "", namespaceName)
+	k8s.RunKubectlAndGetOutputE(t, kubectlOptions, "get", "pods", "-o", "wide")
+	ExcuteInfluxDBQuery(t, namespaceName, influxPodName, "show measurements", "-database", "nuodb")
+
 	t.Run("verifyNuoDBMetricsStored", func(t *testing.T) {
 		// Verify 6 out of 190+ measurements
 		// Objects measurement has unit type 1 (MONITOR_COUNT)
