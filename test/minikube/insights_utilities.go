@@ -2,16 +2,18 @@ package minikube
 
 import (
 	"fmt"
-	"github.com/gruntwork-io/terratest/modules/helm"
-	"github.com/gruntwork-io/terratest/modules/k8s"
-	"github.com/gruntwork-io/terratest/modules/random"
-	"github.com/nuodb/nuodb-helm-charts/test/testlib"
-	v1 "k8s.io/api/core/v1"
 	"path/filepath"
 	"runtime"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/gruntwork-io/terratest/modules/helm"
+	"github.com/gruntwork-io/terratest/modules/k8s"
+	"github.com/gruntwork-io/terratest/modules/random"
+	"github.com/nuodb/nuodb-helm-charts/test/testlib"
+	"github.com/stretchr/testify/require"
+	v1 "k8s.io/api/core/v1"
 )
 
 func getFunctionCallerName() string {
@@ -28,7 +30,7 @@ func StartInsights(t *testing.T, options *helm.Options, namespace string) (strin
 		if options.Version == "" {
 			helm.Install(t, options, INSIGHTS_HELM_CHART_PATH, helmChartReleaseName)
 		} else {
-			helm.Install(t, options, "nuodb/admin ", helmChartReleaseName)
+			helm.Install(t, options, "nuodb/insights ", helmChartReleaseName)
 		}
 	})
 }
@@ -71,4 +73,14 @@ func startInsightsTemplate(t *testing.T, options *helm.Options, namespace string
 	go testlib.GetAppLog(t, namespaceName, influxPodName, "", &v1.PodLogOptions{Follow: true})
 
 	return
+}
+
+func ExcuteInfluxDBQuery(t *testing.T, namespace string, influxPodName string, query string, influxArgs ...string) string {
+	kubectlOptions := k8s.NewKubectlOptions("", "", namespace)
+	var kubectlArgs []string
+	kubectlArgs = append(kubectlArgs, "exec", influxPodName, "--", "influx", "-execute", query)
+	kubectlArgs = append(kubectlArgs, influxArgs...)
+	output, err := k8s.RunKubectlAndGetOutputE(t, kubectlOptions, kubectlArgs...)
+	require.NoError(t, err)
+	return output
 }

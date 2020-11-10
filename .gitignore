@@ -3,6 +3,11 @@ lib
 **/*.tgz
 **/Chart.lock
 
-stable/charts/*
+stable/insights/charts/*
+stable/admin
+stable/database
+incubator/demo-ycsb
+
+results/
 
 .idea/

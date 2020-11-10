@@ -27,6 +27,25 @@ if [[ $TEST_SUITE = "Kubernetes"  ]]; then
 
   echo "Downloading dependencies"
   helm dep update stable/insights
+
+  # Use NuoDB helm charts for integration testing
+  if [[ $NUODB_HELM_CHARTS_VERSION =~ ^([0-9]+\.?){1,3}$ ]]; then
+    # Use already released chart versions
+    echo "Testing with NuoDB Helm Charts v${NUODB_HELM_CHARTS_VERSION}"
+    helm repo add nuodb https://storage.googleapis.com/nuodb-charts
+  else
+    git clone https://github.com/nuodb/nuodb-helm-charts ../nuodb-helm-charts
+    pushd ../nuodb-helm-charts
+    git checkout "${NUODB_HELM_CHARTS_VERSION}"
+    echo "--- Checked out nuodb-helm-charts branch $(git rev-parse --abbrev-ref HEAD):\n\n$(git log -n1 HEAD)"
+    popd
+    # Create symbolic links so that `testlib` can install local charts
+    ln -s ${PWD}/../nuodb-helm-charts/stable/admin stable/admin
+    ln -s ${PWD}/../nuodb-helm-charts/stable/database stable/database
+    mkdir incubator
+    ln -s ${PWD}/../nuodb-helm-charts/incubator/demo-ycsb incubator/demo-ycsb
+  fi
+
 elif [[ $TEST_SUITE = "docker"  ]]; then
   docker version
   docker-compose version
