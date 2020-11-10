@@ -2,7 +2,6 @@ package minikube
 
 import (
 	"fmt"
-	"os"
 	"strconv"
 	"strings"
 	"testing"
@@ -106,7 +105,6 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 	defer testlib.Teardown(testlib.TEARDOWN_YCSB)
 
 	options := helm.Options{
-		Version: os.Getenv("NUODB_HELM_CHARTS_VERSION"),
 		SetValues: map[string]string{
 			"nuocollector.enabled":                  "true",
 			"database.sm.resources.requests.cpu":    testlib.MINIMAL_VIABLE_ENGINE_CPU,
@@ -116,6 +114,7 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 			"ycsb.replicas":                         "1",
 		},
 	}
+	InjectNuoDBHelmChartsVersion(t, &options)
 
 	adminReleaseName, namespaceName := testlib.StartAdmin(t, &options, 1, "")
 	admin0 := fmt.Sprintf("%s-nuodb-cluster0-0", adminReleaseName)

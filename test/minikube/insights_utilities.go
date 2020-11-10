@@ -2,7 +2,9 @@ package minikube
 
 import (
 	"fmt"
+	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"testing"
@@ -73,6 +75,17 @@ func startInsightsTemplate(t *testing.T, options *helm.Options, namespace string
 	go testlib.GetAppLog(t, namespaceName, influxPodName, "", &v1.PodLogOptions{Follow: true})
 
 	return
+}
+
+func InjectNuoDBHelmChartsVersion(t *testing.T, options *helm.Options) {
+	if options.Version == "" {
+		version := os.Getenv("NUODB_HELM_CHARTS_VERSION")
+		if matched, _ := regexp.MatchString(`^([0-9]+\.?){1,3}$`, version); matched {
+			// Use already released version
+			t.Logf("Testing with NuoDB Helm Charts v%s", version)
+			options.Version = version
+		}
+	}
 }
 
 func ExcuteInfluxDBQuery(t *testing.T, namespace string, influxPodName string, query string, influxArgs ...string) string {

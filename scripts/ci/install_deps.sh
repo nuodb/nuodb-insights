@@ -40,7 +40,7 @@ if [[ $TEST_SUITE = "Kubernetes"  ]]; then
       # Checkout revision/branch/tag if specified; otherwise use latest master
       git checkout "${NUODB_HELM_CHARTS_VERSION}"
     fi
-    echo "--- Checked out nuodb-helm-charts branch $(git rev-parse --abbrev-ref HEAD):\n\n$(git log -n1 HEAD)"
+    echo -e "--- Checked out nuodb-helm-charts branch $(git rev-parse --abbrev-ref HEAD):\n\n$(git log -n1 HEAD)"
     popd
     # Create symbolic links so that `testlib` can install local charts
     ln -s ${PWD}/../nuodb-helm-charts/stable/admin stable/admin

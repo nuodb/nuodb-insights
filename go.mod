@@ -14,7 +14,7 @@ require (
 	github.com/gruntwork-io/terratest v0.28.10
 	github.com/imdario/mergo v0.3.10 // indirect
 	github.com/json-iterator/go v1.1.10 // indirect
-	github.com/nuodb/nuodb-helm-charts v0.0.0-20201016212455-bb81fa7b4827
+	github.com/nuodb/nuodb-helm-charts v0.0.0-20201109214733-c8bc2399a12e
 	github.com/otiai10/copy v1.2.0
 	github.com/stretchr/testify v1.6.1
 	golang.org/x/crypto v0.0.0-20200709230013-948cd5f35899 // indirect

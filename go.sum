@@ -330,6 +330,8 @@ github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRW
 github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f/go.mod h1:ZdcZmHo+o7JKHSa8/e818NopupXU1YMK5fe1lsApnBw=
 github.com/nuodb/nuodb-helm-charts v0.0.0-20201016212455-bb81fa7b4827 h1:aXtRoqqAOoVVOuA1ztSwtYRBBt8tH9LrNFyp510RfsQ=
 github.com/nuodb/nuodb-helm-charts v0.0.0-20201016212455-bb81fa7b4827/go.mod h1:HQ5WD9+PAbhzXfNfz0YOYHAGVcoCgid3i1Svxr3V2W0=
+github.com/nuodb/nuodb-helm-charts v0.0.0-20201109214733-c8bc2399a12e h1:XTQlSR0wKuPK0kp9EQ3h6MmZ33VsY0vTkLAtc6Mkr1Y=
+github.com/nuodb/nuodb-helm-charts v0.0.0-20201109214733-c8bc2399a12e/go.mod h1:HQ5WD9+PAbhzXfNfz0YOYHAGVcoCgid3i1Svxr3V2W0=
 github.com/nuodb/nuodb-helm-charts v2.4.1+incompatible h1:7BGifiVPuKP49qFVKQcS1LmlXBl5mJJZmC33dHxGP7Q=
 github.com/nuodb/nuodb-helm-charts v2.4.1+incompatible/go.mod h1:kc+jpeo445+nDvFmSfyxo8EbFKw1ggxB3ocyeM+bJ2g=
 github.com/olekukonko/tablewriter v0.0.0-20170122224234-a0225b3f23b5/go.mod h1:vsDQFd/mU46D+Z4whnwzcISnGGzXWMclvtLoiIKAKIo=
@@ -668,6 +670,7 @@ google.golang.org/appengine v1.4.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7
 google.golang.org/appengine v1.5.0/go.mod h1:xpcJRLb0r/rnEns0DIKYYv+WjYCduHsrkT7/EB5XEv4=
 google.golang.org/appengine v1.6.1/go.mod h1:i06prIuMbXzDqacNJfV5OdTW448YApPu5ww/cMBSeb0=
 google.golang.org/appengine v1.6.5/go.mod h1:8WjMMxjGQR8xUklV/ARdw2HLXBOI7O7uCIDZVag1xfc=
+google.golang.org/appengine v1.6.6 h1:lMO5rYAqUxkmaj76jAkRUvt5JZgFymx/+Q5Mzfivuhc=
 google.golang.org/appengine v1.6.6/go.mod h1:8WjMMxjGQR8xUklV/ARdw2HLXBOI7O7uCIDZVag1xfc=
 google.golang.org/genproto v0.0.0-20180817151627-c66870c02cf8/go.mod h1:JiN7NxoALGmiZfu7CAH4rXhgtRTLTxftemlI0sWmxmc=
 google.golang.org/genproto v0.0.0-20190307195333-5fe7a883aa19/go.mod h1:VzzqZJRnGkLBvHegQrXjBqPurQTc5/KpmUdxsrq26oE=
