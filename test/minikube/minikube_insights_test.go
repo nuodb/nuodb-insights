@@ -17,6 +17,18 @@ import (
 	"github.com/nuodb/nuodb-helm-charts/test/testlib"
 )
 
+const YCSB_CONTROLLER_NAME = "ycsb-load"
+
+func scaleDownYCSB(t *testing.T, namespaceName string, delay time.Duration) {
+	testlib.AwaitNrReplicasScheduled(t, namespaceName, YCSB_CONTROLLER_NAME, 1)
+	testlib.AwaitNrReplicasReady(t, namespaceName, YCSB_CONTROLLER_NAME, 1)
+	time.Sleep(delay)
+	kubectlOptions := k8s.NewKubectlOptions("", "", namespaceName)
+	// Ignore the error as at the time of execution, the controller may be removed by the test tear down
+	k8s.RunKubectlE(t, kubectlOptions, "scale", "replicationcontroller", YCSB_CONTROLLER_NAME, "--replicas=0")
+	t.Log("YCSB workload stopped")
+}
+
 func checkMetricPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string,
 	measurement string, database string, host string, metric string) bool {
 	queryString := fmt.Sprintf("select count(%s) from \"%s\" where host = '%s'", metric, measurement, host)
@@ -126,6 +138,8 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 		},
 	}, namespaceName)
 	testlib.StartYCSBWorkload(t, namespaceName, &options)
+	// Let YCSB run for 60 sec and scale the pod down to 0
+	go scaleDownYCSB(t, namespaceName, 60*time.Second)
 
 	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
 
