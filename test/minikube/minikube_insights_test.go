@@ -120,9 +120,9 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 		SetValues: map[string]string{
 			"nuocollector.enabled":                  "true",
 			"database.sm.resources.requests.cpu":    testlib.MINIMAL_VIABLE_ENGINE_CPU,
-			"database.sm.resources.requests.memory": testlib.MINIMAL_VIABLE_ENGINE_MEMORY,
+			"database.sm.resources.requests.memory": "256Mi",
 			"database.te.resources.requests.cpu":    testlib.MINIMAL_VIABLE_ENGINE_CPU,
-			"database.te.resources.requests.memory": testlib.MINIMAL_VIABLE_ENGINE_MEMORY,
+			"database.te.resources.requests.memory": "256Mi",
 			"ycsb.replicas":                         "1",
 		},
 	}
