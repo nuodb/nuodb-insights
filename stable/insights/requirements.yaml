@@ -3,11 +3,11 @@ dependencies:
   condition: grafana.enabled
   tags:
     - backend
-  repository: https://kubernetes-charts.storage.googleapis.com
-  version: 5.0.23
+  repository: https://grafana.github.io/helm-charts
+  version: 6.1.2
 - name: influxdb
   condition: influxdb.enabled
   tags:
     - backend
   repository: https://helm.influxdata.com/
-  version: 4.4.7
+  version: 4.8.9

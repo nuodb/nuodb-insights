@@ -1,9 +1,9 @@
 {{/* vim: set filetype=mustache: */}}
 
 {{/* -- Install nuocd configmaps if labels exists and nuocd is enabled  -- */}}
-{{ if (hasKey .Values.config "nuocollector") }}
-{{ if not (empty .Values.config.nuocollector)  }}
-{{ if .Values.config.nuocollector.enabled  }}
+{{ if (hasKey .Values.insights "nuocollector") }}
+{{ if not (empty .Values.insights.nuocollector)  }}
+{{ if .Values.insights.nuocollector.enabled  }}
 
 {{/* -- Install influx output plugin, if influx is enabled or influx is referenced. -- */}}
 

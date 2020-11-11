@@ -75,7 +75,7 @@ grafana is grafana location is overridded.
 
 
 {{- define "insights.namespace" -}}
-{{-  if and .Values.grafana.enabled .Values.config.grafana.enabled -}}
+{{-  if and .Values.grafana.enabled .Values.insights.grafana.enabled -}}
 {{    printf "%s" (default .Release.Namespace .Values.grafana.namespaceOverride) }}
 {{-  else -}}
 {{    default "!" .Values.grafana.namespaceOverride }}

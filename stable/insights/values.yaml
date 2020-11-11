@@ -1,7 +1,7 @@
 grafana:
   enabled: true
   # For complete list of configuration options for  
-  # grafana see the documentation @ https://github.com/helm/charts/tree/master/stable/grafana.
+  # grafana see the documentation @ https://github.com/grafana/helm-charts/tree/main/charts/grafana.
   # sidecar setup here is for custom dashboards and datasource for nuocd pushing metrics
   # to influx
   sidecar:
@@ -22,7 +22,7 @@ influxdb:
   enabled: true
   # For complete list of configuration options for  
   # influxdb see the documentation @ https://github.com/influxdata/helm-charts/tree/master/charts/influxdb
-  # the initScript here is to initialize a database for metrics from nuocollector.
+  # the initScript here is to initialize a database for metrics from NuoDB Collector.
   initScripts:
     enabled: true
     scripts:
@@ -31,7 +31,7 @@ influxdb:
         /usr/bin/influx -execute 'CREATE DATABASE nuolog WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuologrp'        
         /usr/bin/influx -execute 'CREATE DATABASE nuodb_internal WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp2'
     
-config:
+insights:
   grafana:
     # enabled: false - to not load dashboards nor datasources but do start grafana (grafana.enabled: true)
     #                - true only loads dashboards if grafana.enabled: true or grafana.overrideNamespace is set.
@@ -53,6 +53,6 @@ config:
   # Configure the NuoDB collector daemon.  A sidecar that collects metrics from the engine process and
   # forwards to configurable output.
   nuocollector:
-    # enabled: false - will not setup nuocollector configuration; set to false when starting grafana and insights
+    # enabled: false - will not setup NuoDB Collector configuration; set to false when starting grafana and insights
     #                  only - say in a different namespace.
     enabled: true
