@@ -33,16 +33,7 @@ if [[ $TEST_SUITE = "Kubernetes"  ]]; then
     # Use already released chart versions
     echo "Testing with NuoDB Helm Charts v${NUODB_HELM_CHARTS_VERSION}"
     helm repo add nuodb https://storage.googleapis.com/nuodb-charts
-
-    # Workaround: YCSB chart is not available in the public repo so download it on disk
-    # Remove next 6 lines once YCSB is released along with the other charts
-    git clone https://github.com/nuodb/nuodb-helm-charts ../nuodb-helm-charts
-    pushd ../nuodb-helm-charts
-    git checkout "v${NUODB_HELM_CHARTS_VERSION}"
-    popd
-    mkdir incubator
-    ln -s ${PWD}/../nuodb-helm-charts/incubator/demo-ycsb incubator/demo-ycsb
-    
+    helm repo add nuodb-incubator https://storage.googleapis.com/nuodb-charts-incubator
   else
     git clone https://github.com/nuodb/nuodb-helm-charts ../nuodb-helm-charts
     pushd ../nuodb-helm-charts
