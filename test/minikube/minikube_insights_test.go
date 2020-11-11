@@ -19,7 +19,7 @@ import (
 
 const YCSB_CONTROLLER_NAME = "ycsb-load"
 
-func scaleDownYCSB(t *testing.T, namespaceName string, delay time.Duration) {
+func scaleDownYCSBWithDelay(t *testing.T, namespaceName string, delay time.Duration) {
 	testlib.AwaitNrReplicasScheduled(t, namespaceName, YCSB_CONTROLLER_NAME, 1)
 	testlib.AwaitNrReplicasReady(t, namespaceName, YCSB_CONTROLLER_NAME, 1)
 	time.Sleep(delay)
@@ -144,7 +144,7 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 	}
 	InjectNuoDBHelmChartsVersion(t, &options)
 
-	adminReleaseName, namespaceName := testlib.StartAdmin(t, &helm.Options{}, 1, "")
+	adminReleaseName, namespaceName := testlib.StartAdmin(t, &options, 1, "")
 	admin0 := fmt.Sprintf("%s-nuodb-cluster0-0", adminReleaseName)
 	testlib.StartDatabase(t, namespaceName, admin0, &options)
 	helmChartReleaseName, _ := StartInsights(t, &helm.Options{
@@ -155,7 +155,7 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 	}, namespaceName)
 	testlib.StartYCSBWorkload(t, namespaceName, &options)
 	// Let YCSB run for 60 sec and scale the pod down to 0
-	go scaleDownYCSB(t, namespaceName, 60*time.Second)
+	go scaleDownYCSBWithDelay(t, namespaceName, 60*time.Second)
 
 	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
 

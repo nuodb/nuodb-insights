@@ -26,7 +26,7 @@ env:
     - MINIKUBE_HOME=$HOME
     - CHANGE_MINIKUBE_NONE_USER=true
     - KUBECONFIG=$HOME/.kube/config
-    - NUODB_HELM_CHARTS_VERSION=""
+    - NUODB_HELM_CHARTS_VERSION="3.0.0"
 
 before_install:
   - |
