@@ -96,7 +96,6 @@ func verifyNuoDBDatabasesPresent(t *testing.T, namespace string, influxPodName s
 	require.NoError(t, err)
 	assert.Contains(t, output, "nuodb")
 	assert.Contains(t, output, "nuodb_internal")
-	assert.Contains(t, output, "nuolog")
 	assert.Contains(t, output, "telegraf")
 }
 
