@@ -17,7 +17,7 @@
 
 ## Dashboards
 
-<img src="images/InsightsExample.png" alt="Insights Dashboards Example" width="1800" height="836"/>
+<img src="images/InsightsExample.png" alt="Insights Dashboards Example"/>
 
 ### Dashboards Configuration
 
