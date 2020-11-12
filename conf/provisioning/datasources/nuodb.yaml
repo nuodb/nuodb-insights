@@ -18,22 +18,6 @@ datasources:
   url: http://${INFLUX_HOST}:8086
   user: ''
   withCredentials: false
-- name: nuolog
-  access: proxy
-  basicAuth: false
-  basicAuthPassword: ''
-  basicAuthUser: ''
-  database: nuolog
-  isDefault: false
-  jsonData: {timeInterval: 10s}
-  orgId: 1
-  password: ''
-  secureJsonFields: {}
-  type: influxdb
-  typeLogoUrl: ''
-  url: http://${INFLUX_HOST}:8086
-  user: ''
-  withCredentials: false
 - name: nuodb_internal
   access: proxy
   basicAuth: false
@@ -42,38 +26,6 @@ datasources:
   database: nuodb_internal
   isDefault: false
   jsonData: {timeInterval: 30s}
-  orgId: 1
-  password: ''
-  secureJsonFields: {}
-  type: influxdb
-  typeLogoUrl: ''
-  url: http://${INFLUX_HOST}:8086
-  user: ''
-  withCredentials: false
-- name: telegraf
-  access: proxy
-  basicAuth: false
-  basicAuthPassword: ''
-  basicAuthUser: ''
-  database: telegraf
-  isDefault: false
-  jsonData: {timeInterval: 10s}
-  orgId: 1
-  password: ''
-  secureJsonFields: {}
-  type: influxdb
-  typeLogoUrl: ''
-  url: http://${INFLUX_HOST}:8086
-  user: ''
-  withCredentials: false
-- name: syslog
-  access: proxy
-  basicAuth: false
-  basicAuthPassword: ''
-  basicAuthUser: ''
-  database: syslog
-  isDefault: false
-  jsonData: {timeInterval: 10s}
   orgId: 1
   password: ''
   secureJsonFields: {}
