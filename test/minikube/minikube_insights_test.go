@@ -14,14 +14,22 @@ import (
 	"github.com/gruntwork-io/terratest/modules/k8s"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 
-	"github.com/nuodb/nuodb-helm-charts/test/testlib"
+	"github.com/nuodb/nuodb-helm-charts/v3/test/testlib"
 )
 
 const YCSB_CONTROLLER_NAME = "ycsb-load"
 
-func scaleDownYCSBWithDelay(t *testing.T, namespaceName string, delay time.Duration) {
-	testlib.AwaitNrReplicasScheduled(t, namespaceName, YCSB_CONTROLLER_NAME, 1)
-	testlib.AwaitNrReplicasReady(t, namespaceName, YCSB_CONTROLLER_NAME, 1)
+func runYcsbForDurationAndScaleDown(t *testing.T, namespaceName string, options *helm.Options, delay time.Duration) {
+	testlib.StartYCSBWorkload(t, namespaceName, options)
+	ycsbNrReplicas := 1
+	if options.SetValues["ycsb.replicas"] != "" {
+		replicas, err := strconv.Atoi(options.SetValues["ycsb.replicas"])
+		if err == nil {
+			ycsbNrReplicas = replicas
+		}
+	}
+	testlib.AwaitNrReplicasScheduled(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
+	testlib.AwaitNrReplicasReady(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
 	time.Sleep(delay)
 	kubectlOptions := k8s.NewKubectlOptions("", "", namespaceName)
 	// Ignore the error as at the time of execution, the controller may be removed by the test tear down
@@ -153,9 +161,8 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 			"grafana.enabled": "false",
 		},
 	}, namespaceName)
-	testlib.StartYCSBWorkload(t, namespaceName, &options)
 	// Let YCSB run for 60 sec and scale the pod down to 0
-	go scaleDownYCSBWithDelay(t, namespaceName, 60*time.Second)
+	go runYcsbForDurationAndScaleDown(t, namespaceName, &options, 60*time.Second)
 
 	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
 

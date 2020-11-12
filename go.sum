@@ -334,6 +334,10 @@ github.com/nuodb/nuodb-helm-charts v0.0.0-20201109214733-c8bc2399a12e h1:XTQlSR0
 github.com/nuodb/nuodb-helm-charts v0.0.0-20201109214733-c8bc2399a12e/go.mod h1:HQ5WD9+PAbhzXfNfz0YOYHAGVcoCgid3i1Svxr3V2W0=
 github.com/nuodb/nuodb-helm-charts v2.4.1+incompatible h1:7BGifiVPuKP49qFVKQcS1LmlXBl5mJJZmC33dHxGP7Q=
 github.com/nuodb/nuodb-helm-charts v2.4.1+incompatible/go.mod h1:kc+jpeo445+nDvFmSfyxo8EbFKw1ggxB3ocyeM+bJ2g=
+github.com/nuodb/nuodb-helm-charts/v3 v3.0.1-0.20201112095200-9c0233e6aeed h1:roZnutgdmMxcgcei9WI6lbbYXMXmN/vs19lZ1rBkkjY=
+github.com/nuodb/nuodb-helm-charts/v3 v3.0.1-0.20201112095200-9c0233e6aeed/go.mod h1:qx5+XhG3bEGHmL7a1VbiHBHXAp729ABaE++0w6mnETo=
+github.com/nuodb/nuodb-helm-charts/v3 v3.0.1 h1:610cxxDi8+4ztfF/LkVm/EmX926m+JT+JCFtQB0Rb+4=
+github.com/nuodb/nuodb-helm-charts/v3 v3.0.1/go.mod h1:qx5+XhG3bEGHmL7a1VbiHBHXAp729ABaE++0w6mnETo=
 github.com/olekukonko/tablewriter v0.0.0-20170122224234-a0225b3f23b5/go.mod h1:vsDQFd/mU46D+Z4whnwzcISnGGzXWMclvtLoiIKAKIo=
 github.com/onsi/ginkgo v0.0.0-20170829012221-11459a886d9c/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
