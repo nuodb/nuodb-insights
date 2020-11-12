@@ -2,16 +2,19 @@ package minikube
 
 import (
 	"fmt"
-	"github.com/gruntwork-io/terratest/modules/helm"
-	"github.com/gruntwork-io/terratest/modules/k8s"
-	"github.com/gruntwork-io/terratest/modules/random"
-	"github.com/nuodb/nuodb-helm-charts/test/testlib"
-	v1 "k8s.io/api/core/v1"
+	"os"
 	"path/filepath"
+	"regexp"
 	"runtime"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/gruntwork-io/terratest/modules/helm"
+	"github.com/gruntwork-io/terratest/modules/k8s"
+	"github.com/gruntwork-io/terratest/modules/random"
+	"github.com/nuodb/nuodb-helm-charts/v3/test/testlib"
+	v1 "k8s.io/api/core/v1"
 )
 
 func getFunctionCallerName() string {
@@ -28,7 +31,7 @@ func StartInsights(t *testing.T, options *helm.Options, namespace string) (strin
 		if options.Version == "" {
 			helm.Install(t, options, INSIGHTS_HELM_CHART_PATH, helmChartReleaseName)
 		} else {
-			helm.Install(t, options, "nuodb/admin ", helmChartReleaseName)
+			helm.Install(t, options, "nuodb/insights ", helmChartReleaseName)
 		}
 	})
 }
@@ -59,16 +62,37 @@ func startInsightsTemplate(t *testing.T, options *helm.Options, namespace string
 		helm.Delete(t, options, helmChartReleaseName, true)
 	})
 
-	testlib.AwaitNrReplicasScheduled(t, namespaceName, "grafana", 1)
-	grafanaPodName := testlib.GetPodName(t, namespaceName, "grafana")
-	testlib.AwaitPodUp(t, namespaceName, grafanaPodName, 300*time.Second)
-	go testlib.GetAppLog(t, namespaceName, grafanaPodName, "datasources",
-		&v1.PodLogOptions{Follow: true, Container: "grafana-sc-datasources"})
-
-	testlib.AwaitNrReplicasScheduled(t, namespaceName, "influxdb", 1)
-	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
-	testlib.AwaitPodUp(t, namespaceName, influxPodName, 300*time.Second)
-	go testlib.GetAppLog(t, namespaceName, influxPodName, "", &v1.PodLogOptions{Follow: true})
-
+	if options.SetValues["grafana.enabled"] != "false" {
+		testlib.AwaitNrReplicasScheduled(t, namespaceName, "grafana", 1)
+		grafanaPodName := testlib.GetPodName(t, namespaceName, "grafana")
+		testlib.AwaitPodUp(t, namespaceName, grafanaPodName, 300*time.Second)
+		go testlib.GetAppLog(t, namespaceName, grafanaPodName, "datasources",
+			&v1.PodLogOptions{Follow: true, Container: "grafana-sc-datasources"})
+	}
+	if options.SetValues["influxdb.enabled"] != "false" {
+		testlib.AwaitNrReplicasScheduled(t, namespaceName, "influxdb", 1)
+		influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
+		testlib.AwaitPodUp(t, namespaceName, influxPodName, 300*time.Second)
+		go testlib.GetAppLog(t, namespaceName, influxPodName, "", &v1.PodLogOptions{Follow: true})
+	}
 	return
+}
+
+func InjectNuoDBHelmChartsVersion(t *testing.T, options *helm.Options) {
+	if options.Version == "" {
+		version := os.Getenv("NUODB_HELM_CHARTS_VERSION")
+		if matched, _ := regexp.MatchString(`^([0-9]+\.?){1,3}$`, version); matched {
+			// Use already released version
+			t.Logf("Testing with NuoDB Helm Charts v%s", version)
+			options.Version = version
+		}
+	}
+}
+
+func ExcuteInfluxDBQueryE(t *testing.T, namespace string, influxPodName string, query string, influxArgs ...string) (string, error) {
+	kubectlOptions := k8s.NewKubectlOptions("", "", namespace)
+	var kubectlArgs []string
+	kubectlArgs = append(kubectlArgs, "exec", influxPodName, "--", "influx", "-execute", query)
+	kubectlArgs = append(kubectlArgs, influxArgs...)
+	return k8s.RunKubectlAndGetOutputE(t, kubectlOptions, kubectlArgs...)
 }
