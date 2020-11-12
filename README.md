@@ -10,12 +10,10 @@
 
 | Directory | Description                                            |
 |-----------|--------------------------------------------------------|
-| conf      | dashboards and datasources for provisioning in grafana |
-| data      | contains an example monitor file to demonstrate batch loading |
-| deploy    | yaml configuration files for the monitor stack, nuoca setup and batch job for processing monitor output      |
+| conf      | dashboards and data sources for provisioning in grafana |
+| deploy    | YAML configuration files for the monitor stack |
 | images    | contains png included in this README |
 | stable    | Helm Charts for Kubernetes Environments |
-| systemd   | files to set up nuoca to collect on bare metal |
 
 ## Dashboards
 
@@ -45,13 +43,13 @@ cd nuodb-insights
 
 Then run `docker-compose up` to start the processes specified in the Docker Compose file:
 ```
-docker-compose -f deploy/docker-compose.yml up -d
+docker-compose -f deploy/docker-compose.yaml up -d
 ```
 
 Stop processes started with `docker-compose up` by running the following command:
 
 ```
-docker-compose -f deploy/docker-compose.yml down
+docker-compose -f deploy/docker-compose.yaml down
 ```
 
 If you already have a NuoDB domain running, and you only need NuoDB insights, you can use the `deploy/monitor-stack.yaml` file instead.
