@@ -164,15 +164,19 @@ wget https://dl.grafana.com/oss/release/grafana-7.3.1-1.x86_64.rpm
 sudo yum localinstall -y grafana-7.3.1-1.x86_64.rpm
 
 git clone https://github.com/nuodb/nuodb-insights.git
-rm -rf /etc/grafana/provisioning
-cp -r nuodb-insights/conf/provisioning /etc/grafana/
+sudo rm -rf /etc/grafana/provisioning
+sudo cp -r nuodb-insights/conf/provisioning /etc/grafana
+sudo mkdir -p /etc/grafana/provisioning/notifiers /etc/grafana/provisioning/plugins
+sudo chown -R root:grafana /etc/grafana/provisioning
+sudo chmod 755 $(find /etc/grafana/provisioning -type d)
+sudo chmod 640 $(find /etc/grafana/provisioning -type f)
 ```
 
 Once installed, `grafana` can be started with `influxdb` as a datasource by using the `INFLUX_HOST` environment variable.
 
 ```
-echo "export INFLUX_HOST=<hostinflux>" >> /etc/sysconfig/grafana-server
-sudo systemctl daemon-reload
+echo "INFLUX_HOST=<hostinflux>" >> /etc/sysconfig/grafana-server
+sudo systemctl enable grafana-server
 sudo systemctl start grafana-server
 ```
 
