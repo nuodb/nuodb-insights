@@ -328,16 +328,8 @@ github.com/munnerz/goautoneg v0.0.0-20120707110453-a547fc61f48d/go.mod h1:+n7T8m
 github.com/munnerz/goautoneg v0.0.0-20191010083416-a7dc8b61c822/go.mod h1:+n7T8mK8HuQTcFwEeznm/DIxMOiR9yIdICNftLE1DvQ=
 github.com/mwitkow/go-conntrack v0.0.0-20161129095857-cc309e4a2223/go.mod h1:qRWi+5nqEBWmkhHvq77mSJWrCKwh8bxhgT7d/eI7P4U=
 github.com/mxk/go-flowrate v0.0.0-20140419014527-cca7078d478f/go.mod h1:ZdcZmHo+o7JKHSa8/e818NopupXU1YMK5fe1lsApnBw=
-github.com/nuodb/nuodb-helm-charts v0.0.0-20201016212455-bb81fa7b4827 h1:aXtRoqqAOoVVOuA1ztSwtYRBBt8tH9LrNFyp510RfsQ=
-github.com/nuodb/nuodb-helm-charts v0.0.0-20201016212455-bb81fa7b4827/go.mod h1:HQ5WD9+PAbhzXfNfz0YOYHAGVcoCgid3i1Svxr3V2W0=
-github.com/nuodb/nuodb-helm-charts v0.0.0-20201109214733-c8bc2399a12e h1:XTQlSR0wKuPK0kp9EQ3h6MmZ33VsY0vTkLAtc6Mkr1Y=
-github.com/nuodb/nuodb-helm-charts v0.0.0-20201109214733-c8bc2399a12e/go.mod h1:HQ5WD9+PAbhzXfNfz0YOYHAGVcoCgid3i1Svxr3V2W0=
-github.com/nuodb/nuodb-helm-charts v2.4.1+incompatible h1:7BGifiVPuKP49qFVKQcS1LmlXBl5mJJZmC33dHxGP7Q=
-github.com/nuodb/nuodb-helm-charts v2.4.1+incompatible/go.mod h1:kc+jpeo445+nDvFmSfyxo8EbFKw1ggxB3ocyeM+bJ2g=
 github.com/nuodb/nuodb-helm-charts/v3 v3.0.1-0.20201112095200-9c0233e6aeed h1:roZnutgdmMxcgcei9WI6lbbYXMXmN/vs19lZ1rBkkjY=
 github.com/nuodb/nuodb-helm-charts/v3 v3.0.1-0.20201112095200-9c0233e6aeed/go.mod h1:qx5+XhG3bEGHmL7a1VbiHBHXAp729ABaE++0w6mnETo=
-github.com/nuodb/nuodb-helm-charts/v3 v3.0.1 h1:610cxxDi8+4ztfF/LkVm/EmX926m+JT+JCFtQB0Rb+4=
-github.com/nuodb/nuodb-helm-charts/v3 v3.0.1/go.mod h1:qx5+XhG3bEGHmL7a1VbiHBHXAp729ABaE++0w6mnETo=
 github.com/olekukonko/tablewriter v0.0.0-20170122224234-a0225b3f23b5/go.mod h1:vsDQFd/mU46D+Z4whnwzcISnGGzXWMclvtLoiIKAKIo=
 github.com/onsi/ginkgo v0.0.0-20170829012221-11459a886d9c/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
 github.com/onsi/ginkgo v1.6.0/go.mod h1:lLunBs/Ym6LB5Z9jYTR76FiuTmxDTDusOGeTQH+WWjE=
