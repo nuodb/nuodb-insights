@@ -30,11 +30,11 @@ If release name contains chart name it will be used as a full name.
 {{-   $influxdb := include "influxdb.fullname" $context -}}
 {{-   $hostname := default (printf "%s.%s.svc" $influxdb .Release.Namespace) .Values.influxdb.host -}}
 {{-   $port     := default 8086 .Values.influxdb.port -}}
-{{-   printf "http://%s:%d" $hostname $port -}}
+{{-   printf "http://%s:%s" $hostname (toString $port) -}}
 {{- else -}}
 {{-   $hostname := default (printf "influxdb.%s.svc" .Release.Namespace) .Values.influxdb.host -}}
 {{-   $port     := default 8086 .Values.influxdb.port -}}
-{{-   printf "http://%s:%d" $hostname $port -}}
+{{-   printf "http://%s:%s" $hostname (toString $port) -}}
 {{- end -}}
 {{- end -}}
 
