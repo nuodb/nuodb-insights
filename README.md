@@ -1,4 +1,4 @@
-<img src="images/nuodb.svg" width="200" height="200" /> 
+<img src="images/nuodb.svg" width="200" height="200" />
 
 # NuoDB Insights - Visual Monitoring
 
@@ -16,6 +16,8 @@
 | stable    | Helm Charts for Kubernetes Environments |
 
 ## Dashboards
+
+<img src="images/InsightsExample.png" alt="Insights Dashboards Example"/>
 
 ### Dashboards Configuration
 
@@ -53,6 +55,9 @@ docker-compose -f deploy/docker-compose.yaml down
 ```
 
 If you already have a NuoDB domain running, and you only need NuoDB insights, you can use the `deploy/monitor-stack.yaml` file instead.
+
+Once all docker images are running successfully, navigate to [NuoDB Insights - NuoDB Ops System Overview](http://localhost:3000/d/000000004/nuodb-ops-system-overview), and start exploring the NuoDB dashboards.
+The default password in Grafana is `admin:admin`.
 
 ## Setup manually in Docker
 
