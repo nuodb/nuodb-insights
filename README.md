@@ -4,8 +4,6 @@
 
 [![Build Status](https://travis-ci.com/nuodb/nuodb-insights.svg?token=nYo6yHzhBM9syBKXYk7y&branch=master)](https://travis-ci.com/nuodb/nuodb-insights)
 
-## Introduction
-
 ### Repository Structure:
 
 | Directory | Description                                            |
@@ -15,15 +13,29 @@
 | images    | contains png included in this README |
 | stable    | Helm Charts for Kubernetes Environments |
 
-## Dashboards
+## Sample Dashboard
 
 <img src="images/InsightsExample.png" alt="Insights Dashboards Example"/>
 
-### Dashboards Configuration
 
-`conf/provisioning/dashboards/nuodb.yaml` defines the location of the dashboards.
+# NuoDB Insights Page Outline
+[Introduction](#Introduction)
 
-## Quickstart with Docker compose
+[Quick Start with Docker Compose](#Quick-start-with-docker-compose)
+
+[Setup Manually in Docker](#Setup-in-docker)
+
+[Setup in Kubernetes](#Setup-in-Kubernetes)
+
+[Setup on Bare Metal Linux](#Setup-on-bare-metal-linux)
+
+[Check Collection Status](#Check-collection-status)
+
+## Introduction
+
+NuoDB Insights is a visual monitor tool that aids NuoDB practicianers in monitoring database health, resoruce consumption, and application workload in real-time and historically using the intuitive graphical interface. It installs locally on the same nodes/hosts your database runs and supports a variety of deployment models: Kubernetes, Docker, and physical host / Virtual Machine environments. 
+
+## Quickstart with Docker Compose
 
 For a complete example on how to set up the NuoDB domain with NuoDB Insights, you can use `docker compose`.
 This repository contains a Docker Compose file (`deploy/docker-compose.yml`) which will start:
@@ -138,9 +150,9 @@ If you are new to Kubernetes and Helm please read the [high-level description](s
 
 If you are looking for specific configuration options see the [Insights Helm Chart Readme](stable/insights/README.md).
 
-## Setup on Bare Metal
+## Setup on Bare Metal Linux
 
-The following installation instructions apply to RedHat and CentOS distributions. For other platforms, see [InfluxDB](https://docs.influxdata.com/influxdb/latest/introduction/install/) and [Grafana](https://grafana.com/docs/grafana/latest/installation/) installation instructions.
+The following installation instructions apply to Red Hat and CentOS Linux distributions on bare-metal or VMs. For other platforms, see [InfluxDB](https://docs.influxdata.com/influxdb/latest/introduction/install/) and [Grafana](https://grafana.com/docs/grafana/latest/installation/) installation instructions.
 
 ### 1) Download and install `influxdb`
 
