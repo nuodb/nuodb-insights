@@ -33,7 +33,7 @@ influxdb:
 insights:
   grafana:
     # enabled: false - to not load dashboards nor datasources but do start grafana (grafana.enabled: true)
-    #                - true only loads dashboards if grafana.enabled: true or grafana.overrideNamespace is set.
+    #                - true only loads dashboards if grafana.enabled: true or grafana.namespaceOverride is set.
     enabled: true
     datasources:
       nuodb:
