@@ -17,8 +17,8 @@
   "editable": true,
   "gnetId": 928,
   "graphTooltip": 1,
-  "id": 17,
-  "iteration": 1599153564456,
+  "id": 4,
+  "iteration": 1605294736321,
   "links": [
     {
       "$$hashKey": "object:2794",
@@ -57,6 +57,12 @@
       ],
       "datasource": "nuodb",
       "description": "Current number of running Transaction Engines processes in the NuoDB domain.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -194,6 +200,12 @@
       ],
       "datasource": null,
       "description": "Current number of running Storage Manager processes in the NuoDB domain.",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -328,6 +340,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -355,9 +374,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -567,6 +587,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -597,9 +624,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -728,6 +756,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -754,9 +789,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -954,6 +990,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -964,6 +1007,7 @@
       },
       "hiddenSeries": false,
       "id": 61875,
+      "interval": ">$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -979,9 +1023,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1000,158 +1045,25 @@
       "targets": [
         {
           "alias": "$col",
-          "dsType": "influxdb",
           "groupBy": [
             {
               "params": [
-                "10s"
+                "$__interval"
               ],
               "type": "time"
             },
             {
               "params": [
-                "none"
+                "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": false,
-          "measurement": "Commits",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"rate\") AS \"TPS\", count(\"rate\") AS \"# TEs\" FROM \"Commits\" WHERE (\"nodetype\" = 'Transaction')  AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($__interval) fill(none)",
+          "query": "SELECT sum(\"rate\") AS \"TPS\", count(\"rate\") AS \"# TEs\" FROM (SELECT mean(\"rate\") AS rate FROM \"Commits\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" , \"db\", \"$pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              },
-              {
-                "params": [
-                  "TPS"
-                ],
-                "type": "alias"
-              }
-            ],
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "count"
-              },
-              {
-                "params": [
-                  "# TEs"
-                ],
-                "type": "alias"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "pid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "Commits",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"Commits\" WHERE (\"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(none)",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            }
-          ]
-        },
-        {
-          "alias": "# TEs",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "Milliseconds",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT count(\"value\") FROM \"Milliseconds\" WHERE (\"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval) fill(none)",
-          "rawQuery": true,
-          "refId": "C",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1163,17 +1075,11 @@
               },
               {
                 "params": [],
-                "type": "count"
+                "type": "mean"
               }
             ]
           ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            }
-          ]
+          "tags": []
         }
       ],
       "thresholds": [],
@@ -1228,6 +1134,13 @@
       "description": "# client connections for each transaction engine",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1256,9 +1169,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1378,7 +1292,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 22,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "overview"
@@ -1392,6 +1306,7 @@
           "text": "host",
           "value": "host"
         },
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": "By",
@@ -1424,6 +1339,7 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
+        "error": null,
         "hide": 0,
         "label": "interval",
         "name": "interval",
@@ -1505,6 +1421,7 @@
           }
         ],
         "query": "10s,30s,1m,5m,10m,15m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
@@ -1512,17 +1429,19 @@
       {
         "allValue": ".*",
         "current": {
-          "tags": [],
-          "text": "All",
+          "selected": false,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Database",
         "multi": true,
         "name": "database",
@@ -1541,16 +1460,19 @@
       {
         "allValue": ".*",
         "current": {
-          "text": "All",
+          "selected": false,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES WITH KEY = \"host\"  WHERE db =~ /^$database$/  AND nodetype = 'Transaction' ",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
@@ -1574,6 +1496,7 @@
           "text": "nodeid",
           "value": "nodeid"
         },
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Process Identier",
@@ -1636,9 +1559,6 @@
   },
   "timezone": "",
   "title": "NuoDB Ops System Overview",
-  "uid": "000000004",
-  "variables": {
-    "list": []
-  },
-  "version": 3
+  "uid": null,
+  "version": 2
 }
