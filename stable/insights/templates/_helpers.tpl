@@ -68,12 +68,7 @@ app.kubernetes.io/instance: {{ .Release.Name }}
 {{/*
 Namespace for the dashboards, this should be same as namespace for
 grafana is grafana location is overridded.
-{{- define "insights.namespace" -}}
-  {{ default .Release.Namespace .Values.grafana.namespaceOverride }}
-{{- end -}}
 */}}
-
-
 {{- define "insights.namespace" -}}
 {{-  if and .Values.grafana.enabled .Values.insights.grafana.enabled -}}
 {{    printf "%s" (default .Release.Namespace .Values.grafana.namespaceOverride) }}
