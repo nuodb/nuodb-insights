@@ -17,7 +17,7 @@ This chart starts a NuoDB Insights deployment on a Kubernetes cluster using the 
 ## Command
 
 ```
-helm install nuodb/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
+helm install nuodb-insights/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
 ```
 
 ## Installing the Chart

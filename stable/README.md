@@ -83,18 +83,18 @@ The default repository for NuoDB is located at https://storage.googleapis.com/nu
 To add the charts for your local client, run the `helm repo add` command below:
 
 ```
-helm repo add nuodb https://storage.googleapis.com/nuodb-charts
-"nuodb" has been added to your repositories
+helm repo add nuodb-insights https://storage.googleapis.com/nuodb-insights
+"nuodb-insights" has been added to your repositories
 ```
 
 To list the NuoDB charts added to your repository, run 
 ```
-helm search nuodb/
+helm search nuodb
 ```
 
 You can now install the chart:
 ```
-helm install nuodb/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
+helm install nuodb-insights/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
 ```
 
 
@@ -122,7 +122,7 @@ If NuoDB Insights is installed in the same namespace with NuoDB database, no add
 Otherwise it is required to create NuoDB Collector configuration for Insights in all namespaces where NuoDB admin and database services are running. This can be done by installing the chart and setting `insights.influxdb.host` to the InfluxDB fully qualified domain name. For example:
 
 ```bash
-helm install nuodb/insights --generate-name -n nuodb \
+helm install nuodb-insights/insights --generate-name -n nuodb \
   --set grafana.enabled=false \
   --set influxdb.enabled=false \
   --set insights.grafana.enabled=false \
@@ -142,7 +142,7 @@ Grafana 3-rd party chart supports ingress with Grafana 6.3 and above. Configure 
 For example:
 
 ```
-helm install insights nuodb/insights -n nuodb \
+helm install insights nuodb-insights/insights -n nuodb \
   --set grafana.ingress.enabled=true \
   --set grafana.ingress.hosts='{"insights.example.com"}'
 ```
