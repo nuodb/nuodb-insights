@@ -202,7 +202,7 @@ sudo /etc/rc.d/init.d/grafana-server start
 
 Follow the instructions for installing the [NuoDB Collector](https://github.com/nuodb/nuodb-collector#setup-on-bare-metal) on bare-metal. NuoDB Collector should be set up on all hosts that will run NuoDB database processes.
 
-Once all components have been set up, NuoDB performance can be visualized by navigating to the [NuoDB Insights - NuoDB Ops System Overview](http://<hostgrafana>:3000/d/000000004/nuodb-ops-system-overview), where `<hostgrafana> is the host that the Grafana server was started on. The default password in Grafana is `admin:admin`.
+Once all components have been set up, NuoDB performance can be visualized by navigating to the NuoDB Insights - NuoDB Ops System Overview dashboard at http://<hostgrafana>:3000/d/000000004/nuodb-ops-system-overview, where `<hostgrafana>` is the host that the Grafana server was started on. The default password in Grafana is `admin:admin`.
 
 ## Status of the Project
 
