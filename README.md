@@ -21,9 +21,9 @@
 # NuoDB Insights Page Outline
 [Introduction](#Introduction)
 
-[Quick Start with Docker Compose](#Quickstart-with-docker-compose)
+[Quick Start in Docker using Docker Compose](#Quickstart-in-docker-using-docker-compose)
 
-[Setup Manually in Docker](#Setup-manually-in-docker)
+[Setup Manually in Docker using Docker Run](#Setup-manually-in-docker-using-docker-run)
 
 [Setup in Kubernetes](#Setup-in-Kubernetes)
 
@@ -31,11 +31,11 @@
 
 ## Introduction
 
-NuoDB Insights is a visual monitor tool that aids NuoDB practicianers in monitoring NuoDB database health, resoruce consumption, and application workload processed in real-time and historically using an intuitive graphical interface. It installs locally on the same nodes/hosts your database runs and supports a variety of deployment models: Kubernetes, Docker, and physical host / Virtual Machine environments. 
+NuoDB Insights is a visual monitor tool that aids NuoDB practicianers in monitoring NuoDB database health, resoruce consumption, and application workload processed in real-time and historically using an intuitive graphical interface. It can be installed at database startup or after. It also installs locally on the same nodes/hosts your database runs and supports all NuoDB database deployment environments: Kubernetes, Docker, and physical host / Virtual Machine environments. 
 
-## Quickstart with Docker Compose
+## Quickstart in Docker using Docker Compose
 
-For a complete example on how to set up the NuoDB domain with NuoDB Insights, you can use `docker compose`.
+For a complete example on how to set up the NuoDB database with NuoDB Insights monitoring, you can use `docker compose`.
 This repository contains a Docker Compose file (`deploy/docker-compose.yml`) which will start:
 
 - 1 Admin Processes
@@ -68,7 +68,7 @@ If you already have a NuoDB domain running, and you only need NuoDB insights, yo
 
 Once all docker images are running successfully, NuoDB performance can be visualized by navigating to the [NuoDB Insights - NuoDB Ops System Overview](http://localhost:3000/d/000000004/nuodb-ops-system-overview), and start exploring the NuoDB dashboards. The default password in Grafana is `admin:admin`.
 
-## Setup manually in Docker
+## Setup manually in Docker using Docker Run
 
 ### Download the Docker Images
 
