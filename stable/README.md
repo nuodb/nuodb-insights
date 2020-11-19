@@ -47,14 +47,6 @@ helm version
 version.BuildInfo{Version:"v3.2.4", GitCommit:"0ad800ef43d3b826f31a5ad8dfbb4fe05d143688", GitTreeState:"dirty", GoVersion:"go1.14.3"}
 ```
 
-## Create the _nuodb_ namespace to install NuoDB
-
-```
-kubectl create namespace nuodb
-```
-
-You are now ready to install the NuoDB components.
-
 # Deploying NuoDB using Helm Charts
 
 The minimal supported version of NuoDB and the NuoDB helm charts is specified in the [Insights Helm Chart Readme](insights/README.md).
