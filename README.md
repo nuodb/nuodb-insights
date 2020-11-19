@@ -44,7 +44,7 @@ This repository contains a Docker Compose file (`deploy/docker-compose.yml`) whi
 - 2 NuoDB Collector containers (1 for SM, 1 for TE)
 - 1 InfluxDB database
 - 1 Grafana and NuoDB Dashboards
-- 1 YCSB Demo Workload
+- 1 YCSB Demo Workload generator
 
 Clone the NuoDB Insights repository and `cd` into it:
 
@@ -141,7 +141,7 @@ It is located in the [stable](stable/README.md) directory.
 
 ### Installation
 
-If you are new to Kubernetes and Helm, please read the [high-level description in the Stable directory](stable/README.md). 
+If you are new to Kubernetes and Helm, please read the [high-level description](stable/README.md) in the Stable directory. 
 
 For specific configuration options, see the [Insights Helm Chart Readme](stable/insights/README.md).
 
@@ -198,7 +198,7 @@ sudo /etc/rc.d/init.d/grafana-server start
 
 ### 3) Install NuoDB Collector on all hosts with database processes
 
-Follow the instructions for installing the [NuoDB Collector](https://github.com/nuodb/nuodb-collector#setup-on-bare-metal) on bare-metal. NuoDB Collector should be set up on all hosts that will run NuoDB database processes.
+Follow the instructions for installing the [NuoDB Collector on bare-metal](https://github.com/nuodb/nuodb-collector#setup-on-bare-metal). The NuoDB Collector must be set up on all hosts that will run NuoDB database processes.
 
 Once all components have been set up, NuoDB performance can be visualized by navigating to the NuoDB Insights - NuoDB Ops System Overview dashboard at `http://<hostgrafana>:3000/d/000000004/nuodb-ops-system-overview`, where `<hostgrafana>` is the host that the Grafana server was started on. The default password in Grafana is `admin:admin`.
 
