@@ -64,7 +64,7 @@ Stop processes started with `docker-compose up` by running the following command
 docker-compose -f deploy/docker-compose.yaml down
 ```
 
-If you already have a NuoDB domain running, and you only need NuoDB insights, you can use the `deploy/monitor-stack.yaml` file instead.
+If you already have a NuoDB database running, and you only need to start NuoDB insights, run the `deploy/monitor-stack.yaml` file instead.
 
 Once all docker images are running successfully, NuoDB performance can be visualized by navigating to the [NuoDB Insights - NuoDB Ops System Overview](http://localhost:3000/d/000000004/nuodb-ops-system-overview), and start exploring the NuoDB dashboards. The default password in Grafana is `admin:admin`.
 
@@ -114,8 +114,8 @@ docker run -d --name grafana \
       grafana/grafana:latest
 ```
 
-You can now start your NuoDB domain with the NuoDB Collector.
-For more info on how to start your domain, please refer to the [NuoDB Docker Blog Part I](https://nuodb.com/blog/deploy-nuodb-database-docker-containers-part-i) and the readme for [NuoDB Collector](https://github.com/nuodb/nuodb-collector).
+You can now start your NuoDB database with the NuoDB Collector.
+For more info on how to start your database, please refer to the [NuoDB Docker Blog Part I](https://nuodb.com/blog/deploy-nuodb-database-docker-containers-part-i) and the readme for [NuoDB Collector](https://github.com/nuodb/nuodb-collector).
 
 You can use the example NuoDB YCSB workload generator to explore the various dashboards.
 ```
