@@ -139,7 +139,7 @@ helm install insights nuodb-insights/insights -n nuodb \
   --set grafana.ingress.hosts='{"insights.example.com"}'
 ```
 
-For OCP deployments the service can be exposed via route.
+For Red Hat OpenShift deployments the service can be exposed via route.
 
 ```
 oc expose svc/<release-name>-grafana
