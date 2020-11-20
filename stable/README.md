@@ -132,7 +132,7 @@ helm install nuodb-insights/stable/insights --generate-name -n nuodb \
 
 Patch NuoDB SCC so that 472 fsGroup is allowed and assign it to the service account set in the above command.
 
-```
+```bash
 kubectl patch -n nuodb scc nuodb-scc --type='json' \
   -p='[{"op": "replace", "path": "/fsGroup", "value":{"type": "MustRunAs", "ranges": [{"max": 472, "min": 472}] } }]'
 oc adm policy add-scc-to-user nuodb-scc system:serviceaccount:nuodb:grafana -n nuodb
