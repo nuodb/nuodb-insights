@@ -108,6 +108,28 @@ You can now install the chart:
 helm install stable/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
 ```
 
+### Grant Red Had OpenShift privileges
+
+By default Grafana deployment will run as user, group and fsGroup of 472. The value can be configured in `grafana.securityContext`.
+Unless a Security Context Constraint is created to allow that, Ret Hat OpenShift won't start Grafana container.
+If [NuoDB SCC][10] has been created already in the cluster, it can be modified and assigned to the service account used by Grafana. Otherwise new Security Context Constraint needs to be created.
+
+Specify the name of the Grafana service account during NuoDB Insights installation:
+
+```bash
+helm install nuodb-insights/stable/insights --generate-name -n nuodb \
+  --set grafana.serviceAccount.create=true \
+  --set grafana.serviceAccount.name=grafana
+```
+
+Patch NuoDB SCC so that 472 fsGroup is allowed and assign it to the service account set in the above command.
+
+```bash
+kubectl patch -n nuodb scc nuodb-scc --type='json' \
+  -p='[{"op": "replace", "path": "/fsGroup", "value":{"type": "MustRunAs", "ranges": [{"max": 472, "min": 472}] } }]'
+oc adm policy add-scc-to-user nuodb-scc system:serviceaccount:nuodb:grafana -n nuodb
+```
+
 ### Installing in different namespace
 
 If NuoDB Insights is installed in the same namespace with NuoDB database, no additional steps are needed.
@@ -150,7 +172,9 @@ oc expose svc/<release-name>-grafana
 By default, Grafana generates a random password when the instance is started.
 To retrieve the password, you can read the Kubernetes secret as such:
 ```
-kubectl get secret <release-name>-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+kubectl get secrets -n nuodb \
+  $(kubectl get secrets -l app.kubernetes.io/name=grafana -n nuodb -o custom-columns=":metadata.name" --no-headers=true) \
+  -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
 
 ## Cleanup
@@ -168,3 +192,4 @@ An alternative cleanup strategy is to delete the entire project:
 [7]: https://v2.helm.sh/docs/using_helm/
 [8]: https://github.com/nuodb/nuodb-helm-charts
 [9]: #deploying-nuodb-insights-using-helm-charts
+[10]: https://github.com/nuodb/nuodb-helm-charts/blob/master/deploy/nuodb-scc.yaml
