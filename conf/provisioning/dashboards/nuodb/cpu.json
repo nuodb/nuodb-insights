@@ -31,7 +31,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1594745242672,
+  "iteration": 1607016043261,
   "links": [
     {
       "asDropdown": true,
@@ -85,6 +85,12 @@
       "decimals": 1,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -211,6 +217,12 @@
       "decimals": 1,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -336,6 +348,12 @@
       "decimals": 1,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -461,6 +479,12 @@
       "decimals": 0,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -561,10 +585,15 @@
       "valueName": "avg"
     },
     {
-      "content": "",
       "datasource": null,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 3,
         "w": 2,
@@ -573,7 +602,11 @@
       },
       "id": 39,
       "links": [],
-      "mode": "markdown",
+      "options": {
+        "content": "",
+        "mode": "markdown"
+      },
+      "pluginVersion": "7.3.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -591,6 +624,12 @@
       "decimals": 0,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "short",
       "gauge": {
         "maxValue": 100,
@@ -717,6 +756,12 @@
       "decimals": 0,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "short",
       "gauge": {
         "maxValue": 100,
@@ -823,10 +868,15 @@
       "valueName": "avg"
     },
     {
-      "content": "",
       "datasource": null,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "gridPos": {
         "h": 3,
         "w": 2,
@@ -835,7 +885,11 @@
       },
       "id": 40,
       "links": [],
-      "mode": "markdown",
+      "options": {
+        "content": "",
+        "mode": "markdown"
+      },
+      "pluginVersion": "7.3.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -853,6 +907,12 @@
       "decimals": 0,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "short",
       "gauge": {
         "maxValue": 100,
@@ -977,6 +1037,12 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -1102,6 +1168,12 @@
       "decimals": 1,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -1227,6 +1299,12 @@
       "decimals": 1,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percent",
       "gauge": {
         "maxValue": 100,
@@ -1362,6 +1440,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 0,
       "fillGradient": 0,
       "grid": {},
@@ -1392,9 +1477,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1775,6 +1861,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 0,
       "fillGradient": 0,
       "grid": {},
@@ -1805,9 +1898,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2203,6 +2297,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -2233,9 +2334,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2481,6 +2583,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -2511,9 +2620,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2763,7 +2873,7 @@
       "id": 94,
       "panels": [],
       "repeat": null,
-      "title": "$host CPU by $group",
+      "title": "per host CPU by $group",
       "type": "row"
     },
     {
@@ -2775,12 +2885,19 @@
       "decimals": 0,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 4,
-        "w": 6,
+        "w": 12,
         "x": 0,
         "y": 17
       },
@@ -2804,18 +2921,17 @@
       "maxPerRow": 4,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "repeat": "host",
       "scopedVars": {
         "host": {
-          "selected": false,
-          "text": "sm1",
-          "value": "sm1"
+          "selected": false
         }
       },
       "seriesOverrides": [],
@@ -2849,7 +2965,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2901,7 +3017,7 @@
           "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -2953,7 +3069,7 @@
           "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -3031,13 +3147,20 @@
       "decimals": 0,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
       "gridPos": {
         "h": 4,
-        "w": 6,
-        "x": 6,
+        "w": 12,
+        "x": 12,
         "y": 17
       },
       "hiddenSeries": false,
@@ -3060,20 +3183,18 @@
       "maxPerRow": 4,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeat": null,
-      "repeatIteration": 1594745242672,
+      "repeatIteration": 1607016043261,
       "repeatPanelId": 17,
       "scopedVars": {
         "host": {
-          "selected": false,
-          "text": "sm2",
-          "value": "sm2"
+          "selected": false
         }
       },
       "seriesOverrides": [],
@@ -3107,7 +3228,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3159,7 +3280,7 @@
           "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3211,523 +3332,7 @@
           "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "norm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "$host"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "$host - $group breakdown",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": 0,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "nuodb",
-      "decimals": 0,
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {},
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 12,
-        "y": 17
-      },
-      "hiddenSeries": false,
-      "id": 96,
-      "interval": ">$interval",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "hideEmpty": true,
-        "hideZero": true,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [],
-      "maxPerRow": 4,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatIteration": 1594745242672,
-      "repeatPanelId": 17,
-      "scopedVars": {
-        "host": {
-          "selected": false,
-          "text": "te",
-          "value": "te"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "System - $tag_$group",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "$group"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "PercentSystemTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "norm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "$host"
-            }
-          ]
-        },
-        {
-          "alias": "User - $tag_$group",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "$group"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "PercentUserTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "norm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "$host"
-            }
-          ]
-        },
-        {
-          "alias": "Total - $tag_$group",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "$group"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "PercentCpuTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "norm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "$host"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "$host - $group breakdown",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "format": "percent",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": 0,
-          "show": true
-        },
-        {
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "nuodb",
-      "decimals": 0,
-      "editable": true,
-      "error": false,
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {},
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 18,
-        "y": 17
-      },
-      "hiddenSeries": false,
-      "id": 97,
-      "interval": ">$interval",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "hideEmpty": true,
-        "hideZero": true,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": true,
-      "linewidth": 2,
-      "links": [],
-      "maxPerRow": 4,
-      "nullPointMode": "null",
-      "options": {
-        "dataLinks": []
-      },
-      "percentage": false,
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "repeat": null,
-      "repeatIteration": 1594745242672,
-      "repeatPanelId": 17,
-      "scopedVars": {
-        "host": {
-          "selected": false,
-          "text": "te-1",
-          "value": "te-1"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "System - $tag_$group",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "$group"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "PercentSystemTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "norm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "$host"
-            }
-          ]
-        },
-        {
-          "alias": "User - $tag_$group",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "$group"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "PercentUserTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "norm"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "host",
-              "operator": "=",
-              "value": "$host"
-            }
-          ]
-        },
-        {
-          "alias": "Total - $tag_$group",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "$group"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "PercentCpuTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" = '$host' AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -3797,8 +3402,8 @@
       }
     }
   ],
-  "refresh": "10s",
-  "schemaVersion": 22,
+  "refresh": "",
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "nuodb",
@@ -3815,6 +3420,7 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
+        "error": null,
         "hide": 0,
         "label": "interval",
         "name": "interval",
@@ -3830,12 +3436,12 @@
             "value": "10s"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "30s",
             "value": "30s"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "1m",
             "value": "1m"
           },
@@ -3908,6 +3514,7 @@
           "value": "host"
         },
         "datasource": null,
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Grouping",
@@ -3915,12 +3522,12 @@
         "name": "group",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "host",
             "value": "host"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "db",
             "value": "db"
           },
@@ -3936,6 +3543,7 @@
           }
         ],
         "query": "host,db,nodetype,pid",
+        "queryValue": "",
         "refresh": 0,
         "skipUrlSync": false,
         "type": "custom"
@@ -3950,9 +3558,9 @@
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Database",
         "multi": true,
         "name": "database",
@@ -3978,9 +3586,9 @@
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE  \"db\" =~ /^$database$/",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
@@ -4030,8 +3638,5 @@
   "timezone": "",
   "title": "CPU",
   "uid": null,
-  "variables": {
-    "list": []
-  },
-  "version": 1
+  "version": 4
 }
