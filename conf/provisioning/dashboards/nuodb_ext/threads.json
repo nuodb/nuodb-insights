@@ -17,7 +17,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1596571488576,
+  "iteration": 1607088228128,
   "links": [
     {
       "$$hashKey": "object:1885",
@@ -51,6 +51,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -61,6 +68,7 @@
       },
       "hiddenSeries": false,
       "id": 4,
+      "interval": "$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -75,9 +83,10 @@
       "linewidth": 1,
       "nullPointMode": "null as zero",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -191,6 +200,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -201,6 +217,7 @@
       },
       "hiddenSeries": false,
       "id": 5,
+      "interval": "$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -215,9 +232,10 @@
       "linewidth": 1,
       "nullPointMode": "null as zero",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -331,6 +349,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -341,6 +366,7 @@
       },
       "hiddenSeries": false,
       "id": 7,
+      "interval": "$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -355,9 +381,10 @@
       "linewidth": 1,
       "nullPointMode": "null as zero",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": true,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -471,6 +498,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -481,6 +515,7 @@
       },
       "hiddenSeries": false,
       "id": 8,
+      "interval": "$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -495,9 +530,10 @@
       "linewidth": 1,
       "nullPointMode": "null as zero",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": true,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -611,6 +647,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -621,6 +664,7 @@
       },
       "hiddenSeries": false,
       "id": 6,
+      "interval": "$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -635,9 +679,10 @@
       "linewidth": 1,
       "nullPointMode": "null as zero",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": true,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -746,8 +791,8 @@
       }
     }
   ],
-  "refresh": "30s",
-  "schemaVersion": 22,
+  "refresh": "10s",
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "nuodb"
@@ -755,7 +800,104 @@
   "templating": {
     "list": [
       {
+        "auto": true,
+        "auto_count": "50",
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "text": "auto",
+          "value": "$__auto_interval_interval"
+        },
+        "error": null,
+        "hide": 0,
+        "label": "interval",
+        "name": "interval",
+        "options": [
+          {
+            "selected": true,
+            "text": "auto",
+            "value": "$__auto_interval_interval"
+          },
+          {
+            "selected": false,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": false,
+            "text": "15s",
+            "value": "15s"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "10s,15s,30s,1m,5m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
         "datasource": "nuodb_internal",
+        "error": null,
         "filters": [],
         "hide": 0,
         "label": "Filter",
@@ -771,6 +913,7 @@
           "text": "0",
           "value": "0"
         },
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "cpu",
@@ -863,9 +1006,6 @@
   },
   "timezone": "",
   "title": "Thread Usage",
-  "uid": "jj6DGhkMk",
-  "variables": {
-    "list": []
-  },
+  "uid": null,
   "version": 2
 }

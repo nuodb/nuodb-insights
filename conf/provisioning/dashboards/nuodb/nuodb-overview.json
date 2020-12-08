@@ -32,7 +32,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1595421242783,
+  "iteration": 1607091937293,
   "links": [
     {
       "asDropdown": true,
@@ -80,7 +80,8 @@
       "datasource": null,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -94,6 +95,7 @@
       },
       "hiddenSeries": false,
       "id": 6,
+      "interval": "$interval",
       "legend": {
         "avg": false,
         "current": false,
@@ -107,10 +109,11 @@
       "linewidth": 1,
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -295,7 +298,8 @@
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -310,7 +314,7 @@
       },
       "hiddenSeries": false,
       "id": 2,
-      "interval": "10s",
+      "interval": "$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -326,15 +330,17 @@
       "links": [],
       "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:270",
           "alias": "current",
           "bars": true,
           "color": "#E24D42",
@@ -342,6 +348,7 @@
           "yaxis": 2
         },
         {
+          "$$hashKey": "object:271",
           "alias": "on TE",
           "steppedLine": true,
           "yaxis": 2
@@ -596,12 +603,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "How many transactions are Busy (in database) relative to Idle (not in database) during the collection interval.",
+      "description": "How many transactions are Busy (in database) relative to Idle (not in database) during the collection interval. Only valid for NuoDB 4.1+",
       "editable": true,
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {}
+          "custom": {},
+          "links": []
         },
         "overrides": []
       },
@@ -616,7 +624,7 @@
       },
       "hiddenSeries": false,
       "id": 9,
-      "interval": "10s",
+      "interval": "$interval",
       "legend": {
         "alignAsTable": true,
         "avg": true,
@@ -632,10 +640,11 @@
       "links": [],
       "nullPointMode": "connected",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": true,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -815,7 +824,7 @@
     }
   ],
   "refresh": "10s",
-  "schemaVersion": 22,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "overview"
@@ -823,18 +832,113 @@
   "templating": {
     "list": [
       {
-        "allValue": ".*",
+        "auto": true,
+        "auto_count": "50",
+        "auto_min": "10s",
         "current": {
           "selected": false,
-          "tags": [],
-          "text": "LOG",
-          "value": "LOG"
+          "text": "auto",
+          "value": "$__auto_interval_interval"
+        },
+        "error": null,
+        "hide": 0,
+        "label": "interval",
+        "name": "interval",
+        "options": [
+          {
+            "selected": false,
+            "text": "auto",
+            "value": "$__auto_interval_interval"
+          },
+          {
+            "selected": true,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "15m",
+            "value": "15m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "10s,30s,1m,5m,10m,15m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": true,
+          "text": "ENOVIA",
+          "value": "ENOVIA"
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES WITH KEY = \"db\"",
+        "error": null,
         "hide": 0,
         "includeAll": false,
-        "index": -1,
         "label": "Database",
         "multi": false,
         "name": "database",
@@ -853,14 +957,19 @@
       {
         "allValue": ".*",
         "current": {
-          "text": "All",
-          "value": "$__all"
+          "selected": true,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"db\" = '$database' AND \"nodetype\" = 'Transaction'",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
@@ -910,8 +1019,5 @@
   "timezone": "",
   "title": "NuoDB Overview",
   "uid": null,
-  "variables": {
-    "list": []
-  },
-  "version": 1
+  "version": 5
 }

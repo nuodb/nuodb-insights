@@ -31,7 +31,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1596121046956,
+  "iteration": 1607090541195,
   "links": [
     {
       "$$hashKey": "object:4599",
@@ -74,8 +74,8 @@
       "scopedVars": {
         "nodes": {
           "selected": false,
-          "text": "2",
-          "value": "2"
+          "text": "1",
+          "value": "1"
         }
       },
       "title": "Node $nodes",
@@ -87,6 +87,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -97,7 +104,7 @@
       },
       "hiddenSeries": false,
       "id": 9,
-      "interval": ">30s",
+      "interval": "$interval",
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -114,9 +121,10 @@
       "maxPerRow": 3,
       "nullPointMode": "null as zero",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -125,8 +133,8 @@
       "scopedVars": {
         "nodes": {
           "selected": false,
-          "text": "2",
-          "value": "2"
+          "text": "1",
+          "value": "1"
         }
       },
       "seriesOverrides": [],
@@ -236,6 +244,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -246,7 +261,7 @@
       },
       "hiddenSeries": false,
       "id": 18,
-      "interval": ">30s",
+      "interval": "$interval",
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -263,9 +278,10 @@
       "maxPerRow": 3,
       "nullPointMode": "null as zero",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -273,8 +289,8 @@
       "scopedVars": {
         "nodes": {
           "selected": false,
-          "text": "2",
-          "value": "2"
+          "text": "1",
+          "value": "1"
         }
       },
       "seriesOverrides": [],
@@ -384,6 +400,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -394,7 +417,7 @@
       },
       "hiddenSeries": false,
       "id": 22,
-      "interval": ">30s",
+      "interval": "$interval",
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -411,9 +434,10 @@
       "maxPerRow": 3,
       "nullPointMode": "null as zero",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -421,8 +445,8 @@
       "scopedVars": {
         "nodes": {
           "selected": false,
-          "text": "2",
-          "value": "2"
+          "text": "1",
+          "value": "1"
         }
       },
       "seriesOverrides": [],
@@ -537,14 +561,13 @@
       },
       "id": 23,
       "panels": [],
-      "repeat": null,
-      "repeatIteration": 1596121046956,
+      "repeatIteration": 1607090541195,
       "repeatPanelId": 11,
       "scopedVars": {
         "nodes": {
           "selected": false,
-          "text": "3",
-          "value": "3"
+          "text": "2",
+          "value": "2"
         }
       },
       "title": "Node $nodes",
@@ -556,6 +579,13 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "$nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "gridPos": {
@@ -566,7 +596,7 @@
       },
       "hiddenSeries": false,
       "id": 24,
-      "interval": ">30s",
+      "interval": "$interval",
       "legend": {
         "alignAsTable": false,
         "avg": false,
@@ -583,22 +613,23 @@
       "maxPerRow": 3,
       "nullPointMode": "null as zero",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
       "repeat": "listeners",
       "repeatDirection": "h",
-      "repeatIteration": 1596121046956,
+      "repeatIteration": 1607090541195,
       "repeatPanelId": 9,
       "repeatedByRow": true,
       "scopedVars": {
         "nodes": {
           "selected": false,
-          "text": "3",
-          "value": "3"
+          "text": "2",
+          "value": "2"
         }
       },
       "seriesOverrides": [],
@@ -703,1445 +734,326 @@
       }
     },
     {
-      "collapsed": true,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 18
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
       },
-      "id": 27,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$nuodb_internal",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 1
-          },
-          "hiddenSeries": false,
-          "id": 28,
-          "interval": ">30s",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "maxPerRow": 3,
-          "nullPointMode": "null as zero",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": "listeners",
-          "repeatDirection": "h",
-          "repeatIteration": 1596121046956,
-          "repeatPanelId": 9,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "nodes": {
-              "selected": false,
-              "text": "4",
-              "value": "4"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_sync_trace_metric",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "sync_trace_metric"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "measurement": "nuodb_synctrace",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT LAST(M) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND  \"id\" =~ /^$nodes$/ AND \"host\" =~ /^$host$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
-              "rawQuery": true,
-              "refId": "C",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "totalTimeStalls"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "id",
-                  "operator": "=~",
-                  "value": "/^$nodes$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Total Stall Time",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:156",
-              "format": "µs",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:157",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$nuodb_internal",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 1
-          },
-          "hiddenSeries": false,
-          "id": 29,
-          "interval": ">30s",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "maxPerRow": 3,
-          "nullPointMode": "null as zero",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "h",
-          "repeatIteration": 1596121046956,
-          "repeatPanelId": 18,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "nodes": {
-              "selected": false,
-              "text": "4",
-              "value": "4"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_sync_trace_metric",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "sync_trace_metric"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "measurement": "nuodb_synctrace",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT LAST(N) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N, mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND \"id\" =~ /^$nodes$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "totalTimeStalls"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "id",
-                  "operator": "=~",
-                  "value": "/^$nodes$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Number of Stalls",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:156",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:157",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$nuodb_internal",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 1
-          },
-          "hiddenSeries": false,
-          "id": 30,
-          "interval": ">30s",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "maxPerRow": 3,
-          "nullPointMode": "null as zero",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "h",
-          "repeatIteration": 1596121046956,
-          "repeatPanelId": 22,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "nodes": {
-              "selected": false,
-              "text": "4",
-              "value": "4"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_sync_trace_metric",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "sync_trace_metric"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "measurement": "nuodb_synctrace",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT LAST(M)/LAST(N) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N,  mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND  \"id\" =~ /^$nodes$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
-              "rawQuery": true,
-              "refId": "C",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "totalTimeStalls"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "id",
-                  "operator": "=~",
-                  "value": "/^$nodes$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Average Stall Time",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:156",
-              "format": "µs",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:157",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1596121046956,
-      "repeatPanelId": 11,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 8,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 25,
+      "interval": "$interval",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "maxPerRow": 3,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatDirection": "h",
+      "repeatIteration": 1607090541195,
+      "repeatPanelId": 18,
+      "repeatedByRow": true,
       "scopedVars": {
         "nodes": {
           "selected": false,
-          "text": "4",
-          "value": "4"
+          "text": "2",
+          "value": "2"
         }
       },
-      "title": "Node $nodes",
-      "type": "row"
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "$tag_sync_trace_metric",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "sync_trace_metric"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "nuodb_synctrace",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT LAST(N) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N, mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND \"host\" =~ /^$host$/ AND  \"id\" =~ /^$nodes$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "totalTimeStalls"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=~",
+              "value": "/^$nodes$/"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Number of Stalls",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:156",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:157",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     },
     {
-      "collapsed": true,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 19
+      "aliasColors": {},
+      "bars": true,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "$nuodb_internal",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
       },
-      "id": 31,
-      "panels": [
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$nuodb_internal",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 1
-          },
-          "hiddenSeries": false,
-          "id": 32,
-          "interval": ">30s",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "maxPerRow": 3,
-          "nullPointMode": "null as zero",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": "listeners",
-          "repeatDirection": "h",
-          "repeatIteration": 1596121046956,
-          "repeatPanelId": 9,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "nodes": {
-              "selected": false,
-              "text": "5",
-              "value": "5"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_sync_trace_metric",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "sync_trace_metric"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "measurement": "nuodb_synctrace",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT LAST(M) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND  \"id\" =~ /^$nodes$/ AND \"host\" =~ /^$host$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
-              "rawQuery": true,
-              "refId": "C",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "totalTimeStalls"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "id",
-                  "operator": "=~",
-                  "value": "/^$nodes$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Total Stall Time",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:156",
-              "format": "µs",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:157",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$nuodb_internal",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 1
-          },
-          "hiddenSeries": false,
-          "id": 33,
-          "interval": ">30s",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "maxPerRow": 3,
-          "nullPointMode": "null as zero",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "h",
-          "repeatIteration": 1596121046956,
-          "repeatPanelId": 18,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "nodes": {
-              "selected": false,
-              "text": "5",
-              "value": "5"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_sync_trace_metric",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "sync_trace_metric"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "measurement": "nuodb_synctrace",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT LAST(N) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N, mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND \"id\" =~ /^$nodes$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "totalTimeStalls"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "id",
-                  "operator": "=~",
-                  "value": "/^$nodes$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Number of Stalls",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:156",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:157",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$nuodb_internal",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 1
-          },
-          "hiddenSeries": false,
-          "id": 34,
-          "interval": ">30s",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "maxPerRow": 3,
-          "nullPointMode": "null as zero",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "h",
-          "repeatIteration": 1596121046956,
-          "repeatPanelId": 22,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "nodes": {
-              "selected": false,
-              "text": "5",
-              "value": "5"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_sync_trace_metric",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "sync_trace_metric"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
-              ],
-              "hide": false,
-              "measurement": "nuodb_synctrace",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT LAST(M)/LAST(N) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N,  mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND  \"id\" =~ /^$nodes$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
-              "rawQuery": true,
-              "refId": "C",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "totalTimeStalls"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "id",
-                  "operator": "=~",
-                  "value": "/^$nodes$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Average Stall Time",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:156",
-              "format": "µs",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:157",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        }
-      ],
-      "repeat": null,
-      "repeatIteration": 1596121046956,
-      "repeatPanelId": 11,
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 8,
+        "w": 8,
+        "x": 16,
+        "y": 10
+      },
+      "hiddenSeries": false,
+      "id": 26,
+      "interval": "$interval",
+      "legend": {
+        "alignAsTable": false,
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "rightSide": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": false,
+      "linewidth": 1,
+      "maxPerRow": 3,
+      "nullPointMode": "null as zero",
+      "options": {
+        "alertThreshold": true
+      },
+      "percentage": false,
+      "pluginVersion": "7.3.2",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "repeatDirection": "h",
+      "repeatIteration": 1607090541195,
+      "repeatPanelId": 22,
+      "repeatedByRow": true,
       "scopedVars": {
         "nodes": {
           "selected": false,
-          "text": "5",
-          "value": "5"
+          "text": "2",
+          "value": "2"
         }
       },
-      "title": "Node $nodes",
-      "type": "row"
-    },
-    {
-      "collapsed": true,
-      "datasource": null,
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 20
-      },
-      "id": 35,
-      "panels": [
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": true,
+      "steppedLine": false,
+      "targets": [
         {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$nuodb_internal",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 0,
-            "y": 1
-          },
-          "hiddenSeries": false,
-          "id": 36,
-          "interval": ">30s",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "maxPerRow": 3,
-          "nullPointMode": "null as zero",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeat": "listeners",
-          "repeatDirection": "h",
-          "repeatIteration": 1596121046956,
-          "repeatPanelId": 9,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "nodes": {
-              "selected": false,
-              "text": "8",
-              "value": "8"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
+          "alias": "$tag_sync_trace_metric",
+          "groupBy": [
             {
-              "alias": "$tag_sync_trace_metric",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "sync_trace_metric"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
+              "params": [
+                "$__interval"
               ],
-              "hide": false,
-              "measurement": "nuodb_synctrace",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT LAST(M) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND  \"id\" =~ /^$nodes$/ AND \"host\" =~ /^$host$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
-              "rawQuery": true,
-              "refId": "C",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "totalTimeStalls"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "id",
-                  "operator": "=~",
-                  "value": "/^$nodes$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Total Stall Time",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:156",
-              "format": "µs",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
+              "type": "time"
             },
             {
-              "$$hashKey": "object:157",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$nuodb_internal",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 8,
-            "y": 1
-          },
-          "hiddenSeries": false,
-          "id": 37,
-          "interval": ">30s",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "maxPerRow": 3,
-          "nullPointMode": "null as zero",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "h",
-          "repeatIteration": 1596121046956,
-          "repeatPanelId": 18,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "nodes": {
-              "selected": false,
-              "text": "8",
-              "value": "8"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_sync_trace_metric",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "sync_trace_metric"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
+              "params": [
+                "sync_trace_metric"
               ],
-              "hide": false,
-              "measurement": "nuodb_synctrace",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT LAST(N) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N, mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND \"id\" =~ /^$nodes$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
-              "rawQuery": true,
-              "refId": "A",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "totalTimeStalls"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "id",
-                  "operator": "=~",
-                  "value": "/^$nodes$/"
-                }
-              ]
-            }
-          ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Number of Stalls",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:156",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
+              "type": "tag"
             },
             {
-              "$$hashKey": "object:157",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
-          ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
-        },
-        {
-          "aliasColors": {},
-          "bars": true,
-          "dashLength": 10,
-          "dashes": false,
-          "datasource": "$nuodb_internal",
-          "fill": 1,
-          "fillGradient": 0,
-          "gridPos": {
-            "h": 8,
-            "w": 8,
-            "x": 16,
-            "y": 1
-          },
-          "hiddenSeries": false,
-          "id": 38,
-          "interval": ">30s",
-          "legend": {
-            "alignAsTable": false,
-            "avg": false,
-            "current": false,
-            "max": false,
-            "min": false,
-            "rightSide": false,
-            "show": false,
-            "total": false,
-            "values": false
-          },
-          "lines": false,
-          "linewidth": 1,
-          "maxPerRow": 3,
-          "nullPointMode": "null as zero",
-          "options": {
-            "dataLinks": []
-          },
-          "percentage": false,
-          "pointradius": 2,
-          "points": false,
-          "renderer": "flot",
-          "repeatDirection": "h",
-          "repeatIteration": 1596121046956,
-          "repeatPanelId": 22,
-          "repeatedByRow": true,
-          "scopedVars": {
-            "nodes": {
-              "selected": false,
-              "text": "8",
-              "value": "8"
-            }
-          },
-          "seriesOverrides": [],
-          "spaceLength": 10,
-          "stack": true,
-          "steppedLine": false,
-          "targets": [
-            {
-              "alias": "$tag_sync_trace_metric",
-              "groupBy": [
-                {
-                  "params": [
-                    "$__interval"
-                  ],
-                  "type": "time"
-                },
-                {
-                  "params": [
-                    "sync_trace_metric"
-                  ],
-                  "type": "tag"
-                },
-                {
-                  "params": [
-                    "null"
-                  ],
-                  "type": "fill"
-                }
+              "params": [
+                "null"
               ],
-              "hide": false,
-              "measurement": "nuodb_synctrace",
-              "orderByTime": "ASC",
-              "policy": "default",
-              "query": "SELECT LAST(M)/LAST(N) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N,  mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND  \"id\" =~ /^$nodes$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
-              "rawQuery": true,
-              "refId": "C",
-              "resultFormat": "time_series",
-              "select": [
-                [
-                  {
-                    "params": [
-                      "totalTimeStalls"
-                    ],
-                    "type": "field"
-                  },
-                  {
-                    "params": [],
-                    "type": "mean"
-                  }
-                ]
-              ],
-              "tags": [
-                {
-                  "key": "id",
-                  "operator": "=~",
-                  "value": "/^$nodes$/"
-                }
-              ]
+              "type": "fill"
             }
           ],
-          "thresholds": [],
-          "timeFrom": null,
-          "timeRegions": [],
-          "timeShift": null,
-          "title": "Average Stall Time",
-          "tooltip": {
-            "shared": true,
-            "sort": 2,
-            "value_type": "individual"
-          },
-          "type": "graph",
-          "xaxis": {
-            "buckets": null,
-            "mode": "time",
-            "name": null,
-            "show": true,
-            "values": []
-          },
-          "yaxes": [
-            {
-              "$$hashKey": "object:156",
-              "format": "µs",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            },
-            {
-              "$$hashKey": "object:157",
-              "format": "short",
-              "label": null,
-              "logBase": 1,
-              "max": null,
-              "min": null,
-              "show": true
-            }
+          "hide": false,
+          "measurement": "nuodb_synctrace",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT LAST(M)/LAST(N) FROM (SELECT mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N,  mean(\"totalSumStalls\") AS S FROM \"nuodb_synctrace\" WHERE (\"sync_trace_metric\" =~ /^$metric$/ AND  \"id\" =~ /^$nodes$/ AND \"host\" =~ /^$host$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"sync_trace_metric\" fill(null)) WHERE $timeFilter AND M/S > $percent GROUP BY time($__interval),\"sync_trace_metric\" fill(null)",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "totalTimeStalls"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
           ],
-          "yaxis": {
-            "align": false,
-            "alignLevel": null
-          }
+          "tags": [
+            {
+              "key": "id",
+              "operator": "=~",
+              "value": "/^$nodes$/"
+            }
+          ]
         }
       ],
-      "repeat": null,
-      "repeatIteration": 1596121046956,
-      "repeatPanelId": 11,
-      "scopedVars": {
-        "nodes": {
-          "selected": false,
-          "text": "8",
-          "value": "8"
-        }
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "Average Stall Time",
+      "tooltip": {
+        "shared": true,
+        "sort": 2,
+        "value_type": "individual"
       },
-      "title": "Node $nodes",
-      "type": "row"
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "$$hashKey": "object:156",
+          "format": "µs",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "$$hashKey": "object:157",
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 22,
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "nuodb"
@@ -2150,10 +1062,11 @@
     "list": [
       {
         "current": {
-          "selected": true,
+          "selected": false,
           "text": "nuodb_internal",
           "value": "nuodb_internal"
         },
+        "error": null,
         "hide": 2,
         "includeAll": false,
         "label": null,
@@ -2167,17 +1080,103 @@
         "type": "datasource"
       },
       {
+        "auto": true,
+        "auto_count": "50",
+        "auto_min": "30s",
+        "current": {
+          "selected": false,
+          "text": "30s",
+          "value": "30s"
+        },
+        "error": null,
+        "hide": 0,
+        "label": "interval",
+        "name": "interval",
+        "options": [
+          {
+            "selected": true,
+            "text": "auto",
+            "value": "$__auto_interval_interval"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "30s,1m,5m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
+      {
         "allValue": null,
         "current": {
           "selected": true,
-          "text": "db_payments",
-          "value": "db_payments"
+          "text": "LOG",
+          "value": "LOG"
         },
         "datasource": "$nuodb_internal",
         "definition": "SHOW TAG VALUES  FROM \"nuodb_synctrace\" WITH KEY = \"dbname\"",
+        "error": null,
         "hide": 0,
         "includeAll": false,
-        "index": -1,
         "label": "db",
         "multi": false,
         "name": "database",
@@ -2196,16 +1195,19 @@
       {
         "allValue": null,
         "current": {
-          "text": "All",
+          "selected": true,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "$nuodb_internal",
         "definition": "SHOW TAG VALUES  FROM \"nuodb_synctrace\" WITH KEY = \"host\" WHERE \"dbname\" =~ /^$database$/",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "host",
         "multi": true,
         "name": "host",
@@ -2224,17 +1226,19 @@
       {
         "allValue": null,
         "current": {
-          "tags": [],
-          "text": "All",
+          "selected": true,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "$nuodb_internal",
         "definition": "SHOW TAG VALUES  FROM \"nuodb_synctrace\" WITH KEY = \"id\" WHERE \"dbname\" =~ /^$database$/ AND \"host\" =~ /^$host$/",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "node",
         "multi": true,
         "name": "nodes",
@@ -2253,17 +1257,19 @@
       {
         "allValue": ".*",
         "current": {
-          "tags": [],
-          "text": "All",
+          "selected": true,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "$nuodb_internal",
         "definition": "SHOW TAG VALUES  FROM \"nuodb_synctrace\" WITH KEY = \"sync_trace_metric\" WHERE \"dbname\" =~ /^$database$/",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "metrics",
         "multi": true,
         "name": "metric",
@@ -2282,11 +1288,11 @@
       {
         "allValue": null,
         "current": {
-          "$$hashKey": "object:1302",
-          "selected": true,
+          "selected": false,
           "text": "0",
           "value": "0"
         },
+        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "percentage greater than",
@@ -2372,9 +1378,6 @@
   },
   "timezone": "",
   "title": "Sync Trace",
-  "uid": "7InGifzGz",
-  "variables": {
-    "list": []
-  },
-  "version": 9
+  "uid": null,
+  "version": 3
 }
