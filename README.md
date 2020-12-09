@@ -21,7 +21,7 @@
 # NuoDB Insights Page Outline
 [Introduction](#Introduction)
 
-[Quick Start in Docker using Docker Compose](#Quickstart-in-docker-using-docker-compose)
+[QuickStart in Docker using Docker Compose](#Quickstart-in-docker-using-docker-compose)
 
 [Setup Manually in Docker using Docker Run](#Setup-manually-in-docker-using-docker-run)
 
