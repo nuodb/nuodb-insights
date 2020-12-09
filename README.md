@@ -133,11 +133,7 @@ docker run -dit --name ycsb1 \
 
 ### Helm Repository Structure
 
-This GitHub repository contains the source for the packaged and versioned charts released in the [`gs://nuodb-charts` Google Storage bucket](https://console.cloud.google.com/storage/browser/nuodb-charts/) (the Chart Repository).
-
-This Github repository also contains the NuoDB Insights Helm Chart.
-It contains all components required to install NuoDB Insights.
-It is located in the [stable](stable/README.md) directory.
+This Github repository contains the NuoDB Insights Helm Chart and all the required components to install and deploy NuoDB Insights.
 
 ### Installation
 
