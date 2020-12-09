@@ -118,7 +118,7 @@ If [NuoDB SCC][10] has been created already in the cluster, it can be modified a
 Specify the name of the Grafana service account during NuoDB Insights installation:
 
 ```bash
-helm install [name] nuodb-insights/stable/insights --generate-name -n nuodb \
+helm install insights nuodb-insights/stable/insights -n nuodb \
   --set grafana.serviceAccount.create=true \
   --set grafana.serviceAccount.name=grafana
 ```
@@ -137,7 +137,7 @@ If NuoDB Insights is installed in the same namespace with NuoDB database, no add
 Otherwise, it is required to create NuoDB Collector configuration for Insights in all namespaces where NuoDB admin and database services are running. This can be done by installing the chart and setting `insights.influxdb.host` to the InfluxDB fully qualified domain name. For example:
 
 ```bash
-helm install [name] nuodb-insights/insights --generate-name -n nuodb \
+helm install insights nuodb-insights/insights -n nuodb \
   --set grafana.enabled=false \
   --set influxdb.enabled=false \
   --set insights.grafana.enabled=false \
