@@ -33,7 +33,7 @@
 
 NuoDB Insights is a visual monitor tool that aids NuoDB practitioners in monitoring NuoDB database health, resource consumption, and application workload processed in real-time and historically using an intuitive graphical interface. It can be installed at database startup or after. It also installs locally on the same nodes/hosts your database runs and supports all NuoDB database deployment environments: Kubernetes, Docker, and physical host / Virtual Machine environments. 
 
-## Quickstart in Docker using Docker Compose
+## QuickStart in Docker using Docker Compose
 
 For a complete example on how to set up the NuoDB database with NuoDB Insights monitoring, you can use `docker compose`.
 This repository contains a Docker Compose file (`deploy/docker-compose.yml`) which will start:
