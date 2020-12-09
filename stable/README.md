@@ -2,7 +2,7 @@
 
 1. **[Getting Started with Helm][4]** describes how to install and configure Helm on a client host. 
 2. **[Deploying NuoDB using Helm Charts][5]** contains a quick primer on how to deploy the NuoDB Helm Charts.
-2. **[Deploying NuoDB Insights using Helm Charts][9]** describes how to install NuoDB Insights.
+3. **[Deploying NuoDB Insights using Helm Charts][9]** describes how to install NuoDB Insights.
 
 
 # Getting Started with Helm 
@@ -82,11 +82,14 @@ To confirm the NuoDB Insights chart has been added to your local chart repositor
 helm search repo nuodb-insights
 ```
 
-You can now install the chart:
+Install the chart:
 ```
-helm install insights nuodb-insights/insights [--generate-name] [--set parameter] [--values myvalues.yaml]
+helm install [name] nuodb-insights/insights [--generate-name] [--set parameter] [--values myvalues.yaml]
 ```
-
+For example, for the name, use `insights` and for namespace use `nuodb` : 
+```
+helm install insights nuodb-insights/insights --namespace nuodb
+```
 
 ### Installing from source
 
@@ -101,9 +104,9 @@ In order to use this helm chart locally you will need to first update the depend
 $ helm dep update stable/insights
 ```
 
-You can now install the chart:
+Install the chart:
 ```
-helm install insights stable/insights [--generate-name] [--set parameter] [--values myvalues.yaml]
+helm install [name] stable/insights [--generate-name] [--set parameter] [--values myvalues.yaml]
 ```
 
 ### Grant Red Hat OpenShift privileges
@@ -115,7 +118,7 @@ If [NuoDB SCC][10] has been created already in the cluster, it can be modified a
 Specify the name of the Grafana service account during NuoDB Insights installation:
 
 ```bash
-helm install insights nuodb-insights/stable/insights --generate-name -n nuodb \
+helm install [name] nuodb-insights/stable/insights --generate-name -n nuodb \
   --set grafana.serviceAccount.create=true \
   --set grafana.serviceAccount.name=grafana
 ```
@@ -131,10 +134,10 @@ oc adm policy add-scc-to-user nuodb-scc system:serviceaccount:nuodb:grafana -n n
 ### Installing in different namespace
 
 If NuoDB Insights is installed in the same namespace with NuoDB database, no additional steps are needed.
-Otherwise it is required to create NuoDB Collector configuration for Insights in all namespaces where NuoDB admin and database services are running. This can be done by installing the chart and setting `insights.influxdb.host` to the InfluxDB fully qualified domain name. For example:
+Otherwise, it is required to create NuoDB Collector configuration for Insights in all namespaces where NuoDB admin and database services are running. This can be done by installing the chart and setting `insights.influxdb.host` to the InfluxDB fully qualified domain name. For example:
 
 ```bash
-helm install insights nuodb-insights/insights --generate-name -n nuodb \
+helm install [name] nuodb-insights/insights --generate-name -n nuodb \
   --set grafana.enabled=false \
   --set influxdb.enabled=false \
   --set insights.grafana.enabled=false \
@@ -144,13 +147,14 @@ helm install insights nuodb-insights/insights --generate-name -n nuodb \
 
 ## Accessing NuoDB Insights
 
-By default the NuoDB Insights Grafana dashboard WebUI will be available within the Kubernetes cluster via ClusterIP service. One way to access the WebUI dashboards is to use port forwarding and navigate your web browser to http://localhost:8080/.
+By default, the NuoDB Insights Grafana dashboard WebUI will be available within the Kubernetes cluster via ClusterIP service. One way to access the WebUI dashboards is to use port forwarding and navigate your web browser to http://localhost:8080/.
 
 ```
-kubectl port-forward service/<release-name>-grafana 8080:80
+kubectl port-forward service/<name>-grafana 8080:80
 ```
+For `<name>`, use the value used in your `helm install` command for the `name` argument.
 
-Grafana 3-rd party chart supports ingress with Grafana 6.3 and above. Configure ingress during NuoDB Insights chart installation and navigate to one of the hosts specified in `grafana.ingress.hosts` variable.
+Grafana 3rd party chart supports ingress with Grafana 6.3 and above. Configure ingress during NuoDB Insights chart installation and navigate to one of the hosts specified in `grafana.ingress.hosts` variable.
 For example:
 
 ```
