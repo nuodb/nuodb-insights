@@ -138,8 +138,8 @@ This Github repository contains the NuoDB Insights Helm Chart and all the requir
 ### Installation
 
 1. **[Getting Started with Helm](stable#getting-started-with-helm)** describes how to install and configure Helm on a client host. 
-2. **[Deploying NuoDB using Helm Charts](stable#deploying-nuodb-using-helm-charts)** contains a quick primer on how to deploy the NuoDB Helm Charts.
-3. **[Deploying NuoDB Insights using Helm Charts](stable#deploying-nuodb-insights-using-helm-charts)** describes how to install NuoDB Insights.
+2. **[Deploying NuoDB using Helm Charts](stable#deploying-nuodb-using-helm-charts)** contains a quick primer on how to deploy a NuoDB database using the NuoDB Helm Charts.
+3. **[Deploying NuoDB Insights using Helm Charts](stable#deploying-nuodb-insights-using-helm-charts)** describes how to install and configure NuoDB Insights.
 
 ## Setup on Bare Metal Linux
 
