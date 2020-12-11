@@ -86,7 +86,7 @@ Install the chart:
 ```
 helm install [name] nuodb-insights/insights [--generate-name] [--set parameter] [--values myvalues.yaml]
 ```
-For example, for the name, use `insights` and for namespace use `nuodb` : 
+For the name, use `insights` and for namespace use `nuodb` : 
 ```
 helm install insights nuodb-insights/insights --namespace nuodb
 ```
@@ -150,9 +150,8 @@ helm install insights nuodb-insights/insights -n nuodb \
 By default, the NuoDB Insights Grafana dashboard WebUI will be available within the Kubernetes cluster via ClusterIP service. One way to access the WebUI dashboards is to use port forwarding and navigate your web browser to http://localhost:8080/.
 
 ```
-kubectl port-forward service/<name>-grafana 8080:80
+kubectl port-forward service/insights-grafana 8080:80
 ```
-For `<name>`, use the value used in your `helm install` command for the `name` argument.
 
 Grafana 3rd party chart supports ingress with Grafana 6.3 and above. Configure ingress during NuoDB Insights chart installation and navigate to one of the hosts specified in `grafana.ingress.hosts` variable.
 For example:
