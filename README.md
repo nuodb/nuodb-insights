@@ -21,7 +21,7 @@
 # NuoDB Insights Page Outline
 [Introduction](#Introduction)
 
-[Quick Start in Docker using Docker Compose](#Quickstart-in-docker-using-docker-compose)
+[QuickStart in Docker using Docker Compose](#Quickstart-in-docker-using-docker-compose)
 
 [Setup Manually in Docker using Docker Run](#Setup-manually-in-docker-using-docker-run)
 
@@ -31,9 +31,9 @@
 
 ## Introduction
 
-NuoDB Insights is a visual monitor tool that aids NuoDB practicianers in monitoring NuoDB database health, resoruce consumption, and application workload processed in real-time and historically using an intuitive graphical interface. It can be installed at database startup or after. It also installs locally on the same nodes/hosts your database runs and supports all NuoDB database deployment environments: Kubernetes, Docker, and physical host / Virtual Machine environments. 
+NuoDB Insights is a visual monitor tool that aids NuoDB practitioners in monitoring NuoDB database health, resource consumption, and application workload processed in real-time and historically using an intuitive graphical interface. It can be installed at database startup or after. It also installs locally on the same nodes/hosts your database runs and supports all NuoDB database deployment environments: Kubernetes, Docker, and physical host / Virtual Machine environments. 
 
-## Quickstart in Docker using Docker Compose
+## QuickStart in Docker using Docker Compose
 
 For a complete example on how to set up the NuoDB database with NuoDB Insights monitoring, you can use `docker compose`.
 This repository contains a Docker Compose file (`deploy/docker-compose.yml`) which will start:
@@ -133,17 +133,13 @@ docker run -dit --name ycsb1 \
 
 ### Helm Repository Structure
 
-This GitHub repository contains the source for the packaged and versioned charts released in the [`gs://nuodb-charts` Google Storage bucket](https://console.cloud.google.com/storage/browser/nuodb-charts/) (the Chart Repository).
-
-This Github repository also contains the NuoDB Insights Helm Chart.
-It contains all components required to install NuoDB Insights.
-It is located in the [stable](stable/README.md) directory.
+This Github repository contains the NuoDB Insights Helm Chart and all the required components to install and deploy NuoDB Insights.
 
 ### Installation
 
-If you are new to Kubernetes and Helm, please read the [high-level description](stable/README.md) in the Stable directory. 
-
-For specific configuration options, see the [Insights Helm Chart Readme](stable/insights/README.md).
+1. **[Getting Started with Helm](stable#getting-started-with-helm)** describes how to install and configure Helm on a client host. 
+2. **[Deploying NuoDB using Helm Charts](stable#deploying-nuodb-using-helm-charts)** contains a quick primer on how to deploy a NuoDB database using the NuoDB Helm Charts.
+3. **[Deploying NuoDB Insights using Helm Charts](stable#deploying-nuodb-insights-using-helm-charts)** describes how to install and configure NuoDB Insights.
 
 ## Setup on Bare Metal Linux
 
