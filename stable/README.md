@@ -86,7 +86,7 @@ Install the chart:
 ```
 helm install [name] nuodb-insights/insights [--generate-name] [--set parameter] [--values myvalues.yaml]
 ```
-For the name, use `insights` and for namespace use `nuodb` : 
+For the name, use `insights` and for the namespace use `nuodb` : 
 ```
 helm install insights nuodb-insights/insights --namespace nuodb
 ```
