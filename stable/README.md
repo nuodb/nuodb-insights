@@ -1,24 +1,32 @@
 ### The instructions on this page are in three parts:
 
-1. **[Getting Started with Helm][4]** covers how to install and configure Helm on a client host. It will walk you through deploying a canary application to make sure Helm is properly configured.
-2. **[Deploying NuoDB using Helm Charts][5]** contains a quick primer on the NuoDB domain installation.
-2. **[Deploying NuoDB Insights using Helm Charts][9]** covers the installation of NuoDB Insights.
+1. **[Getting Started with Helm][4]** describes how to install and configure Helm on a client host. 
+2. **[Deploying NuoDB using Helm Charts][5]** contains a quick primer on how to deploy the NuoDB Helm Charts.
+3. **[Deploying NuoDB Insights using Helm Charts][9]** describes how to install NuoDB Insights.
 
 
 # Getting Started with Helm 
 
-This section will walk you through getting the Helm client installed in your environment. If using Red Hat OpenShift, this page assumes that you already have the OpenShift `oc` client program installed locally and that you are logged into your OpenShift instance.
+If using Red Hat OpenShift, confirm the OpenShift `oc` client program is installed locally and that you are logged into your OpenShift instance.
 
 ## Install Helm 3
 
-If you are interested in Helm 2, please follow the [official Helm 2 docs][7].
+If you are planning to install Helm 2, please follow the [official Helm 2 docs][7].
+
+### MacOS
+
+Use the Brew Package manager.
+```
+brew install helm
+```
+### Linux
 
 Every [release][2] of Helm provides binary releases for a variety of OSes. 
 
 1. Download your [desired version][2]
 2. Unpack it (`tar -zxvf helm-${helm-version}-linux-amd64.tgz`)
 
-We’ll use Helm version 3.2.4, which can be downloaded via <https://github.com/kubernetes/helm/releases/tag/v3.2.4>.
+This example uses Helm version 3.2.4, which can be downloaded via <https://github.com/kubernetes/helm/releases/tag/v3.2.4>.
 
 Run the following commands to install the Helm locally on your Linux client machine:
 ```bash
@@ -31,13 +39,6 @@ Move the Helm binaries to /usr/local/bin
 $ mv helm /usr/local/bin
 ```
 
-If you're running on Mac, we recommend using the Brew Package manager.
-```
-brew install helm
-```
-
-Confirm you can run the Helm client: `helm help`.
-
 ## Confirm that the Helm client is installed correctly 
 
 The results should be as follows:
@@ -47,24 +48,14 @@ helm version
 version.BuildInfo{Version:"v3.2.4", GitCommit:"0ad800ef43d3b826f31a5ad8dfbb4fe05d143688", GitTreeState:"dirty", GoVersion:"go1.14.3"}
 ```
 
-## Create the _nuodb_ namespace to install NuoDB
-
-```
-kubectl create namespace nuodb
-```
-
-You are now ready to install the NuoDB components.
-
 # Deploying NuoDB using Helm Charts
 
 The minimal supported version of NuoDB and the NuoDB helm charts is specified in the [Insights Helm Chart Readme](insights/README.md).
 
 For steps to install the NuoDB database please read the documentation in the [NuoDB Helm Charts][8] repository.
-At a bare minimum you will need the [Admin Chart](https://github.com/nuodb/nuodb-helm-charts/tree/master/stable/admin) and at least one [Database Chart](https://github.com/nuodb/nuodb-helm-charts/tree/master/stable/database). They have to be installed with `nuocollector.enabled` set to `true`.
+The [Admin Chart](https://github.com/nuodb/nuodb-helm-charts/tree/master/stable/admin) and the [Database Chart](https://github.com/nuodb/nuodb-helm-charts/tree/master/stable/database) must be installed with `nuocollector.enabled` set to `true`.
 
 # Deploying NuoDB Insights using Helm Charts
-
-The following section outlines the steps in order to deploy NuoDB Insights using this Helm Chart repository.
 
 ## Configuration Parameters
 
@@ -73,8 +64,7 @@ For configuration options please see the [Insights Helm Chart Readme](insights/R
 
 ## Deployment Steps
 
-The order of installation of [`NuoDB Helm Charts`][8] and [`NuoDB Insights`](insights) does not matter.
-You can install the components in any order.
+The installation of the [`NuoDB Helm Charts`][8] and [`NuoDB Insights`](insights) can occur in an order.
 
 ### Installing a released version of NuoDB Insights
 
@@ -83,20 +73,23 @@ The default repository for NuoDB is located at https://storage.googleapis.com/nu
 To add the charts for your local client, run the `helm repo add` command below:
 
 ```
-helm repo add nuodb https://storage.googleapis.com/nuodb-charts
-"nuodb" has been added to your repositories
+helm repo add nuodb-insights https://storage.googleapis.com/nuodb-insights
+"nuodb-insights" has been added to your repositories
 ```
 
-To list the NuoDB charts added to your repository, run 
+To confirm the NuoDB Insights chart has been added to your local chart repository, run 
 ```
-helm search nuodb/
-```
-
-You can now install the chart:
-```
-helm install nuodb/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
+helm search repo nuodb-insights
 ```
 
+Install the chart:
+```
+helm install [name] nuodb-insights/insights [--generate-name] [--set parameter] [--values myvalues.yaml]
+```
+For the name, use `insights` and for the namespace use `nuodb` : 
+```
+helm install insights nuodb-insights/insights --namespace nuodb
+```
 
 ### Installing from source
 
@@ -111,18 +104,40 @@ In order to use this helm chart locally you will need to first update the depend
 $ helm dep update stable/insights
 ```
 
-You can now install the chart:
+Install the chart:
 ```
-helm install stable/insights [--generate-name | --name releaseName] [--set parameter] [--values myvalues.yaml]
+helm install [name] stable/insights [--generate-name] [--set parameter] [--values myvalues.yaml]
+```
+
+### Grant Red Hat OpenShift privileges
+
+By default Grafana deployment will run as user, group and fsGroup of 472. The value can be configured in `grafana.securityContext`.
+Unless a Security Context Constraint is created to allow that, Ret Hat OpenShift won't start Grafana container.
+If [NuoDB SCC][10] has been created already in the cluster, it can be modified and assigned to the service account used by Grafana. Otherwise new Security Context Constraint needs to be created.
+
+Specify the name of the Grafana service account during NuoDB Insights installation:
+
+```bash
+helm install insights nuodb-insights/stable/insights -n nuodb \
+  --set grafana.serviceAccount.create=true \
+  --set grafana.serviceAccount.name=grafana
+```
+
+Patch NuoDB SCC so that 472 fsGroup is allowed and assign it to the service account set in the above command.
+
+```bash
+kubectl patch -n nuodb scc nuodb-scc --type='json' \
+  -p='[{"op": "replace", "path": "/fsGroup", "value":{"type": "MustRunAs", "ranges": [{"max": 472, "min": 472}] } }]'
+oc adm policy add-scc-to-user nuodb-scc system:serviceaccount:nuodb:grafana -n nuodb
 ```
 
 ### Installing in different namespace
 
 If NuoDB Insights is installed in the same namespace with NuoDB database, no additional steps are needed.
-Otherwise it is required to create NuoDB Collector configuration for Insights in all namespaces where NuoDB admin and database services are running. This can be done by installing the chart and setting `insights.influxdb.host` to the InfluxDB fully qualified domain name. For example:
+Otherwise, it is required to create NuoDB Collector configuration for Insights in all namespaces where NuoDB admin and database services are running. This can be done by installing the chart and setting `insights.influxdb.host` to the InfluxDB fully qualified domain name. For example:
 
 ```bash
-helm install nuodb/insights --generate-name -n nuodb \
+helm install insights nuodb-insights/insights -n nuodb \
   --set grafana.enabled=false \
   --set influxdb.enabled=false \
   --set insights.grafana.enabled=false \
@@ -132,22 +147,22 @@ helm install nuodb/insights --generate-name -n nuodb \
 
 ## Accessing NuoDB Insights
 
-By default Grafana will be available within the Kubernetes cluster via ClusterIP service. One way to access Grafana dashboards is to use port forwarding and navigate to http://localhost:8080/.
+By default, the NuoDB Insights Grafana dashboard WebUI will be available within the Kubernetes cluster via ClusterIP service. One way to access the WebUI dashboards is to use port forwarding and navigate your web browser to http://localhost:8080/.
 
 ```
-kubectl port-forward service/<release-name>-grafana 8080:80
+kubectl port-forward service/insights-grafana 8080:80
 ```
 
-Grafana 3-rd party chart supports ingress with Grafana 6.3 and above. Configure ingress during NuoDB Insights chart installation and navigate to one of the hosts specified in `grafana.ingress.hosts` variable.
+Grafana 3rd party chart supports ingress with Grafana 6.3 and above. Configure ingress during NuoDB Insights chart installation and navigate to one of the hosts specified in `grafana.ingress.hosts` variable.
 For example:
 
 ```
-helm install insights nuodb/insights -n nuodb \
+helm install insights nuodb-insights/insights -n nuodb \
   --set grafana.ingress.enabled=true \
   --set grafana.ingress.hosts='{"insights.example.com"}'
 ```
 
-For OCP deployments the service can be exposed via route.
+For Red Hat OpenShift deployments the service can be exposed via route.
 
 ```
 oc expose svc/<release-name>-grafana
@@ -156,9 +171,11 @@ oc expose svc/<release-name>-grafana
 ### Grafana Default Password
 
 By default, Grafana generates a random password when the instance is started.
-To retrieve the password, you can read the Kubernetes secret as such:
+To retrieve the password, run:
 ```
-kubectl get secret <release-name>-grafana -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
+kubectl get secrets -n nuodb \
+  $(kubectl get secrets -l app.kubernetes.io/name=grafana -n nuodb -o custom-columns=":metadata.name" --no-headers=true) \
+  -o jsonpath="{.data.admin-password}" | base64 --decode ; echo
 ```
 
 ## Cleanup
@@ -176,3 +193,4 @@ An alternative cleanup strategy is to delete the entire project:
 [7]: https://v2.helm.sh/docs/using_helm/
 [8]: https://github.com/nuodb/nuodb-helm-charts
 [9]: #deploying-nuodb-insights-using-helm-charts
+[10]: https://github.com/nuodb/nuodb-helm-charts/blob/master/deploy/nuodb-scc.yaml
