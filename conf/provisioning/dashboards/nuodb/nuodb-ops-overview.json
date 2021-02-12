@@ -10,6 +10,19 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
+      },
+      {
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": false,
+        "iconColor": "rgba(255, 96, 96, 1)",
+        "limit": 100,
+        "name": "db annotations",
+        "showIn": 0,
+        "tags": [
+          "$database"
+        ],
+        "type": "tags"
       }
     ]
   },
@@ -17,8 +30,8 @@
   "editable": true,
   "gnetId": 928,
   "graphTooltip": 1,
-  "id": 4,
-  "iteration": 1605294736321,
+  "id": null,
+  "iteration": 1613065241505,
   "links": [
     {
       "$$hashKey": "object:2794",
@@ -810,71 +823,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host (commits)",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "Commits",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"rate\") AS rate FROM \"Commits\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" , \"pid\" fill(null)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        },
-        {
           "alias": "[$tag_$pid] $tag_host ($tag_db)",
           "dsType": "influxdb",
           "groupBy": [
@@ -1045,25 +993,158 @@
       "targets": [
         {
           "alias": "$col",
+          "dsType": "influxdb",
           "groupBy": [
             {
               "params": [
-                "$__interval"
+                "10s"
               ],
               "type": "time"
             },
             {
               "params": [
-                "null"
+                "none"
               ],
               "type": "fill"
             }
           ],
+          "hide": false,
+          "measurement": "Commits",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"rate\") AS \"TPS\", count(\"rate\") AS \"# TEs\" FROM (SELECT mean(\"rate\") AS rate FROM \"Commits\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" , \"db\", \"$pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT sum(\"rate\") AS \"TPS\", count(\"rate\") AS \"# TEs\" FROM \"Commits\" WHERE (\"nodetype\" = 'Transaction')  AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($__interval) fill(none)",
           "rawQuery": true,
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              },
+              {
+                "params": [
+                  "TPS"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "count"
+              },
+              {
+                "params": [
+                  "# TEs"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            }
+          ]
+        },
+        {
+          "alias": "$tag_host",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "measurement": "Commits",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"rate\") FROM \"Commits\" WHERE (\"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(none)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            }
+          ]
+        },
+        {
+          "alias": "# TEs",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "none"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": true,
+          "measurement": "Milliseconds",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT count(\"value\") FROM \"Milliseconds\" WHERE (\"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval) fill(none)",
+          "rawQuery": true,
+          "refId": "C",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1075,11 +1156,17 @@
               },
               {
                 "params": [],
-                "type": "mean"
+                "type": "count"
               }
             ]
           ],
-          "tags": []
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -1291,7 +1378,7 @@
       }
     }
   ],
-  "refresh": "10s",
+  "refresh": "30s",
   "schemaVersion": 26,
   "style": "dark",
   "tags": [
@@ -1421,7 +1508,6 @@
           }
         ],
         "query": "10s,30s,1m,5m,10m,15m,30m,1h,6h,12h,1d,7d,14d,30d",
-        "queryValue": "",
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
@@ -1429,7 +1515,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -1438,7 +1524,6 @@
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1446,8 +1531,8 @@
         "multi": true,
         "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
-        "refresh": 1,
+        "query": "select distinct(\"db\") from (select first(raw) from \"Milliseconds\" where $timeFilter GROUP BY \"db\")\n",
+        "refresh": 2,
         "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
@@ -1460,7 +1545,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -1469,7 +1554,6 @@
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES WITH KEY = \"host\"  WHERE db =~ /^$database$/  AND nodetype = 'Transaction' ",
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1477,8 +1561,8 @@
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "SHOW TAG VALUES WITH KEY = \"host\"  WHERE db =~ /^$database$/  AND nodetype = 'Transaction' ",
-        "refresh": 1,
+        "query": "select distinct(\"host\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND db =~ /$database$/ AND nodetype = 'Transaction' GROUP BY \"host\")\n",
+        "refresh": 2,
         "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
@@ -1491,10 +1575,10 @@
       {
         "allValue": null,
         "current": {
-          "selected": false,
-          "tags": [],
-          "text": "nodeid",
-          "value": "nodeid"
+          "$$hashKey": "object:2654",
+          "selected": true,
+          "text": "startid",
+          "value": "startid"
         },
         "error": null,
         "hide": 0,
@@ -1511,25 +1595,26 @@
           },
           {
             "$$hashKey": "object:2654",
-            "selected": false,
+            "selected": true,
             "text": "startid",
             "value": "startid"
           },
           {
             "$$hashKey": "object:2655",
-            "selected": true,
+            "selected": false,
             "text": "nodeid",
             "value": "nodeid"
           }
         ],
         "query": "pid,startid,nodeid",
+        "queryValue": "",
         "skipUrlSync": false,
         "type": "custom"
       }
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -1560,5 +1645,5 @@
   "timezone": "",
   "title": "NuoDB Ops System Overview",
   "uid": null,
-  "version": 2
+  "version": 4
 }

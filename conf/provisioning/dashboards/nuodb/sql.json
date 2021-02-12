@@ -11,19 +11,21 @@
         "limit": 100,
         "name": "Annotations & Alerts",
         "showIn": 0,
-        "type": "dashboard"
+        "tags": [],
+        "type": "tags"
       },
       {
         "$$hashKey": "object:476",
         "datasource": "-- Grafana --",
         "enable": true,
         "hide": false,
-        "iconColor": "#FADE2A",
+        "iconColor": "rgb(194, 209, 195)",
         "limit": 100,
-        "name": "test",
+        "matchAny": false,
+        "name": "db annotation",
         "showIn": 0,
         "tags": [
-          "test"
+          "$database"
         ],
         "type": "tags"
       }
@@ -33,7 +35,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1594992052403,
+  "iteration": 1613149604152,
   "links": [
     {
       "asDropdown": true,
@@ -71,7 +73,7 @@
       "id": 22,
       "panels": [],
       "repeat": null,
-      "title": "Current Values",
+      "title": "Current Totals (averaged over last minute)",
       "type": "row"
     },
     {
@@ -84,8 +86,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Aggregate sum of average commits per second for each TE in the most recent one minute interval of the current displayed time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -158,7 +167,7 @@
           "measurement": "Commits",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Commits\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY \"host\",\"pid\")",
+          "query": "SELECT SUM(a) FROM (SELECT mean(\"rate\") as a FROM \"Commits\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND time > ${__to}ms - 1m AND time <= ${__to}ms GROUP BY \"host\",\"pid\" )",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -211,8 +220,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Aggregate sum of average rollbacks per second for each TE in the most recent one minute interval of the current displayed time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -285,7 +301,7 @@
           "measurement": "Rollbacks",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Rollbacks\" WHERE ( \"nodetype\" = 'Transaction'  and  \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) and $timeFilter GROUP BY \"host\",\"pid\" fill(0))",
+          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Rollbacks\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND time > ${__to}ms - 1m AND time <= ${__to}ms GROUP BY \"host\",\"pid\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -338,8 +354,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Aggregate sum of the average number of client connections in the most recent one minute interval of the current displayed time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -410,7 +433,7 @@
           "measurement": "ClientCncts",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"raw\") as a FROM \"ClientCncts\" WHERE ( \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ ) AND $timeFilter GROUP BY \"host\",\"pid\")",
+          "query": "SELECT sum(a) FROM (SELECT mean(\"raw\") as a FROM \"ClientCncts\" WHERE ( \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ ) AND time >= ${__to}ms - 1m and time < ${__to}ms GROUP BY \"host\",\"pid\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -447,24 +470,6 @@
       "valueName": "avg"
     },
     {
-      "content": "",
-      "datasource": null,
-      "editable": true,
-      "error": false,
-      "gridPos": {
-        "h": 3,
-        "w": 2,
-        "x": 12,
-        "y": 1
-      },
-      "id": 11,
-      "links": [],
-      "mode": "markdown",
-      "title": "",
-      "transparent": true,
-      "type": "text"
-    },
-    {
       "cacheTimeout": null,
       "colorBackground": false,
       "colorValue": false,
@@ -474,8 +479,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Aggregate sum of average number of rows updated per second for each TE in the most recent one minute interval of the current displayed time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -547,7 +559,7 @@
           "measurement": "Updates",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Updates\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND  $timeFilter GROUP BY \"host\",\"pid\")",
+          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Updates\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND time >= ${__to}ms - 1m AND time < ${__to}ms GROUP BY \"host\",\"pid\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -600,8 +612,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Aggregate sum of average number of rows deleted per second for each TE in the most recent one minute interval of the current displayed time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -673,7 +692,7 @@
           "measurement": "Deletes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Deletes\" WHERE (\"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/) AND  $timeFilter GROUP BY \"host\",\"pid\")",
+          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Deletes\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND time >= ${__to}ms - 1m AND time < ${__to}ms GROUP BY \"host\",\"pid\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -726,8 +745,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Aggregate sum of average number of rows inserted per second for each TE in the most recent one minute interval of the current displayed time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -799,7 +825,7 @@
           "measurement": "Inserts",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Inserts\" WHERE  (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY \"host\",\"pid\")",
+          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Inserts\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND time >= ${__to}ms - 1m AND time < ${__to}ms GROUP BY \"host\",\"pid\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -863,8 +889,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "the number of SQL connections established with a TE at the time the metric is collected.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -888,17 +922,13 @@
       },
       "lines": true,
       "linewidth": 2,
-      "links": [
-        {
-          "title": "Connections",
-          "url": "dashboard/db/connections?$__url_time_range&$__all_variables"
-        }
-      ],
+      "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -908,7 +938,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
+          "alias": "$tag_host ( db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid )",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -925,82 +955,36 @@
             },
             {
               "params": [
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "nodeid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": true,
+          "hide": false,
           "measurement": "ClientCncts",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"raw\") AS raw FROM \"ClientCncts\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\" , \"pid\" fill(null)",
           "rawQuery": false,
           "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "raw"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ClientCncts",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT SUM(\"raw\") FROM (SELECT mean(\"raw\") AS raw FROM \"ClientCncts\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\" , \"pid\" fill(null)) GROUP BY time($__interval),\"host\"",
-          "rawQuery": true,
-          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1058,6 +1042,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:359",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1066,6 +1051,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:360",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1085,9 +1071,17 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "decimals": 0,
+      "decimals": 1,
+      "description": "This graph shows the average number of SQL connections executing within the database for the collection interval.   This is displayed per TE.   The value is calculated as SqlListenerSqlProcTime/Milliseconds  * 1000.  Since the value SqlListenerSqlProcTime is only incremented after a thread completes the transaction,  a long running sql statement will skew these numbers and large spikes will be noticed in the graph.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1116,14 +1110,16 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:3288",
           "alias": "total",
           "fill": 0,
           "linewidth": 0,
@@ -1135,7 +1131,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
+          "alias": "$tag_host ( db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid )",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1152,66 +1148,19 @@
             },
             {
               "params": [
-                "null"
+                "nodeid"
               ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "SqlListenerSqlProcTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"value\") FROM \"SqlListenerIdleTime\" WHERE (\"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
+              "type": "tag"
             },
             {
               "params": [
-                "host"
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
               ],
               "type": "tag"
             },
@@ -1226,9 +1175,9 @@
           "measurement": "SqlListenerSqlProcTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(\"VALUE\") FROM (SELECT mean(\"value\")  AS VALUE FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" , \"pid\" fill(null)) GROUP BY time($__interval), \"host\"",
-          "rawQuery": true,
-          "refId": "B",
+          "query": "SELECT sum(\"value\") FROM \"SqlListenerIdleTime\" WHERE (\"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)",
+          "rawQuery": false,
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1286,6 +1235,8 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:230",
+          "decimals": 1,
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1294,6 +1245,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:231",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1328,8 +1280,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Average number of commits per seconds by each TE. ",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1356,14 +1316,16 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:1760",
           "alias": "total",
           "fill": 0,
           "linewidth": 0,
@@ -1375,7 +1337,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host (commits)",
+          "alias": "$tag_host ( db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid )",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1392,12 +1354,30 @@
             },
             {
               "params": [
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "nodeid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": true,
+          "hide": false,
           "measurement": "Commits",
           "orderByTime": "ASC",
           "policy": "default",
@@ -1438,78 +1418,13 @@
               "value": "/^$host$/"
             }
           ]
-        },
-        {
-          "alias": "$tag_host (commits)",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "Commits",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT SUM(\"rate\") FROM (SELECT mean(\"rate\") AS rate FROM \"Commits\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" , \"pid\" fill(null)) GROUP BY time($__interval), \"host\"",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Commits/secs",
+      "title": "Commits",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -1526,6 +1441,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1771",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1534,6 +1450,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1772",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1553,8 +1470,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Average number of rollbacks per second within each TE.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1581,9 +1506,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1593,7 +1519,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host (rollback)",
+          "alias": "$tag_host ( db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid )",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1610,12 +1536,30 @@
             },
             {
               "params": [
+                "nodeid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": true,
+          "hide": false,
           "measurement": "Rollbacks",
           "orderByTime": "ASC",
           "policy": "default",
@@ -1656,78 +1600,13 @@
               "value": "/^$database$/"
             }
           ]
-        },
-        {
-          "alias": "$tag_host (rollback)",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "Rollbacks",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT SUM(\"rate\") FROM (SELECT mean(\"rate\") AS rate FROM \"Rollbacks\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\" ,\"pid\" fill(null)) GROUP BY time($__interval),\"host\"",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            }
-          ]
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Rollbacks/secs",
+      "title": "Rollbacks",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -1744,6 +1623,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:2177",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1752,6 +1632,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:2178",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1786,8 +1667,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Average number of rows inserted  per second by each TE.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1814,9 +1703,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1826,7 +1716,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
+          "alias": "$tag_host ( db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid )",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1843,12 +1733,30 @@
             },
             {
               "params": [
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "nodeid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": true,
+          "hide": false,
           "measurement": "Inserts",
           "orderByTime": "ASC",
           "policy": "default",
@@ -1889,83 +1797,13 @@
               "value": "/^$database$/"
             }
           ]
-        },
-        {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "pid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Inserts",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(\"rate\") FROM (SELECT mean(\"rate\") AS rate FROM \"Inserts\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"pid\", \"host\" fill(null)) GROUP BY time($__interval), \"host\"",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            }
-          ]
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Rows Inserted / sec",
+      "title": "Rows Inserted",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -1982,6 +1820,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:189",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1990,6 +1829,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:190",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2009,8 +1849,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Average number of rows updated  per second by each TE.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -2037,9 +1885,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2049,7 +1898,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host (updates)",
+          "alias": "$tag_host ( db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid )",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -2066,12 +1915,30 @@
             },
             {
               "params": [
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "nodeid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": true,
+          "hide": false,
           "measurement": "Updates",
           "orderByTime": "ASC",
           "policy": "default",
@@ -2110,77 +1977,13 @@
               "value": "/^$database$/"
             }
           ]
-        },
-        {
-          "alias": "$tag_host (updates)",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Updates",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT SUM(\"rate\") FROM (SELECT mean(\"rate\") AS rate FROM \"Updates\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\",\"pid\" fill(null)) GROUP BY time($__interval),\"host\"",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            }
-          ]
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Rows Updates/secs",
+      "title": "Rows Updates",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -2197,6 +2000,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:570",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2205,6 +2009,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:571",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2224,8 +2029,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Average number of rows deleted per second by each TE.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -2252,9 +2065,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2264,7 +2078,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host (deletes)",
+          "alias": "$tag_host ( db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid )",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -2281,12 +2095,30 @@
             },
             {
               "params": [
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "nodeid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": true,
+          "hide": false,
           "measurement": "Deletes",
           "orderByTime": "ASC",
           "policy": "default",
@@ -2327,78 +2159,13 @@
               "value": "/^$host$/"
             }
           ]
-        },
-        {
-          "alias": "$tag_host (deletes)",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "Deletes",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT SUM(\"rate\") FROM (SELECT mean(\"rate\") AS rate FROM \"Deletes\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) GROUP BY time($__interval), \"host\"",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
         }
       ],
       "thresholds": [],
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Rows Deleted/secs",
+      "title": "Rows Deleted",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -2415,6 +2182,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:799",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2423,6 +2191,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:800",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2457,8 +2226,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "The average number of active transactions that are in a pending insert wait as measured by wait time associated with pending insert relative to interval window.  Pending Insert Wait is when a TE is waiting for acknowledgement from chairman that an insert will not invalidate uniqueness constraint on unique indexes.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -2485,9 +2262,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2497,7 +2275,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
+          "alias": "$tag_host ( db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid )",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -2509,6 +2287,24 @@
             {
               "params": [
                 "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "nodeid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
               ],
               "type": "tag"
             },
@@ -2580,6 +2376,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:1332",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2588,6 +2385,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:1333",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2607,8 +2405,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "The average number of active transactions that are in a pending update wait as measured by wait time associated with pending update relative to interval window.  Pending Updte Wait is when a TE is waiting for acknowledgement from chairman that an update does not conflict with other transactions.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -2635,9 +2441,10 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2647,7 +2454,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
+          "alias": "$tag_host ( db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid )",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -2664,12 +2471,30 @@
             },
             {
               "params": [
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "nodeid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
                 "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": true,
+          "hide": false,
           "measurement": "PendingUpdateWaitTime",
           "orderByTime": "ASC",
           "policy": "default",
@@ -2732,6 +2557,7 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "PendingUpdateWaitTime",
           "orderByTime": "ASC",
           "policy": "default",
@@ -2795,6 +2621,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:6327",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2803,6 +2630,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:6328",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2817,8 +2645,8 @@
       }
     }
   ],
-  "refresh": "10s",
-  "schemaVersion": 22,
+  "refresh": "30s",
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "nuodb",
@@ -2832,20 +2660,21 @@
         "auto_min": "10s",
         "current": {
           "selected": false,
-          "text": "30s",
-          "value": "30s"
+          "text": "auto",
+          "value": "$__auto_interval_interval"
         },
+        "error": null,
         "hide": 0,
         "label": "interval",
         "name": "interval",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "10s",
             "value": "10s"
           },
@@ -2891,6 +2720,7 @@
           }
         ],
         "query": "10s,30s,1m,5m,10m,30m,1h,6h,12h",
+        "queryValue": "",
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
@@ -2898,22 +2728,25 @@
       {
         "allValue": ".*",
         "current": {
-          "text": "All",
+          "selected": true,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"db\"",
+        "definition": "",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Database",
         "multi": true,
         "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"db\"",
-        "refresh": 1,
+        "query": "select distinct(\"db\") from (select first(raw) from \"Milliseconds\" where $timeFilter GROUP BY \"db\")",
+        "refresh": 2,
         "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
@@ -2926,22 +2759,25 @@
       {
         "allValue": ".*",
         "current": {
-          "text": "All",
+          "selected": true,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ and \"nodetype\" = 'Transaction'",
+        "definition": "",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ and \"nodetype\" = 'Transaction'",
-        "refresh": 1,
+        "query": "select distinct(\"host\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND db =~ /$database$/ AND nodetype = 'Transaction' GROUP BY \"host\")",
+        "refresh": 2,
         "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
@@ -2985,8 +2821,5 @@
   "timezone": "",
   "title": "SQL",
   "uid": null,
-  "variables": {
-    "list": []
-  },
-  "version": 1
+  "version": 13
 }

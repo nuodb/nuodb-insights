@@ -5,11 +5,14 @@
         "$$hashKey": "object:2495",
         "builtIn": 1,
         "datasource": "-- Grafana --",
-        "enable": true,
+        "enable": false,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
         "name": "Annotations & Alerts",
-        "type": "dashboard"
+        "showIn": 0,
+        "tags": [],
+        "type": "tags"
       },
       {
         "$$hashKey": "object:5008",
@@ -18,10 +21,10 @@
         "hide": false,
         "iconColor": "rgba(255, 96, 96, 1)",
         "limit": 100,
-        "name": "test",
+        "name": "db annotations",
         "showIn": 0,
         "tags": [
-          "test"
+          "$database"
         ],
         "type": "tags"
       }
@@ -31,7 +34,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1595427252978,
+  "iteration": 1613149930371,
   "links": [
     {
       "asDropdown": true,
@@ -69,7 +72,7 @@
       "id": 27,
       "panels": [],
       "repeat": null,
-      "title": "ARCHIVE STATS AVERAGED OVER ALL SMS",
+      "title": "Latest (1 minute) Archive Stats Averaged Over All SMS",
       "type": "row"
     },
     {
@@ -82,8 +85,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Average (across all SMs) atom files saved per second for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -105,10 +115,12 @@
       "mappingType": 1,
       "mappingTypes": [
         {
+          "$$hashKey": "object:1104",
           "name": "value to text",
           "value": 1
         },
         {
+          "$$hashKey": "object:1105",
           "name": "range to text",
           "value": 2
         }
@@ -151,12 +163,59 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "ObjectsSaved",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"ObjectsSaved\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time(1m), \"host\" fill(null)) GROUP BY \"host\")",
           "rawQuery": true,
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "median"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        },
+        {
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "ObjectsSaved",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"rate\")  FROM \"ObjectsSaved\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time >= ${__to}ms - 1m  and time <= ${__to}ms",
+          "rawQuery": true,
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -189,6 +248,7 @@
       "valueFontSize": "50%",
       "valueMaps": [
         {
+          "$$hashKey": "object:1107",
           "op": "=",
           "text": "N/A",
           "value": "null"
@@ -206,8 +266,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Average (across all SMs) archive queue depth for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -275,12 +342,59 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "ArchiveQueue",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"raw\")  AS A FROM \"ArchiveQueue\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
           "rawQuery": true,
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "raw"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        },
+        {
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "ArchiveQueue",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"raw\")  FROM \"ArchiveQueue\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
+          "rawQuery": true,
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -330,8 +444,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Average (across all SMs) number of atom files loaded into SM memory for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -399,12 +520,59 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "ObjectsLoaded",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"ObjectsLoaded\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
           "rawQuery": true,
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        },
+        {
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "ObjectsLoaded",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"rate\")  FROM \"ObjectsLoaded\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
+          "rawQuery": true,
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -455,8 +623,15 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Average (across all SMs) percentage of wallclock time spent file syncing atom files to the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -524,12 +699,59 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "ArchiveFsyncTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"ArchiveFsyncTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
           "rawQuery": true,
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        },
+        {
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "ArchiveFsyncTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\")  FROM \"ArchiveFsyncTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
+          "rawQuery": true,
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -580,8 +802,15 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Average (across all SMs) percentage of wallclock time spent in a directory operation (open/close/rename) within the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -649,12 +878,59 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "ArchiveDirectoryTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"ArchiveDirectoryTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
           "rawQuery": true,
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        },
+        {
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "ArchiveDirectoryTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\")  FROM \"ArchiveDirectoryTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
+          "rawQuery": true,
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -705,8 +981,15 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Average (across all SMs) percentage of wallclock time spent in a write operation to the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_  .",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -774,12 +1057,59 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "ArchiveWriteTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"ArchiveWriteTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ \n AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
           "rawQuery": true,
           "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        },
+        {
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "ArchiveWriteTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\")  FROM \"ArchiveWriteTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
+          "rawQuery": true,
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -830,8 +1160,15 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Average (across all SMs) percentage of wallclock time spent in a read operation from the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -899,6 +1236,7 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "ArchiveReadTime",
           "orderByTime": "ASC",
           "policy": "default",
@@ -927,6 +1265,44 @@
               "value": "Storage"
             }
           ]
+        },
+        {
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\")  FROM \"ArchiveReadTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "thresholds": "",
@@ -955,8 +1331,15 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Average (across all SMs) percentage of wallclock time spent throttling sync operations in the archive to allow other work to be performed for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -1009,11 +1392,10 @@
       "tableColumn": "",
       "targets": [
         {
-          "dsType": "influxdb",
           "groupBy": [
             {
               "params": [
-                "10s"
+                "$__interval"
               ],
               "type": "time"
             },
@@ -1024,12 +1406,11 @@
               "type": "fill"
             }
           ],
-          "measurement": "ArchiveSyncThrottleTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"ArchiveSyncThrottleTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "query": "SELECT mean(\"value\")  FROM \"ArchiveSyncThrottleTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1045,13 +1426,7 @@
               }
             ]
           ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
+          "tags": []
         }
       ],
       "thresholds": "",
@@ -1080,8 +1455,15 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Average (across all SMs) percentage of wallclock time spent throttling write operations in the archive to allow read operations to be performed from the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -1152,7 +1534,7 @@
           "measurement": "ArchiveBandwidthThrottleTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"ArchiveBandwidthThrottleTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "query": "SELECT mean(\"value\")  FROM \"ArchiveBandwidthThrottleTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1204,8 +1586,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Average (across all SMs) rate of number of bytes written to the archive per second for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "Bps",
       "gauge": {
         "maxValue": 100,
@@ -1277,9 +1666,9 @@
           "measurement": "ArchiveBufferedBytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"DiskWritten\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "query": "SELECT mean(\"rate\")  AS A FROM \"DiskWritten\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time >= ${__to}ms - 1m  and time < ${__to}ms",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1340,8 +1729,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Above the x axis shows total number of  objects (atoms) saved averaged for each interval over the current time window.   Objects(atoms) read are shown below the x-axis.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1371,16 +1768,18 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "/Loaded/",
+          "$$hashKey": "object:902",
+          "alias": "/.*:read$/",
           "transform": "negative-Y"
         }
       ],
@@ -1389,66 +1788,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Saved  - $tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "pid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "0"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "ObjectsSaved",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"ObjectsSaved\" WHERE (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\",\"pid\" fill(0)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host(saved)",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):saved",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1466,7 +1806,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT mean(\"rate\") AS M FROM \"ObjectsSaved\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\") AS M FROM \"ObjectsSaved\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -1487,66 +1827,7 @@
           "tags": []
         },
         {
-          "alias": "Loaded  - $tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "pid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "0"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "ObjectsLoaded",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"ObjectsSaved\" WHERE (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\",\"pid\" fill(0)",
-          "rawQuery": false,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host(read)",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):read",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1578,7 +1859,7 @@
           "measurement": "ObjectsLoaded",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT - SUM(M) FROM (SELECT mean(\"rate\") AS M FROM \"ObjectsLoaded\" WHERE \"host\" =~ /^$host$/ AND  \"db\" =~ /^$database$/ AND(\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\") AS M FROM \"ObjectsLoaded\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1656,6 +1937,13 @@
       "decimals": 1,
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1686,80 +1974,27 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:574",
+          "alias": "/.*:directory$/",
+          "transform": "negative-Y"
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "ArchiveFsyncTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"value\") AS M FROM \"ArchiveFsyncTime\" WHERE (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(0)",
-          "rawQuery": false,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host(sync)",
-          "dsType": "influxdb",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):fsync",
           "groupBy": [
             {
               "params": [
@@ -1774,12 +2009,11 @@
               "type": "fill"
             }
           ],
-          "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT mean(\"value\") AS M FROM \"ArchiveFsyncTime\" WHERE \"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"value\") AS M FROM \"ArchiveFsyncTime\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1798,8 +2032,7 @@
           "tags": []
         },
         {
-          "alias": "$tag_host(directory)",
-          "dsType": "influxdb",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):directory",
           "groupBy": [
             {
               "params": [
@@ -1814,12 +2047,11 @@
               "type": "fill"
             }
           ],
-          "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT - SUM(M) FROM (SELECT mean(\"value\") AS M FROM \"ArchiveDirectoryTime\" WHERE \"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"value\") AS M FROM \"ArchiveDirectoryTime\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
-          "refId": "C",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1861,6 +2093,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:296",
           "format": "percentunit",
           "label": "",
           "logBase": 1,
@@ -1869,6 +2102,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:297",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1888,8 +2122,16 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "The left y-axis shows number of objects in archive queue.  The archive queue is composed of objects that have been modified and need to be written to the archive.  The right y-axis (and graphed in red) gives an indication of the amount of write throttling occurring.  Write throttling is done by the TE when the rate of object changes exceeds the rate at which the objects can be written to the archive.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -1919,19 +2161,22 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "Write Throttling",
+          "$$hashKey": "object:933",
+          "alias": "/.*:writethrottle$/",
           "color": "#E24D42",
-          "fill": 0,
-          "linewidth": 1,
+          "fill": 2,
+          "linewidth": 0,
+          "steppedLine": true,
           "yaxis": 2
         }
       ],
@@ -1940,46 +2185,6 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT last(\"raw\") AS M FROM \"ArchiveQueue\" WHERE (\"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND \"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
           "alias": "Write Throttling",
           "dsType": "influxdb",
           "groupBy": [
@@ -1996,7 +2201,7 @@
               "type": "fill"
             }
           ],
-          "hide": false,
+          "hide": true,
           "measurement": "WriteThrottleTime",
           "orderByTime": "ASC",
           "policy": "default",
@@ -2025,6 +2230,83 @@
               "value": "Transaction"
             }
           ]
+        },
+        {
+          "alias": "$tag_host($tag_db:$tag_nodeid):queuedepth",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"raw\") AS M FROM \"ArchiveQueue\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
+        },
+        {
+          "alias": "$tag_db:writethrottle",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\") AS M FROM \"WriteThrottleTime\" WHERE \"host\" =~ /^$host$/ AND  \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval),  \"db\" fill(null)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": []
         }
       ],
       "thresholds": [],
@@ -2048,6 +2330,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:219",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2056,7 +2339,8 @@
           "show": true
         },
         {
-          "format": "µs",
+          "$$hashKey": "object:220",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -2077,6 +2361,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -2106,74 +2397,29 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:353",
+          "alias": "/.*:archivethrottle/",
+          "bars": true,
+          "lines": false,
+          "yaxis": 2
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "0"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "DiskWritten",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"DiskWritten\" WHERE (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\" fill(0)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
           "groupBy": [
             {
               "params": [
@@ -2191,9 +2437,9 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT mean(\"rate\") AS M FROM \"DiskWritten\" WHERE \"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\") AS M FROM \"DiskWritten\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -2210,6 +2456,85 @@
             ]
           ],
           "tags": []
+        },
+        {
+          "alias": "$tag_host ( db: $tag_db, nodeid: tag_nodeid, startid: $tag_startid):archivethrottle",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "db"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "nodeid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "startid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "ArchiveBandwidthThrottleTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            },
+            {
+              "condition": "AND",
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
+            },
+            {
+              "condition": "AND",
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
         }
       ],
       "thresholds": [],
@@ -2233,6 +2558,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:159",
           "format": "bytes",
           "label": null,
           "logBase": 1,
@@ -2241,6 +2567,8 @@
           "show": true
         },
         {
+          "$$hashKey": "object:160",
+          "decimals": null,
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2266,7 +2594,7 @@
       "id": 29,
       "panels": [],
       "repeat": null,
-      "title": "Journal stats averaged over all SMs",
+      "title": "Latest (1 minute) Journal Stats Averaged Over All SMs",
       "type": "row"
     },
     {
@@ -2280,8 +2608,15 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Average (across all SMs) percentage of wallclock time spent syncing journal messages to the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -2352,7 +2687,7 @@
           "measurement": "JournalFsyncTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"JournalFsyncTime\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "query": "SELECT mean(\"value\")  AS A FROM \"JournalFsyncTime\" WHERE \"nodetype\" = 'Storage' AND time >= ${__to}ms-1m AND time <= ${__to}ms",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2405,8 +2740,15 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Average (across all SMs) percentage of wallclock time spent in direcroty operations (open/close/delete) within the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -2477,7 +2819,7 @@
           "measurement": "JournalDirectoryTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"JournalDirectoryTime\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "query": "SELECT mean(\"value\")  AS A FROM \"JournalDirectoryTime\" WHERE \"nodetype\" = 'Storage' AND time >= ${__to}ms-1m AND time <= ${__to}ms",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2530,8 +2872,15 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Average (across all SMs) percentage of wallclock time spent writing journal messages to the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "percentunit",
       "gauge": {
         "maxValue": 100,
@@ -2599,12 +2948,13 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "measurement": "JournalWriteTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"JournalWriteTime\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "query": "SELECT mean(\"value\")  AS A FROM \"JournalWriteTime\" WHERE \"nodetype\" = 'Storage' AND time >= ${__to}ms-1m AND time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -2654,8 +3004,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Average (across all SMs) number of journal messages waiting to be added to journal over the last 1 minutes sampled about every 10 seconds of the current time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -2726,9 +3083,9 @@
           "measurement": "JournalQueue",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"raw\")  AS A FROM \"JournalQueue\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "query": "SELECT mean(\"raw\")  AS A FROM \"JournalQueue\" WHERE \"nodetype\" = 'Storage' AND time >= ${__to}ms-1m AND time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -2778,8 +3135,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Average (across all SMs) rate of number of bytes written to the journal per second for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "Bps",
       "gauge": {
         "maxValue": 100,
@@ -2850,9 +3214,9 @@
           "measurement": "JrnlBytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"JrnlBytes\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "query": "SELECT mean(\"rate\")  AS A FROM \"JrnlBytes\" WHERE \"nodetype\" = 'Storage' AND time >= ${__to}ms-1m AND time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -2902,8 +3266,15 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Average (across all SMs) number of writes per second to the journal for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
       "format": "none",
       "gauge": {
         "maxValue": 100,
@@ -2971,12 +3342,13 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "measurement": "JrnlWrites",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"JrnlWrites\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
+          "query": "SELECT mean(\"rate\")  AS A FROM \"JrnlWrites\" WHERE \"nodetype\" = 'Storage' AND time >= ${__to}ms-1m AND time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -3039,6 +3411,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -3068,10 +3447,11 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 1,
       "points": false,
       "renderer": "flot",
@@ -3081,59 +3461,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "0"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "JournalQueue",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "raw"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
           "groupBy": [
             {
               "params": [
@@ -3150,9 +3478,9 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT mean(\"raw\") AS M FROM \"JournalQueue\" WHERE \"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"raw\") AS M FROM \"JournalQueue\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -3223,6 +3551,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -3252,21 +3587,27 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [],
+      "seriesOverrides": [
+        {
+          "$$hashKey": "object:179",
+          "alias": "/.*(directory)/",
+          "transform": "negative-Y"
+        }
+      ],
       "spaceLength": 10,
       "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):sync",
           "groupBy": [
             {
               "params": [
@@ -3276,22 +3617,15 @@
             },
             {
               "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "0"
+                "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": true,
-          "measurement": "JournalFsyncTime",
+          "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\") *100 FROM \"JournalFsyncTime\" WHERE \"host\" =~ /$host$/ AND (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\" fill(0)",
+          "query": "SELECT mean(\"value\")*100 AS M FROM \"JournalFsyncTime\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3306,26 +3640,13 @@
               {
                 "params": [],
                 "type": "mean"
-              },
-              {
-                "params": [
-                  "*100"
-                ],
-                "type": "math"
               }
             ]
           ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
+          "tags": []
         },
         {
-          "alias": "$tag_host(sync)",
-          "dsType": "influxdb",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):directory",
           "groupBy": [
             {
               "params": [
@@ -3335,22 +3656,15 @@
             },
             {
               "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "0"
+                "null"
               ],
               "type": "fill"
             }
           ],
           "hide": false,
-          "measurement": "JournalFsyncTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT mean(\"value\")*100 AS M FROM \"JournalFsyncTime\" WHERE \"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"value\")*100 AS M FROM \"JournalDirectoryTime\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3365,81 +3679,10 @@
               {
                 "params": [],
                 "type": "mean"
-              },
-              {
-                "params": [
-                  "*100"
-                ],
-                "type": "math"
               }
             ]
           ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host(directory)",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "0"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "JournalFsyncTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT - SUM(M) FROM (SELECT mean(\"value\")*100 AS M FROM \"JournalDirectoryTime\" WHERE \"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              },
-              {
-                "params": [
-                  "*100"
-                ],
-                "type": "math"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
+          "tags": []
         }
       ],
       "thresholds": [],
@@ -3494,6 +3737,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -3523,10 +3773,11 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 1,
       "points": false,
       "renderer": "flot",
@@ -3536,7 +3787,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -3562,7 +3813,7 @@
           "measurement": "JrnlBytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"JrnlWrites\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(0)",
+          "query": "SELECT mean(\"rate\") FROM \"JrnlWrites\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(0)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3587,46 +3838,6 @@
               "value": "Storage"
             }
           ]
-        },
-        {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"JrnlBytes\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
         }
       ],
       "thresholds": [],
@@ -3681,6 +3892,13 @@
       "datasource": "nuodb",
       "editable": true,
       "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {},
+          "links": []
+        },
+        "overrides": []
+      },
       "fill": 1,
       "fillGradient": 0,
       "grid": {},
@@ -3710,10 +3928,11 @@
       "links": [],
       "nullPointMode": "null",
       "options": {
-        "dataLinks": []
+        "alertThreshold": true
       },
       "paceLength": 10,
       "percentage": false,
+      "pluginVersion": "7.3.2",
       "pointradius": 1,
       "points": false,
       "renderer": "flot",
@@ -3723,7 +3942,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -3749,7 +3968,7 @@
           "measurement": "JrnlBytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"JrnlBytes\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(0)",
+          "query": "SELECT mean(\"rate\") FROM \"JrnlBytes\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(0)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3774,46 +3993,6 @@
               "value": "Storage"
             }
           ]
-        },
-        {
-          "alias": "$tag_host",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"JrnlBytes\" WHERE \"nodetype\" = 'Storage' AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
         }
       ],
       "thresholds": [],
@@ -3861,8 +4040,8 @@
       }
     }
   ],
-  "refresh": "10s",
-  "schemaVersion": 22,
+  "refresh": "30s",
+  "schemaVersion": 26,
   "style": "dark",
   "tags": [
     "nuodb",
@@ -3875,16 +4054,17 @@
         "auto_count": 50,
         "auto_min": "10s",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
+        "error": null,
         "hide": 0,
         "label": "interval",
         "name": "interval",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
@@ -3899,7 +4079,7 @@
             "value": "30s"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "1m",
             "value": "1m"
           },
@@ -3955,6 +4135,7 @@
           }
         ],
         "query": "10s,30s,1m,5m,10m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
         "refresh": 2,
         "skipUrlSync": false,
         "type": "interval"
@@ -3962,22 +4143,25 @@
       {
         "allValue": ".*",
         "current": {
-          "text": "All",
+          "selected": false,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+        "definition": "",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Database",
         "multi": true,
         "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
-        "refresh": 1,
+        "query": "select distinct(\"db\") from (select first(raw) from \"Milliseconds\" where $timeFilter GROUP BY \"db\")",
+        "refresh": 2,
         "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
@@ -3990,22 +4174,25 @@
       {
         "allValue": ".*",
         "current": {
-          "text": "All",
+          "selected": false,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ AND nodetype = 'Storage' ",
+        "definition": "",
+        "error": null,
         "hide": 0,
         "includeAll": true,
-        "index": -1,
         "label": "Host",
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH  KEY = \"host\"  WHERE \"db\" =~ /$database$/ AND nodetype = 'Storage' ",
-        "refresh": 1,
+        "query": "select distinct(\"host\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND db =~ /$database$/ AND nodetype = 'Storage' GROUP BY \"host\")\n",
+        "refresh": 2,
         "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
@@ -4049,8 +4236,5 @@
   "timezone": "",
   "title": "Disk",
   "uid": null,
-  "variables": {
-    "list": []
-  },
-  "version": 11
+  "version": 23
 }
