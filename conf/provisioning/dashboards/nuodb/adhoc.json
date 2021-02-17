@@ -2035,10 +2035,10 @@
         "current": {
           "selected": false,
           "text": [
-            "ENOVIA"
+            "All"
           ],
           "value": [
-            "ENOVIA"
+            "$__all"
           ]
         },
         "datasource": "nuodb",

@@ -163,59 +163,13 @@
               "type": "fill"
             }
           ],
-          "hide": true,
-          "measurement": "ObjectsSaved",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"ObjectsSaved\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/  AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time(1m), \"host\" fill(null)) GROUP BY \"host\")",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "median"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
           "hide": false,
           "measurement": "ObjectsSaved",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"rate\")  FROM \"ObjectsSaved\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time >= ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -342,59 +296,13 @@
               "type": "fill"
             }
           ],
-          "hide": true,
-          "measurement": "ArchiveQueue",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"raw\")  AS A FROM \"ArchiveQueue\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "raw"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
           "hide": false,
           "measurement": "ArchiveQueue",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"raw\")  FROM \"ArchiveQueue\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -520,59 +428,13 @@
               "type": "fill"
             }
           ],
-          "hide": true,
-          "measurement": "ObjectsLoaded",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"rate\")  AS A FROM \"ObjectsLoaded\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "sum"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
           "hide": false,
           "measurement": "ObjectsLoaded",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"rate\")  FROM \"ObjectsLoaded\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -699,59 +561,13 @@
               "type": "fill"
             }
           ],
-          "hide": true,
-          "measurement": "ArchiveFsyncTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"ArchiveFsyncTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
           "hide": false,
           "measurement": "ArchiveFsyncTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"value\")  FROM \"ArchiveFsyncTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -878,59 +694,13 @@
               "type": "fill"
             }
           ],
-          "hide": true,
-          "measurement": "ArchiveDirectoryTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"ArchiveDirectoryTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
           "hide": false,
           "measurement": "ArchiveDirectoryTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"value\")  FROM \"ArchiveDirectoryTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1057,59 +827,13 @@
               "type": "fill"
             }
           ],
-          "hide": true,
-          "measurement": "ArchiveWriteTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"ArchiveWriteTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ \n AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
           "hide": false,
           "measurement": "ArchiveWriteTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"value\")  FROM \"ArchiveWriteTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1221,52 +945,6 @@
       "tableColumn": "",
       "targets": [
         {
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "10s"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "ArchiveReadTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT last(A) AS B FROM (SELECT mean(\"value\")  AS A FROM \"ArchiveReadTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ \n AND $timeFilter GROUP BY time(1m), \"host\" fill(none)) GROUP BY \"host\")",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            }
-          ]
-        },
-        {
           "groupBy": [
             {
               "params": [
@@ -1286,7 +964,7 @@
           "policy": "default",
           "query": "SELECT mean(\"value\")  FROM \"ArchiveReadTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1410,7 +1088,7 @@
           "policy": "default",
           "query": "SELECT mean(\"value\")  FROM \"ArchiveSyncThrottleTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/  AND time > ${__to}ms - 1m  and time <= ${__to}ms",
           "rawQuery": true,
-          "refId": "B",
+          "refId": "A",
           "resultFormat": "time_series",
           "select": [
             [
@@ -1531,6 +1209,7 @@
               "type": "fill"
             }
           ],
+          "hide": false,
           "measurement": "ArchiveBandwidthThrottleTime",
           "orderByTime": "ASC",
           "policy": "default",
@@ -2185,54 +1864,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "Write Throttling",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "measurement": "WriteThrottleTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(B) FROM (SELECT mean(\"value\") AS B FROM \"WriteThrottleTime\" WHERE (\"nodetype\" = 'Transaction') AND \"db\" =~ /^$database$/ AND $timeFilter GROUP BY time($__interval) fill(null)) WHERE $timeFilter GROUP BY time($__interval) ",
-          "rawQuery": false,
-          "refId": "D",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "max"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            }
-          ]
-        },
-        {
-          "alias": "$tag_host($tag_db:$tag_nodeid):queuedepth",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):queuedepth",
           "groupBy": [
             {
               "params": [
@@ -3813,7 +3445,7 @@
           "measurement": "JrnlBytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"JrnlWrites\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(0)",
+          "query": "SELECT mean(\"rate\") FROM \"JrnlWrites\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3968,7 +3600,7 @@
           "measurement": "JrnlBytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"JrnlBytes\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(0)",
+          "query": "SELECT mean(\"rate\") FROM \"JrnlBytes\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",

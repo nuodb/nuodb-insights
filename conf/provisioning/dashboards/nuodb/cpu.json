@@ -161,7 +161,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(\"norm\") as a FROM \"PercentUserTime\" WHERE \"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  time > ${__to}ms - 1m AND time <= ${__to}ms",
@@ -1601,7 +1601,7 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
@@ -1648,7 +1648,7 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
@@ -1742,7 +1742,7 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
@@ -1789,7 +1789,7 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
@@ -2029,7 +2029,7 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
@@ -2076,7 +2076,7 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
@@ -2170,7 +2170,7 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
@@ -2217,7 +2217,7 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
           "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",

@@ -1161,7 +1161,7 @@
       "seriesOverrides": [
         {
           "$$hashKey": "object:180",
-          "alias": "/reload.*/i",
+          "alias": "/.*:reloaded/i",
           "stack": "A",
           "transform": "negative-Y"
         }
@@ -1171,7 +1171,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "loaded(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "SM( host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):loaded",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1251,7 +1251,7 @@
           ]
         },
         {
-          "alias": "reloaded(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "SM( host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):reloaded",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1439,7 +1439,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):purged",
           "groupBy": [
             {
               "params": [
