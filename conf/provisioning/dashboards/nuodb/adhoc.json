@@ -2031,10 +2031,9 @@
         "useTags": false
       },
       {
-
         "allValue": ".*",
         "current": {
-          "selected": false
+          "selected": false,
           "text": [
             "All"
           ],
@@ -2137,5 +2136,5 @@
   "timezone": "",
   "title": "Adhoc Query",
   "uid": null,
-  "version": 2
+  "version": 1
 }

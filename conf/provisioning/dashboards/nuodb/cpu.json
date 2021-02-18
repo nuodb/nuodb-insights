@@ -5,10 +5,12 @@
         "$$hashKey": "object:1576",
         "builtIn": 1,
         "datasource": "-- Grafana --",
-        "enable": true,
+        "enable": false,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
+        "limit": 100,
         "name": "Annotations & Alerts",
+        "showIn": 0,
         "type": "dashboard"
       },
       {
@@ -18,10 +20,10 @@
         "hide": false,
         "iconColor": "rgba(255, 96, 96, 1)",
         "limit": 100,
-        "name": "test",
+        "name": "db annotations",
         "showIn": 0,
         "tags": [
-          "test"
+          "$database"
         ],
         "type": "tags"
       }
@@ -31,7 +33,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1607016043261,
+  "iteration": 1613149969024,
   "links": [
     {
       "asDropdown": true,
@@ -83,6 +85,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 1,
+      "description": "Average User CPU time for TEs in the most recent 1m interval of current time window,  filters Database and Host are applied.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -106,7 +109,7 @@
         "y": 1
       },
       "hideTimeOverride": true,
-      "id": 3,
+      "id": 96,
       "interval": null,
       "links": [],
       "mappingType": 1,
@@ -124,7 +127,7 @@
       "nullPointMode": "null",
       "nullText": null,
       "postfix": "",
-      "postfixFontSize": "30%",
+      "postfixFontSize": "50%",
       "prefix": "",
       "prefixFontSize": "50%",
       "rangeMaps": [
@@ -136,7 +139,7 @@
       ],
       "sparkline": {
         "fillColor": "rgba(31, 118, 189, 0.18)",
-        "full": true,
+        "full": false,
         "lineColor": "rgb(31, 120, 193)",
         "show": false
       },
@@ -158,11 +161,10 @@
               "type": "fill"
             }
           ],
-          "hide": false,
           "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(a) FROM (SELECT mean(\"norm\") as a FROM \"PercentUserTime\" WHERE \"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time(1m) fill(0))",
+          "query": "SELECT mean(\"norm\") as a FROM \"PercentUserTime\" WHERE \"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  time > ${__to}ms - 1m AND time <= ${__to}ms",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -190,7 +192,7 @@
         }
       ],
       "thresholds": "",
-      "timeFrom": null,
+      "timeFrom": "30s",
       "timeShift": null,
       "title": "User",
       "type": "singlestat",
@@ -202,7 +204,7 @@
           "value": "null"
         }
       ],
-      "valueName": "current"
+      "valueName": "avg"
     },
     {
       "cacheTimeout": null,
@@ -215,6 +217,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 1,
+      "description": "Average System CPU time for TEs in the most recent 1m interval of current time window,  filters Database and Host are applied.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -293,7 +296,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(a) FROM (SELECT mean(\"norm\") as a FROM \"PercentSystemTime\" WHERE \"nodetype\" = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time(1m) fill(0))",
+          "query": "SELECT mean(\"norm\") as a FROM \"PercentSystemTime\" WHERE \"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  time > ${__to}ms - 1m AND time <= ${__to}ms",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -346,6 +349,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 1,
+      "description": "Average Total CPU time for TEs in the most recent 1m interval of current time window,  filters Database and Host are applied.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -424,7 +428,7 @@
           "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(a) FROM (SELECT mean(\"norm\") as a FROM \"PercentCpuTime\" WHERE \"nodetype\" = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time(1m) fill(0))",
+          "query": "SELECT mean(\"norm\") as a FROM \"PercentCpuTime\" WHERE \"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  time > ${__to}ms - 1m AND time <= ${__to}ms",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -477,6 +481,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Number of TEs seen in the last minute.    Filters for Database and Host are considered.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -622,6 +627,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Number of host running either an SM or TE within the most recent one minute interval for the current time window.   Filters Database and Host are applied.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -682,34 +688,25 @@
       "tableColumn": "",
       "targets": [
         {
-          "dsType": "influxdb",
           "groupBy": [
             {
               "params": [
-                "10s"
+                "$__interval"
               ],
               "type": "time"
             },
             {
               "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "0"
+                "null"
               ],
               "type": "fill"
             }
           ],
-          "hide": false,
-          "measurement": "Milliseconds",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select count(last) from ( select last(raw),time from \"NumberCores\" where  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter group by \"host\")",
+          "query": "SELECT count(last) FROM (SELECT last(\"value\") FROM \"Milliseconds\" WHERE  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND time > ${__to}ms - 1m AND time <= ${__to}ms group by \"host\" fill(null))",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -721,7 +718,7 @@
               },
               {
                 "params": [],
-                "type": "last"
+                "type": "mean"
               }
             ]
           ],
@@ -754,6 +751,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Total number of cores detected in the most recent one minute interval of the current time window associated with a host running either an SM or TE.   Filters Database and Host are applied.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -814,11 +812,10 @@
       "tableColumn": "",
       "targets": [
         {
-          "dsType": "influxdb",
           "groupBy": [
             {
               "params": [
-                "$interval"
+                "$__interval"
               ],
               "type": "time"
             },
@@ -831,9 +828,9 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "select sum(last) from ( select last(raw),time from \"NumberCores\" where  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter group by \"host\")",
+          "query": "SELECT sum(last) FROM (SELECT last(\"raw\") FROM \"NumberCores\" WHERE  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND time > ${__to}ms - 1m AND time <= ${__to}ms group by \"host\" fill(null))",
           "rawQuery": true,
-          "refId": "A",
+          "refId": "B",
           "resultFormat": "time_series",
           "select": [
             [
@@ -905,6 +902,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "Number of SMs seen in the last minute.    Filters for Database and Host are considered.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -983,7 +981,7 @@
           "measurement": "Milliseconds",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT COUNT(min) FROM (SELECT MIN(\"raw\") FROM \"Milliseconds\" WHERE \"nodetype\" = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY \"host\")",
+          "query": "SELECT COUNT(min) FROM (SELECT MIN(\"raw\") FROM \"Milliseconds\" WHERE \"nodetype\" = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  time > ${__to}ms - 1m AND time <= ${__to}ms  GROUP BY \"startid\")",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1011,7 +1009,7 @@
         }
       ],
       "thresholds": "",
-      "timeFrom": "30s",
+      "timeFrom": null,
       "timeShift": null,
       "title": "# SM",
       "type": "singlestat",
@@ -1035,6 +1033,7 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
+      "description": "Average User CPU time for SMs in the most recent 1m interval of current time window,  filters Database and Host are applied.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1113,7 +1112,7 @@
           "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(a) FROM (SELECT mean(\"norm\") as a FROM \"PercentUserTime\" WHERE \"nodetype\" = 'Storage' AND   \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time(1m) fill(0))",
+          "query": "SELECT mean(\"norm\") as a FROM \"PercentUserTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  time > ${__to}ms - 1m AND time <= ${__to}ms",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1166,6 +1165,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 1,
+      "description": "Average System CPU time for SMs in the most recent 1m interval of current time window,  filters Database and Host are applied.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1244,7 +1244,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(a) FROM (SELECT mean(\"norm\") as a FROM \"PercentSystemTime\" WHERE \"nodetype\" = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND   $timeFilter GROUP BY time(1m) fill(0))",
+          "query": "SELECT mean(\"norm\") as a FROM \"PercentSystemTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  time > ${__to}ms - 1m AND time <= ${__to}ms",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1297,6 +1297,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 1,
+      "description": "Average Total CPU time for SMs in the most recent 1m interval of current time window,  filters Database and Host are applied.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1375,7 +1376,7 @@
           "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT last(a) FROM (SELECT mean(\"norm\") as a FROM \"PercentCpuTime\" WHERE \"nodetype\" = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time(1m) fill(0))",
+          "query": "SELECT mean(\"norm\") as a FROM \"PercentCpuTime\" WHERE \"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  time > ${__to}ms - 1m AND time <= ${__to}ms",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1438,6 +1439,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Average CPU time as measured by number of cores for each engine type,  filters for Database and Host limit which processes to consider.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1486,18 +1488,21 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:477",
           "alias": "TE - System",
           "color": "#0A50A1",
           "fill": 3,
           "stack": "A"
         },
         {
+          "$$hashKey": "object:478",
           "alias": "TE - User",
           "color": "#0A50A1",
           "fill": 1,
           "stack": "A"
         },
         {
+          "$$hashKey": "object:479",
           "alias": "TE - Total",
           "color": "#0A50A1",
           "fill": 0,
@@ -1505,18 +1510,21 @@
           "zindex": 3
         },
         {
+          "$$hashKey": "object:480",
           "alias": "SM - System",
           "color": "#E0752D",
           "fill": 3,
           "stack": "B"
         },
         {
+          "$$hashKey": "object:481",
           "alias": "SM - User",
           "color": "#E0752D",
           "fill": 1,
           "stack": "B"
         },
         {
+          "$$hashKey": "object:482",
           "alias": "SM - Total",
           "color": "#E0752D",
           "fill": 0,
@@ -1549,7 +1557,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT MEAN(A) FROM (SELECT mean(ncores) AS A FROM \"PercentSystemTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT mean(ncores) AS A FROM \"PercentSystemTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1593,10 +1601,10 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT MEAN(A) FROM (SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND   $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -1640,10 +1648,10 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT MEAN(A) FROM (SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -1690,7 +1698,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT MEAN(A) FROM (SELECT mean(ncores) AS A FROM \"PercentSystemTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT mean(ncores) AS A FROM \"PercentSystemTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -1734,10 +1742,10 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT MEAN(A) FROM (SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
           "rawQuery": true,
           "refId": "E",
           "resultFormat": "time_series",
@@ -1781,10 +1789,10 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT MEAN(A) FROM (SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval) fill(none)",
           "rawQuery": true,
           "refId": "F",
           "resultFormat": "time_series",
@@ -1859,6 +1867,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Total CPU time as measured by number of cores for each engine type,  filters for Database and Host limit which processes to consider.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1907,18 +1916,21 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
+          "$$hashKey": "object:784",
           "alias": "TE - System",
           "color": "#0A50A1",
           "fill": 3,
           "stack": "A"
         },
         {
+          "$$hashKey": "object:785",
           "alias": "TE - User",
           "color": "#0A50A1",
           "fill": 1,
           "stack": "A"
         },
         {
+          "$$hashKey": "object:786",
           "alias": "TE - Total",
           "color": "#0A50A1",
           "fill": 0,
@@ -1926,18 +1938,21 @@
           "zindex": 3
         },
         {
+          "$$hashKey": "object:787",
           "alias": "SM - System",
           "color": "#E0752D",
           "fill": 3,
           "stack": "B"
         },
         {
+          "$$hashKey": "object:788",
           "alias": "SM - User",
           "color": "#E0752D",
           "fill": 1,
           "stack": "B"
         },
         {
+          "$$hashKey": "object:789",
           "alias": "SM - Total",
           "color": "#E0752D",
           "fill": 0,
@@ -1970,7 +1985,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentSystemTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentSystemTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -2014,10 +2029,10 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -2061,10 +2076,10 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Transaction' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -2111,7 +2126,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentSystemTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentSystemTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -2155,10 +2170,10 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentUserTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "E",
           "resultFormat": "time_series",
@@ -2202,10 +2217,10 @@
             }
           ],
           "hide": false,
-          "measurement": "PercentSystemTime",
+          "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), host, pid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
+          "query": " SELECT SUM(A) FROM (SELECT mean(ncores) AS A FROM \"PercentCpuTime\" WHERE nodetype = 'Storage' AND  \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  $timeFilter GROUP BY time($__interval), startid fill(none)) WHERE  $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "F",
           "resultFormat": "time_series",
@@ -2295,6 +2310,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Average CPU usage across all TEs (each TE is given same weight independent of number of cores available for that TE),  filter criteria of Database and Host are considered,  results are grouped based upon Grouping criteria.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2372,6 +2388,8 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT mean(\"norm\") FROM \"PercentSystemTime\" WHERE (\"nodetype\" = 'Transaction' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"$group\" fill(null)",
+          "rawQuery": false,
           "refId": "E",
           "resultFormat": "time_series",
           "select": [
@@ -2554,6 +2572,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:439",
           "format": "percent",
           "label": null,
           "logBase": 1,
@@ -2562,6 +2581,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:440",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2581,6 +2601,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Average CPU usage across all SMs (each SM is given same weight independent of number of cores available for that SM),  filter criteria of Database and Host are considered,  results are grouped based upon Grouping criteria.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2883,6 +2904,7 @@
       "dashes": false,
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "CPU usage by $group for $host host",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2931,7 +2953,9 @@
       "repeat": "host",
       "scopedVars": {
         "host": {
-          "selected": false
+          "selected": false,
+          "text": "ip-172-31-27-126.ec2.internal",
+          "value": "ip-172-31-27-126.ec2.internal"
         }
       },
       "seriesOverrides": [],
@@ -2965,7 +2989,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"startid\", \"$group\" fill(null)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3017,7 +3041,7 @@
           "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"startid\", \"$group\" fill(null)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3069,7 +3093,7 @@
           "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"startid\", \"$group\" fill(null)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -3117,6 +3141,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:160",
           "format": "percent",
           "label": "",
           "logBase": 1,
@@ -3125,6 +3150,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:161",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -3145,6 +3171,7 @@
       "dashes": false,
       "datasource": "nuodb",
       "decimals": 0,
+      "description": "CPU usage by $group for $host host",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -3164,7 +3191,7 @@
         "y": 17
       },
       "hiddenSeries": false,
-      "id": 95,
+      "id": 97,
       "interval": ">$interval",
       "legend": {
         "avg": false,
@@ -3190,11 +3217,13 @@
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeatIteration": 1607016043261,
+      "repeatIteration": 1613149969024,
       "repeatPanelId": 17,
       "scopedVars": {
         "host": {
-          "selected": false
+          "selected": false,
+          "text": "ip-172-31-31-177.ec2.internal",
+          "value": "ip-172-31-31-177.ec2.internal"
         }
       },
       "seriesOverrides": [],
@@ -3228,7 +3257,7 @@
           "measurement": "PercentSystemTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentSystemTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"startid\", \"$group\" fill(null)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3280,7 +3309,7 @@
           "measurement": "PercentUserTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentUserTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"startid\", \"$group\" fill(null)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3332,7 +3361,7 @@
           "measurement": "PercentCpuTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"pid\", \"$group\" fill(0)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
+          "query": "SELECT sum(\"N\") FROM (SELECT mean(\"norm\") AS \"N\" FROM \"PercentCpuTime\" WHERE \"host\" =~ /^$host$/ AND $timeFilter GROUP BY time($interval),  \"startid\", \"$group\" fill(null)) WHERE $timeFilter GROUP BY time($interval), \"$group\"",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -3380,6 +3409,7 @@
       },
       "yaxes": [
         {
+          "$$hashKey": "object:160",
           "format": "percent",
           "label": "",
           "logBase": 1,
@@ -3388,6 +3418,7 @@
           "show": true
         },
         {
+          "$$hashKey": "object:161",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -3402,7 +3433,7 @@
       }
     }
   ],
-  "refresh": "",
+  "refresh": "30s",
   "schemaVersion": 26,
   "style": "dark",
   "tags": [
@@ -3416,7 +3447,7 @@
         "auto_count": 50,
         "auto_min": "10s",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
@@ -3426,7 +3457,7 @@
         "name": "interval",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
@@ -3436,7 +3467,7 @@
             "value": "10s"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "30s",
             "value": "30s"
           },
@@ -3522,12 +3553,12 @@
         "name": "group",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "host",
             "value": "host"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "db",
             "value": "db"
           },
@@ -3538,11 +3569,11 @@
           },
           {
             "selected": false,
-            "text": "pid",
-            "value": "pid"
+            "text": "startid",
+            "value": "startid"
           }
         ],
-        "query": "host,db,nodetype,pid",
+        "query": "host,db,nodetype,startid",
         "queryValue": "",
         "refresh": 0,
         "skipUrlSync": false,
@@ -3551,13 +3582,16 @@
       {
         "allValue": ".*",
         "current": {
-          "text": "All",
+          "selected": false,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+        "definition": "",
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -3565,9 +3599,9 @@
         "multi": true,
         "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
-        "refresh": 1,
-        "regex": "",
+        "query": "select distinct(\"db\") from (select first(raw) from \"Milliseconds\" where $timeFilter GROUP BY \"db\")",
+        "refresh": 2,
+        "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
@@ -3579,13 +3613,16 @@
       {
         "allValue": ".*",
         "current": {
-          "text": "All",
+          "selected": false,
+          "text": [
+            "All"
+          ],
           "value": [
             "$__all"
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE  \"db\" =~ /^$database$/",
+        "definition": "",
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -3593,8 +3630,8 @@
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE  \"db\" =~ /^$database$/",
-        "refresh": 1,
+        "query": "select distinct(\"host\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND db =~ /$database$/ GROUP BY \"host\")",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -3638,5 +3675,5 @@
   "timezone": "",
   "title": "CPU",
   "uid": null,
-  "version": 4
+  "version": 7
 }

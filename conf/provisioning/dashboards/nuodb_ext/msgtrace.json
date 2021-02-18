@@ -4,7 +4,7 @@
       {
         "builtIn": 1,
         "datasource": "-- Grafana --",
-        "enable": true,
+        "enable": false,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
@@ -16,7 +16,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1607088527151,
+  "iteration": 1613151534833,
   "links": [
     {
       "$$hashKey": "object:3968",
@@ -108,13 +108,6 @@
       "renderer": "flot",
       "repeat": "listeners",
       "repeatDirection": "h",
-      "scopedVars": {
-        "listeners": {
-          "selected": false,
-          "text": "1:2",
-          "value": "1:2"
-        }
-      },
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": true,
@@ -147,171 +140,6 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT LAST(M) FROM (SELECT time,mean(\"totalTimeStalls\") AS M, mean(\"totalSumStalls\") AS S FROM \"nuodb_msgtrace\" WHERE (\"msg_trace_metric\" =~ /^$metric$/ AND \"id\" =~ /^$listeners$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($__interval), \"msg_trace_metric\" fill(null)) WHERE M/S > $percent AND $timeFilter GROUP BY time($__interval),\"msg_trace_metric\" fill(null)",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "totalTimeStalls"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "id",
-              "operator": "=~",
-              "value": "/^$listeners$/"
-            },
-            {
-              "condition": "AND",
-              "key": "totalTimeStalls",
-              "operator": ">",
-              "value": "1000*$ms"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Node $listeners Listener",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:156",
-          "format": "µs",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:157",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$nuodb_internal",
-      "description": "Wall clock time spent process messages from other nodes in the  database chorus.   metrics are collected every 30 seconds,  so max bar size should be 30 sec.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 1
-      },
-      "hiddenSeries": false,
-      "id": 19,
-      "interval": "$interval",
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": false,
-      "linewidth": 1,
-      "maxPerRow": 3,
-      "nullPointMode": "null as zero",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.2",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "repeatDirection": "h",
-      "repeatIteration": 1607088527151,
-      "repeatPanelId": 9,
-      "scopedVars": {
-        "listeners": {
-          "selected": false,
-          "text": "2:1",
-          "value": "2:1"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$tag_msg_trace_metric",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "msg_trace_metric"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "nuodb_msgtrace",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT LAST(M) FROM (SELECT time,mean(\"totalTimeStalls\") AS M, mean(\"totalSumStalls\") AS S FROM \"nuodb_msgtrace\" WHERE (\"msg_trace_metric\" =~ /^$metric$/ AND \"id\" =~ /^$listeners$/ AND \"dbname\" =~ /^$database$/ ) AND $timeFilter GROUP BY time($interval), \"msg_trace_metric\" fill(null)) WHERE M/S > $percent AND $timeFilter GROUP BY time($interval),\"msg_trace_metric\" fill(null)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -451,13 +279,6 @@
       "renderer": "flot",
       "repeat": "listeners",
       "repeatDirection": "h",
-      "scopedVars": {
-        "listeners": {
-          "selected": false,
-          "text": "1:2",
-          "value": "1:2"
-        }
-      },
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": true,
@@ -489,164 +310,6 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT LAST(M)/LAST(N) FROM (SELECT time,mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N,mean(\"totalSumStalls\") AS S FROM \"nuodb_msgtrace\" WHERE (\"msg_trace_metric\" =~ /^$metric$/ AND \"dbname\" =~ /^$database$/ AND \"id\" =~ /^$listeners$/) AND $timeFilter GROUP BY time($__interval), \"msg_trace_metric\" fill(null)) WHERE M/S > $percent AND $timeFilter GROUP BY time($__interval),\"msg_trace_metric\" fill(null)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "totalTimeStalls"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "id",
-              "operator": "=~",
-              "value": "/^$listeners$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Node $listeners Listener",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:156",
-          "format": "µs",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:157",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$nuodb_internal",
-      "description": "Average time to process a message from the other node.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 10
-      },
-      "hiddenSeries": false,
-      "id": 20,
-      "interval": "$interval",
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": false,
-      "linewidth": 1,
-      "maxPerRow": 3,
-      "nullPointMode": "null as zero",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.2",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "repeatDirection": "h",
-      "repeatIteration": 1607088527151,
-      "repeatPanelId": 4,
-      "scopedVars": {
-        "listeners": {
-          "selected": false,
-          "text": "2:1",
-          "value": "2:1"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$tag_msg_trace_metric",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "name"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "nuodb_msgtrace",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT LAST(M)/LAST(N) FROM (SELECT time,mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N,mean(\"totalSumStalls\") AS S FROM \"nuodb_msgtrace\" WHERE (\"msg_trace_metric\" =~ /^.*$/ AND \"dbname\" =~ /^$database$/ AND \"id\" =~ /^$listeners$/) AND $timeFilter GROUP BY time($interval), \"msg_trace_metric\" fill(null)) WHERE M/S > $percent AND $timeFilter GROUP BY time($interval),\"msg_trace_metric\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -781,13 +444,6 @@
       "renderer": "flot",
       "repeat": "listeners",
       "repeatDirection": "h",
-      "scopedVars": {
-        "listeners": {
-          "selected": false,
-          "text": "1:2",
-          "value": "1:2"
-        }
-      },
       "seriesOverrides": [],
       "spaceLength": 10,
       "stack": true,
@@ -819,164 +475,6 @@
           "orderByTime": "ASC",
           "policy": "default",
           "query": "SELECT LAST(N) FROM (SELECT time,mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N,mean(\"totalSumStalls\") AS S FROM \"nuodb_msgtrace\" WHERE (\"msg_trace_metric\" =~ /^$metric$/ AND \"dbname\" =~ /^$database$/ AND \"id\" =~ /^$listeners$/) AND $timeFilter GROUP BY time($__interval), \"msg_trace_metric\" fill(null)) WHERE M/S > $percent AND $timeFilter GROUP BY time($__interval),\"msg_trace_metric\" fill(null)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "totalTimeStalls"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "id",
-              "operator": "=~",
-              "value": "/^$listeners$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Node $listeners Listener",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:156",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:157",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "$nuodb_internal",
-      "description": "Number of messages processed from other node in database chorus.",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 19
-      },
-      "hiddenSeries": false,
-      "id": 21,
-      "interval": "$interval",
-      "legend": {
-        "alignAsTable": false,
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "rightSide": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": false,
-      "linewidth": 1,
-      "maxPerRow": 3,
-      "nullPointMode": "null as zero",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.2",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "repeatDirection": "h",
-      "repeatIteration": 1607088527151,
-      "repeatPanelId": 18,
-      "scopedVars": {
-        "listeners": {
-          "selected": false,
-          "text": "2:1",
-          "value": "2:1"
-        }
-      },
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "$tag_msg_trace_metric",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "name"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "nuodb_msgtrace",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT LAST(N) FROM (SELECT time,mean(\"totalTimeStalls\") AS M, mean(\"numStalls\") AS N,mean(\"totalSumStalls\") AS S FROM \"nuodb_msgtrace\" WHERE (\"msg_trace_metric\" =~ /^.*$/ AND \"dbname\" =~ /^$database$/ AND \"id\" =~ /^$listeners$/) AND $timeFilter GROUP BY time($interval), \"msg_trace_metric\" fill(null)) WHERE M/S > $percent AND $timeFilter GROUP BY time($interval),\"msg_trace_metric\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -1149,12 +647,11 @@
       {
         "allValue": null,
         "current": {
-          "selected": true,
-          "text": "ENOVIA",
-          "value": "ENOVIA"
+          "selected": false,
+          "text": "",
+          "value": ""
         },
-        "datasource": "$nuodb_internal",
-        "definition": "SHOW TAG VALUES  FROM \"nuodb_msgtrace\" WITH KEY = \"dbname\"",
+        "datasource": "nuodb_internal",
         "error": null,
         "hide": 0,
         "includeAll": false,
@@ -1162,8 +659,8 @@
         "multi": false,
         "name": "database",
         "options": [],
-        "query": "SHOW TAG VALUES  FROM \"nuodb_msgtrace\" WITH KEY = \"dbname\"",
-        "refresh": 1,
+        "query": "select distinct(\"dbname\") from (select first(numStalls) from \"nuodb_msgtrace\" where $timeFilter GROUP BY \"dbname\")",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1196,15 +693,10 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": "All",
+          "value": "$__all"
         },
         "datasource": "$nuodb_internal",
-        "definition": "SHOW TAG VALUES  FROM \"nuodb_msgtrace\" WITH KEY = \"host\" WHERE \"dbname\" = '$database'",
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1212,8 +704,8 @@
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "SHOW TAG VALUES  FROM \"nuodb_msgtrace\" WITH KEY = \"host\" WHERE \"dbname\" = '$database'",
-        "refresh": 1,
+        "query": "select distinct(\"host\") from (select first(numStalls) from \"nuodb_msgtrace\" where $timeFilter AND \"dbname\" =~ /^$database$/ GROUP BY \"host\")",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1226,16 +718,13 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": true,
+          "tags": [],
+          "text": [],
+          "value": []
         },
         "datasource": "$nuodb_internal",
-        "definition": "SHOW TAG VALUES  FROM \"nuodb_msgtrace\" WITH KEY = \"id\" WHERE \"dbname\" = '$database' AND \"host\" =~ /^$host$/",
+        "definition": "",
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1243,8 +732,8 @@
         "multi": true,
         "name": "listeners",
         "options": [],
-        "query": "SHOW TAG VALUES  FROM \"nuodb_msgtrace\" WITH KEY = \"id\" WHERE \"dbname\" = '$database' AND \"host\" =~ /^$host$/",
-        "refresh": 1,
+        "query": "select distinct(\"id\") from (select first(numStalls) from \"nuodb_msgtrace\" where $timeFilter AND \"dbname\" =~ /^$database$/ AND \"host\" =~ /^$host$/ GROUP BY \"id\")",
+        "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
         "sort": 0,
@@ -1257,7 +746,7 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": [
             "All"
           ],
@@ -1266,7 +755,6 @@
           ]
         },
         "datasource": "$nuodb_internal",
-        "definition": "SHOW TAG VALUES  FROM \"nuodb_msgtrace\" WITH KEY = \"msg_trace_metric\" WHERE \"dbname\" = '$database'",
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1274,7 +762,7 @@
         "multi": true,
         "name": "metric",
         "options": [],
-        "query": "SHOW TAG VALUES  FROM \"nuodb_msgtrace\" WITH KEY = \"msg_trace_metric\" WHERE \"dbname\" = '$database'",
+        "query": "SHOW TAG VALUES FROM \"nuodb_msgtrace\" WITH KEY = \"msg_trace_metric\" WHERE \"dbname\" = '$database'",
         "refresh": 1,
         "regex": "",
         "skipUrlSync": false,
@@ -1353,7 +841,7 @@
     ]
   },
   "time": {
-    "from": "now-15m",
+    "from": "now-30m",
     "to": "now"
   },
   "timepicker": {
@@ -1371,5 +859,5 @@
   "timezone": "",
   "title": "Message Trace",
   "uid": null,
-  "version": 4
+  "version": 2
 }
