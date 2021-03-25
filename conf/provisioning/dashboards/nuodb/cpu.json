@@ -33,7 +33,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1613149969024,
+  "iteration": 1616443761599,
   "links": [
     {
       "asDropdown": true,
@@ -611,7 +611,7 @@
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -886,7 +886,7 @@
         "content": "",
         "mode": "markdown"
       },
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -1482,7 +1482,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1910,7 +1910,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2353,7 +2353,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2644,7 +2644,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2904,7 +2904,7 @@
       "dashes": false,
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "CPU usage by $group for $host host",
+      "description": "CPU usage by $group for host $host",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2946,7 +2946,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2954,8 +2954,8 @@
       "scopedVars": {
         "host": {
           "selected": false,
-          "text": "ip-172-31-27-126.ec2.internal",
-          "value": "ip-172-31-27-126.ec2.internal"
+          "text": "ip-172-31-81-28.ec2.internal",
+          "value": "ip-172-31-81-28.ec2.internal"
         }
       },
       "seriesOverrides": [],
@@ -3171,7 +3171,7 @@
       "dashes": false,
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "CPU usage by $group for $host host",
+      "description": "CPU usage by $group for host ($host)",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -3213,17 +3213,17 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "repeatIteration": 1613149969024,
+      "repeatIteration": 1616443761599,
       "repeatPanelId": 17,
       "scopedVars": {
         "host": {
           "selected": false,
-          "text": "ip-172-31-31-177.ec2.internal",
-          "value": "ip-172-31-31-177.ec2.internal"
+          "text": "ip-172-31-94-195.ec2.internal",
+          "value": "ip-172-31-94-195.ec2.internal"
         }
       },
       "seriesOverrides": [],
@@ -3434,7 +3434,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "nuodb",
@@ -3451,6 +3451,7 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
+        "description": null,
         "error": null,
         "hide": 0,
         "label": "interval",
@@ -3545,6 +3546,7 @@
           "value": "host"
         },
         "datasource": null,
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": false,
@@ -3592,6 +3594,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -3611,7 +3614,7 @@
         "useTags": false
       },
       {
-        "allValue": ".*",
+        "allValue": "",
         "current": {
           "selected": false,
           "text": [
@@ -3623,6 +3626,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -3675,5 +3679,5 @@
   "timezone": "",
   "title": "CPU",
   "uid": null,
-  "version": 7
+  "version": 2
 }

@@ -35,7 +35,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1613149604152,
+  "iteration": 1616441714280,
   "links": [
     {
       "asDropdown": true,
@@ -889,7 +889,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "the number of SQL connections established with a TE at the time the metric is collected.",
+      "description": "the number of SQL connections established with each selected TE at the time the metric is collected.  The graph is a stack graph so top line is the average sum across all selected TEs.  The hover tooltip will show the individual values.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -928,7 +928,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1072,7 +1072,7 @@
       "dashes": false,
       "datasource": "nuodb",
       "decimals": 1,
-      "description": "This graph shows the average number of SQL connections executing within the database for the collection interval.   This is displayed per TE.   The value is calculated as SqlListenerSqlProcTime/Milliseconds  * 1000.  Since the value SqlListenerSqlProcTime is only incremented after a thread completes the transaction,  a long running sql statement will skew these numbers and large spikes will be noticed in the graph.",
+      "description": "This graph shows the average number of SQL connections executing within the database for the collection interval.   This is displayed per TE.   The value is calculated as SqlListenerSqlProcTime/Milliseconds  * 1000.  Since the value SqlListenerSqlProcTime is only incremented after a thread completes the transaction,  a long running sql statement will skew these numbers and large spikes will be noticed in the graph. The graph is a stack graph so top line is the average sum across all selected TEs.  The hover tooltip will show the individual values.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1113,7 +1113,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1280,7 +1280,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Average number of commits per seconds by each TE. ",
+      "description": "Average number of commits per seconds within each selected TE. The graph is a stack graph so top line is the average sum across all selected TEs.  The hover tooltip will show the individual values.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1319,7 +1319,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1470,7 +1470,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Average number of rollbacks per second within each TE.",
+      "description": "Average number of rollbacks per second within each selected TE. The graph is a stack graph so top line is the average sum across all selected TEs.  The hover tooltip will show the individual values.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1509,7 +1509,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1667,7 +1667,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Average number of rows inserted  per second by each TE.",
+      "description": "Average number of rows inserted  per second for each selected TE. The graph is a stack graph so top line is the average sum across all selected TEs.  The hover tooltip will show the individual values.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1706,7 +1706,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1849,7 +1849,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Average number of rows updated  per second by each TE.",
+      "description": "Average number of rows updated  per second for each selected TE. The graph is a stack graph so top line is the average sum across all selected TEs.  The hover tooltip will show the individual values.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1888,7 +1888,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2029,7 +2029,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Average number of rows deleted per second by each TE.",
+      "description": "Average number of rows deleted per second for each selected TE. The graph is a stack graph so top line is the average sum across all selected TEs.  The hover tooltip will show the individual values.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2068,7 +2068,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2226,7 +2226,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "The average number of active transactions that are in a pending insert wait as measured by wait time associated with pending insert relative to interval window.  Pending Insert Wait is when a TE is waiting for acknowledgement from chairman that an insert will not invalidate uniqueness constraint on unique indexes.",
+      "description": "The average number of active transactions that are in a pending insert wait as measured by wait time associated with pending insert relative to interval window.  Pending Insert Wait is when a TE is waiting for acknowledgement from chairman that an insert will not invalidate uniqueness constraint on unique indexes. The graph is a stack graph so top line is the average sum across all selected TEs.  The hover tooltip will show the individual values.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2265,7 +2265,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2405,7 +2405,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "The average number of active transactions that are in a pending update wait as measured by wait time associated with pending update relative to interval window.  Pending Updte Wait is when a TE is waiting for acknowledgement from chairman that an update does not conflict with other transactions.",
+      "description": "The average number of active transactions that are in a pending update wait as measured by wait time associated with pending update relative to interval window.  Pending Updte Wait is when a TE is waiting for acknowledgement from chairman that an update does not conflict with other transactions. The graph is a stack graph so top line is the average sum across all selected TEs.  The hover tooltip will show the individual values.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2444,7 +2444,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2646,7 +2646,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "nuodb",
@@ -2663,6 +2663,7 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
+        "description": null,
         "error": null,
         "hide": 0,
         "label": "interval",
@@ -2738,6 +2739,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -2757,7 +2759,7 @@
         "useTags": false
       },
       {
-        "allValue": ".*",
+        "allValue": "",
         "current": {
           "selected": true,
           "text": [
@@ -2769,6 +2771,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -2821,5 +2824,5 @@
   "timezone": "",
   "title": "SQL",
   "uid": null,
-  "version": 13
+  "version": 2
 }

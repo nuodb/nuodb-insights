@@ -33,7 +33,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1613149996361,
+  "iteration": 1616443686796,
   "links": [
     {
       "asDropdown": true,
@@ -71,7 +71,7 @@
       "id": 22,
       "panels": [],
       "repeat": null,
-      "title": "Current Averages",
+      "title": "Latest (1 minute) Averages",
       "type": "row"
     },
     {
@@ -93,10 +93,10 @@
       "id": 19,
       "links": [],
       "options": {
-        "content": "<h4 style=\"text-align:right;\">Send</h4>",
+        "content": "<h4 style=\"text-align:right;\">Sent</h4>",
         "mode": "html"
       },
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -112,7 +112,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 2,
-      "description": "Average data rate of messages sent by all TEs over the last minute interval for the current time window.",
+      "description": "Average data rate of messages sent by all selected TEs over the last minute interval for the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -299,7 +299,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 2,
-      "description": "Average data rate of messages sent by all SMs over the last minute interval for the current time window.",
+      "description": "Average data rate of messages sent by all selected SMs over the last minute interval for the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -434,7 +434,7 @@
         "content": "<h4 style=\"text-align:right\">Received</h4>",
         "mode": "html"
       },
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "title": "",
       "transparent": true,
       "type": "text"
@@ -450,7 +450,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 2,
-      "description": "Average data rate of messages received by all TEs over the last minute interval for the current time window.",
+      "description": "Average data rate of messages received by all selected TEs over the last minute interval for the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -574,7 +574,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 2,
-      "description": "Average data rate of messages received by all SMs over the last minute interval for the current time window.",
+      "description": "Average data rate of messages received by all selected SMs over the last minute interval for the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -752,7 +752,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -762,7 +762,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "$col(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid,  startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -781,7 +781,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M)*8 FROM (SELECT mean(\"rate\") AS M FROM \"BytesSent\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$sent$/ AND \"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\")*8 AS TE FROM \"BytesSent\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$sent$/ AND \"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -802,7 +802,7 @@
           "tags": []
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "$col(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid,  startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -821,7 +821,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M)*8 FROM (SELECT mean(\"rate\") AS M FROM \"BytesSent\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$sent$/ AND \"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\")*8 AS SM FROM \"BytesSent\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$sent$/ AND \"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -934,7 +934,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -944,7 +944,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "$col(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid,  startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -962,7 +962,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M)*8  FROM (SELECT mean(\"rate\") AS M FROM \"BytesReceived\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$received$/ AND \"nodetype\" = 'Transaction'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\")*8 AS TE FROM \"BytesReceived\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$received$/ AND \"nodetype\" = 'Transaction'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -983,7 +983,7 @@
           "tags": []
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "$col(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid,  startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1001,7 +1001,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M)*8 FROM (SELECT mean(\"rate\") AS M FROM \"BytesReceived\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$received$/ AND \"nodetype\" = 'Storage'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\")*8 AS SM FROM \"BytesReceived\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$received$/ AND \"nodetype\" = 'Storage'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -1128,7 +1128,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1138,7 +1138,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "$col(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid,  startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1156,7 +1156,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT mean(\"rate\") AS M FROM \"MessagesSent\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$sent$/ AND \"nodetype\" = 'Transaction'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\") AS TE  FROM \"MessagesSent\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$sent$/ AND \"nodetype\" = 'Transaction'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -1177,7 +1177,7 @@
           "tags": []
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "$col(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid,  startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1195,7 +1195,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT mean(\"rate\") AS M FROM \"MessagesSent\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$sent$/ AND \"nodetype\" = 'Storage'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\") AS SM FROM \"MessagesSent\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$sent$/ AND \"nodetype\" = 'Storage'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -1307,7 +1307,7 @@
         "alertThreshold": true
       },
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1317,7 +1317,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE - $tag_host",
+          "alias": "$col(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid,  startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1335,7 +1335,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT mean(\"rate\") AS M FROM \"MessagesReceived\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$received$/ AND \"nodetype\" = 'Transaction'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\") AS TE FROM \"MessagesReceived\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$received$/ AND \"nodetype\" = 'Transaction'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -1356,7 +1356,7 @@
           "tags": []
         },
         {
-          "alias": "SM - $tag_host",
+          "alias": "$col(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid,  startid: $tag_startid)",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1374,7 +1374,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(M) FROM (SELECT mean(\"rate\") AS M FROM \"MessagesReceived\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$received$/ AND \"nodetype\" = 'Storage'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"pid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval), \"host\"",
+          "query": "SELECT mean(\"rate\") AS SM FROM \"MessagesReceived\" WHERE (\"host\" =~ /^$host$/ AND \"nodetype\" =~ /^$received$/ AND \"nodetype\" = 'Storage'  AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -1439,7 +1439,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "nuodb",
@@ -1456,6 +1456,7 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
+        "description": null,
         "error": null,
         "hide": 0,
         "label": "interval",
@@ -1552,6 +1553,7 @@
         },
         "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"nodetype\"",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1579,6 +1581,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1610,6 +1613,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1641,6 +1645,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1693,5 +1698,5 @@
   "timezone": "",
   "title": "Communication",
   "uid": null,
-  "version": 8
+  "version": 6
 }
