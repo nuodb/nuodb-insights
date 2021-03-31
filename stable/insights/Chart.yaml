@@ -12,7 +12,7 @@ maintainers:
 - name: NuoDB
   email: support@nuodb.com
 engine: gotpl
-icon: https://www.nuodb.com/sites/all/themes/nuodb/logo.svg
+icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
 type: application
 appVersion: 4.1.0
 dependencies:
