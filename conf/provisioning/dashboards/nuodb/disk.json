@@ -34,7 +34,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1613149930371,
+  "iteration": 1616704290502,
   "links": [
     {
       "asDropdown": true,
@@ -85,7 +85,7 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
-      "description": "Average (across all SMs) atom files saved per second for the last 1 minute of the current time window.",
+      "description": "Average (across all selected SMs) atom files saved per second for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -220,7 +220,7 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
-      "description": "Average (across all SMs) archive queue depth for the last 1 minute of the current time window.",
+      "description": "Average (across all selected SMs) archive queue depth for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -352,7 +352,7 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
-      "description": "Average (across all SMs) number of atom files loaded into SM memory for the last 1 minute of the current time window.",
+      "description": "Average (across all selected SMs) number of atom files loaded into SM memory for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -485,7 +485,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "Average (across all SMs) percentage of wallclock time spent file syncing atom files to the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
+      "description": "Average (across all selected SMs) percentage of wallclock time spent file syncing atom files to the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -618,7 +618,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "Average (across all SMs) percentage of wallclock time spent in a directory operation (open/close/rename) within the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
+      "description": "Average (across all selected SMs) percentage of wallclock time spent in a directory operation (open/close/rename) within the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -751,7 +751,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "Average (across all SMs) percentage of wallclock time spent in a write operation to the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_  .",
+      "description": "Average (across all selected SMs) percentage of wallclock time spent in a write operation to the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_  .",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -884,7 +884,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "Average (across all SMs) percentage of wallclock time spent in a read operation from the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
+      "description": "Average (across all selected SMs) percentage of wallclock time spent in a read operation from the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1009,7 +1009,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "Average (across all SMs) percentage of wallclock time spent throttling sync operations in the archive to allow other work to be performed for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
+      "description": "Average (across all selected SMs) percentage of wallclock time spent throttling sync operations in the archive to allow other work to be performed for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1133,7 +1133,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "Average (across all SMs) percentage of wallclock time spent throttling write operations in the archive to allow read operations to be performed from the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
+      "description": "Average (across all selected SMs) percentage of wallclock time spent throttling write operations in the archive to allow read operations to be performed from the archive for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1265,7 +1265,7 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
-      "description": "Average (across all SMs) rate of number of bytes written to the archive per second for the last 1 minute of the current time window.",
+      "description": "Average (across all selected SMs) rate of number of bytes written to the archive per second for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1451,7 +1451,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1614,6 +1614,7 @@
       "dashes": false,
       "datasource": "nuodb",
       "decimals": 1,
+      "description": "Above the x-axis shows percentage of time spent in file sync operation for each SM.  Below the x-axis shows percentage of time spent in directory (open/close/rename) operation. <BR/><BR/> <B><I>The maximum time spent in all I/O operations is 100% * number of archive threads.</I></B>",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -1657,7 +1658,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1844,7 +1845,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -1991,6 +1992,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "The amount of data written to each selected archive per second.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2033,7 +2035,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -2129,6 +2131,7 @@
               "type": "fill"
             }
           ],
+          "hide": true,
           "measurement": "ArchiveBandwidthThrottleTime",
           "orderByTime": "ASC",
           "policy": "default",
@@ -2173,7 +2176,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Bytes Written",
+      "title": "Bytes Written / Sec",
       "tooltip": {
         "msResolution": false,
         "shared": true,
@@ -2240,7 +2243,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "Average (across all SMs) percentage of wallclock time spent syncing journal messages to the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
+      "description": "Average (across all selected SMs) percentage of wallclock time spent syncing journal messages to the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2259,7 +2262,7 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
+        "w": 3,
         "x": 0,
         "y": 16
       },
@@ -2372,7 +2375,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "Average (across all SMs) percentage of wallclock time spent in direcroty operations (open/close/delete) within the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
+      "description": "Average (across all selected SMs) percentage of wallclock time spent in direcroty operations (open/close/delete) within the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2391,8 +2394,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 4,
+        "w": 3,
+        "x": 3,
         "y": 16
       },
       "hideTimeOverride": true,
@@ -2504,7 +2507,7 @@
       ],
       "datasource": "nuodb",
       "decimals": 0,
-      "description": "Average (across all SMs) percentage of wallclock time spent writing journal messages to the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
+      "description": "Average (across all selected SMs) percentage of wallclock time spent writing journal messages to the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2523,8 +2526,8 @@
       },
       "gridPos": {
         "h": 3,
-        "w": 4,
-        "x": 8,
+        "w": 3,
+        "x": 6,
         "y": 16
       },
       "hideTimeOverride": true,
@@ -2636,7 +2639,140 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
-      "description": "Average (across all SMs) number of journal messages waiting to be added to journal over the last 1 minutes sampled about every 10 seconds of the current time window.",
+      "decimals": 0,
+      "description": "Average (across all selected SMs) percentage of wallclock time spent reading from the journal for the last 1 minute of the current time window.  Max value would be _number archive threads * 100%_ .",
+      "editable": true,
+      "error": false,
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "format": "percentunit",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 3,
+        "w": 3,
+        "x": 9,
+        "y": 16
+      },
+      "hideTimeOverride": true,
+      "id": 33,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "null",
+      "nullText": null,
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "10s"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "JournalWriteTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT mean(\"value\")  AS A FROM \"JournalReadTime\" WHERE \"nodetype\" = 'Storage' AND time >= ${__to}ms-1m AND time <= ${__to}ms",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": "15m",
+      "timeShift": null,
+      "title": "Read",
+      "type": "singlestat",
+      "valueFontSize": "50%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "avg"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "rgba(245, 54, 54, 0.9)",
+        "rgba(237, 129, 40, 0.89)",
+        "rgba(50, 172, 45, 0.97)"
+      ],
+      "datasource": "nuodb",
+      "description": "Average (across all selected SMs) number of journal messages waiting to be added to journal over the last 1 minute sampled about every 10 seconds of the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2767,7 +2903,7 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
-      "description": "Average (across all SMs) rate of number of bytes written to the journal per second for the last 1 minute of the current time window.",
+      "description": "Average (across all selected SMs) rate of number of bytes written to the journal per second for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -2898,7 +3034,7 @@
         "rgba(50, 172, 45, 0.97)"
       ],
       "datasource": "nuodb",
-      "description": "Average (across all SMs) number of writes per second to the journal for the last 1 minute of the current time window.",
+      "description": "Average (across all selected SMs) number of writes per second to the journal for the last 1 minute of the current time window.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -3041,6 +3177,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Current number of messages in the journal queue yet to be added to the journal file.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -3083,7 +3220,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 1,
       "points": false,
       "renderer": "flot",
@@ -3093,7 +3230,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):$col",
           "groupBy": [
             {
               "params": [
@@ -3110,7 +3247,7 @@
           ],
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"raw\") AS M FROM \"JournalQueue\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
+          "query": "SELECT mean(\"raw\") AS queuedepth FROM \"JournalQueue\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3181,6 +3318,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Above the x-axis shows percentage of time spent in file sync'ng the journal for each SM.  Below the x-axis shows percentage of time spent in directory (open/close/rename) operation on the journal for  each SM. <BR/><BR/> <B><I>The maximum time spent in all I/O operations is 100%.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -3223,7 +3361,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -3239,7 +3377,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):sync",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):$col",
           "groupBy": [
             {
               "params": [
@@ -3257,7 +3395,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\")*100 AS M FROM \"JournalFsyncTime\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
+          "query": "SELECT mean(\"value\")*100 AS sync FROM \"JournalFsyncTime\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3278,7 +3416,7 @@
           "tags": []
         },
         {
-          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):directory",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):$col",
           "groupBy": [
             {
               "params": [
@@ -3296,7 +3434,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"value\")*100 AS M FROM \"JournalDirectoryTime\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
+          "query": "SELECT mean(\"value\")*100 AS directory FROM \"JournalDirectoryTime\" WHERE \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/ AND  (\"nodetype\" = 'Storage') AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "B",
           "resultFormat": "time_series",
@@ -3321,7 +3459,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Sync / Directory",
+      "title": "Fsync / Directory",
       "tooltip": {
         "msResolution": true,
         "shared": true,
@@ -3367,6 +3505,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Rate at which messages are being written to the journal for each SM.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -3409,7 +3548,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 1,
       "points": false,
       "renderer": "flot",
@@ -3419,7 +3558,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):$col",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -3445,7 +3584,7 @@
           "measurement": "JrnlBytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"JrnlWrites\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
+          "query": "SELECT mean(\"rate\") AS rate FROM \"JrnlWrites\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3522,6 +3661,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
+      "description": "Throughput measured in bytes per second written to the journal for each SM.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -3564,7 +3704,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 1,
       "points": false,
       "renderer": "flot",
@@ -3574,7 +3714,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "$tag_host(db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):$col",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -3600,7 +3740,7 @@
           "measurement": "JrnlBytes",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"JrnlBytes\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
+          "query": "SELECT mean(\"rate\") AS throughput FROM \"JrnlBytes\" WHERE (\"nodetype\" = 'Storage' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -3673,7 +3813,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "nuodb",
@@ -3690,6 +3830,7 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
+        "description": null,
         "error": null,
         "hide": 0,
         "label": "interval",
@@ -3785,6 +3926,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -3816,6 +3958,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -3868,5 +4011,5 @@
   "timezone": "",
   "title": "Disk",
   "uid": null,
-  "version": 23
+  "version": 3
 }

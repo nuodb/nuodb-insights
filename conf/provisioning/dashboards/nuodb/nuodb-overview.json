@@ -32,7 +32,7 @@
   "gnetId": null,
   "graphTooltip": 1,
   "id": null,
-  "iteration": 1613065205535,
+  "iteration": 1616705608022,
   "links": [
     {
       "asDropdown": true,
@@ -78,6 +78,7 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": null,
+      "description": "The left y-axis is for the stack bar graph that shows relative (in terms of cores) breakdown of where processing time is being spent.  The right y-axis and grey shadow area graph is an indication of the total number of cores available by all selected TEs.",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -113,7 +114,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -194,7 +195,7 @@
           "measurement": "NumberCores",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT sum(ncores) FROM (SELECT mean(\"raw\") as ncores FROM \"NumberCores\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/ AND \"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval), \"pid\" fill(null)) GROUP BY time($__interval)",
+          "query": "SELECT sum(ncores) FROM (SELECT mean(\"raw\") as ncores FROM \"NumberCores\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/ AND \"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval), \"startid\" fill(null)) GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
@@ -299,6 +300,7 @@
       "dashes": false,
       "datasource": "nuodb",
       "decimals": 1,
+      "description": "the green line is relative to the left y-axis and displays the number of transactions committed per second.  Displayed below the x-axis relative to the right axis is an average (across all TEs) of the current number of transactions for the database at the time the metric was collected.   This measurement is a sum for the database as understood by the selected TEs.  At any point of time the understanding of which transactions are active will be slightly different in each TE.  The blue line is a calculation of the average number of transactions that were processing within the database for the colletion window (averaged across the display time window).   The data used to calculate this is collected only when a transaction is done processing.  So a transaction / statement that is in the database for a significant amount of time (for each a count on a very large table) will not skew this graph.  You'll see a big spike in the blue line when the long running statement ends.",
       "editable": true,
       "error": false,
       "fieldConfig": {
@@ -339,14 +341,14 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
       "seriesOverrides": [
         {
           "$$hashKey": "object:270",
-          "alias": "current",
+          "alias": "active:current",
           "bars": true,
           "color": "#E24D42",
           "lines": false,
@@ -355,7 +357,7 @@
         },
         {
           "$$hashKey": "object:271",
-          "alias": "on TE",
+          "alias": "processing:average",
           "steppedLine": true,
           "transform": "negative-Y",
           "yaxis": 2
@@ -386,7 +388,7 @@
           "measurement": "Commits",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM( A ) FROM (SELECT mean(\"rate\")  AS A FROM \"Commits\" WHERE \"nodetype\" = 'Transaction' AND $timeFilter AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/ GROUP BY \"host\",\"pid\", time($interval) fill(null)) WHERE $timeFilter GROUP BY time($interval)",
+          "query": "SELECT SUM( A ) FROM (SELECT mean(\"rate\")  AS A FROM \"Commits\" WHERE \"nodetype\" = 'Transaction' AND $timeFilter AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/ GROUP BY \"startid\", time($interval) fill(null)) WHERE $timeFilter GROUP BY time($interval)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -413,53 +415,19 @@
           ]
         },
         {
-          "alias": "alerts",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": true,
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT count(\"pid\") FROM \"alerts\".\"alert\" WHERE $timeFilter  AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database/ GROUP BY time($interval) fill(none)",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "current",
+          "alias": "active:current",
           "groupBy": [
             {
               "params": [
                 "$__interval"
               ],
               "type": "time"
+            },
+            {
+              "params": [
+                "db"
+              ],
+              "type": "tag"
             },
             {
               "params": [
@@ -471,6 +439,8 @@
           "measurement": "CurrentActiveTransactions",
           "orderByTime": "ASC",
           "policy": "default",
+          "query": "SELECT mean(\"raw\") FROM \"CurrentActiveTransactions\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"db\" fill(null)",
+          "rawQuery": true,
           "refId": "C",
           "resultFormat": "time_series",
           "select": [
@@ -502,7 +472,7 @@
           ]
         },
         {
-          "alias": "on TE",
+          "alias": "processing:average",
           "groupBy": [
             {
               "params": [
@@ -527,7 +497,7 @@
           "measurement": "SqlListenerSqlProcTime",
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(X) FROM (SELECT mean(\"value\") as X FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction') AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /$host$/) AND $timeFilter GROUP BY time($__interval), \"host\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
+          "query": "SELECT SUM(X) FROM (SELECT mean(\"value\") as X FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction') AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /$host$/) AND $timeFilter GROUP BY time($__interval), \"startid\" fill(null)) WHERE $timeFilter GROUP BY time($__interval)",
           "rawQuery": true,
           "refId": "D",
           "resultFormat": "time_series",
@@ -647,7 +617,7 @@
       },
       "paceLength": 10,
       "percentage": true,
-      "pluginVersion": "7.3.2",
+      "pluginVersion": "7.4.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -827,7 +797,7 @@
     }
   ],
   "refresh": "30s",
-  "schemaVersion": 26,
+  "schemaVersion": 27,
   "style": "dark",
   "tags": [
     "overview"
@@ -843,6 +813,7 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
+        "description": null,
         "error": null,
         "hide": 0,
         "label": "interval",
@@ -939,6 +910,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": false,
@@ -970,6 +942,7 @@
         },
         "datasource": "nuodb",
         "definition": "",
+        "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -1022,5 +995,5 @@
   "timezone": "",
   "title": "NuoDB Overview",
   "uid": null,
-  "version": 9
+  "version": 2
 }

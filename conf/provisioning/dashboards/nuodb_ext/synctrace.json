@@ -204,7 +204,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:156",
-          "format": "µs",
+          "format": "\u00b5s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -502,7 +502,7 @@
       "yaxes": [
         {
           "$$hashKey": "object:156",
-          "format": "µs",
+          "format": "\u00b5s",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -841,5 +841,5 @@
   "timezone": "",
   "title": "Sync Trace",
   "uid": null,
-  "version": 2
+  "version": 1
 }
