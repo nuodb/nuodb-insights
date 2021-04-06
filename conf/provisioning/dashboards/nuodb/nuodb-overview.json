@@ -77,7 +77,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "nuodb",
       "description": "The left y-axis is for the stack bar graph that shows relative (in terms of cores) breakdown of where processing time is being spent.  The right y-axis and grey shadow area graph is an indication of the total number of cores available by all selected TEs.",
       "fieldConfig": {
         "defaults": {
