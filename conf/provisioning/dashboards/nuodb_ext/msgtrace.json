@@ -46,7 +46,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "nuodb_internal",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -63,7 +63,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$nuodb_internal",
+      "datasource": "nuodb_internal",
       "description": "Wall clock time spent process messages from other nodes in the  database chorus.   metrics are collected every 30 seconds,  so max bar size should be 30 sec.",
       "fieldConfig": {
         "defaults": {
@@ -217,7 +217,7 @@
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "nuodb_internal",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -234,7 +234,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$nuodb_internal",
+      "datasource": "nuodb_internal",
       "description": "Average time to process a message from the other node.",
       "fieldConfig": {
         "defaults": {
@@ -381,7 +381,7 @@
     },
     {
       "collapsed": false,
-      "datasource": "${DS_NUODB}",
+      "datasource": "nuodb_internal",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -399,7 +399,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$nuodb_internal",
+      "datasource": "nuodb_internal",
       "description": "Number of messages processed from other node in database chorus.",
       "fieldConfig": {
         "defaults": {
@@ -671,32 +671,13 @@
         "useTags": false
       },
       {
-        "current": {
-          "selected": false,
-          "text": "nuodb_internal",
-          "value": "nuodb_internal"
-        },
-        "error": null,
-        "hide": 2,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "nuodb_internal",
-        "options": [],
-        "query": "influxdb",
-        "refresh": 1,
-        "regex": "nuodb_internal",
-        "skipUrlSync": false,
-        "type": "datasource"
-      },
-      {
         "allValue": null,
         "current": {
           "selected": false,
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "$nuodb_internal",
+        "datasource": "nuodb_internal",
         "error": null,
         "hide": 0,
         "includeAll": true,
@@ -723,7 +704,7 @@
           "text": [],
           "value": []
         },
-        "datasource": "$nuodb_internal",
+        "datasource": "nuodb_internal",
         "definition": "",
         "error": null,
         "hide": 0,
@@ -754,7 +735,7 @@
             "$__all"
           ]
         },
-        "datasource": "$nuodb_internal",
+        "datasource": "nuodb_internal",
         "error": null,
         "hide": 0,
         "includeAll": true,

@@ -211,7 +211,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#73BF69"
       ],
-      "datasource": null,
+      "datasource": "nuodb",
       "description": "Current number of running Storage Manager processes in the NuoDB domain.",
       "fieldConfig": {
         "defaults": {
@@ -937,7 +937,7 @@
       "bars": false,
       "dashLength": 10,
       "dashes": false,
-      "datasource": null,
+      "datasource": "nuodb",
       "fieldConfig": {
         "defaults": {
           "custom": {},

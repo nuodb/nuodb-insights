@@ -63,7 +63,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": "nuodb_internal",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -81,7 +81,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$nuodb_internal",
+      "datasource": "nuodb_internal",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -231,7 +231,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$nuodb_internal",
+      "datasource": "nuodb_internal",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -380,7 +380,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "$nuodb_internal",
+      "datasource": "nuodb_internal",
       "fieldConfig": {
         "defaults": {
           "custom": {},
@@ -534,25 +534,6 @@
   "templating": {
     "list": [
       {
-        "current": {
-          "selected": false,
-          "text": "nuodb_internal",
-          "value": "nuodb_internal"
-        },
-        "error": null,
-        "hide": 2,
-        "includeAll": false,
-        "label": null,
-        "multi": false,
-        "name": "nuodb_internal",
-        "options": [],
-        "query": "influxdb",
-        "refresh": 1,
-        "regex": "nuodb_internal",
-        "skipUrlSync": false,
-        "type": "datasource"
-      },
-      {
         "auto": true,
         "auto_count": "50",
         "auto_min": "30s",
@@ -642,10 +623,10 @@
         "allValue": null,
         "current": {
           "selected": false,
-          "text": "DIRK",
-          "value": "DIRK"
+          "text": "",
+          "value": ""
         },
-        "datasource": "$nuodb_internal",
+        "datasource": "nuodb_internal",
         "definition": "",
         "error": null,
         "hide": 0,
@@ -673,7 +654,7 @@
           "text": [],
           "value": []
         },
-        "datasource": "$nuodb_internal",
+        "datasource": "nuodb_internal",
         "definition": "",
         "error": null,
         "hide": 0,
@@ -700,7 +681,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "$nuodb_internal",
+        "datasource": "nuodb_internal",
         "definition": "",
         "error": null,
         "hide": 0,
@@ -727,7 +708,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "$nuodb_internal",
+        "datasource": "nuodb_internal",
         "definition": "SHOW TAG VALUES  FROM \"nuodb_synctrace\" WITH KEY = \"sync_trace_metric\" WHERE \"dbname\" =~ /^$database$/",
         "error": null,
         "hide": 0,
