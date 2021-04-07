@@ -75,7 +75,7 @@ Once all docker images are running successfully, NuoDB performance can be visual
 ```
 docker pull nuodb/nuodb-ce:latest
 docker pull nuodb/nuodb-collector:latest
-docker pull influxdb:latest
+docker pull influxdb:1.8
 docker pull grafana/grafana:latest
 ```
 
@@ -101,7 +101,7 @@ docker run -d --name influxdb \
       -p 8086:8086 \
       -p 8082:8082 \
       -v $PWD/deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh \
-      influxdb:latest
+      influxdb:1.8
 ```
 
 As the final step, start Grafana with the NuoDB dashboards.
