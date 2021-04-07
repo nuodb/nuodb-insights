@@ -28,7 +28,20 @@ func startAndScaleYCSB(t *testing.T, namespaceName string, options *helm.Options
 			ycsbNrReplicas = replicas
 		}
 	}
+
+	testlib.AddDiagnosticTeardown(testlib.TEARDOWN_YCSB, t, func() {
+		options := k8s.NewKubectlOptions("", "", namespaceName)
+		_ = k8s.RunKubectlE(t, options, "describe", "replicationcontroller", YCSB_CONTROLLER_NAME)
+	})
+
 	testlib.AwaitNrReplicasScheduled(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
+
+	testlib.AddDiagnosticTeardown(testlib.TEARDOWN_YCSB, t, func() {
+		options := k8s.NewKubectlOptions("", "", namespaceName)
+		podName := testlib.GetPodName(t, namespaceName, YCSB_CONTROLLER_NAME)
+		_ = k8s.RunKubectlE(t, options, "describe", "pod", podName)
+	})
+
 	testlib.AwaitNrReplicasReady(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
 }
 
@@ -159,7 +172,7 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 		},
 	}, namespaceName)
 	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
-	
+
 	// Start YCSB Load Generator
 	startAndScaleYCSB(t, namespaceName, &options)
 	waitTime := 60*time.Second
