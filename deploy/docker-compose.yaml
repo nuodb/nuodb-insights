@@ -10,7 +10,7 @@ services:
     image: nuodb/nuodb-ce:latest
     hostname: sm
     environment:
-      NUOCMD_API_SERVER: https://nuoadmin1:8888
+      NUOCMD_API_SERVER: nuoadmin1:8888
     depends_on:
       - nuoadmin1
     command: [ "nuodocker", "start", "sm", "--db-name", "hockey", "--server-id", "nuoadmin1", "--dba-user", "dba", "--dba-password", "goalie" ]
@@ -18,7 +18,7 @@ services:
     image: nuodb/nuodb-ce:latest
     hostname: te
     environment:
-      NUOCMD_API_SERVER: https://nuoadmin1:8888
+      NUOCMD_API_SERVER: nuoadmin1:8888
     depends_on:
       - nuoadmin1
       - sm
