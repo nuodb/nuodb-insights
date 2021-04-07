@@ -19,7 +19,7 @@ import (
 
 const YCSB_CONTROLLER_NAME = "ycsb-load"
 
-func runYcsbForDurationAndScaleDown(t *testing.T, namespaceName string, options *helm.Options, delay time.Duration) {
+func startAndScaleYCSB(t *testing.T, namespaceName string, options *helm.Options) {
 	testlib.StartYCSBWorkload(t, namespaceName, options)
 	ycsbNrReplicas := 1
 	if options.SetValues["ycsb.replicas"] != "" {
@@ -30,11 +30,6 @@ func runYcsbForDurationAndScaleDown(t *testing.T, namespaceName string, options 
 	}
 	testlib.AwaitNrReplicasScheduled(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
 	testlib.AwaitNrReplicasReady(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
-	time.Sleep(delay)
-	kubectlOptions := k8s.NewKubectlOptions("", "", namespaceName)
-	// Ignore the error as at the time of execution, the controller may be removed by the test tear down
-	k8s.RunKubectlE(t, kubectlOptions, "scale", "replicationcontroller", YCSB_CONTROLLER_NAME, "--replicas=0")
-	t.Log("YCSB workload stopped")
 }
 
 func checkMetricPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string,
@@ -151,62 +146,67 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 	}
 	InjectNuoDBHelmChartsVersion(t, &options)
 
+	// Start Database
 	adminReleaseName, namespaceName := testlib.StartAdmin(t, &options, 1, "")
 	admin0 := fmt.Sprintf("%s-nuodb-cluster0-0", adminReleaseName)
 	testlib.StartDatabase(t, namespaceName, admin0, &options)
+
+	// Start Insights
 	helmChartReleaseName, _ := StartInsights(t, &helm.Options{
 		SetValues: map[string]string{
 			// Disable Grafana as we don't use it in this test
 			"grafana.enabled": "false",
 		},
 	}, namespaceName)
-	// Let YCSB run for 60 sec and scale the pod down to 0
-	go runYcsbForDurationAndScaleDown(t, namespaceName, &options, 60*time.Second)
-
 	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
+	
+	// Start YCSB Load Generator
+	startAndScaleYCSB(t, namespaceName, &options)
+	waitTime := 60*time.Second
+	time.Sleep(waitTime) // give some time to YCSB
 
 	t.Run("verifyNuoDBMetricsStored", func(t *testing.T) {
 		// Verify 6 out of 190+ measurements
 		verifyMeasurementsPresent(t, namespaceName, influxPodName, "nuodb",
-			[]string{"Objects", "SqlListenerThrottleTime", "CurrentCommittedTransactions", "PercentCpuTime", "ChairmanMigration", "Summary.CPU"}, 60*time.Second)
+			[]string{"Objects", "SqlListenerThrottleTime", "CurrentCommittedTransactions", "PercentCpuTime", "ChairmanMigration", "Summary.CPU"}, waitTime)
 		// Objects measurement has unit type 1 (MONITOR_COUNT)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Objects", "demo", "raw", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Objects", "demo", "rate", 60*time.Second)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Objects", "demo", "raw", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Objects", "demo", "rate", waitTime)
 
 		// SqlListenerThrottleTime measurement has unit type 2 (MONITOR_MILLISECOND)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "SqlListenerThrottleTime", "demo", "raw", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "SqlListenerThrottleTime", "demo", "value", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "SqlListenerThrottleTime", "demo", "normvalue", 60*time.Second)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "SqlListenerThrottleTime", "demo", "raw", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "SqlListenerThrottleTime", "demo", "value", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "SqlListenerThrottleTime", "demo", "normvalue", waitTime)
 
 		// No measurements have unit type 3 (MONITOR_STATE)
 
 		// CurrentCommittedTransactions measurement has unit type 4 (MONITOR_NUMBER)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "CurrentCommittedTransactions", "demo", "raw", 60*time.Second)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "CurrentCommittedTransactions", "demo", "raw", waitTime)
 
 		// PercentCpuTime measurement has unit type 5 (MONITOR_PERCENT)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "raw", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "norm", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "ncores", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "idle", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "nidle", 60*time.Second)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "raw", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "norm", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "ncores", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "idle", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "PercentCpuTime", "demo", "nidle", waitTime)
 
 		// Measurements with unit type 6 (MONITOR_IDENTIFIER) are not stored
 
 		// ChairmanMigration measurement has unit type 6 (MONITOR_DELTA)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "ChairmanMigration", "demo", "raw", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "ChairmanMigration", "demo", "rate", 60*time.Second)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "ChairmanMigration", "demo", "raw", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "ChairmanMigration", "demo", "rate", waitTime)
 
 		// Summary measurement are calculated based on other measurement values
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Summary.CPU", "demo", "raw", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Summary.CPU", "demo", "value", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Summary.CPU", "demo", "normvalue", 60*time.Second)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Summary.CPU", "demo", "raw", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Summary.CPU", "demo", "value", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb", "Summary.CPU", "demo", "normvalue", waitTime)
 	})
 
 	t.Run("verifyNuoDBInternalMetricsStored", func(t *testing.T) {
 		verifyMeasurementsPresent(t, namespaceName, influxPodName, "nuodb_internal",
-			[]string{"nuodb_msgtrace", "nuodb_thread", "nuodb_synctrace"}, 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb_internal", "nuodb_msgtrace", "demo", "maxStallTime", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb_internal", "nuodb_thread", "demo", "stime", 60*time.Second)
-		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb_internal", "nuodb_synctrace", "demo", "numLocks", 60*time.Second)
+			[]string{"nuodb_msgtrace", "nuodb_thread", "nuodb_synctrace"}, waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb_internal", "nuodb_msgtrace", "demo", "maxStallTime", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb_internal", "nuodb_thread", "demo", "stime", waitTime)
+		verifyEngineMetricsPresent(t, namespaceName, influxPodName, "nuodb_internal", "nuodb_synctrace", "demo", "numLocks", waitTime)
 	})
 }
