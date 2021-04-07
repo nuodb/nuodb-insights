@@ -39,7 +39,7 @@ services:
       - influxdb
     environment:
       INFLUXURL: http://influxdb:8086
-      NUOCMD_API_SERVER: https://nuoadmin1:8888
+      NUOCMD_API_SERVER: nuoadmin1:8888
       NUOCD_HOSTNAME: sm
     pid: 'service:sm'
   nuocd-te:
@@ -50,7 +50,7 @@ services:
       - influxdb
     environment:
       INFLUXURL: http://influxdb:8086
-      NUOCMD_API_SERVER: https://nuoadmin1:8888
+      NUOCMD_API_SERVER: nuoadmin1:8888
       NUOCD_HOSTNAME: te
     pid: 'service:te'
   grafana:
