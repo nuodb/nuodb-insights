@@ -29,20 +29,27 @@ func startAndScaleYCSB(t *testing.T, namespaceName string, options *helm.Options
 		}
 	}
 
-	testlib.AddDiagnosticTeardown(testlib.TEARDOWN_YCSB, t, func() {
-		options := k8s.NewKubectlOptions("", "", namespaceName)
-		_ = k8s.RunKubectlE(t, options, "describe", "replicationcontroller", YCSB_CONTROLLER_NAME)
-	})
+	if ycsbNrReplicas > 0 {
+		kubectlOptions := k8s.NewKubectlOptions("", "", namespaceName)
 
-	testlib.AwaitNrReplicasScheduled(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
+		testlib.AddDiagnosticTeardown(testlib.TEARDOWN_YCSB, t, func() {
+			_ = k8s.RunKubectlE(t, kubectlOptions, "describe", "replicationcontroller", YCSB_CONTROLLER_NAME)
+		})
 
-	testlib.AddDiagnosticTeardown(testlib.TEARDOWN_YCSB, t, func() {
-		options := k8s.NewKubectlOptions("", "", namespaceName)
+		testlib.AwaitNrReplicasScheduled(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
+
+		// find at least 1 YCSB pod
 		podName := testlib.GetPodName(t, namespaceName, YCSB_CONTROLLER_NAME)
-		_ = k8s.RunKubectlE(t, options, "describe", "pod", podName)
-	})
 
-	testlib.AwaitNrReplicasReady(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
+		testlib.AddDiagnosticTeardown(testlib.TEARDOWN_YCSB, t, func() {
+			_ = k8s.RunKubectlE(t, kubectlOptions, "describe", "pod", podName)
+		})
+
+		testlib.AwaitPodUp(t, namespaceName, podName, 300*time.Second)
+
+		// wait for any other replicas to come up
+		testlib.AwaitNrReplicasReady(t, namespaceName, YCSB_CONTROLLER_NAME, ycsbNrReplicas)
+	}
 }
 
 func checkMetricPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string,
