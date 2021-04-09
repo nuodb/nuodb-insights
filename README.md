@@ -21,6 +21,8 @@
 # NuoDB Insights Page Outline
 [Introduction](#Introduction)
 
+[Requirements](#Requirements)
+
 [QuickStart in Docker using Docker Compose](#Quickstart-in-docker-using-docker-compose)
 
 [Setup Manually in Docker using Docker Run](#Setup-manually-in-docker-using-docker-run)
@@ -32,6 +34,15 @@
 ## Introduction
 
 NuoDB Insights is a visual monitor tool that aids NuoDB practitioners in monitoring NuoDB database health, resource consumption, and application workload processed in real-time and historically using an intuitive graphical interface. It can be installed at database startup or after. It also installs locally on the same nodes/hosts your database runs and supports all NuoDB database deployment environments: Kubernetes, Docker, and physical host / Virtual Machine environments. 
+
+## Requirements
+
+| Dependency | Description & version                                 |
+|-----------|--------------------------------------------------------|
+| [NuoDB](https://nuodb.com/) | A distributed SQL database. 4.0 or newer |
+| [NuoDB Collector](https://github.com/nuodb/nuodb-collector)   | The stats collector daemon. 1.1.0 or newer |
+| [InfluxDB](https://portal.influxdata.com/downloads/)    | Time-series database. Only version 1.X is supported. Recommended 1.8 or newer.  |
+| [Grafana](https://grafana.com/grafana/download)    | Dashboards visualization. 7.0.0 or newer |
 
 ## QuickStart in Docker using Docker Compose
 
