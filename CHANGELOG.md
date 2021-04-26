@@ -1,15 +1,17 @@
 # Changelog
 
-## [1.1.0](https://github.com/nuodb/nuodb-insights/tree/1.1.0) (2021-04-05)
+## [1.1.0](https://github.com/nuodb/nuodb-insights/tree/1.1.0) (2021-04-26)
 
 [Full Changelog](https://github.com/nuodb/nuodb-insights/compare/v1.0.0...1.1.0)
 
 **Implemented enhancements:**
 
 - Annotation now based upon database name tag [\#22](https://github.com/nuodb/nuodb-insights/issues/22)
-- Enhanced dashboard descriptions and help texts [\#20](https://github.com/nuodb/nuodb-insights/pull/20) ([butson](https://github.com/butson))
+- Updated the sample Docker compose file to work with NuoDB 4.2. [\#24](https://github.com/nuodb/nuodb-insights/pull/24) ([mkysel](https://github.com/mkysel))
+- Changed the datasource configuration to not use the default datasource which was assumed to be "nuodb". [\#23](https://github.com/nuodb/nuodb-insights/pull/23) ([butson](https://github.com/butson))
+- Enhanced the dashboard descriptions and help text. [\#20](https://github.com/nuodb/nuodb-insights/pull/20) ([butson](https://github.com/butson))
 - Updated Grafana version to 6.6.0 and clarified Helm 3 requirements [\#19](https://github.com/nuodb/nuodb-insights/pull/19) ([butson](https://github.com/butson))
-- Changed default time window to last 30 minutes and set default refresh rate to 30s [\#18](https://github.com/nuodb/nuodb-insights/pull/18) ([butson](https://github.com/butson))
+- Updated the default Grafana time window to last 30 minutes and set the default screen refresh rate to 30s [\#18](https://github.com/nuodb/nuodb-insights/pull/18) ([butson](https://github.com/butson))
 - Added interval to all NuoDB dashboards to control graph visualization when using large time windows [\#16](https://github.com/nuodb/nuodb-insights/pull/16) ([butson](https://github.com/butson))
 - Changed grafana.overrideNamespace to grafana.namespaceOverride Helm value setting [\#13](https://github.com/nuodb/nuodb-insights/pull/13) ([sivanov-nuodb](https://github.com/sivanov-nuodb))
 
