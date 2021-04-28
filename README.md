@@ -87,7 +87,7 @@ Once all docker images are running successfully, NuoDB performance can be visual
 docker pull nuodb/nuodb-ce:latest
 docker pull nuodb/nuodb-collector:latest
 docker pull influxdb:1.8
-docker pull grafana/grafana:latest
+docker pull grafana/grafana:7.5.4
 ```
 
 ### Get NuoDB Insights
@@ -122,7 +122,7 @@ docker run -d --name grafana \
       -p 3000:3000 \
       --env INFLUX_HOST=influxdb \
       -v $PWD/conf/provisioning:/etc/grafana/provisioning \
-      grafana/grafana:latest
+      grafana/grafana:7.5.4
 ```
 
 You can now start your NuoDB database with the NuoDB Collector.
