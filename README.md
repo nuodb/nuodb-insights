@@ -42,7 +42,7 @@ NuoDB Insights is a visual monitor tool that aids NuoDB practitioners in monitor
 | [NuoDB](https://nuodb.com/) | A distributed SQL database. 4.0 or newer |
 | [NuoDB Collector](https://github.com/nuodb/nuodb-collector)   | The stats collector daemon. 1.1.0 or newer |
 | [InfluxDB](https://portal.influxdata.com/downloads/)    | Time-series database. Only version 1.X is supported. NuoDB recommends version 1.8 or later.  |
-| [Grafana](https://grafana.com/grafana/download)    | Dashboards visualization. 7.0.0 or newer |
+| [Grafana](https://grafana.com/grafana/download)    | Dashboards visualization. Only version 7.X is supported. NuoDB recommends version 7.5.4 or later. |
 
 ## QuickStart in Docker using Docker Compose
 
