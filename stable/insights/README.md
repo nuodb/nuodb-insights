@@ -29,6 +29,7 @@ All configurable parameters for each top-level scope are detailed below, organiz
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
 | `enabled` | Enable the 3rd party Grafana Installation | `true` |
+| `image.tag` | Version of Grafana | `7.5.4` |
 
 For a complete list of configuration variables supported by the 3-rd party chart refer to [Grafana Helm Chart](https://github.com/grafana/helm-charts/tree/main/charts/grafana).
 By default, if the grafana chart is enabled a sidecar is created to collect the dashboards and datasource configmaps.
@@ -39,6 +40,7 @@ The dashboards will be deployed to grafana in `/var/lib/grafana/dashboards/nuodb
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
 | `enabled` | Enable the 3rd party InfluxDB Installation | `true` |
+| `image.tag` | Version of InfluxDB | `1.8` |
 | `host` | InfluxDB FQDN in case it is installed in different namespace | `nil` |
 | `port` | InfluxDB port in case it is installed in different namespace | `8086` |
 
