@@ -77,7 +77,10 @@ docker-compose -f deploy/docker-compose.yaml down
 
 If you already have a NuoDB database running, and you only need to start NuoDB insights, run the `deploy/monitor-stack.yaml` file instead.
 
-Once all docker images are running successfully, NuoDB performance can be visualized by navigating to the [NuoDB Insights - NuoDB Ops System Overview](http://localhost:3000/d/000000004/nuodb-ops-system-overview), and start exploring the NuoDB dashboards. The default password in Grafana is `admin:admin`.
+Once all components have been installed, NuoDB performance can be visualized by navigating to the NuoDB Insights WebUI dashboard available at http://<hostgrafana>:3000, where `<hostgrafana>` is the host that the Grafana server was started on.
+From this login screen, enter the default username and password combination for Grafana which is `admin/admin`.
+You will then be prompted to create a new password.
+Once logged into the interface, browse the available Dashboards and select the "NuoDB Ops System Overview" to get started!
 
 ## Setup manually in Docker using Docker Run
 
