@@ -1,5 +1,7 @@
 grafana:
   enabled: true
+  image:
+    tag: 7.5.4
   # For complete list of configuration options for  
   # grafana see the documentation @ https://github.com/grafana/helm-charts/tree/main/charts/grafana.
   # sidecar setup here is for custom dashboards and datasource for nuocd pushing metrics
@@ -20,6 +22,8 @@ grafana:
 
 influxdb:
   enabled: true
+  image:
+    tag: 1.8
   # For complete list of configuration options for  
   # influxdb see the documentation @ https://github.com/influxdata/helm-charts/tree/master/charts/influxdb
   # the initScript here is to initialize a database for metrics from NuoDB Collector.
