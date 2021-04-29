@@ -177,8 +177,8 @@ env $(cat /etc/default/influxdb | xargs) influxd -config /etc/influxdb/influxdb.
 On a host in your NuoDB domain, install Grafana and configure it to use the NuoDB-Insights dashboards.
 
 ```
-wget https://dl.grafana.com/enterprise/release/grafana-enterprise-7.5.4-1.x86_64.rpm
-sudo yum install grafana-enterprise-7.5.4-1.x86_64.rpm
+wget https://dl.grafana.com/oss/release/grafana-7.5.4-1.x86_64.rpm
+sudo yum install grafana-7.5.4-1.x86_64.rpm
 
 git clone https://github.com/nuodb/nuodb-insights.git
 sudo rm -rf /etc/grafana/provisioning
