@@ -54,7 +54,7 @@ services:
       NUOCD_HOSTNAME: te
     pid: 'service:te'
   grafana:
-    image: grafana/grafana:latest
+    image: grafana/grafana:7.5.4
     depends_on:
       - influxdb
     environment:

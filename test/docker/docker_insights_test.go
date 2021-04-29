@@ -37,7 +37,7 @@ func TestDockerInsightsInstallSmall(t *testing.T) {
 
 	assert.EqualValues(t, 2, len(containers))
 	assert.True(t, containersContainImage(t, containers, "influxdb:1.8"))
-	assert.True(t, containersContainImage(t, containers, "grafana/grafana:latest"))
+	assert.True(t, containersContainImage(t, containers, "grafana/grafana:7.5.4"))
 
 }
 
@@ -58,6 +58,6 @@ func TestDockerInsightsInstallComplete(t *testing.T) {
 
 	assert.EqualValues(t, 8, len(containers))
 	assert.True(t, containersContainImage(t, containers, "influxdb:1.8"), "Influx container not found")
-	assert.True(t, containersContainImage(t, containers, "grafana/grafana:latest"), "Grafana container not found")
+	assert.True(t, containersContainImage(t, containers, "grafana/grafana:7.5.4"), "Grafana container not found")
 
 }
