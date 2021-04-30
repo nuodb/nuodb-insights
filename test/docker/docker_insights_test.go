@@ -56,7 +56,7 @@ func TestDockerInsightsInstallComplete(t *testing.T) {
 	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{})
 	require.NoError(t, err)
 
-	assert.EqualValues(t, 8, len(containers))
+	assert.EqualValues(t, 10, len(containers))
 	assert.True(t, containersContainImage(t, containers, "influxdb:1.8"), "Influx container not found")
 	assert.True(t, containersContainImage(t, containers, "grafana/grafana:7.5.4"), "Grafana container not found")
 
