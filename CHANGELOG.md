@@ -1,6 +1,6 @@
 # Changelog
 
-## [1.1.0](https://github.com/nuodb/nuodb-insights/tree/1.1.0) (2021-04-26)
+## [1.1.0](https://github.com/nuodb/nuodb-insights/tree/1.1.0) (2021-04-30)
 
 [Full Changelog](https://github.com/nuodb/nuodb-insights/compare/v1.0.0...1.1.0)
 
@@ -14,6 +14,10 @@
 - Updated the default Grafana time window to last 30 minutes and set the default screen refresh rate to 30s [\#18](https://github.com/nuodb/nuodb-insights/pull/18) ([butson](https://github.com/butson))
 - Added interval to all NuoDB dashboards to control graph visualization when using large time windows [\#16](https://github.com/nuodb/nuodb-insights/pull/16) ([butson](https://github.com/butson))
 - Changed grafana.overrideNamespace to grafana.namespaceOverride Helm value setting [\#13](https://github.com/nuodb/nuodb-insights/pull/13) ([sivanov-nuodb](https://github.com/sivanov-nuodb))
+
+**Fixed bugs:**
+
+- Corrected an issue on the "NuoDB Ops System Overview" databoard that resulted in the incorrect display of TE counts and aggregate TPS values in the Aggregate TPS panel. [\#29](https://github.com/nuodb/nuodb-insights/pull/29) ([butson](https://github.com/butson))
 
 **Removed:**
 
