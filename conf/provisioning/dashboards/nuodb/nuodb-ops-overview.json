@@ -1061,7 +1061,7 @@
           "hide": false,
           "orderByTime": "ASC",
           "policy": "default",
-          "query": "SELECT SUM(\"V\") FROM (SELECT mean(\"value\") AS \"V\" FROM \"Milliseconds\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"/^$pid$/\" fill(none)) GROUP BY time($__interval) fill(none)",
+          "query": "SELECT SUM(\"V\") FROM (SELECT mean(\"value\") AS \"V\" FROM \"Milliseconds\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY time($__interval), \"$pid\" fill(none)) GROUP BY time($__interval) fill(none)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
