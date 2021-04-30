@@ -52,7 +52,7 @@ This repository contains a Docker Compose file (`deploy/docker-compose.yml`) whi
 - 1 Admin Processes
 - 1 Storage Manager
 - 2 Transaction Engines
-- 2 NuoDB Collector containers (1 for SM, 1 for TE)
+- 3 NuoDB Collector containers (1 for SM, 2 for TE)
 - 1 InfluxDB database
 - 1 Grafana and NuoDB Dashboards
 - 1 YCSB Demo Workload generator

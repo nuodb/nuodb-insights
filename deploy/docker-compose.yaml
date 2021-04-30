@@ -14,9 +14,18 @@ services:
     depends_on:
       - nuoadmin1
     command: [ "nuodocker", "start", "sm", "--db-name", "hockey", "--server-id", "nuoadmin1", "--dba-user", "dba", "--dba-password", "goalie" ]
-  te:
+  te1:
     image: nuodb/nuodb-ce:latest
-    hostname: te
+    hostname: te1
+    environment:
+      NUOCMD_API_SERVER: nuoadmin1:8888
+    depends_on:
+      - nuoadmin1
+      - sm
+    command: [ "nuodocker", "start", "te", "--db-name", "hockey", "--server-id", "nuoadmin1" ]
+  te2:
+    image: nuodb/nuodb-ce:latest
+    hostname: te2
     environment:
       NUOCMD_API_SERVER: nuoadmin1:8888
     depends_on:
@@ -42,7 +51,7 @@ services:
       NUOCMD_API_SERVER: nuoadmin1:8888
       NUOCD_HOSTNAME: sm
     pid: 'service:sm'
-  nuocd-te:
+  nuocd-te1:
     image: nuodb/nuodb-collector:latest
     depends_on:
       - nuoadmin1
@@ -51,8 +60,19 @@ services:
     environment:
       INFLUXURL: http://influxdb:8086
       NUOCMD_API_SERVER: nuoadmin1:8888
-      NUOCD_HOSTNAME: te
-    pid: 'service:te'
+      NUOCD_HOSTNAME: te1
+    pid: 'service:te1'
+  nuocd-te2:
+    image: nuodb/nuodb-collector:latest
+    depends_on:
+      - nuoadmin1
+      - sm
+      - influxdb
+    environment:
+      INFLUXURL: http://influxdb:8086
+      NUOCMD_API_SERVER: nuoadmin1:8888
+      NUOCD_HOSTNAME: te2
+    pid: 'service:te2'
   grafana:
     image: grafana/grafana:7.5.4
     depends_on:
@@ -66,7 +86,8 @@ services:
   ycsb-demo:
     image: nuodb/ycsb:latest
     depends_on:
-      - te
+      - te1
+      - te2
     environment:
       PEER_ADDRESS: nuoadmin1
       DB_NAME: hockey
