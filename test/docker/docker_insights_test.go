@@ -20,6 +20,12 @@ func containersContainImage(t *testing.T, containers []types.Container, expected
 	return false
 }
 
+func assertInfluxContainsDatabases(t *testing.T, composeFile string) {
+	listings := GetDatabaseListings(t, composeFile, INFLUXDB_CONTAINER_NAME)
+	assert.Contains(t, listings, "nuodb")
+	assert.Contains(t, listings, "nuodb_internal")
+}
+
 func TestDockerInsightsInstallSmall(t *testing.T) {
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	require.NoError(t, err)
@@ -45,19 +51,25 @@ func TestDockerInsightsInstallComplete(t *testing.T) {
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	require.NoError(t, err)
 
+	composeFile := "deploy/docker-compose.yaml"
+
 	options :=  docker.Options {
 		WorkingDir: "../..",
 	}
-	docker.RunDockerCompose(t, &options, "-f", "deploy/docker-compose.yaml", "up", "-d")
+	docker.RunDockerCompose(t, &options, "-f", composeFile, "up", "-d")
 	defer func() {
-		docker.RunDockerCompose(t, &options, "-f", "deploy/docker-compose.yaml", "down")
+		docker.RunDockerCompose(t, &options, "-f", composeFile, "down")
 	}()
 
 	containers, err := cli.ContainerList(context.Background(), types.ContainerListOptions{})
 	require.NoError(t, err)
 
 	assert.EqualValues(t, 10, len(containers))
-	assert.True(t, containersContainImage(t, containers, "influxdb:1.8"), "Influx container not found")
-	assert.True(t, containersContainImage(t, containers, "grafana/grafana:7.5.4"), "Grafana container not found")
+	assert.True(t, containersContainImage(t, containers, INFLUX_VERSION), "Influx container not found")
+	assert.True(t, containersContainImage(t, containers, GRAFANA_VERSION), "Grafana container not found")
 
+	AwaitAdminUp(t, composeFile, ADMIN_CONTAINER_NAME)
+	AwaitDatabaseUp(t, composeFile, ADMIN_CONTAINER_NAME)
+
+	assertInfluxContainsDatabases(t, composeFile)
 }
