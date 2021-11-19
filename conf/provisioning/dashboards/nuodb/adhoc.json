@@ -2012,35 +2012,28 @@
         "useTags": false
       },
       {
-        "allValue": ".*",
+        "allValue": null,
         "current": {
           "selected": false,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "text": "",
+          "value": ""
         },
-        "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+        "datasource": null,
+	"definition": "show tag values from \"Milliseconds\" with key in (\"domain\")  where \"domain\" = '${__user.login}'",
+        "description": null,
         "error": null,
         "hide": 2,
-        "includeAll": true,
-        "label": null,
-        "multi": true,
-        "name": "database",
+        "includeAll": false,
+        "label": "Domain",
+        "multi": false,
+        "name": "domain",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+	"query": "show tag values from \"Milliseconds\" with key in (\"domain\")  where \"domain\" = '${__user.login}'",
         "refresh": 1,
-        "regex": ".*",
-        "skipUrlSync": false,
-        "sort": 1,
-        "tagValuesQuery": "",
-        "tags": [],
-        "tagsQuery": "",
-        "type": "query",
-        "useTags": false
+        "regex": "",
+        "skipUrlSync": true,
+        "sort": 0,
+        "type": "query"
       },
       {
         "allValue": ".*",
@@ -2054,17 +2047,50 @@
           ]
         },
         "datasource": "nuodb",
-        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"db\" =~ /$database$/ ",
+        "definition": "",
+        "description": null,
         "error": null,
-        "hide": 2,
+        "hide": 0,
         "includeAll": true,
-        "label": null,
+        "label": "Database",
+        "multi": true,
+        "name": "database",
+        "options": [],
+        "query": "select distinct(\"db\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND domain =~ /^$domain$/ GROUP BY \"db\")",
+        "refresh": 2,
+        "regex": ".*",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "nuodb",
+        "definition": "select distinct(\"host\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND domain =~ /^$domain$/ AND db =~ /^$database$/ GROUP BY \"host\")",
+        "description": null,
+        "error": null,
+        "hide": 0,
+        "includeAll": true,
+        "label": "Host",
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"db\" =~ /$database$/ ",
-        "refresh": 1,
-        "regex": ".*",
+        "query": "select distinct(\"host\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND domain =~ /^$domain$/ AND db =~ /^$database$/ GROUP BY \"host\")",
+        "refresh": 2,
+        "regex": "",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
