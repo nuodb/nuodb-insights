@@ -100,15 +100,20 @@ cd nuodb-insights
 ```
 
 ### Starting NuoDB Insights
-First, you should create a Docker network.
-All NuoDB components should be running on this network.
+1. Create a Docker network.
+
+   All NuoDB components should be running on this network.
+
+      
 ```
 docker network create nuodb-net
-```
+ ```
 
-Second, start an InfluxDB server.
-We will use an init script that will generate the required databases.
+2. Start an InfluxDB server.
 
+   Use an init script to generate the required databases.
+
+     
 ```
 docker run -d --name influxdb \
       --network nuodb-net \
@@ -117,8 +122,12 @@ docker run -d --name influxdb \
       -v $PWD/deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh \
       influxdb:1.8
 ```
+      
+      
+   NOTE: NuoDB Collector only supports InfluxDB version 1.X.
 
-As the final step, start Grafana with the NuoDB dashboards.
+3. Start Grafana with the NuoDB dashboards.
+
 ```
 docker run -d --name grafana \
       --network nuodb-net \
@@ -128,10 +137,12 @@ docker run -d --name grafana \
       grafana/grafana:7.5.4
 ```
 
-You can now start your NuoDB database with the NuoDB Collector.
-For more info on how to start your database, please refer to the [NuoDB Docker Blog Part I](https://nuodb.com/blog/deploy-nuodb-database-docker-containers-part-i) and the readme for [NuoDB Collector](https://github.com/nuodb/nuodb-collector).
+4. If you haven't already, [start your NuoDB database](https://nuodb.com/blog/deploy-nuodb-database-docker-containers-part-i).
+      
+5. Start the [NuoDB Collector](https://github.com/nuodb/nuodb-collector) daemons for each NuoDB database process.      
 
-You can use the example NuoDB YCSB workload generator to explore the various dashboards.
+   Use the example NuoDB YCSB workload generator given below to explore the various dashboards.
+
 ```
 docker run -dit --name ycsb1 \
       --hostname ycsb1 \
