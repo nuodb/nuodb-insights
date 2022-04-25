@@ -111,9 +111,7 @@ docker network create nuodb-net
 
 2. Start an InfluxDB server.
 
-   Use an init script to generate the required databases.
-
-     
+   Use the provided init script to generate the required databases.
 ```
 docker run -d --name influxdb \
       --network nuodb-net \
@@ -122,9 +120,11 @@ docker run -d --name influxdb \
       -v $PWD/deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh \
       influxdb:1.8
 ```
-      
-      
-   NOTE: NuoDB Collector only supports InfluxDB version 1.X.
+<ul>NOTE: NuoDB Collector only supports InfluxDB version 1.X.
+   </ul>
+     
+
+
 
 3. Start Grafana with the NuoDB dashboards.
 
@@ -141,7 +141,7 @@ docker run -d --name grafana \
       
 5. Start the [NuoDB Collector](https://github.com/nuodb/nuodb-collector) daemons for each NuoDB database process.      
 
-   Use the example NuoDB YCSB workload generator given below to explore the various dashboards.
+6. Start the NuoDB YCSB workload generator to explore the various dashboards with live monitoring data.
 
 ```
 docker run -dit --name ycsb1 \
