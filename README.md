@@ -137,7 +137,7 @@ docker run -d --name grafana \
       grafana/grafana:7.5.4
 ```
 
-4. If you haven't already, [start your NuoDB database](https://nuodb.com/blog/deploy-nuodb-database-docker-containers-part-i).
+4. If you haven't already, [start your NuoDB database](https://doc.nuodb.com/nuodb/latest/quick-start-guide/docker/).
       
 5. Start the [NuoDB Collector](https://github.com/nuodb/nuodb-collector) daemons for each NuoDB database process.      
 
