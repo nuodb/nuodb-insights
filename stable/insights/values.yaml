@@ -53,3 +53,4 @@ insights:
     # enabled: false - will not setup NuoDB Collector configuration; set to false when starting grafana and insights
     #                  only - say in a different namespace.
     enabled: true
+    extensions: {}
