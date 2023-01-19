@@ -21,11 +21,11 @@ dependencies:
   tags:
     - backend
   repository: https://grafana.github.io/helm-charts
-  version: 6.6.0
+  version: 6.50.0
 - name: influxdb
   condition: influxdb.enabled
   tags:
     - backend
   repository: https://helm.influxdata.com/
-  version: 4.9.14
+  version: 4.12.0
 

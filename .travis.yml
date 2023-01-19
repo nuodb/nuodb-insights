@@ -11,22 +11,23 @@ go:
 services:
   - docker
 
+vm:
+  size: large
+
 env:
   jobs:
     - TEST_SUITE=Kubernetes
     - TEST_SUITE=docker
   global:
-    - HELM_VERSION="v3.2.4"
-    - DEP_VERSION=0.5.4
-    - KUBERNETES_VERSION=1.15.0
-    - MINIKUBE_VERSION=1.2.0
-    - MINISHIFT_VERSION=1.34.2
+    - HELM_VERSION="v3.10.2"
+    - KUBERNETES_VERSION=1.25.2
+    - MINIKUBE_VERSION=1.28.0
     - MINIKUBE_WANTUPDATENOTIFICATION=false
     - MINIKUBE_WANTREPORTERRORPROMPT=false
     - MINIKUBE_HOME=$HOME
     - CHANGE_MINIKUBE_NONE_USER=true
     - KUBECONFIG=$HOME/.kube/config
-    - NUODB_HELM_CHARTS_VERSION="3.0.0"
+    - NUODB_HELM_CHARTS_VERSION="3.5.0"
 
 before_install:
   - |

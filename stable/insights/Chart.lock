@@ -1,0 +1,9 @@
+dependencies:
+- name: grafana
+  repository: https://grafana.github.io/helm-charts
+  version: 6.50.0
+- name: influxdb
+  repository: https://helm.influxdata.com/
+  version: 4.12.0
+digest: sha256:f3e167e714f976e99e2fd1c560233a54eb60bb74661452224dbed6e876c509b5
+generated: "2023-01-18T10:09:40.484674-05:00"
