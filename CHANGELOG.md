@@ -4,7 +4,7 @@
 
 **Implemented enhancements:**
 
-- [4353ac7](https://github.com/nuodb/nuodb-insights/commit/4353ac7) Bump versions of dependencies to support Kubernetes 1.25 ([\#37](https://github.com/nuodb/nuodb-insights/pull/37))
+- [4353ac7](https://github.com/nuodb/nuodb-insights/commit/4353ac7) Update version dependencies to support Kubernetes 1.25 ([\#37](https://github.com/nuodb/nuodb-insights/pull/37))
 - [801d7ed](https://github.com/nuodb/nuodb-insights/commit/801d7ed) Update github.com/gogo/protobuf to address vulnerability ([\#33](https://github.com/nuodb/nuodb-insights/pull/33))
 
 ## [v1.1.0](https://github.com/nuodb/nuodb-insights/tree/v1.1.0) (2021-04-30)
