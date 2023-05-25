@@ -6,19 +6,21 @@ set -ex
 
 if [[ $TEST_SUITE = "Kubernetes"  ]]; then
 
-  wget https://get.helm.sh/helm-"${HELM_VERSION}"-linux-amd64.tar.gz -O /tmp/helm.tar.gz
-  tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1 && chmod +x /tmp/helm && sudo mv /tmp/helm /usr/local/bin
-
-  # conntrack is required by Minikube
+  # Download kubectl, which is a requirement for using minikube.
   curl -Lo kubectl https://storage.googleapis.com/kubernetes-release/release/v"${KUBERNETES_VERSION}"/bin/linux/amd64/kubectl && chmod +x kubectl && sudo mv kubectl /usr/local/bin/
 
   sudo apt-get update
 
+  # Make test dir to store test results
   mkdir -p "${TEST_RESULTS}"
 
+  # conntrack is required by Minikube
   sudo apt-get install -y conntrack
 
   curl -sSL https://github.com/gotestyourself/gotestsum/releases/download/v"${GOTESTSUM_VERSION}"/gotestsum_"${GOTESTSUM_VERSION}"_linux_amd64.tar.gz | sudo tar -xz -C /usr/local/bin gotestsum
+
+  wget https://get.helm.sh/helm-"${HELM_VERSION}"-linux-amd64.tar.gz -O /tmp/helm.tar.gz
+  tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1 && chmod +x /tmp/helm && sudo mv /tmp/helm /usr/local/bin
 
   # Download minikube.
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/v"${MINIKUBE_VERSION}"/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
