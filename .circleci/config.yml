@@ -23,7 +23,6 @@ commands:
             fi
             sudo apt-get update
             sudo apt-get install socat
-            chmod a+x scripts/ci/*.sh
             scripts/ci/install_deps.sh
           environment:
             GOTESTSUM_VERSION: "1.7.0"
