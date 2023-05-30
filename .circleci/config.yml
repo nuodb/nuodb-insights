@@ -30,9 +30,8 @@ commands:
             TEST_RESULTS: /tmp/test-results
 
       - run:
-          name: Run script
+          name: Run tests
           command: |
-            chmod a+x scripts/ci/*.sh
             scripts/ci/determine_and_run_tests.sh
       - store_test_results:
           path: /tmp/test-results
