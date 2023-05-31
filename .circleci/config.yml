@@ -19,7 +19,7 @@ commands:
             MODIFIED_FILES=$(git diff --name-only "${BASE_COMMIT}")
             if ! echo "${MODIFIED_FILES}" | grep -qvE '(\.md$)'; then
               echo "Only docs were updated, stopping build process."
-              exit
+              circleci-agent step halt
             fi
             sudo apt-get update
             sudo apt-get install socat
@@ -66,6 +66,3 @@ workflows:
     jobs:
       - build_n_run_docker
       - build_n_run_kub
-
-
-
