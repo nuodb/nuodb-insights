@@ -3,6 +3,7 @@
 # exit when any command fails
 set -ex
 
+curl -sSL https://github.com/gotestyourself/gotestsum/releases/download/v"${GOTESTSUM_VERSION}"/gotestsum_"${GOTESTSUM_VERSION}"_linux_amd64.tar.gz | sudo tar -xz -C /usr/local/bin gotestsum
 
 if [[ $TEST_SUITE = "Kubernetes"  ]]; then
 
@@ -17,8 +18,6 @@ if [[ $TEST_SUITE = "Kubernetes"  ]]; then
   # conntrack is required by Minikube
   sudo apt-get install -y conntrack
 
-  curl -sSL https://github.com/gotestyourself/gotestsum/releases/download/v"${GOTESTSUM_VERSION}"/gotestsum_"${GOTESTSUM_VERSION}"_linux_amd64.tar.gz | sudo tar -xz -C /usr/local/bin gotestsum
-
   wget https://get.helm.sh/helm-"${HELM_VERSION}"-linux-amd64.tar.gz -O /tmp/helm.tar.gz
   tar xzf /tmp/helm.tar.gz -C /tmp --strip-components=1 && chmod +x /tmp/helm && sudo mv /tmp/helm /usr/local/bin
 
@@ -26,9 +25,22 @@ if [[ $TEST_SUITE = "Kubernetes"  ]]; then
   curl -Lo minikube https://storage.googleapis.com/minikube/releases/v"${MINIKUBE_VERSION}"/minikube-linux-amd64 && chmod +x minikube && sudo mv minikube /usr/local/bin/
 
   # start minikube
-  minikube start --vm-driver=none --kubernetes-version=v"${KUBERNETES_VERSION}"
+  minikube start --vm-driver=docker --kubernetes-version=v"${KUBERNETES_VERSION}" --cpus=max --memory=max
   minikube status
   kubectl cluster-info
+  cat <<EOF > valuesInject.yaml
+database:
+  te:
+    resources:
+      limits:
+        cpu: 2
+        memory: 2Gi
+  sm:
+    resources:
+      limits:
+        cpu: 2
+        memory: 2Gi
+EOF
 
   helm version
 
@@ -60,7 +72,6 @@ if [[ $TEST_SUITE = "Kubernetes"  ]]; then
   fi
 
 elif [[ $TEST_SUITE = "docker"  ]]; then
-  curl -sSL https://github.com/gotestyourself/gotestsum/releases/download/v"${GOTESTSUM_VERSION}"/gotestsum_"${GOTESTSUM_VERSION}"_linux_amd64.tar.gz | sudo tar -xz -C /usr/local/bin gotestsum
   mkdir -p "${TEST_RESULTS}"
   docker version
   docker-compose version
