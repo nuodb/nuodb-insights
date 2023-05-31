@@ -26,7 +26,6 @@ commands:
             scripts/ci/install_deps.sh
           environment:
             GOTESTSUM_VERSION: "1.7.0"
-            TEST_RESULTS: /tmp/test-results
 
       - run:
           name: Run tests
@@ -43,6 +42,7 @@ jobs:
       - nuodb_insight_command
     environment:
       TEST_SUITE: docker
+      TEST_RESULTS: /tmp/test-results
     resource_class: medium
 
   build_n_run_kub:
@@ -57,6 +57,7 @@ jobs:
       MINIKUBE_VERSION: "1.25.2"
       KUBERNETES_VERSION: "1.21.3"
       NUODB_HELM_CHARTS_VERSION: "3.5.0"
+      TEST_RESULTS: /tmp/test-results
 
 # Orchestrate jobs using workflows
 # See: https://circleci.com/docs/configuration-reference/#workflows
