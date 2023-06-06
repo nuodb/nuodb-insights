@@ -226,3 +226,4 @@ Once all components have been set up, NuoDB performance can be visualized by nav
 ## Status of the Project
 
 This project is still under active development, so you might run into [issues](https://github.com/nuodb/nuodb-insights/issues). If you do, please don't be shy about letting us know, or better yet, contribute a fix or feature.
+
