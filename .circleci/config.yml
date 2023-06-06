@@ -33,8 +33,6 @@ commands:
             scripts/ci/determine_and_run_tests.sh
       - store_test_results:
           path: /tmp/test-results
-      - store_artifacts:
-          path: ./results/
 
 jobs:
   build_n_run_docker:
@@ -52,6 +50,8 @@ jobs:
       image: ubuntu-2004:202201-02
     steps:
       - nuodb_insight_command
+      - store_artifacts:
+          path: ./results/
     resource_class: medium
     environment:
       TEST_SUITE: Kubernetes
