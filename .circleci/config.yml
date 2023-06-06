@@ -33,6 +33,8 @@ commands:
             scripts/ci/determine_and_run_tests.sh
       - store_test_results:
           path: /tmp/test-results
+      - store_artifacts:
+          path: ./results/
 
 jobs:
   build_n_run_docker:
