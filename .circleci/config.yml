@@ -15,7 +15,7 @@ commands:
       - run:
           name: Install Dependencies
           command: |
-            BASE_COMMIT=$(git merge-base HEAD circleci-project-setup)
+            BASE_COMMIT=$(git merge-base HEAD master)
             MODIFIED_FILES=$(git diff --name-only "${BASE_COMMIT}")
             if ! echo "${MODIFIED_FILES}" | grep -qvE '(\.md$)'; then
               echo "Only docs were updated, stopping build process."
