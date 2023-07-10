@@ -1,19 +1,38 @@
-version: '3'
+version: "3"
 services:
   nuoadmin1:
     image: nuodb/nuodb-ce:latest
     environment:
       NUODB_DOMAIN_ENTRYPOINT: nuoadmin1
+      INFLUXDB_TOKEN: quickbrownfoxjumpsoveralazydog
+      INFLUXDB_BUCKET: telegraf
+      INFLUXDB_ORG: nuodb
     hostname: nuoadmin1
-    command: [ "nuoadmin" ]
+    command: ["nuoadmin"]
+    healthcheck: 
+      test: ["CMD-SHELL", "nuocmd check servers --check-connected --check-converged --timeout 300"]
   sm:
     image: nuodb/nuodb-ce:latest
     hostname: sm
     environment:
       NUOCMD_API_SERVER: nuoadmin1:8888
     depends_on:
-      - nuoadmin1
-    command: [ "nuodocker", "start", "sm", "--db-name", "hockey", "--server-id", "nuoadmin1", "--dba-user", "dba", "--dba-password", "goalie" ]
+      nuoadmin1 :
+        condition: service_healthy
+    command:
+      [
+        "nuodocker",
+        "start",
+        "sm",
+        "--db-name",
+        "hockey",
+        "--server-id",
+        "nuoadmin1",
+        "--dba-user",
+        "dba",
+        "--dba-password",
+        "goalie",
+      ]
   te1:
     image: nuodb/nuodb-ce:latest
     hostname: te1
@@ -22,7 +41,16 @@ services:
     depends_on:
       - nuoadmin1
       - sm
-    command: [ "nuodocker", "start", "te", "--db-name", "hockey", "--server-id", "nuoadmin1" ]
+    command:
+      [
+        "nuodocker",
+        "start",
+        "te",
+        "--db-name",
+        "hockey",
+        "--server-id",
+        "nuoadmin1",
+      ]
   te2:
     image: nuodb/nuodb-ce:latest
     hostname: te2
@@ -31,15 +59,33 @@ services:
     depends_on:
       - nuoadmin1
       - sm
-    command: [ "nuodocker", "start", "te", "--db-name", "hockey", "--server-id", "nuoadmin1" ]
+    command:
+      [
+        "nuodocker",
+        "start",
+        "te",
+        "--db-name",
+        "hockey",
+        "--server-id",
+        "nuoadmin1",
+      ]
   influxdb:
-    image: influxdb:1.8
+    image: influxdb:2.7
     ports:
       # The API for InfluxDB is served on port 8086
       - "8086:8086"
       - "8082:8082"
     volumes:
       - ../deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
+    environment:
+      DOCKER_INFLUXDB_INIT_MODE: $INFLUXDB_MODE
+      DOCKER_INFLUXDB_INIT_USERNAME: $INFLUXDB_USERNAME
+      DOCKER_INFLUXDB_INIT_PASSWORD: $INFLUXDB_PASSWORD
+      DOCKER_INFLUXDB_INIT_ORG: $INFLUXDB_ORG
+      DOCKER_INFLUXDB_INIT_RETENTION: $INFLUXDB_RETENTION
+      DOCKER_INFLUXDB_INIT_BUCKET: $INFLUXDB_BUCKET
+      DOCKER_INFLUXDB_INIT_ADMIN_TOKEN: $INFLUXDB_ADMIN_TOKEN
+
   nuocd-sm:
     image: nuodb/nuodb-collector:latest
     depends_on:
@@ -47,10 +93,13 @@ services:
       - sm
       - influxdb
     environment:
-      INFLUXURL: http://influxdb:8086
+      INFLUXURL: $INFLUXDB_URL
       NUOCMD_API_SERVER: nuoadmin1:8888
       NUOCD_HOSTNAME: sm
-    pid: 'service:sm'
+      INFLUXDB_TOKEN: $INFLUXDB_ADMIN_TOKEN
+      INFLUXDB_BUCKET: $INFLUXDB_BUCKET
+      INFLUXDB_ORG: $INFLUXDB_ORG
+    pid: "service:sm"
   nuocd-te1:
     image: nuodb/nuodb-collector:latest
     depends_on:
@@ -58,10 +107,13 @@ services:
       - sm
       - influxdb
     environment:
-      INFLUXURL: http://influxdb:8086
+      INFLUXURL: $INFLUXDB_URL
       NUOCMD_API_SERVER: nuoadmin1:8888
       NUOCD_HOSTNAME: te1
-    pid: 'service:te1'
+      INFLUXDB_TOKEN: $INFLUXDB_ADMIN_TOKEN
+      INFLUXDB_BUCKET: $INFLUXDB_BUCKET
+      INFLUXDB_ORG: $INFLUXDB_ORG
+    pid: "service:te1"
   nuocd-te2:
     image: nuodb/nuodb-collector:latest
     depends_on:
@@ -69,16 +121,20 @@ services:
       - sm
       - influxdb
     environment:
-      INFLUXURL: http://influxdb:8086
+      INFLUXURL: $INFLUXDB_URL
       NUOCMD_API_SERVER: nuoadmin1:8888
       NUOCD_HOSTNAME: te2
-    pid: 'service:te2'
+      INFLUXDB_TOKEN: $INFLUXDB_ADMIN_TOKEN
+      INFLUXDB_BUCKET: $INFLUXDB_BUCKET
+      INFLUXDB_ORG: $INFLUXDB_ORG}
+    pid: "service:te2"
   grafana:
-    image: grafana/grafana:7.5.4
+    image: grafana/grafana:9.5.6
     depends_on:
       - influxdb
     environment:
-      - INFLUX_HOST=influxdb
+      INFLUX_HOST: influxdb
+      INFLUXDB_TOKEN: $INFLUXDB_ADMIN_TOKEN
     volumes:
       - ../conf/provisioning:/etc/grafana/provisioning
     ports:

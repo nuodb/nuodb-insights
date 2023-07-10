@@ -25,11 +25,11 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "insights.influxdb_url" -}}
-{{- $context  := dict "Values" .Values.influxdb "Chart" (dict "Name" "influxdb") "Release" .Release  "Capabilities" .Capabilities -}}
-{{- if and .Values.influxdb .Values.influxdb.enabled -}}
+{{- $context  := dict "Values" .Values.influxdb2 "Chart" (dict "Name" "influxdb") "Release" .Release  "Capabilities" .Capabilities -}}
+{{- if and .Values.influxdb2 .Values.influxdb2.enabled -}}
 {{-   $influxdb := include "influxdb.fullname" $context -}}
-{{-   $hostname := default (printf "%s.%s.svc" $influxdb .Release.Namespace) .Values.influxdb.host -}}
-{{-   $port     := default 8086 .Values.influxdb.port -}}
+{{-   $hostname := default (printf "%s.%s.svc" $influxdb .Release.Namespace) .Values.influxdb2.host -}}
+{{-   $port     := default 8086 .Values.influxdb2.port -}}
 {{-   printf "http://%s:%s" $hostname (toString $port) -}}
 {{- else -}}
 {{-   $hostname := default (printf "influxdb.%s.svc" .Release.Namespace) .Values.influxdb.host -}}
@@ -75,4 +75,28 @@ grafana is grafana location is overridded.
 {{-  else -}}
 {{    default "!" .Values.grafana.namespaceOverride }}
 {{-  end }}
+{{- end -}}
+
+{{/*
+InfluxDB token value    
+*/}}
+
+{{- define "insights.influxdb_token" -}}
+{{- $name := (printf "%s-auth" (include "influxdb.fullname" .) ) }}
+{{- $secret := (lookup "v1" "Secret" .Release.Namespace $name )}}
+{{- if $secret }}
+{{- printf "%s" index $secret "data" "admin-token"}}
+{{- else if .Values.influxdb2.adminUser.token }}
+{{- printf "%s" .Values.influxdb2.adminUser.token }}
+{{- else }}
+{{- printf "%s" (randAlphaNum 32 | b64enc | quote) }}
+{{- end }}
+{{- end -}}
+
+
+{{/*
+InfluxDB org value
+*/}}
+{{- define "insights.influxdb_org" -}}
+{{- printf "%s" .Values.influxdb2.adminUser.organization }}
 {{- end -}}

@@ -21,7 +21,6 @@ data:
         url: {{ include "insights.influxdb_url" $ }}
         password: ''
         user: ''
-        database: '{{ get $val "database" }}'
         basicAuth: false
         basicAuthUser: ''
         basicAuthPassword: ''
@@ -29,7 +28,11 @@ data:
         isDefault: {{ and (hasKey $val "isDefault") (get $val "isDefault") }}
         jsonData:
           timeInterval: '{{ get $val "timeInterval" }}'
-        secureJsonData: {}
+          dbName: '{{ get $val "database" }}'
+          httpMode: GET
+          httpHeaderName1: 'Authorization'
+        secureJsonData: 
+          httpHeaderValue1: 'Token {{ include "insights.influxdb_token" $ }}'
         version: 1
         editable: true
 {{ end }}

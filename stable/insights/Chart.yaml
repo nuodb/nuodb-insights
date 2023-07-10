@@ -3,29 +3,28 @@ name: insights
 version: 1.2.0
 description: NuoDB Insights - Visual Monitoring
 keywords:
-- monitoring
-- nuodb
-- influxdb
-- grafana
+  - monitoring
+  - nuodb
+  - influxdb
+  - grafana
 home: https://github.com/nuodb/nuodb-insights/stable/insights
 maintainers:
-- name: NuoDB
-  email: support@nuodb.com
+  - name: NuoDB
+    email: support@nuodb.com
 engine: gotpl
 icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
 type: application
 appVersion: 4.1.0
 dependencies:
-- name: grafana
-  condition: grafana.enabled
-  tags:
-    - backend
-  repository: https://grafana.github.io/helm-charts
-  version: 6.50.0
-- name: influxdb
-  condition: influxdb.enabled
-  tags:
-    - backend
-  repository: https://helm.influxdata.com/
-  version: 4.12.0
-
+  - name: grafana
+    condition: grafana.enabled
+    tags:
+      - backend
+    repository: https://grafana.github.io/helm-charts
+    version: 6.58.4
+  - name: influxdb2
+    condition: influxdb.enabled
+    tags:
+      - backend
+    repository: https://helm.influxdata.com/
+    version: 2.1.1

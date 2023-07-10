@@ -41,8 +41,8 @@ NuoDB Insights is a visual monitor tool that aids NuoDB practitioners in monitor
 |-----------|--------------------------------------------------------|
 | [NuoDB](https://nuodb.com/) | A distributed SQL database. 4.0 or newer |
 | [NuoDB Collector](https://github.com/nuodb/nuodb-collector)   | The stats collector daemon. 1.1.0 or newer |
-| [InfluxDB](https://portal.influxdata.com/downloads/)    | Time-series database. Only version 1.X is supported. NuoDB recommends version 1.8 or later.  |
-| [Grafana](https://grafana.com/grafana/download)    | Dashboards visualization. Only version 7.X is supported. NuoDB recommends version 7.5.4 or later. |
+| [InfluxDB](https://portal.influxdata.com/downloads/)    | Time-series database. Only version 2.X is supported. NuoDB recommends version 2.7 or later.  |
+| [Grafana](https://grafana.com/grafana/download)    | Dashboards visualization. NuoDB recommends version 7.5.4 or later. |
 
 ## QuickStart in Docker using Docker Compose
 
@@ -89,8 +89,8 @@ Once logged into the interface, browse the available Dashboards and select the "
 ```
 docker pull nuodb/nuodb-ce:latest
 docker pull nuodb/nuodb-collector:latest
-docker pull influxdb:1.8
-docker pull grafana/grafana:7.5.4
+docker pull influxdb:2.7
+docker pull grafana/grafana:9.5.6
 ```
 
 ### Get NuoDB Insights
@@ -117,11 +117,16 @@ docker run -d --name influxdb \
       --network nuodb-net \
       -p 8086:8086 \
       -p 8082:8082 \
+      --env DOCKER_INFLUXDB_INIT_MODE= setup \
+      --env DOCKER_INFLUXDB_INIT_USERNAME= <your_username> \
+      --env DOCKER_INFLUXDB_INIT_PASSWORD= <your_password> \
+      --env DOCKER_INFLUXDB_INIT_ORG= <name_of_organization> \
+      --env DOCKER_INFLUXDB_INIT_RETENTION= <bucket_retention_time> \
+      --env DOCKER_INFLUXDB_INIT_BUCKET= <influxdb_bucket_name> \
+      --env DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= <your_influxdb_token> \
       -v $PWD/deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh \
-      influxdb:1.8
+      influxdb:2.7
 ```
-<ul>NOTE: NuoDB Collector only supports InfluxDB version 1.X.
-   </ul>
      
 
 
@@ -133,8 +138,9 @@ docker run -d --name grafana \
       --network nuodb-net \
       -p 3000:3000 \
       --env INFLUX_HOST=influxdb \
+      --env INFLUXDB_TOKEN=<influxdb_token> \
       -v $PWD/conf/provisioning:/etc/grafana/provisioning \
-      grafana/grafana:7.5.4
+      grafana/grafana:9.5.6
 ```
 
 4. If you haven't already, [start your NuoDB database](https://doc.nuodb.com/nuodb/latest/quick-start-guide/docker/).
@@ -175,9 +181,9 @@ The following installation instructions apply to Red Hat and CentOS Linux distri
 Install `InfluxDB` on the same host machine referred to by `<hostinflux>` in the [NuoDB Collector](https://github.com/nuodb/nuodb-collector#configuration) installation instructions.
 
 ```
-wget https://dl.influxdata.com/influxdb/releases/influxdb-1.8.3.x86_64.rpm
-sudo yum localinstall -y influxdb-1.8.3.x86_64.rpm
-sudo systemctl start influxdb
+wget https://dl.influxdata.com/influxdb/releases/influxdb2-2.7.0.x86_64.rpm
+sudo yum localinstall influxdb2-2.7.0.x86_64.rpm
+sudo service influxdb start
 ```
 
 If not using `systemd`, `InfluxDB` can be started directly as follows:
@@ -191,8 +197,8 @@ env $(cat /etc/default/influxdb | xargs) influxd -config /etc/influxdb/influxdb.
 On a host in your NuoDB domain, install Grafana and configure it to use the NuoDB-Insights dashboards.
 
 ```
-wget https://dl.grafana.com/oss/release/grafana-7.5.4-1.x86_64.rpm
-sudo yum install grafana-7.5.4-1.x86_64.rpm
+wget https://dl.grafana.com/enterprise/release/grafana-enterprise_9.5.6_amd64.deb
+sudo yum install -y https://dl.grafana.com/enterprise/release/grafana-enterprise-9.5.6-1.x86_64.rpm
 
 git clone https://github.com/nuodb/nuodb-insights.git
 sudo rm -rf /etc/grafana/provisioning

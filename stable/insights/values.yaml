@@ -1,39 +1,49 @@
 grafana:
   enabled: true
   image:
-    tag: 7.5.4
-  # For complete list of configuration options for  
+    tag: 9.5.6
+  # For complete list of configuration options for
   # grafana see the documentation @ https://github.com/grafana/helm-charts/tree/main/charts/grafana.
   # sidecar setup here is for custom dashboards and datasource for nuocd pushing metrics
   # to influx
   sidecar:
     dashboards:
       enabled: true
-      label: 'grafana_dashboard'
+      label: "grafana_dashboard"
       searchNamespace: null
       folder: "/var/lib/grafana/dashboards"
       provider:
-        name:           "nuodb"
+        name: "nuodb"
         allowUiUpdates: true
     datasources:
       enabled: true
-      label: 'grafana_datasource'
+      label: "grafana_datasource"
       searchNamespace: null
 
-influxdb:
+influxdb2:
   enabled: true
   image:
-    tag: 1.8
-  # For complete list of configuration options for  
+    tag: 2.7
+  adminUser:
+    password: "helloworld"
+    bucket: "telegraf"
+    token: "quickbrownfoxjumpsoverlazydog"
+    organization: "nuodb"
+  nameOverride: "influxdb2"
+  service:
+    port: 8086
+  # For complete list of configuration options for
   # influxdb see the documentation @ https://github.com/influxdata/helm-charts/tree/master/charts/influxdb
   # the initScript here is to initialize a database for metrics from NuoDB Collector.
   initScripts:
     enabled: true
     scripts:
       init-nuodb.sh: |+
-        /usr/bin/influx -execute 'CREATE DATABASE nuodb WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'
-        /usr/bin/influx -execute 'CREATE DATABASE nuodb_internal WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'
-    
+        #!/bin/bash
+        set -e
+        influx bucket create --name nuodb --retention 365d
+        influx bucket create --name nuodb_internal --retention 365d
+
 insights:
   grafana:
     # enabled: false - to not load dashboards nor datasources but do start grafana (grafana.enabled: true)

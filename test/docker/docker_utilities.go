@@ -2,8 +2,9 @@ package docker
 
 import (
 	"github.com/gruntwork-io/terratest/modules/docker"
-	"strings"
 	"testing"
+	"fmt"
+	"encoding/json"
 )
 
 func executeCommandInContainer(t *testing.T, composeFile string, containerName string, args ...string) string {
@@ -29,7 +30,17 @@ func AwaitDatabaseUp(t *testing.T, composeFile string, adminContainerName string
 }
 
 func GetDatabaseListings(t *testing.T, composeFile string, influxContainerName string) []string {
-	raw := executeCommandInContainer(t, composeFile, influxContainerName, "influx", "-execute", "show databases")
-	databaseListing := strings.Split(raw, "----")[1]
-	return strings.Split(databaseListing, "\n")
+	raw := executeCommandInContainer(t, composeFile, influxContainerName, "influx", "bucket", "list", "--json")
+	var bucketList []map[string]interface{}
+	var listing []string
+	jsonData := string(raw)
+	err := json.Unmarshal([]byte(jsonData), &bucketList)
+	if err != nil {
+		fmt.Println("Error while decoding data ", err.Error())
+	}
+	for _, bucket := range bucketList {
+		str := bucket["name"].(string)
+		listing = append(listing, str)
+	}
+	return listing
 }

@@ -42,8 +42,8 @@ func TestDockerInsightsInstallSmall(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.EqualValues(t, 2, len(containers))
-	assert.True(t, containersContainImage(t, containers, "influxdb:1.8"))
-	assert.True(t, containersContainImage(t, containers, "grafana/grafana:7.5.4"))
+	assert.True(t, containersContainImage(t, containers, INFLUX_VERSION))
+	assert.True(t, containersContainImage(t, containers, GRAFANA_VERSION))
 
 }
 

@@ -7,31 +7,39 @@ datasources:
   basicAuth: false
   basicAuthPassword: ''
   basicAuthUser: ''
-  database: nuodb
   isDefault: true
-  jsonData: {timeInterval: 10s}
   orgId: 1
   password: ''
-  secureJsonFields: {}
   type: influxdb
   typeLogoUrl: ''
   url: http://${INFLUX_HOST}:8086
   user: ''
   withCredentials: false
+  jsonData:
+    dbName: nuodb
+    httpMode: GET
+    httpHeaderName1: 'Authorization'
+    timeInterval: 10s
+  secureJsonData:
+    httpHeaderValue1: 'Token ${INFLUXDB_TOKEN}'
 - name: nuodb_internal
   access: proxy
   basicAuth: false
   basicAuthPassword: ''
   basicAuthUser: ''
-  database: nuodb_internal
   isDefault: false
-  jsonData: {timeInterval: 30s}
   orgId: 1
   password: ''
-  secureJsonFields: {}
   type: influxdb
   typeLogoUrl: ''
   url: http://${INFLUX_HOST}:8086
   user: ''
   withCredentials: false
+  jsonData:
+    dbName: nuodb_internal
+    httpMode: GET
+    httpHeaderName1: 'Authorization'
+    timeInterval: 30s
+  secureJsonData:
+    httpHeaderValue1: 'Token ${INFLUXDB_TOKEN}'
   

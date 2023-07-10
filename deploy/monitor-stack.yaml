@@ -1,7 +1,7 @@
 version: '3'
 services:
   influxdb:
-    image: influxdb:1.8
+    image: influxdb:2.7
     ports:
       # The API for InfluxDB is served on port 8086
       - "8086:8086"
@@ -9,7 +9,7 @@ services:
     volumes:
       - ../deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh
   grafana:
-    image: grafana/grafana:7.5.4
+    image: grafana/grafana:9.5.6
     depends_on:
       - influxdb
     environment:

@@ -7,7 +7,7 @@
 
 {{/* -- Install influx output plugin, if influx is enabled or influx is referenced. -- */}}
 
-{{- if and .Values.influxdb (or .Values.influxdb.enabled .Values.influxdb.host) -}}
+{{- if and .Values.influxdb2 (or .Values.influxdb2.enabled .Values.influxdb2.host) -}}
 ---
 apiVersion: v1
 kind: ConfigMap
@@ -18,15 +18,12 @@ metadata:
     "nuodb.com/nuocollector-plugin": "insights"
 data:
   influxdb.conf: |-
-    [[ outputs.influxdb ]]
+    [[ outputs.influxdb_v2 ]]
       urls = [ {{ include "insights.influxdb_url" $ | quote }} ]
-      database = "telegraf"
-      database_tag = "db_tag"
-      exclude_database_tag = true
-      ## Retention policy to write to. Empty string writes to the default rp.
-      retention_policy = ""
-      ## Write consistency (clusters only), can be: "any", "one", "quorum", "all"
-      write_consistency = "any"
+      token = {{ include "insights.influxdb_token" $ | quote }}
+      organization = {{ include "insights.influxdb_org" $ | quote }}
+      bucket = "telegraf"
+      bucket_tag = "db_tag"
       ## Write timeout (for the InfluxDB client), formatted as a string.
       ## If not provided, will default to 5s. 0s means no timeout (not recommended).
       timeout = "5s"
