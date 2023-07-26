@@ -21,6 +21,17 @@ providers:
   updateIntervalSeconds: 10 #how often Grafana will scan for changed dashboards
   options:
     path: /etc/grafana/provisioning/dashboards/nuodb_ext
+- name: 'nuodb_client'
+  orgId: 1
+  folder: 'nuodb_client'
+  type: file
+  disableDeletion: false
+  editable: true
+  allowUiUpdates: true
+  updateIntervalSeconds: 10 #how often Grafana will scan for changed dashboards
+  options:
+    path: /etc/grafana/provisioning/dashboards/nuodb_client
+
 
     
 
