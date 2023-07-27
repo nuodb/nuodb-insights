@@ -69,7 +69,9 @@ func checkMetricPresent(t *testing.T, namespace string, influxPodName string, in
 		t.Logf("Unexpected error received from InfluxDB: %s", err)
 		return false
 	}
+	fmt.Println("Output is ", output)
 	lines := strings.Split(output, "\n")
+	fmt.Println("Lines are ", lines)
 	if len(lines) > 1 {
 		// The output format will be `name,time,count`
 		count, err := strconv.Atoi(strings.Split(lines[1], ",")[2])
