@@ -1,0 +1,380 @@
+{
+  "meta": {
+    "type": "db",
+    "canSave": true,
+    "canEdit": true,
+    "canAdmin": true,
+    "canStar": true,
+    "canDelete": true,
+    "slug": "sql-statement-details",
+    "url": "/d/f13dbb76-dc2a-42b9-af72-88700f6857b8/sql-statement-details",
+    "expires": "0001-01-01T00:00:00Z",
+    "created": "2023-07-21T19:49:29Z",
+    "updated": "2023-08-01T12:55:05Z",
+    "updatedBy": "admin",
+    "createdBy": "admin",
+    "version": 17,
+    "hasAcl": false,
+    "isFolder": false,
+    "folderId": 20,
+    "folderUid": "b7c2a563-48a3-426d-be2b-0f9fffbd8a85",
+    "folderTitle": "nuodb_client",
+    "folderUrl": "/dashboards/f/b7c2a563-48a3-426d-be2b-0f9fffbd8a85/nuodb-client",
+    "provisioned": false,
+    "provisionedExternalId": "sql-statement-details.json",
+    "annotationsPermissions": {
+      "dashboard": {
+        "canAdd": true,
+        "canEdit": true,
+        "canDelete": true
+      },
+      "organization": {
+        "canAdd": true,
+        "canEdit": true,
+        "canDelete": true
+      }
+    },
+    "publicDashboardAccessToken": "",
+    "publicDashboardUid": "",
+    "publicDashboardEnabled": false
+  },
+  "dashboard": {
+    "annotations": {
+      "list": [
+        {
+          "$$hashKey": "object:65",
+          "builtIn": 1,
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": true,
+          "iconColor": "rgba(0, 211, 255, 1)",
+          "name": "Annotations & Alerts",
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [],
+            "type": "dashboard"
+          },
+          "type": "dashboard"
+        },
+        {
+          "$$hashKey": "object:2934",
+          "datasource": {
+            "type": "datasource",
+            "uid": "grafana"
+          },
+          "enable": true,
+          "hide": false,
+          "iconColor": "rgba(255, 96, 96, 1)",
+          "limit": 100,
+          "name": "db annotations",
+          "showIn": 0,
+          "tags": [
+            "$database"
+          ],
+          "target": {
+            "limit": 100,
+            "matchAny": false,
+            "tags": [
+              "$database"
+            ],
+            "type": "tags"
+          },
+          "type": "tags"
+        }
+      ]
+    },
+    "description": "NuoDB Summary",
+    "editable": false,
+    "fiscalYearStartMonth": 0,
+    "graphTooltip": 1,
+    "id": 21,
+    "links": [
+      {
+        "asDropdown": true,
+        "icon": "external link",
+        "includeVars": true,
+        "keepTime": true,
+        "tags": [
+          "overview"
+        ],
+        "title": "top views",
+        "type": "dashboards"
+      },
+      {
+        "asDropdown": true,
+        "icon": "external link",
+        "includeVars": true,
+        "keepTime": true,
+        "tags": [
+          "nuodb"
+        ],
+        "title": "nuodb",
+        "type": "dashboards"
+      },
+      {
+        "asDropdown": true,
+        "icon": "external link",
+        "includeVars": false,
+        "keepTime": false,
+        "tags": [
+          "sql"
+        ],
+        "targetBlank": false,
+        "title": "sql",
+        "tooltip": "",
+        "type": "dashboards",
+        "url": ""
+      }
+    ],
+    "liveNow": false,
+    "panels": [
+      {
+        "datasource": {
+          "type": "marcusolsson-json-datasource",
+          "uid": "fb12902f-919a-4aa9-89de-398bdfce52df"
+        },
+        "fieldConfig": {
+          "defaults": {
+            "color": {
+              "fixedColor": "text",
+              "mode": "fixed"
+            },
+            "custom": {
+              "align": "auto",
+              "cellOptions": {
+                "type": "color-text"
+              },
+              "inspect": false
+            },
+            "links": [],
+            "mappings": [],
+            "thresholds": {
+              "mode": "absolute",
+              "steps": [
+                {
+                  "color": "green",
+                  "value": null
+                }
+              ]
+            },
+            "unit": "string"
+          },
+          "overrides": [
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Values"
+              },
+              "properties": [
+                {
+                  "id": "custom.inspect",
+                  "value": true
+                }
+              ]
+            },
+            {
+              "matcher": {
+                "id": "byName",
+                "options": "Field"
+              },
+              "properties": [
+                {
+                  "id": "custom.width",
+                  "value": 265
+                }
+              ]
+            }
+          ]
+        },
+        "gridPos": {
+          "h": 27,
+          "w": 24,
+          "x": 0,
+          "y": 0
+        },
+        "id": 10,
+        "maxPerRow": 2,
+        "options": {
+          "cellHeight": "sm",
+          "footer": {
+            "countRows": false,
+            "fields": "",
+            "reducer": [
+              "sum"
+            ],
+            "show": false
+          },
+          "frameIndex": 1,
+          "showHeader": true,
+          "sortBy": []
+        },
+        "pluginVersion": "10.0.3",
+        "repeat": "host",
+        "repeatDirection": "h",
+        "targets": [
+          {
+            "body": "select * from system.localstatementcache where ID='$id'\n",
+            "cacheDurationSeconds": 0,
+            "datasource": {
+              "type": "marcusolsson-json-datasource",
+              "uid": "fb12902f-919a-4aa9-89de-398bdfce52df"
+            },
+            "fields": [
+              {
+                "jsonPath": "$.columns[*].text",
+                "name": "Field",
+                "type": "string"
+              },
+              {
+                "jsonPath": "$.rows[0][*]",
+                "language": "jsonpath",
+                "name": "Values",
+                "type": "string"
+              }
+            ],
+            "method": "POST",
+            "params": [
+              [
+                "dbname",
+                "$database"
+              ],
+              [
+                "hostname",
+                "$host"
+              ]
+            ],
+            "queryParams": "",
+            "refId": "A",
+            "urlPath": "/query"
+          }
+        ],
+        "title": "Statement Details ($host)",
+        "type": "table"
+      }
+    ],
+    "refresh": "30s",
+    "schemaVersion": 38,
+    "style": "dark",
+    "tags": [],
+    "templating": {
+      "list": [
+        {
+          "allValue": ".*",
+          "current": {
+            "selected": false,
+            "text": "test",
+            "value": "test"
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "definition": "",
+          "hide": 0,
+          "includeAll": false,
+          "label": "Database",
+          "multi": false,
+          "name": "database",
+          "options": [],
+          "query": "select distinct(\"db\") from (select first(raw) from \"Milliseconds\" where $timeFilter GROUP BY \"db\")\n",
+          "refresh": 2,
+          "regex": ".*",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "allValue": ".*",
+          "current": {
+            "selected": true,
+            "text": [
+              "nuoadmin-3.nuodb.internal",
+              "nuoadmin-2.nuodb.internal"
+            ],
+            "value": [
+              "nuoadmin-3.nuodb.internal",
+              "nuoadmin-2.nuodb.internal"
+            ]
+          },
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "definition": "",
+          "hide": 0,
+          "includeAll": true,
+          "label": "Host",
+          "multi": true,
+          "name": "host",
+          "options": [],
+          "query": "select distinct(\"host\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND db =~ /$database$/ AND nodetype = 'Transaction' GROUP BY \"host\")\n",
+          "refresh": 2,
+          "regex": ".*",
+          "skipUrlSync": false,
+          "sort": 0,
+          "tagValuesQuery": "",
+          "tagsQuery": "",
+          "type": "query",
+          "useTags": false
+        },
+        {
+          "current": {},
+          "hide": 2,
+          "label": "id",
+          "name": "id",
+          "options": [
+            {
+              "selected": false,
+              "text": "0",
+              "value": "0"
+            }
+          ],
+          "query": "0",
+          "skipUrlSync": false,
+          "type": "textbox"
+        }
+      ]
+    },
+    "time": {
+      "from": "now-30m",
+      "to": "now"
+    },
+    "timepicker": {
+      "refresh_intervals": [
+        "5s",
+        "10s",
+        "30s",
+        "1m",
+        "5m",
+        "15m",
+        "30m",
+        "1h",
+        "2h",
+        "1d"
+      ],
+      "time_options": [
+        "5m",
+        "15m",
+        "1h",
+        "6h",
+        "12h",
+        "24h",
+        "2d",
+        "7d",
+        "30d"
+      ]
+    },
+    "timezone": "",
+    "title": "Sql Statement Details",
+    "uid": "f13dbb76-dc2a-42b9-af72-88700f6857b8",
+    "version": 17,
+    "weekStart": ""
+  }
+}
