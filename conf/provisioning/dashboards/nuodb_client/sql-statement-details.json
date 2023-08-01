@@ -10,10 +10,10 @@
     "url": "/d/f13dbb76-dc2a-42b9-af72-88700f6857b8/sql-statement-details",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2023-07-21T19:49:29Z",
-    "updated": "2023-07-28T21:34:59Z",
+    "updated": "2023-08-01T12:55:05Z",
     "updatedBy": "admin",
     "createdBy": "admin",
-    "version": 15,
+    "version": 17,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 20,
@@ -192,7 +192,7 @@
         },
         "gridPos": {
           "h": 27,
-          "w": 12,
+          "w": 24,
           "x": 0,
           "y": 0
         },
@@ -217,7 +217,7 @@
         "repeatDirection": "h",
         "targets": [
           {
-            "body": "select * from system.localstatementcache where ID='$id'",
+            "body": "select * from system.localstatementcache where ID='$id'\n",
             "cacheDurationSeconds": 0,
             "datasource": {
               "type": "marcusolsson-json-datasource",
@@ -331,7 +331,7 @@
           "name": "id",
           "options": [
             {
-              "selected": true,
+              "selected": false,
               "text": "0",
               "value": "0"
             }
@@ -374,7 +374,7 @@
     "timezone": "",
     "title": "Sql Statement Details",
     "uid": "f13dbb76-dc2a-42b9-af72-88700f6857b8",
-    "version": 15,
+    "version": 17,
     "weekStart": ""
   }
 }

@@ -10,10 +10,10 @@
     "url": "/d/Cp_9O6C4k/sql-statement-operations",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2023-07-21T15:56:00Z",
-    "updated": "2023-07-29T16:47:41Z",
+    "updated": "2023-08-01T18:58:00Z",
     "updatedBy": "admin",
     "createdBy": "admin",
-    "version": 29,
+    "version": 33,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 20,
@@ -88,7 +88,7 @@
       ]
     },
     "description": "NuoDB Summary",
-    "editable": true,
+    "editable": false,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 1,
     "id": 19,
@@ -259,10 +259,6 @@
                       "targetBlank": false,
                       "title": "Details",
                       "url": "/d/f13dbb76-dc2a-42b9-af72-88700f6857b8/sql-statement-details?var-id=${__data.fields.ID}&${host:queryparam}"
-                    },
-                    {
-                      "title": "Executes",
-                      "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}﻿&var-statement=${__data.fields.ID}&${__url_time_range}"
                     }
                   ]
                 }
@@ -315,19 +311,14 @@
           },
           "frameIndex": 1,
           "showHeader": true,
-          "sortBy": [
-            {
-              "desc": true,
-              "displayName": "NUMEXECUTES"
-            }
-          ]
+          "sortBy": []
         },
         "pluginVersion": "10.0.3",
         "repeat": "host",
         "repeatDirection": "v",
         "targets": [
           {
-            "body": "select LASTEXECUTED\n      ,NUMEXECUTES\n      ,RECORDSRETURNED\n      ,INSERTS\n      ,UPDATES\n      ,DELETIONS\n      ,REPLACES\n      ,SQLSTRING\n      ,ID\n from system.LOCALSTATEMENTCACHE\n where LASTEXECUTED > DATE_SUB(now(), INTERVAL $__interval_ms/1000 second)\n",
+            "body": "select LASTEXECUTED\n      ,NUMEXECUTES\n      ,RECORDSRETURNED\n      ,INSERTS\n      ,UPDATES\n      ,DELETIONS\n      ,REPLACES\n      ,SQLSTRING\n      ,ID\n from system.LOCALSTATEMENTCACHE\n where LASTEXECUTED > DATE_SUB(now(), INTERVAL $__interval_ms/1000 second) and ID is not null\n",
             "cacheDurationSeconds": 0,
             "datasource": {
               "type": "marcusolsson-json-datasource",
@@ -428,7 +419,7 @@
               "value": "$__auto_interval_interval"
             },
             {
-              "selected": false,
+              "selected": true,
               "text": "10s",
               "value": "10s"
             },
@@ -483,7 +474,7 @@
               "value": "1d"
             },
             {
-              "selected": true,
+              "selected": false,
               "text": "7d",
               "value": "7d"
             },
@@ -600,7 +591,7 @@
     "timezone": "",
     "title": "Sql Statement Operations",
     "uid": "Cp_9O6C4k",
-    "version": 29,
+    "version": 33,
     "weekStart": ""
   }
 }

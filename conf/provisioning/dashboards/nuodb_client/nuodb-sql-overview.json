@@ -6,14 +6,14 @@
     "canAdmin": true,
     "canStar": true,
     "canDelete": true,
-    "slug": "sql-overview",
-    "url": "/d/cul4kM9Vz/sql-overview",
+    "slug": "nuodb-sql-overview",
+    "url": "/d/cul4kM9Vz/nuodb-sql-overview",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2023-06-28T15:11:31Z",
-    "updated": "2023-07-31T16:37:45Z",
+    "updated": "2023-08-01T15:24:31Z",
     "updatedBy": "admin",
     "createdBy": "admin",
-    "version": 71,
+    "version": 74,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 20,
@@ -78,7 +78,7 @@
         }
       ]
     },
-    "editable": true,
+    "editable": false,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 1,
     "id": 14,
@@ -3159,7 +3159,7 @@
         "links": [
           {
             "title": "SQL Dashboard",
-            "url": "/d/J9fZNkr4z/sql?${__all_variables}﻿&${__url_time_range}"
+            "url": "/d/J9fZNkr4z/sql?${__all_variables}&${__url_time_range}"
           }
         ],
         "options": {
@@ -5397,7 +5397,7 @@
         "type": "stat"
       }
     ],
-    "refresh": "",
+    "refresh": "10s",
     "schemaVersion": 38,
     "style": "dark",
     "tags": [
@@ -5419,12 +5419,12 @@
           "name": "interval",
           "options": [
             {
-              "selected": true,
+              "selected": false,
               "text": "auto",
               "value": "$__auto_interval_interval"
             },
             {
-              "selected": false,
+              "selected": true,
               "text": "10s",
               "value": "10s"
             },
@@ -5589,9 +5589,9 @@
       ]
     },
     "timezone": "utc",
-    "title": "SQL Overview",
+    "title": "NuoDB SQL Overview",
     "uid": "cul4kM9Vz",
-    "version": 71,
+    "version": 74,
     "weekStart": ""
   }
 }

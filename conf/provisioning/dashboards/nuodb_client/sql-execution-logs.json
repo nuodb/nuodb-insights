@@ -6,14 +6,14 @@
     "canAdmin": true,
     "canStar": true,
     "canDelete": true,
-    "slug": "sql-logs",
-    "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs",
+    "slug": "sql-execution-logs",
+    "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-execution-logs",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2023-07-29T14:51:47Z",
-    "updated": "2023-07-31T18:31:19Z",
+    "updated": "2023-08-01T22:44:06Z",
     "updatedBy": "admin",
     "createdBy": "admin",
-    "version": 7,
+    "version": 14,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 20,
@@ -73,7 +73,7 @@
         }
       ]
     },
-    "description": "NuoDB Summary",
+    "description": "Log of each statement execution",
     "editable": true,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 1,
@@ -100,6 +100,18 @@
         ],
         "title": "nuodb",
         "type": "dashboards"
+      },
+      {
+        "asDropdown": true,
+        "icon": "external link",
+        "includeVars": true,
+        "keepTime": true,
+        "tags": [],
+        "targetBlank": false,
+        "title": "sql",
+        "tooltip": "",
+        "type": "dashboards",
+        "url": ""
       }
     ],
     "liveNow": false,
@@ -353,8 +365,8 @@
       },
       {
         "datasource": {
-          "type": "marcusolsson-json-datasource",
-          "uid": "fb12902f-919a-4aa9-89de-398bdfce52df"
+          "type": "influxdb",
+          "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
         },
         "fieldConfig": {
           "defaults": {
@@ -392,12 +404,11 @@
           "x": 0,
           "y": 6
         },
-        "id": 12,
+        "id": 13,
         "options": {
-          "cellHeight": "md",
+          "cellHeight": "sm",
           "footer": {
             "countRows": false,
-            "enablePagination": false,
             "fields": "",
             "reducer": [
               "sum"
@@ -409,35 +420,59 @@
         "pluginVersion": "10.0.3",
         "targets": [
           {
-            "body": "select sqlstring from system.localstatementcache where ID='$statement'",
-            "cacheDurationSeconds": 0,
             "datasource": {
-              "type": "marcusolsson-json-datasource",
-              "uid": "fb12902f-919a-4aa9-89de-398bdfce52df"
+              "type": "influxdb",
+              "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
             },
-            "fields": [
+            "groupBy": [
               {
-                "jsonPath": "$.rows[*][0]",
-                "name": "sqlstring"
+                "params": [
+                  "sqlstring::tag"
+                ],
+                "type": "tag"
               }
             ],
-            "method": "POST",
-            "params": [
+            "measurement": "nuodb_statements",
+            "orderByTime": "ASC",
+            "policy": "autogen",
+            "refId": "A",
+            "resultFormat": "table",
+            "select": [
               [
-                "dbname",
-                "$database"
-              ],
-              [
-                "hostname",
-                "localhost"
+                {
+                  "params": [
+                    "numexecutes"
+                  ],
+                  "type": "field"
+                },
+                {
+                  "params": [],
+                  "type": "first"
+                }
               ]
             ],
-            "queryParams": "",
-            "refId": "A",
-            "urlPath": "/query"
+            "tags": [
+              {
+                "key": "id::tag",
+                "operator": "=~",
+                "value": "/^$statement$/"
+              }
+            ]
           }
         ],
-        "transparent": true,
+        "transformations": [
+          {
+            "id": "organize",
+            "options": {
+              "excludeByName": {
+                "Time": true,
+                "first": true
+              },
+              "indexByName": {},
+              "renameByName": {}
+            }
+          }
+        ],
         "type": "table"
       },
       {
@@ -533,7 +568,7 @@
             "refId": "A"
           }
         ],
-        "title": "Log Counts",
+        "title": "Statement Execution Counts",
         "type": "timeseries"
       },
       {
@@ -578,7 +613,7 @@
         "type": "logs"
       }
     ],
-    "refresh": false,
+    "refresh": "",
     "schemaVersion": 38,
     "style": "dark",
     "tags": [
@@ -620,12 +655,12 @@
           "name": "interval",
           "options": [
             {
-              "selected": false,
+              "selected": true,
               "text": "auto",
               "value": "$__auto_interval_interval"
             },
             {
-              "selected": true,
+              "selected": false,
               "text": "10s",
               "value": "10s"
             },
@@ -764,20 +799,20 @@
         {
           "current": {
             "selected": false,
-            "text": ".+",
-            "value": ".+"
+            "text": "undefined",
+            "value": "undefined"
           },
           "hide": 0,
           "label": "statement",
           "name": "statement",
           "options": [
             {
-              "selected": false,
-              "text": ".+",
-              "value": ".+"
+              "selected": true,
+              "text": "undefined",
+              "value": "undefined"
             }
           ],
-          "query": ".+",
+          "query": "undefined",
           "skipUrlSync": false,
           "type": "textbox"
         },
@@ -809,7 +844,7 @@
           },
           "description": "regex filter for each line,  use to limit results before logfmt",
           "hide": 0,
-          "label": "filter",
+          "label": "",
           "name": "filter",
           "options": [
             {
@@ -866,9 +901,9 @@
       ]
     },
     "timezone": "",
-    "title": "SQL Logs",
+    "title": "SQL Execution Logs",
     "uid": "c9081118-5230-478d-b6e8-d76614395704",
-    "version": 7,
+    "version": 14,
     "weekStart": ""
   }
 }

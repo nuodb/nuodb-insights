@@ -10,10 +10,10 @@
     "url": "/d/df0d2b01-89ff-4108-bace-32f436204209/nuodb-sql-statements",
     "expires": "0001-01-01T00:00:00Z",
     "created": "2023-07-30T18:45:18Z",
-    "updated": "2023-07-31T18:49:45Z",
+    "updated": "2023-08-01T03:00:41Z",
     "updatedBy": "admin",
     "createdBy": "admin",
-    "version": 53,
+    "version": 56,
     "hasAcl": false,
     "isFolder": false,
     "folderId": 20,
@@ -74,7 +74,7 @@
       ]
     },
     "description": "NuoDB Summary",
-    "editable": true,
+    "editable": false,
     "fiscalYearStartMonth": 0,
     "graphTooltip": 1,
     "id": 35,
@@ -1594,7 +1594,8 @@
                   "mode": "absolute",
                   "steps": [
                     {
-                      "color": "green"
+                      "color": "green",
+                      "value": null
                     },
                     {
                       "color": "red",
@@ -3028,7 +3029,7 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 4,
+          "h": 5,
           "w": 4,
           "x": 0,
           "y": 4
@@ -3044,10 +3045,12 @@
         ],
         "options": {
           "legend": {
-            "calcs": [],
-            "displayMode": "list",
+            "calcs": [
+              "lastNotNull"
+            ],
+            "displayMode": "table",
             "placement": "bottom",
-            "showLegend": false
+            "showLegend": true
           },
           "tooltip": {
             "mode": "single",
@@ -3177,6 +3180,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -3215,7 +3219,7 @@
           ]
         },
         "gridPos": {
-          "h": 4,
+          "h": 5,
           "w": 3,
           "x": 4,
           "y": 4
@@ -3237,12 +3241,12 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
           },
-          "textMode": "auto"
+          "textMode": "value"
         },
         "pluginVersion": "10.0.3",
         "targets": [
@@ -3386,6 +3390,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -3424,7 +3429,7 @@
           ]
         },
         "gridPos": {
-          "h": 4,
+          "h": 5,
           "w": 3,
           "x": 7,
           "y": 4
@@ -3435,7 +3440,7 @@
         "links": [
           {
             "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -3445,7 +3450,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -3578,7 +3583,7 @@
           "overrides": []
         },
         "gridPos": {
-          "h": 4,
+          "h": 5,
           "w": 5,
           "x": 10,
           "y": 4
@@ -3594,10 +3599,12 @@
         ],
         "options": {
           "legend": {
-            "calcs": [],
-            "displayMode": "list",
+            "calcs": [
+              "lastNotNull"
+            ],
+            "displayMode": "table",
             "placement": "bottom",
-            "showLegend": false
+            "showLegend": true
           },
           "tooltip": {
             "mode": "single",
@@ -3678,6 +3685,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -3716,7 +3724,7 @@
           ]
         },
         "gridPos": {
-          "h": 4,
+          "h": 5,
           "w": 3,
           "x": 15,
           "y": 4
@@ -3727,7 +3735,7 @@
         "links": [
           {
             "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -3737,7 +3745,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -3862,7 +3870,7 @@
           ]
         },
         "gridPos": {
-          "h": 4,
+          "h": 5,
           "w": 6,
           "x": 18,
           "y": 4
@@ -3873,7 +3881,7 @@
         "links": [
           {
             "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -4158,6 +4166,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -4199,15 +4208,15 @@
           "h": 4,
           "w": 4,
           "x": 0,
-          "y": 8
+          "y": 9
         },
         "hideTimeOverride": true,
         "id": 53,
         "interval": "$collection",
         "links": [
           {
-            "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "title": "",
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -4217,7 +4226,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -4305,6 +4314,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -4346,15 +4356,15 @@
           "h": 4,
           "w": 4,
           "x": 4,
-          "y": 8
+          "y": 9
         },
         "hideTimeOverride": true,
         "id": 54,
         "interval": "$collection",
         "links": [
           {
-            "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "title": "",
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -4364,7 +4374,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -4452,6 +4462,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -4493,15 +4504,15 @@
           "h": 4,
           "w": 4,
           "x": 8,
-          "y": 8
+          "y": 9
         },
         "hideTimeOverride": true,
         "id": 55,
         "interval": "$collection",
         "links": [
           {
-            "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "title": "",
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -4511,7 +4522,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -4599,6 +4610,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -4640,15 +4652,15 @@
           "h": 4,
           "w": 4,
           "x": 12,
-          "y": 8
+          "y": 9
         },
         "hideTimeOverride": true,
         "id": 57,
         "interval": "$collection",
         "links": [
           {
-            "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "title": "",
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -4658,7 +4670,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -4746,6 +4758,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -4787,15 +4800,15 @@
           "h": 4,
           "w": 4,
           "x": 16,
-          "y": 8
+          "y": 9
         },
         "hideTimeOverride": true,
         "id": 56,
         "interval": "$collection",
         "links": [
           {
-            "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "title": "",
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -4805,7 +4818,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -4893,6 +4906,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -4934,7 +4948,7 @@
           "h": 4,
           "w": 4,
           "x": 20,
-          "y": 8
+          "y": 9
         },
         "hideTimeOverride": true,
         "id": 58,
@@ -4942,7 +4956,7 @@
         "links": [
           {
             "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -4952,7 +4966,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -5040,6 +5054,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -5051,45 +5066,21 @@
             },
             "unit": "none"
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "exectime"
-              },
-              "properties": [
-                {
-                  "id": "displayName"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "compiletime"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "Compile Time"
-                }
-              ]
-            }
-          ]
+          "overrides": []
         },
         "gridPos": {
           "h": 4,
           "w": 6,
           "x": 0,
-          "y": 12
+          "y": 13
         },
         "hideTimeOverride": true,
         "id": 59,
         "interval": "$collection",
         "links": [
           {
-            "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "title": "",
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -5099,7 +5090,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -5187,6 +5178,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -5198,45 +5190,21 @@
             },
             "unit": "none"
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "exectime"
-              },
-              "properties": [
-                {
-                  "id": "displayName"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "compiletime"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "Compile Time"
-                }
-              ]
-            }
-          ]
+          "overrides": []
         },
         "gridPos": {
           "h": 4,
           "w": 6,
           "x": 6,
-          "y": 12
+          "y": 13
         },
         "hideTimeOverride": true,
         "id": 60,
         "interval": "$collection",
         "links": [
           {
-            "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "title": "",
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -5246,7 +5214,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -5334,6 +5302,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -5345,45 +5314,21 @@
             },
             "unit": "none"
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "exectime"
-              },
-              "properties": [
-                {
-                  "id": "displayName"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "compiletime"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "Compile Time"
-                }
-              ]
-            }
-          ]
+          "overrides": []
         },
         "gridPos": {
           "h": 4,
           "w": 6,
           "x": 12,
-          "y": 12
+          "y": 13
         },
         "hideTimeOverride": true,
         "id": 61,
         "interval": "$collection",
         "links": [
           {
-            "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "title": "",
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -5393,7 +5338,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -5481,6 +5426,7 @@
               "mode": "fixed"
             },
             "mappings": [],
+            "noValue": "0",
             "thresholds": {
               "mode": "absolute",
               "steps": [
@@ -5492,45 +5438,21 @@
             },
             "unit": "none"
           },
-          "overrides": [
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "exectime"
-              },
-              "properties": [
-                {
-                  "id": "displayName"
-                }
-              ]
-            },
-            {
-              "matcher": {
-                "id": "byName",
-                "options": "compiletime"
-              },
-              "properties": [
-                {
-                  "id": "displayName",
-                  "value": "Compile Time"
-                }
-              ]
-            }
-          ]
+          "overrides": []
         },
         "gridPos": {
           "h": 4,
           "w": 6,
           "x": 18,
-          "y": 12
+          "y": 13
         },
         "hideTimeOverride": true,
         "id": 62,
         "interval": "$collection",
         "links": [
           {
-            "title": "Execute Breakdown",
-            "url": "/d/Qi5TDej4z/sql-statement-cache?${__all_variables}&${__url_time_range}"
+            "title": "",
+            "url": "/d/c9081118-5230-478d-b6e8-d76614395704/sql-logs?${__all_variables}&${__url_time_range}&var-statement=${id:value}"
           }
         ],
         "options": {
@@ -5540,7 +5462,7 @@
           "orientation": "vertical",
           "reduceOptions": {
             "calcs": [
-              "last"
+              "lastNotNull"
             ],
             "fields": "",
             "values": false
@@ -5649,7 +5571,7 @@
               "value": "10s"
             },
             {
-              "selected": false,
+              "selected": true,
               "text": "30s",
               "value": "30s"
             },
@@ -5659,7 +5581,7 @@
               "value": "1m"
             },
             {
-              "selected": true,
+              "selected": false,
               "text": "5m",
               "value": "5m"
             },
@@ -5845,7 +5767,7 @@
     "timezone": "",
     "title": "NuoDB SQL Statements",
     "uid": "df0d2b01-89ff-4108-bace-32f436204209",
-    "version": 53,
+    "version": 56,
     "weekStart": ""
   }
 }
