@@ -56,7 +56,7 @@ func checkMetricPresent(t *testing.T, namespace string, influxPodName string, in
 	measurement string, database string, host string, metric string) bool {
 	// queryString := fmt.Sprintf("select count(%s) from \"%s\" where host = '%s'", metric, measurement, host)
 	// dbTagName := "db"
-	query := fmt.Sprintf("from(bucket: \"%s\")\n |> range(start: -5m)\n |> filter(fn : (r) => r[\"_measurement\"] == \"%s\") and r[\"_field\"] == \"%s\") and r[\"host\"] == \"%s\") |> keep(columns: [\"_value\"]) |> count()", influxDatabase, measurement, metric, host)
+	query := fmt.Sprintf("from(bucket: \"%s\")\n |> range(start: -5m)\n |> filter(fn : (r) => r[\"_measurement\"] == \"%s\" and r[\"_field\"] == \"%s\" and r[\"host\"] == \"%s\") |> keep(columns: [\"_value\"]) |> count()", influxDatabase, measurement, metric, host)
 	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, query, "--raw")
 	if err != nil {
 		t.Logf("Unexpected error received from InfluxDB: %s", err)
