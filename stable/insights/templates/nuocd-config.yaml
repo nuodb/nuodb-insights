@@ -24,6 +24,7 @@ data:
       organization = {{ include "insights.influxdb_org" $ | quote }}
       bucket = "telegraf"
       bucket_tag = "db_tag"
+      exclude_bucket_tag = true
       ## Write timeout (for the InfluxDB client), formatted as a string.
       ## If not provided, will default to 5s. 0s means no timeout (not recommended).
       timeout = "5s"

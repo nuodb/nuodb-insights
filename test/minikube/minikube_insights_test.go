@@ -2,13 +2,13 @@ package minikube
 
 import (
 	"fmt"
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
+	"math"
 	"strconv"
 	"strings"
 	"testing"
 	"time"
-	"math"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 
 	"github.com/gruntwork-io/terratest/modules/helm"
 	"github.com/gruntwork-io/terratest/modules/k8s"
@@ -56,7 +56,7 @@ func checkMetricPresent(t *testing.T, namespace string, influxPodName string, in
 	measurement string, database string, host string, metric string) bool {
 	// queryString := fmt.Sprintf("select count(%s) from \"%s\" where host = '%s'", metric, measurement, host)
 	// dbTagName := "db"
-	query := fmt.Sprintf("from(bucket: \"%s\")\n |> range(start: -5m)\n |> filter(fn : (r) => r[\"_measurement\"] == \"%s\")\n |> filter(fn : (r) => r[\"_field\"] == \"%s\")\n |> filter(fn : (r) => r[\"host\"] == \"%s\") |> keep(columns: [\"_value\"]) |> count()", influxDatabase, measurement, metric, host)
+	query := fmt.Sprintf("from(bucket: \"%s\")\n |> range(start: -5m)\n |> filter(fn : (r) => r[\"_measurement\"] == \"%s\") and r[\"_field\"] == \"%s\") and r[\"host\"] == \"%s\") |> keep(columns: [\"_value\"]) |> count()", influxDatabase, measurement, metric, host)
 	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, query, "--raw")
 	if err != nil {
 		t.Logf("Unexpected error received from InfluxDB: %s", err)
@@ -65,7 +65,7 @@ func checkMetricPresent(t *testing.T, namespace string, influxPodName string, in
 	newOutput := strings.ReplaceAll(output, "\r\n", "\n")
 	lines := strings.Split(newOutput, "\n")
 	if len(lines) > 1 {
-		count, err := strconv.ParseFloat(strings.Split(lines[4], ",")[3],64)
+		count, err := strconv.ParseFloat(strings.Split(lines[4], ",")[3], 64)
 		require.NoError(t, err)
 		if int(math.Ceil(count)) > 0 {
 			t.Logf("Found %f lines for measurement=%s, metric=%s, db=%s, host=%s", count, measurement, metric, database, host)
@@ -177,7 +177,7 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 
 	// Start YCSB Load Generator
 	startAndScaleYCSB(t, namespaceName, &options)
-	waitTime := 60*time.Second
+	waitTime := 60 * time.Second
 	time.Sleep(waitTime) // give some time to YCSB
 
 	t.Run("verifyNuoDBMetricsStored", func(t *testing.T) {

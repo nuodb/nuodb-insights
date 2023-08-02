@@ -78,19 +78,11 @@ grafana is grafana location is overridded.
 {{- end -}}
 
 {{/*
-InfluxDB token value    
+InfluxDB value from the helm chart influxdb2.adminUser.token
 */}}
 
 {{- define "insights.influxdb_token" -}}
-{{- $name := (printf "%s-auth" (include "influxdb.fullname" .) ) }}
-{{- $secret := (lookup "v1" "Secret" .Release.Namespace $name )}}
-{{- if $secret }}
-{{- printf "%s" index $secret "data" "admin-token"}}
-{{- else if .Values.influxdb2.adminUser.token }}
 {{- printf "%s" .Values.influxdb2.adminUser.token }}
-{{- else }}
-{{- printf "%s" (randAlphaNum 32 | b64enc | quote) }}
-{{- end }}
 {{- end -}}
 
 

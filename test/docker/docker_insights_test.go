@@ -30,7 +30,7 @@ func TestDockerInsightsInstallSmall(t *testing.T) {
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	require.NoError(t, err)
 
-	options :=  docker.Options {
+	options := docker.Options{
 		WorkingDir: "../..",
 	}
 	docker.RunDockerCompose(t, &options, "-f", "deploy/monitor-stack.yaml", "up", "-d")
@@ -53,7 +53,7 @@ func TestDockerInsightsInstallComplete(t *testing.T) {
 
 	composeFile := "deploy/docker-compose.yaml"
 
-	options :=  docker.Options {
+	options := docker.Options{
 		WorkingDir: "../..",
 	}
 	docker.RunDockerCompose(t, &options, "-f", composeFile, "up", "-d")
