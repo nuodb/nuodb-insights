@@ -4,20 +4,21 @@ services:
     image: nuodb/nuodb-ce:latest
     environment:
       NUODB_DOMAIN_ENTRYPOINT: nuoadmin1
-      INFLUXDB_TOKEN: quickbrownfoxjumpsoveralazydog
-      INFLUXDB_BUCKET: telegraf
-      INFLUXDB_ORG: nuodb
     hostname: nuoadmin1
     command: ["nuoadmin"]
-    healthcheck: 
-      test: ["CMD-SHELL", "nuocmd check servers --check-connected --check-converged --timeout 300"]
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "nuocmd check servers --check-connected --check-converged --timeout 300",
+        ]
   sm:
     image: nuodb/nuodb-ce:latest
     hostname: sm
     environment:
       NUOCMD_API_SERVER: nuoadmin1:8888
     depends_on:
-      nuoadmin1 :
+      nuoadmin1:
         condition: service_healthy
     command:
       [
