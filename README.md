@@ -31,6 +31,8 @@
 
 [Setup on Bare Metal Linux](#Setup-on-bare-metal-linux)
 
+[Influx DB migration](#InfluxDB-Migration)
+
 ## Introduction
 
 NuoDB Insights is a visual monitor tool that aids NuoDB practitioners in monitoring NuoDB database health, resource consumption, and application workload processed in real-time and historically using an intuitive graphical interface. It can be installed at database startup or after. It also installs locally on the same nodes/hosts your database runs and supports all NuoDB database deployment environments: Kubernetes, Docker, and physical host / Virtual Machine environments. 
@@ -117,13 +119,13 @@ docker run -d --name influxdb \
       --network nuodb-net \
       -p 8086:8086 \
       -p 8082:8082 \
-      --env DOCKER_INFLUXDB_INIT_MODE= setup \
-      --env DOCKER_INFLUXDB_INIT_USERNAME= <your_username> \
-      --env DOCKER_INFLUXDB_INIT_PASSWORD= <your_password> \
-      --env DOCKER_INFLUXDB_INIT_ORG= <name_of_organization> \
-      --env DOCKER_INFLUXDB_INIT_RETENTION= <bucket_retention_time> \
-      --env DOCKER_INFLUXDB_INIT_BUCKET= <influxdb_bucket_name> \
-      --env DOCKER_INFLUXDB_INIT_ADMIN_TOKEN= <your_influxdb_token> \
+      --env DOCKER_INFLUXDB_INIT_MODE=setup \
+      --env DOCKER_INFLUXDB_INIT_USERNAME=<your_username> \
+      --env DOCKER_INFLUXDB_INIT_PASSWORD=<your_password> \
+      --env DOCKER_INFLUXDB_INIT_ORG=<name_of_organization> \
+      --env DOCKER_INFLUXDB_INIT_RETENTION=<bucket_retention_time> \
+      --env DOCKER_INFLUXDB_INIT_BUCKET=<influxdb_bucket_name> \
+      --env DOCKER_INFLUXDB_INIT_ADMIN_TOKEN=<your_influxdb_token> \
       -v $PWD/deploy/initdb.sh:/docker-entrypoint-initdb.d/initdb.sh \
       influxdb:2.7
 ```
@@ -197,8 +199,8 @@ env $(cat /etc/default/influxdb | xargs) influxd -config /etc/influxdb/influxdb.
 On a host in your NuoDB domain, install Grafana and configure it to use the NuoDB-Insights dashboards.
 
 ```
-wget https://dl.grafana.com/enterprise/release/grafana-enterprise_9.5.6_amd64.deb
-sudo yum install -y https://dl.grafana.com/enterprise/release/grafana-enterprise-9.5.6-1.x86_64.rpm
+wget https://dl.grafana.com/oss/release/grafana-9.5.6-1.x86_64.rpm
+sudo yum install -y grafana-9.5.6-1.x86_64.rpm
 
 git clone https://github.com/nuodb/nuodb-insights.git
 sudo rm -rf /etc/grafana/provisioning
@@ -228,6 +230,18 @@ sudo /etc/rc.d/init.d/grafana-server start
 Follow the instructions for installing the [NuoDB Collector on bare-metal](https://github.com/nuodb/nuodb-collector#setup-on-bare-metal). The NuoDB Collector must be set up on all hosts that will run NuoDB database processes.
 
 Once all components have been set up, NuoDB performance can be visualized by navigating to the NuoDB Insights - NuoDB Ops System Overview dashboard at `http://<hostgrafana>:3000/d/000000004/nuodb-ops-system-overview`, where `<hostgrafana>` is the host that the Grafana server was started on. The default password in Grafana is `admin:admin`.
+
+## Insights 2.0
+
+Insights 2.x introduces a breaking change. In this update, a crucial shift is the migration from InfluxDB version 1.8 to 2.7. For those transitioning from the prior Insights 1.x iteration to 2.x, it's important to be aware that access to historical InfluxDB data from the previous version will not be retained due to the migration.
+
+### Migration steps
+
+Run the following command for migrating from Insights 1.2 to 2.0.
+
+```
+helm upgrade <release_name>
+```
 
 ## Status of the Project
 
