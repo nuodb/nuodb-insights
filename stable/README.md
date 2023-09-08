@@ -134,14 +134,14 @@ oc adm policy add-scc-to-user nuodb-scc system:serviceaccount:nuodb:grafana -n n
 ### Installing in different namespace
 
 If NuoDB Insights is installed in the same namespace with NuoDB database, no additional steps are needed.
-Otherwise, it is required to create NuoDB Collector configuration for Insights in all namespaces where NuoDB admin and database services are running. This can be done by installing the chart and setting `insights.influxdb.host` to the InfluxDB fully qualified domain name. For example:
+Otherwise, it is required to create NuoDB Collector configuration for Insights in all namespaces where NuoDB admin and database services are running. This can be done by installing the chart and setting `insights.influxdb2.host` to the InfluxDB fully qualified domain name. For example:
 
 ```bash
 helm install insights nuodb-insights/insights -n nuodb \
   --set grafana.enabled=false \
-  --set influxdb.enabled=false \
+  --set influxdb2.enabled=false \
   --set insights.grafana.enabled=false \
-  --set influxdb.host=<InfluxDB FQDN> \
+  --set influxdb2.host=<InfluxDB FQDN> \
   --set insights.nuocollector.enabled=true
 ```
 

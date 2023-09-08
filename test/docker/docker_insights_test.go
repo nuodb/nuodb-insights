@@ -2,12 +2,13 @@ package docker
 
 import (
 	"context"
+	"testing"
+
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 	"github.com/gruntwork-io/terratest/modules/docker"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func containersContainImage(t *testing.T, containers []types.Container, expectedImage string) bool {
@@ -16,12 +17,11 @@ func containersContainImage(t *testing.T, containers []types.Container, expected
 			return true
 		}
 	}
-
 	return false
 }
 
 func assertInfluxContainsDatabases(t *testing.T, composeFile string) {
-	listings := GetDatabaseListings(t, composeFile, INFLUXDB_CONTAINER_NAME)
+	listings, _ := GetDatabaseListings(t, composeFile, INFLUXDB_CONTAINER_NAME)
 	assert.Contains(t, listings, "nuodb")
 	assert.Contains(t, listings, "nuodb_internal")
 }

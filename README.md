@@ -31,7 +31,7 @@
 
 [Setup on Bare Metal Linux](#Setup-on-bare-metal-linux)
 
-[Influx DB migration](#InfluxDB-Migration)
+[Influx DB migration](#Insights-2.0)
 
 ## Introduction
 

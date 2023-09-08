@@ -2,9 +2,11 @@ package docker
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
-	"github.com/gruntwork-io/terratest/modules/docker"
 	"testing"
+
+	"github.com/gruntwork-io/terratest/modules/docker"
 )
 
 func executeCommandInContainer(t *testing.T, composeFile string, containerName string, args ...string) string {
@@ -29,18 +31,23 @@ func AwaitDatabaseUp(t *testing.T, composeFile string, adminContainerName string
 		"--timeout", "120")
 }
 
-func GetDatabaseListings(t *testing.T, composeFile string, influxContainerName string) []string {
-	raw := executeCommandInContainer(t, composeFile, influxContainerName, "influx", "bucket", "list", "--json")
+func GetDatabaseListings(t *testing.T, composeFile string, influxContainerName string) ([]string, error) {
+	jsonData := executeCommandInContainer(t, composeFile, influxContainerName, "influx", "bucket", "list", "--json")
 	var bucketList []map[string]interface{}
 	var listing []string
-	jsonData := raw
 	err := json.Unmarshal([]byte(jsonData), &bucketList)
 	if err != nil {
 		fmt.Println("Error while decoding data ", err.Error())
+		return nil, err
 	}
 	for _, bucket := range bucketList {
-		str := bucket["name"].(string)
+		str, ok := bucket["name"].(string)
+		if !ok {
+			fmt.Println("Bucket name is not a string ")
+			error:= errors.New("Invalid bucket name")
+			return nil, error
+		} 
 		listing = append(listing, str)
 	}
-	return listing
+	return listing, nil
 }

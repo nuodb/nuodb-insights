@@ -2,13 +2,14 @@ package minikube
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
-	"github.com/stretchr/testify/require"
 	"math"
 	"strconv"
 	"strings"
 	"testing"
 	"time"
+
+	"github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/require"
 
 	"github.com/gruntwork-io/terratest/modules/helm"
 	"github.com/gruntwork-io/terratest/modules/k8s"
@@ -54,8 +55,9 @@ func startAndScaleYCSB(t *testing.T, namespaceName string, options *helm.Options
 
 func checkMetricPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string,
 	measurement string, database string, host string, metric string) bool {
-	// queryString := fmt.Sprintf("select count(%s) from \"%s\" where host = '%s'", metric, measurement, host)
-	// dbTagName := "db"
+	/**
+	 * Influx query that return rows within a time frame of 5 minutes after applying filters based on measurement, field, host provided in the params
+	**/
 	query := fmt.Sprintf("from(bucket: \"%s\")\n |> range(start: -5m)\n |> filter(fn : (r) => r[\"_measurement\"] == \"%s\" and r[\"_field\"] == \"%s\" and r[\"host\"] == \"%s\") |> keep(columns: [\"_value\"]) |> count()", influxDatabase, measurement, metric, host)
 	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, query, "--raw")
 	if err != nil {

@@ -35,7 +35,7 @@ For a complete list of configuration variables supported by the 3-rd party chart
 By default, if the grafana chart is enabled a sidecar is created to collect the dashboards and datasource configmaps.
 The dashboards will be deployed to grafana in `/var/lib/grafana/dashboards/nuodb` and `/var/lib/grafana/dashboards/nuodb` directories with `orgId` of 1.
 
-### influxdb.*
+### influxdb2.*
 
 | Parameter | Description | Default |
 | ----- | ----------- | ------ |
@@ -43,6 +43,9 @@ The dashboards will be deployed to grafana in `/var/lib/grafana/dashboards/nuodb
 | `image.tag` | Version of InfluxDB | `1.8` |
 | `host` | InfluxDB FQDN in case it is installed in different namespace | `nil` |
 | `port` | InfluxDB port in case it is installed in different namespace | `8086` |
+| `adminUser.password` | InfluxDB password required for authentication | `helloworld`
+| `adminUser.token` | InfluxDB token required for authorization| `quickbrownfoxjumpsoverlazydog`
+| `adminUser.organization` | InfluxDB organization name| `nuodb`
 
 For a complete list of configuration variables supported by the 3-rd party chart refer to [InfluxDB Helm Chart](https://github.com/influxdata/helm-charts/tree/master/charts/influxdb).
 By default, if the influxdb chart is enabled `init-nuodb.sh` is created that will initialize all InfluxDB databases used by NuoDB Insights.
