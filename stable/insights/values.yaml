@@ -29,6 +29,7 @@ influxdb2:
     bucket: "telegraf"
     token: "quickbrownfoxjumpsoverlazydog"
     organization: "nuodb"
+  nameOverride: "influxdb2"
   service:
     port: 8086
   # For complete list of configuration options for
