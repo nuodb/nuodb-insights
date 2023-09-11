@@ -25,7 +25,7 @@ If release name contains chart name it will be used as a full name.
 {{- end -}}
 
 {{- define "insights.influxdb_url" -}}
-{{- $context  := dict "Values" .Values.influxdb2 "Chart" (dict "Name" "influxdb") "Release" .Release  "Capabilities" .Capabilities -}}
+{{- $context  := dict "Values" .Values.influxdb2 "Chart" (dict "Name" "influxdb2") "Release" .Release  "Capabilities" .Capabilities -}}
 {{- if and .Values.influxdb2 .Values.influxdb2.enabled -}}
 {{-   $influxdb := include "influxdb.fullname" $context -}}
 {{-   $hostname := default (printf "%s.%s.svc" $influxdb .Release.Namespace) .Values.influxdb2.host -}}
