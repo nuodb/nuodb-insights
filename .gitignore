@@ -1,0 +1,5 @@
+deploy/
+results/
+
+#ignore python files
+.pytest_cache

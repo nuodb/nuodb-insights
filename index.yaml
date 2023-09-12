@@ -1,0 +1,102 @@
+apiVersion: v1
+entries:
+  insights:
+  - apiVersion: v2
+    appVersion: 4.1.0
+    created: "2023-01-31T10:57:04.514793816-05:00"
+    dependencies:
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      tags:
+      - backend
+      version: 6.50.0
+    - condition: influxdb.enabled
+      name: influxdb
+      repository: https://helm.influxdata.com/
+      tags:
+      - backend
+      version: 4.12.0
+    description: NuoDB Insights - Visual Monitoring
+    digest: d065022d406cf8365718f43864748c2c8d6ea95fe346b297a5407b9270ea70e9
+    home: https://github.com/nuodb/nuodb-insights/stable/insights
+    icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
+    keywords:
+    - monitoring
+    - nuodb
+    - influxdb
+    - grafana
+    maintainers:
+    - email: support@nuodb.com
+      name: NuoDB
+    name: insights
+    type: application
+    urls:
+    - https://github.com/nuodb/nuodb-insights/releases/download/v1.2.0/insights-1.2.0.tgz 
+    version: 1.2.0
+  - apiVersion: v2
+    appVersion: 4.1.0
+    created: "2021-05-04T11:27:59.862122752-04:00"
+    dependencies:
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      tags:
+      - backend
+      version: 6.6.0
+    - condition: influxdb.enabled
+      name: influxdb
+      repository: https://helm.influxdata.com/
+      tags:
+      - backend
+      version: 4.9.14
+    description: NuoDB Insights - Visual Monitoring
+    digest: 28656072a5003273ffcaa3a409294b9c293cc9287273a4a64ec6ee059a22e006
+    home: https://github.com/nuodb/nuodb-insights/stable/insights
+    icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
+    keywords:
+    - monitoring
+    - nuodb
+    - influxdb
+    - grafana
+    maintainers:
+    - email: support@nuodb.com
+      name: NuoDB
+    name: insights
+    type: application
+    urls:
+    - https://github.com/nuodb/nuodb-insights/releases/download/v1.1.0/insights-1.1.0.tgz
+    version: 1.1.0
+  - apiVersion: v1
+    appVersion: 4.0.0
+    created: "2020-11-17T10:03:40.732563-05:00"
+    dependencies:
+    - condition: grafana.enabled
+      name: grafana
+      repository: https://grafana.github.io/helm-charts
+      tags:
+      - backend
+      version: 6.1.2
+    - condition: influxdb.enabled
+      name: influxdb
+      repository: https://helm.influxdata.com/
+      tags:
+      - backend
+      version: 4.8.9
+    description: NuoDB Insights - Visual Monitoring
+    digest: 40e4f414dc42e73bfb66ae1c5722da11247467c91937c550bfbedb6ac1c4e303
+    home: https://github.com/nuodb/nuodb-insights/stable/insights
+    icon: https://www.nuodb.com/sites/all/themes/nuodb/logo.svg
+    keywords:
+    - monitoring
+    - nuodb
+    - influxdb
+    - grafana
+    maintainers:
+    - email: support@nuodb.com
+      name: NuoDB
+    name: insights
+    urls:
+    - https://github.com/nuodb/nuodb-insights/releases/download/v1.0.0/insights-1.0.0.tgz
+    version: 1.0.0
+generated: "2023-01-31T10:57:04.504572711-05:00"
