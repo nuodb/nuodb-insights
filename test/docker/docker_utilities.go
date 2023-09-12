@@ -3,10 +3,10 @@ package docker
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/docker"
+	"github.com/stretchr/testify/require"
 )
 
 func executeCommandInContainer(t *testing.T, composeFile string, containerName string, args ...string) string {
@@ -36,15 +36,11 @@ func GetDatabaseListings(t *testing.T, composeFile string, influxContainerName s
 	var bucketList []map[string]interface{}
 	var listing []string
 	err := json.Unmarshal([]byte(jsonData), &bucketList)
-	if err != nil {
-		fmt.Println("Error while decoding data ", err.Error())
-		return nil, err
-	}
+	require.NoError(t, err)
 	for _, bucket := range bucketList {
 		str, ok := bucket["name"].(string)
 		if !ok {
-			fmt.Println("Bucket name is not a string ")
-			error:= errors.New("Invalid bucket name")
+			error:= errors.New("invalid bucket name")
 			return nil, error
 		} 
 		listing = append(listing, str)

@@ -1,6 +1,6 @@
 apiVersion: "v2"
 name: insights
-version: 1.2.0
+version: 2.0.0
 description: NuoDB Insights - Visual Monitoring
 keywords:
   - monitoring
@@ -14,7 +14,7 @@ maintainers:
 engine: gotpl
 icon: https://raw.githubusercontent.com/nuodb/nuodb-helm-charts/master/images/nuodb.svg
 type: application
-appVersion: 4.1.0
+appVersion: 5.0.4
 dependencies:
   - name: grafana
     condition: grafana.enabled

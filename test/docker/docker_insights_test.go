@@ -21,7 +21,8 @@ func containersContainImage(t *testing.T, containers []types.Container, expected
 }
 
 func assertInfluxContainsDatabases(t *testing.T, composeFile string) {
-	listings, _ := GetDatabaseListings(t, composeFile, INFLUXDB_CONTAINER_NAME)
+	listings, err := GetDatabaseListings(t, composeFile, INFLUXDB_CONTAINER_NAME)
+	require.NoError(t, err)
 	assert.Contains(t, listings, "nuodb")
 	assert.Contains(t, listings, "nuodb_internal")
 }
