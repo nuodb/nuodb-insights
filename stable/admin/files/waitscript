@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+# (C) Copyright NuoDB, Inc. 2019-2021  All Rights Reserved
+# This file is licensed under the BSD 3-Clause License.
+# See https://github.com/nuodb/nuodb-helm-charts/blob/master/LICENSE
+
+: ${TIMEOUT:=300}
+
+count = 0
+if ! nuocmd --api-server ${NUOCMD_API_SERVER} check servers --check-active --check-connected --check-leader --timeout ${TIMEOUT} ; then
+    echo "ERROR: nuocmd check server failed; admin not up"
+    exit 1
+fi

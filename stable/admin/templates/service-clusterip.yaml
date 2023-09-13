@@ -1,0 +1,21 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    description: |
+      Cluster IP service permitting us to load balance within the cluster.
+  labels:
+    {{- include "admin.resourceLabels" . | nindent 4 }}
+  name: {{ .Values.admin.domain }}-{{ .Values.admin.serviceSuffix.clusterip }}
+spec:
+  ports:
+  - { name: 8888-tcp,   port: 8888,   protocol: TCP,  targetPort: 8888  }
+  - { name: 48004-tcp,  port: 48004,  protocol: TCP,  targetPort: 48004 }
+  - { name: 48005-tcp,  port: 48005,  protocol: TCP,  targetPort: 48005 }
+  selector:
+    app: {{ template "admin.fullname" . }}
+  sessionAffinity: None
+  type: ClusterIP
+status:
+  loadBalancer: {}
