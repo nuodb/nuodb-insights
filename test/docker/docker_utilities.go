@@ -6,7 +6,6 @@ import (
 	"testing"
 
 	"github.com/gruntwork-io/terratest/modules/docker"
-	"github.com/stretchr/testify/require"
 )
 
 func executeCommandInContainer(t *testing.T, composeFile string, containerName string, args ...string) string {
@@ -36,7 +35,9 @@ func GetDatabaseListings(t *testing.T, composeFile string, influxContainerName s
 	var bucketList []map[string]interface{}
 	var listing []string
 	err := json.Unmarshal([]byte(jsonData), &bucketList)
-	require.NoError(t, err)
+	if err!=nil {
+		return nil, err
+	}
 	for _, bucket := range bucketList {
 		str, ok := bucket["name"].(string)
 		if !ok {
