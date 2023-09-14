@@ -2,6 +2,7 @@ package minikube
 
 import (
 	"fmt"
+	"math"
 	"strconv"
 	"strings"
 	"testing"
@@ -54,28 +55,22 @@ func startAndScaleYCSB(t *testing.T, namespaceName string, options *helm.Options
 
 func checkMetricPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string,
 	measurement string, database string, host string, metric string) bool {
-	queryString := fmt.Sprintf("select count(%s) from \"%s\" where host = '%s'", metric, measurement, host)
-	dbTagName := "db"
-	if influxDatabase == "nuodb_internal" {
-		// DB tag name is different in nuodb_internal database
-		dbTagName = "dbname"
-	}
-	if measurement != "nuodb_thread" {
-		// There is no db tag for nuodb_thread measurement
-		queryString = fmt.Sprintf("%s and %s = '%s'", queryString, dbTagName, database)
-	}
-	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, queryString, "-database", influxDatabase, "-format", "csv")
+	/**
+	 * Influx query that return rows within a time frame of 5 minutes after applying filters based on measurement, field, host provided in the params
+	**/
+	query := fmt.Sprintf("from(bucket: \"%s\")\n |> range(start: -5m)\n |> filter(fn : (r) => r[\"_measurement\"] == \"%s\" and r[\"_field\"] == \"%s\" and r[\"host\"] == \"%s\") |> keep(columns: [\"_value\"]) |> count()", influxDatabase, measurement, metric, host)
+	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, query, "--raw")
 	if err != nil {
 		t.Logf("Unexpected error received from InfluxDB: %s", err)
 		return false
 	}
-	lines := strings.Split(output, "\n")
+	newOutput := strings.ReplaceAll(output, "\r\n", "\n")
+	lines := strings.Split(newOutput, "\n")
 	if len(lines) > 1 {
-		// The output format will be `name,time,count`
-		count, err := strconv.Atoi(strings.Split(lines[1], ",")[2])
+		count, err := strconv.ParseFloat(strings.Split(lines[4], ",")[3], 64)
 		require.NoError(t, err)
-		if int(count) > 0 {
-			t.Logf("Found %d lines for measurement=%s, metric=%s, db=%s, host=%s", count, measurement, metric, database, host)
+		if int(math.Ceil(count)) > 0 {
+			t.Logf("Found %f lines for measurement=%s, metric=%s, db=%s, host=%s", count, measurement, metric, database, host)
 			return true
 		}
 	}
@@ -84,7 +79,9 @@ func checkMetricPresent(t *testing.T, namespace string, influxPodName string, in
 }
 
 func checkMeasurementsPresent(t *testing.T, namespace string, influxPodName string, influxDatabase string, measurements []string) bool {
-	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, "show measurements", "-database", influxDatabase)
+
+	query := fmt.Sprintf("import \"influxdata/influxdb/schema\" \n schema.measurements(bucket: \"%s\")", influxDatabase)
+	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, query, "--raw")
 	if err != nil {
 		t.Logf("Unexpected error received from InfluxDB: %s", err)
 		return false
@@ -107,7 +104,7 @@ func verifyMeasurementsPresent(t *testing.T, namespace string, influxPodName str
 }
 
 func verifyNuoDBDatabasesPresent(t *testing.T, namespace string, influxPodName string) {
-	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, "show databases")
+	output, err := ExcuteInfluxDBQueryE(t, namespace, influxPodName, "buckets()")
 	require.NoError(t, err)
 	assert.Contains(t, output, "nuodb")
 	assert.Contains(t, output, "nuodb_internal")
@@ -139,7 +136,7 @@ func TestKubernetesInsightsInstall(t *testing.T) {
 
 	helmChartReleaseName, namespaceName := StartInsights(t, &options, "")
 
-	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
+	influxPodName := fmt.Sprintf("%s-influxdb2-0", helmChartReleaseName)
 
 	t.Run("verifyDatabasesPresent", func(t *testing.T) {
 		verifyNuoDBDatabasesPresent(t, namespaceName, influxPodName)
@@ -178,11 +175,11 @@ func TestKubernetesInsightsMetricsCollection(t *testing.T) {
 			"grafana.enabled": "false",
 		},
 	}, namespaceName)
-	influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
+	influxPodName := fmt.Sprintf("%s-influxdb2-0", helmChartReleaseName)
 
 	// Start YCSB Load Generator
 	startAndScaleYCSB(t, namespaceName, &options)
-	waitTime := 60*time.Second
+	waitTime := 60 * time.Second
 	time.Sleep(waitTime) // give some time to YCSB
 
 	t.Run("verifyNuoDBMetricsStored", func(t *testing.T) {

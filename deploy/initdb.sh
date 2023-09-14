@@ -1,3 +1,6 @@
-#!/bin/bash
-/usr/bin/influx --execute "CREATE DATABASE nuodb WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp"
-/usr/bin/influx --execute "CREATE DATABASE nuodb_internal WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp"
+#!/bin/sh
+set -e
+
+influx bucket create --name nuodb_internal --retention 365d --shard-group-duration 1d
+
+influx bucket create --name nuodb --retention 365d --shard-group-duration 1d

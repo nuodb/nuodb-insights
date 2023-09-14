@@ -1,13 +1,15 @@
 package docker
 
 import (
-	"github.com/gruntwork-io/terratest/modules/docker"
-	"strings"
+	"encoding/json"
+	"errors"
 	"testing"
+
+	"github.com/gruntwork-io/terratest/modules/docker"
 )
 
 func executeCommandInContainer(t *testing.T, composeFile string, containerName string, args ...string) string {
-	options :=  docker.Options {
+	options := docker.Options{
 		WorkingDir: "../..",
 	}
 
@@ -28,8 +30,21 @@ func AwaitDatabaseUp(t *testing.T, composeFile string, adminContainerName string
 		"--timeout", "120")
 }
 
-func GetDatabaseListings(t *testing.T, composeFile string, influxContainerName string) []string {
-	raw := executeCommandInContainer(t, composeFile, influxContainerName, "influx", "-execute", "show databases")
-	databaseListing := strings.Split(raw, "----")[1]
-	return strings.Split(databaseListing, "\n")
+func GetDatabaseListings(t *testing.T, composeFile string, influxContainerName string) ([]string, error) {
+	jsonData := executeCommandInContainer(t, composeFile, influxContainerName, "influx", "bucket", "list", "--json")
+	var bucketList []map[string]interface{}
+	var listing []string
+	err := json.Unmarshal([]byte(jsonData), &bucketList)
+	if err!=nil {
+		return nil, err
+	}
+	for _, bucket := range bucketList {
+		str, ok := bucket["name"].(string)
+		if !ok {
+			error:= errors.New("invalid bucket name")
+			return nil, error
+		} 
+		listing = append(listing, str)
+	}
+	return listing, nil
 }

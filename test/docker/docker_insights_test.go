@@ -2,12 +2,13 @@ package docker
 
 import (
 	"context"
+	"testing"
+
 	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
 	"github.com/gruntwork-io/terratest/modules/docker"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
-	"testing"
 )
 
 func containersContainImage(t *testing.T, containers []types.Container, expectedImage string) bool {
@@ -16,12 +17,12 @@ func containersContainImage(t *testing.T, containers []types.Container, expected
 			return true
 		}
 	}
-
 	return false
 }
 
 func assertInfluxContainsDatabases(t *testing.T, composeFile string) {
-	listings := GetDatabaseListings(t, composeFile, INFLUXDB_CONTAINER_NAME)
+	listings, err := GetDatabaseListings(t, composeFile, INFLUXDB_CONTAINER_NAME)
+	require.NoError(t, err)
 	assert.Contains(t, listings, "nuodb")
 	assert.Contains(t, listings, "nuodb_internal")
 }
@@ -30,7 +31,7 @@ func TestDockerInsightsInstallSmall(t *testing.T) {
 	cli, err := client.NewClientWithOpts(client.FromEnv)
 	require.NoError(t, err)
 
-	options :=  docker.Options {
+	options := docker.Options{
 		WorkingDir: "../..",
 	}
 	docker.RunDockerCompose(t, &options, "-f", "deploy/monitor-stack.yaml", "up", "-d")
@@ -42,8 +43,8 @@ func TestDockerInsightsInstallSmall(t *testing.T) {
 	require.NoError(t, err)
 
 	assert.EqualValues(t, 2, len(containers))
-	assert.True(t, containersContainImage(t, containers, "influxdb:1.8"))
-	assert.True(t, containersContainImage(t, containers, "grafana/grafana:7.5.4"))
+	assert.True(t, containersContainImage(t, containers, INFLUX_VERSION))
+	assert.True(t, containersContainImage(t, containers, GRAFANA_VERSION))
 
 }
 
@@ -53,7 +54,7 @@ func TestDockerInsightsInstallComplete(t *testing.T) {
 
 	composeFile := "deploy/docker-compose.yaml"
 
-	options :=  docker.Options {
+	options := docker.Options{
 		WorkingDir: "../..",
 	}
 	docker.RunDockerCompose(t, &options, "-f", composeFile, "up", "-d")

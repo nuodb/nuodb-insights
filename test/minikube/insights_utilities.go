@@ -71,7 +71,7 @@ func startInsightsTemplate(t *testing.T, options *helm.Options, namespace string
 	}
 	if options.SetValues["influxdb.enabled"] != "false" {
 		testlib.AwaitNrReplicasScheduled(t, namespaceName, "influxdb", 1)
-		influxPodName := fmt.Sprintf("%s-influxdb-0", helmChartReleaseName)
+		influxPodName := fmt.Sprintf("%s-influxdb2-0", helmChartReleaseName)
 		testlib.AwaitPodUp(t, namespaceName, influxPodName, 300*time.Second)
 		go testlib.GetAppLog(t, namespaceName, influxPodName, "", &v1.PodLogOptions{Follow: true})
 	}
@@ -92,7 +92,7 @@ func InjectNuoDBHelmChartsVersion(t *testing.T, options *helm.Options) {
 func ExcuteInfluxDBQueryE(t *testing.T, namespace string, influxPodName string, query string, influxArgs ...string) (string, error) {
 	kubectlOptions := k8s.NewKubectlOptions("", "", namespace)
 	var kubectlArgs []string
-	kubectlArgs = append(kubectlArgs, "exec", influxPodName, "--", "influx", "-execute", query)
+	kubectlArgs = append(kubectlArgs, "exec", influxPodName, "--", "influx", "query", query)
 	kubectlArgs = append(kubectlArgs, influxArgs...)
 	return k8s.RunKubectlAndGetOutputE(t, kubectlOptions, kubectlArgs...)
 }
