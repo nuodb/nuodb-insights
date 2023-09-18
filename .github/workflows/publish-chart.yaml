@@ -31,13 +31,14 @@ jobs:
           echo "version=$VERSION" >> $GITHUB_OUTPUT
       - name: Package Helm charts
         run: ./scripts/package.sh
+      - name: Remove uncommitted changes
+        run: ./scripts/remove-uncommited-changes.sh
       - name: Publish GitHub release
         run: |
           gh release create v${{ steps.vars.outputs.version }} \
             -t "NuoDB Helm Charts ${{ steps.vars.outputs.version }}" \
             -F changelogs/v${{ steps.vars.outputs.version }}.md \
             package/stable/v${{ steps.vars.outputs.version }}/*.tgz \
-            package/incubator/v${{ steps.vars.outputs.version }}/*.tgz
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: Update Helm index
