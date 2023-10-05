@@ -73,7 +73,7 @@ The default repository for NuoDB is located at https://storage.googleapis.com/nu
 To add the charts for your local client, run the `helm repo add` command below:
 
 ```
-helm repo add nuodb-insights https://storage.googleapis.com/nuodb-insights
+helm repo add nuodb-insights https://nuodb.github.io/nuodb-insights
 "nuodb-insights" has been added to your repositories
 ```
 

@@ -36,7 +36,7 @@ jobs:
       - name: Publish GitHub release
         run: |
           gh release create v${{ steps.vars.outputs.version }} \
-            -t "NuoDB Helm Charts ${{ steps.vars.outputs.version }}" \
+            -t "NuoDB Insights v${{ steps.vars.outputs.version }}" \
             -F changelogs/v${{ steps.vars.outputs.version }}.md \
             package/stable/v${{ steps.vars.outputs.version }}/*.tgz \
         env:
