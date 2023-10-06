@@ -48,10 +48,10 @@
     ]
   },
   "description": "NuoDB Summary",
-  "editable": false,
+  "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 21,
+  "id": 17,
   "links": [
     {
       "asDropdown": true,
@@ -78,8 +78,8 @@
     {
       "asDropdown": true,
       "icon": "external link",
-      "includeVars": false,
-      "keepTime": false,
+      "includeVars": true,
+      "keepTime": true,
       "tags": [
         "sql"
       ],
@@ -100,7 +100,7 @@
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "text",
+            "fixedColor": "super-light-blue",
             "mode": "fixed"
           },
           "custom": {
@@ -110,7 +110,6 @@
             },
             "inspect": false
           },
-          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -121,38 +120,62 @@
               }
             ]
           },
-          "unit": "string"
+          "unit": "none"
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "Values"
+              "options": "TypeGroup"
             },
             "properties": [
               {
-                "id": "custom.inspect",
-                "value": true
+                "id": "custom.width",
+                "value": 131
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "Field"
+              "options": "MsgType"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 265
+                "value": 253
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Count"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 118
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Duration"
+            },
+            "properties": [
+              {
+                "id": "unit",
+                "value": "µs"
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 27,
-        "w": 24,
+        "h": 24,
+        "w": 12,
         "x": 0,
         "y": 0
       },
@@ -166,7 +189,7 @@
           "reducer": [
             "sum"
           ],
-          "show": false
+          "show": true
         },
         "frameIndex": 1,
         "showHeader": true,
@@ -177,7 +200,7 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "body": "select * from system.localstatementcache where ID='$id'\n",
+          "body": "select TYPE,\"GROUP\",COUNT,DURATION from system.localclientmessages order by DURATION desc",
           "cacheDurationSeconds": 0,
           "datasource": {
             "type": "marcusolsson-json-datasource",
@@ -185,15 +208,24 @@
           },
           "fields": [
             {
-              "jsonPath": "$.columns[*].text",
-              "name": "Field",
+              "jsonPath": "$.rows[*][0]",
+              "name": "MsgType",
               "type": "string"
             },
             {
-              "jsonPath": "$.rows[0][*]",
+              "jsonPath": "$.rows[*][1]",
               "language": "jsonpath",
-              "name": "Values",
-              "type": "string"
+              "name": "TypeGroup"
+            },
+            {
+              "jsonPath": "$.rows[*][2]",
+              "language": "jsonpath",
+              "name": "Count"
+            },
+            {
+              "jsonPath": "$.rows[*][3]",
+              "language": "jsonpath",
+              "name": "Duration"
             }
           ],
           "method": "POST",
@@ -212,16 +244,113 @@
           "urlPath": "/query"
         }
       ],
-      "title": "Statement Details ($host)",
+      "title": "Client Messages ($host)",
       "type": "table"
     }
   ],
   "refresh": "30s",
   "schemaVersion": 38,
   "style": "dark",
-  "tags": [],
+  "tags": [
+    "sql"
+  ],
   "templating": {
     "list": [
+      {
+        "auto": true,
+        "auto_count": "50",
+        "auto_min": "10s",
+        "current": {
+          "selected": false,
+          "text": "10s",
+          "value": "10s"
+        },
+        "hide": 0,
+        "label": "interval",
+        "name": "interval",
+        "options": [
+          {
+            "selected": false,
+            "text": "auto",
+            "value": "$__auto_interval_interval"
+          },
+          {
+            "selected": true,
+            "text": "10s",
+            "value": "10s"
+          },
+          {
+            "selected": false,
+            "text": "30s",
+            "value": "30s"
+          },
+          {
+            "selected": false,
+            "text": "1m",
+            "value": "1m"
+          },
+          {
+            "selected": false,
+            "text": "5m",
+            "value": "5m"
+          },
+          {
+            "selected": false,
+            "text": "10m",
+            "value": "10m"
+          },
+          {
+            "selected": false,
+            "text": "15m",
+            "value": "15m"
+          },
+          {
+            "selected": false,
+            "text": "30m",
+            "value": "30m"
+          },
+          {
+            "selected": false,
+            "text": "1h",
+            "value": "1h"
+          },
+          {
+            "selected": false,
+            "text": "6h",
+            "value": "6h"
+          },
+          {
+            "selected": false,
+            "text": "12h",
+            "value": "12h"
+          },
+          {
+            "selected": false,
+            "text": "1d",
+            "value": "1d"
+          },
+          {
+            "selected": false,
+            "text": "7d",
+            "value": "7d"
+          },
+          {
+            "selected": false,
+            "text": "14d",
+            "value": "14d"
+          },
+          {
+            "selected": false,
+            "text": "30d",
+            "value": "30d"
+          }
+        ],
+        "query": "10s,30s,1m,5m,10m,15m,30m,1h,6h,12h,1d,7d,14d,30d",
+        "queryValue": "",
+        "refresh": 2,
+        "skipUrlSync": false,
+        "type": "interval"
+      },
       {
         "allValue": ".*",
         "current": {
@@ -255,12 +384,10 @@
         "current": {
           "selected": true,
           "text": [
-            "nuoadmin-3.nuodb.internal",
-            "nuoadmin-2.nuodb.internal"
+            "All"
           ],
           "value": [
-            "nuoadmin-3.nuodb.internal",
-            "nuoadmin-2.nuodb.internal"
+            "$__all"
           ]
         },
         "datasource": {
@@ -283,22 +410,6 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
-      },
-      {
-        "current": {},
-        "hide": 2,
-        "label": "id",
-        "name": "id",
-        "options": [
-          {
-            "selected": false,
-            "text": "0",
-            "value": "0"
-          }
-        ],
-        "query": "0",
-        "skipUrlSync": false,
-        "type": "textbox"
       }
     ]
   },
@@ -332,8 +443,8 @@
     ]
   },
   "timezone": "",
-  "title": "Sql Statement Details",
-  "uid": "f13dbb76-dc2a-42b9-af72-88700f6857b8",
-  "version": 17,
+  "title": "Client Messages",
+  "uid": "z35SM6j4z",
+  "version": 21,
   "weekStart": ""
 }
