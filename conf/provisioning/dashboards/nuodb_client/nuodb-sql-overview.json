@@ -38,10 +38,10 @@
       }
     ]
   },
-  "editable": false,
+  "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 14,
+  "id": 16,
   "links": [
     {
       "asDropdown": true,
@@ -576,7 +576,7 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 9,
+        "w": 6,
         "x": 0,
         "y": 2
       },
@@ -584,8 +584,8 @@
       "id": 45,
       "links": [
         {
-          "title": "",
-          "url": "/d/z35SM6j4z/client-messages?${__all_variables}&${__url_time_range}"
+          "title": "message chart",
+          "url": "/d/f499edfc-76ed-4d7a-843d-e73e4b6a2ef4/sql-client-messages?${__url_time_range}&${__all_variables}&groups=All"
         }
       ],
       "options": {
@@ -1005,6 +1005,234 @@
       "fieldConfig": {
         "defaults": {
           "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 6,
+        "y": 2
+      },
+      "id": 26,
+      "links": [
+        {
+          "title": "Overview",
+          "url": "/d/AeBZNz9Vk/nuodb-overview?${__all_variables}&${__url_time_range}"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "SqlListenerIdleTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(R) FROM (SELECT mean(\"value\") AS R FROM \"SqlListenerIdleTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY startid, time($__interval) fill(null)) GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            }
+          ]
+        }
+      ],
+      "title": "Idle Time",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P7F1571328205BBA6"
+      },
+      "description": "Average Time (within 1 second) spent by Client Connections active in database over interval",
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "light-blue",
+                "value": null
+              }
+            ]
+          },
+          "unit": "s"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 5,
+        "w": 3,
+        "x": 9,
+        "y": 2
+      },
+      "hideTimeOverride": true,
+      "id": 27,
+      "links": [
+        {
+          "title": "Overview",
+          "url": "/d/AeBZNz9Vk/nuodb-overview?${__all_variables}&${__url_time_range}"
+        }
+      ],
+      "options": {
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
+        "orientation": "auto",
+        "reduceOptions": {
+          "calcs": [
+            "lastNotNull"
+          ],
+          "fields": "",
+          "values": false
+        },
+        "text": {},
+        "textMode": "auto"
+      },
+      "pluginVersion": "10.0.3",
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "SqlListenerSqlProcTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(R) FROM (SELECT mean(\"value\") AS R FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY startid, time($__interval) fill(null)) GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            },
+            {
+              "condition": "AND",
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
+            },
+            {
+              "condition": "AND",
+              "key": "host",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
+        }
+      ],
+      "timeShift": "10s",
+      "title": "Proc Time",
+      "type": "stat"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P7F1571328205BBA6"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
             "mode": "palette-classic"
           },
           "custom": {
@@ -1017,8 +1245,8 @@
           "links": [
             {
               "targetBlank": false,
-              "title": "Details",
-              "url": "/d/z35SM6j4z/client-messages"
+	      "title": "message chart",
+	      "url": "/d/f499edfc-76ed-4d7a-843d-e73e4b6a2ef4/sql-client-messages?${__url_time_range}&${__all_variables}&groups=All"
             }
           ],
           "mappings": [],
@@ -1029,16 +1257,15 @@
       "gridPos": {
         "h": 5,
         "w": 3,
-        "x": 9,
+        "x": 12,
         "y": 2
       },
       "hideTimeOverride": true,
       "id": 52,
       "links": [
         {
-          "targetBlank": false,
-          "title": "",
-          "url": "/d/z35SM6j4z/client-messages?${__all_variables}&${__url_time_range}"
+          "title": "message chart",
+          "url": "/d/f499edfc-76ed-4d7a-843d-e73e4b6a2ef4/sql-client-messages?${__url_time_range}&${__all_variables}&groups=All"
         }
       ],
       "options": {
@@ -1483,15 +1710,15 @@
       "gridPos": {
         "h": 5,
         "w": 3,
-        "x": 12,
+        "x": 15,
         "y": 2
       },
       "hideTimeOverride": true,
       "id": 54,
       "links": [
         {
-          "title": "Details",
-          "url": "/d/z35SM6j4z/client-messages?${__all_variables}&${__url_time_range}"
+          "title": "message chart",
+          "url": "/d/f499edfc-76ed-4d7a-843d-e73e4b6a2ef4/sql-client-messages?${__url_time_range}&${__all_variables}&groups=All"
         }
       ],
       "options": {
@@ -1966,16 +2193,16 @@
       },
       "gridPos": {
         "h": 5,
-        "w": 9,
-        "x": 15,
+        "w": 6,
+        "x": 18,
         "y": 2
       },
       "hideTimeOverride": true,
       "id": 44,
       "links": [
         {
-          "title": "Details",
-          "url": "/d/z35SM6j4z/client-messages?${__all_variables}&${__url_time_range}"
+          "title": "message chart",
+          "url": "/d/f499edfc-76ed-4d7a-843d-e73e4b6a2ef4/sql-client-messages?${__url_time_range}&${__all_variables}&groups=All"
         }
       ],
       "options": {
@@ -2410,7 +2637,7 @@
           "refId": "A"
         }
       ],
-      "title": "Platform",
+      "title": "Statement / Rows",
       "type": "row"
     },
     {
@@ -2648,837 +2875,6 @@
                 "value": null
               }
             ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 6,
-        "y": 8
-      },
-      "id": 26,
-      "links": [
-        {
-          "title": "Overview",
-          "url": "/d/AeBZNz9Vk/nuodb-overview?${__all_variables}&${__url_time_range}"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "SqlListenerIdleTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT SUM(R) FROM (SELECT mean(\"value\") AS R FROM \"SqlListenerIdleTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY startid, time($__interval) fill(null)) GROUP BY time($__interval)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            }
-          ]
-        }
-      ],
-      "title": "Idle Time",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "s"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 9,
-        "y": 8
-      },
-      "hideTimeOverride": true,
-      "id": 27,
-      "links": [
-        {
-          "title": "Overview",
-          "url": "/d/AeBZNz9Vk/nuodb-overview?${__all_variables}&${__url_time_range}"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "SqlListenerSqlProcTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT SUM(R) FROM (SELECT mean(\"value\") AS R FROM \"SqlListenerSqlProcTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY startid, time($__interval) fill(null)) GROUP BY time($__interval)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        }
-      ],
-      "timeShift": "10s",
-      "title": "Proc Time",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "fixedColor": "semi-dark-yellow",
-            "mode": "fixed"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 12,
-        "y": 8
-      },
-      "hideTimeOverride": true,
-      "id": 46,
-      "links": [
-        {
-          "title": "SQL Dashboard",
-          "url": "/d/J9fZNkr4z/sql?${__all_variables}&${__url_time_range}"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "SqlListenerSqlProcTime",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT SUM(R) FROM (SELECT mean(\"rate\") AS R FROM \"Commits\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/) AND $timeFilter GROUP BY startid, time($__interval) fill(null)) GROUP BY time($__interval)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            }
-          ]
-        }
-      ],
-      "timeShift": "10s",
-      "title": "Commits",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 15,
-        "y": 8
-      },
-      "hideTimeOverride": true,
-      "id": 33,
-      "links": [
-        {
-          "title": "SQL Dashboard",
-          "url": "/d/J9fZNkr4z/sql?${__all_variables}&${__url_time_range}"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Inserts",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Inserts\" WHERE  (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/)   AND $timeFilter GROUP BY startid, time($__interval) fill(null)) group BY time($__interval)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            }
-          ]
-        }
-      ],
-      "timeShift": "10s",
-      "title": "Inserts",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 18,
-        "y": 8
-      },
-      "hideTimeOverride": true,
-      "id": 35,
-      "links": [
-        {
-          "title": "SQL Dashboard",
-          "url": "/d/J9fZNkr4z/sql?${__all_variables}&${__url_time_range}"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Updates",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Updates\" WHERE (\"nodetype\" = 'Transaction')  AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /^$host$/)  AND $timeFilter GROUP BY startid, time($__interval) fill(null)) group BY time($__interval)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            }
-          ]
-        }
-      ],
-      "timeShift": "10s",
-      "title": "Updates",
-      "type": "stat"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          },
-          "unit": "none"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 3,
-        "x": 21,
-        "y": 8
-      },
-      "hideTimeOverride": true,
-      "id": 34,
-      "links": [
-        {
-          "title": "SQL Dashboard",
-          "url": "/d/J9fZNkr4z/sql?${__all_variables}&${__url_time_range}"
-        }
-      ],
-      "options": {
-        "colorMode": "value",
-        "graphMode": "area",
-        "justifyMode": "auto",
-        "orientation": "auto",
-        "reduceOptions": {
-          "calcs": [
-            "lastNotNull"
-          ],
-          "fields": "",
-          "values": false
-        },
-        "text": {},
-        "textMode": "auto"
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "Deletes",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"Deletes\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/)  AND $timeFilter GROUP BY startid, time($__interval) fill(null)) group BY time($__interval)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            }
-          ]
-        }
-      ],
-      "timeShift": "10s",
-      "title": "Deletes",
-      "type": "stat"
-    },
-    {
-      "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
-      "gridPos": {
-        "h": 1,
-        "w": 24,
-        "x": 0,
-        "y": 12
-      },
-      "id": 23,
-      "panels": [],
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
-          "refId": "A"
-        }
-      ],
-      "title": "Rows",
-      "type": "row"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "palette-classic"
-          },
-          "custom": {
-            "axisCenteredZero": false,
-            "axisColorMode": "text",
-            "axisLabel": "",
-            "axisPlacement": "auto",
-            "barAlignment": 0,
-            "drawStyle": "line",
-            "fillOpacity": 0,
-            "gradientMode": "none",
-            "hideFrom": {
-              "legend": false,
-              "tooltip": false,
-              "viz": false
-            },
-            "lineInterpolation": "linear",
-            "lineWidth": 1,
-            "pointSize": 5,
-            "scaleDistribution": {
-              "type": "linear"
-            },
-            "showPoints": "never",
-            "spanNulls": false,
-            "stacking": {
-              "group": "A",
-              "mode": "none"
-            },
-            "thresholdsStyle": {
-              "mode": "off"
-            }
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
-          }
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 4,
-        "w": 6,
-        "x": 0,
-        "y": 13
-      },
-      "hideTimeOverride": true,
-      "id": 2,
-      "links": [
-        {
-          "title": "Details by Statement",
-          "url": "/d/Cp_9O6C4k/sql-statement-operations?${__all_variables}&${__url_time_range}"
-        }
-      ],
-      "options": {
-        "legend": {
-          "calcs": [],
-          "displayMode": "list",
-          "placement": "bottom",
-          "showLegend": true
-        },
-        "tooltip": {
-          "mode": "single",
-          "sort": "none"
-        }
-      },
-      "pluginVersion": "8.3.0",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "SqlStatementCount",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(a) FROM (SELECT mean(\"rate\") as a FROM \"SqlStatementCount\" WHERE (\"nodetype\" = 'Transaction')  AND (\"db\" =~ /^$database$/) AND (\"host\" =~ /^$host$/)  AND $timeFilter GROUP BY startid, time($__interval) fill(null)) group BY time($__interval)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            }
-          ]
-        }
-      ],
-      "timeShift": "10s",
-      "title": "Statements Executed",
-      "type": "timeseries"
-    },
-    {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "light-blue",
-                "value": null
-              }
-            ]
           }
         },
         "overrides": []
@@ -3487,7 +2883,7 @@
         "h": 4,
         "w": 3,
         "x": 6,
-        "y": 13
+        "y": 8
       },
       "hideTimeOverride": true,
       "id": 38,
@@ -3499,7 +2895,7 @@
       ],
       "options": {
         "colorMode": "value",
-        "graphMode": "none",
+        "graphMode": "area",
         "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
@@ -3641,7 +3037,7 @@
         "h": 4,
         "w": 3,
         "x": 9,
-        "y": 13
+        "y": 8
       },
       "hideTimeOverride": true,
       "id": 29,
@@ -3954,7 +3350,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 13
+        "y": 8
       },
       "hideTimeOverride": true,
       "id": 37,
@@ -3965,9 +3361,9 @@
         }
       ],
       "options": {
-        "displayMode": "basic",
-        "minVizHeight": 10,
-        "minVizWidth": 0,
+        "colorMode": "value",
+        "graphMode": "area",
+        "justifyMode": "auto",
         "orientation": "auto",
         "reduceOptions": {
           "calcs": [
@@ -3976,8 +3372,7 @@
           "fields": "",
           "values": false
         },
-        "showUnfilled": false,
-        "valueMode": "color"
+        "textMode": "auto"
       },
       "pluginVersion": "10.0.3",
       "repeatDirection": "h",
@@ -4234,7 +3629,7 @@
       ],
       "timeShift": "10s",
       "title": "SQL Rows by Operation",
-      "type": "bargauge"
+      "type": "stat"
     },
     {
       "collapsed": false,
@@ -4246,7 +3641,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 17
+        "y": 12
       },
       "id": 17,
       "panels": [],
@@ -4289,7 +3684,7 @@
         "h": 4,
         "w": 4,
         "x": 0,
-        "y": 18
+        "y": 13
       },
       "hideTimeOverride": true,
       "id": 10,
@@ -4396,7 +3791,7 @@
         "h": 4,
         "w": 4,
         "x": 4,
-        "y": 18
+        "y": 13
       },
       "hideTimeOverride": true,
       "id": 12,
@@ -4503,7 +3898,7 @@
         "h": 4,
         "w": 4,
         "x": 8,
-        "y": 18
+        "y": 13
       },
       "hideTimeOverride": true,
       "id": 15,
@@ -4610,7 +4005,7 @@
         "h": 4,
         "w": 4,
         "x": 12,
-        "y": 18
+        "y": 13
       },
       "hideTimeOverride": true,
       "id": 13,
@@ -4717,7 +4112,7 @@
         "h": 4,
         "w": 4,
         "x": 16,
-        "y": 18
+        "y": 13
       },
       "hideTimeOverride": true,
       "id": 11,
@@ -4825,7 +4220,7 @@
         "h": 4,
         "w": 4,
         "x": 20,
-        "y": 18
+        "y": 13
       },
       "hideTimeOverride": true,
       "id": 14,
@@ -4915,7 +4310,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 22
+        "y": 17
       },
       "id": 4,
       "panels": [],
@@ -4959,7 +4354,7 @@
         "h": 4,
         "w": 6,
         "x": 0,
-        "y": 23
+        "y": 18
       },
       "hideTimeOverride": true,
       "id": 20,
@@ -5065,7 +4460,7 @@
         "h": 4,
         "w": 6,
         "x": 6,
-        "y": 23
+        "y": 18
       },
       "hideTimeOverride": true,
       "id": 18,
@@ -5171,7 +4566,7 @@
         "h": 4,
         "w": 6,
         "x": 12,
-        "y": 23
+        "y": 18
       },
       "hideTimeOverride": true,
       "id": 21,
@@ -5277,7 +4672,7 @@
         "h": 4,
         "w": 6,
         "x": 18,
-        "y": 23
+        "y": 18
       },
       "hideTimeOverride": true,
       "id": 36,
@@ -5357,7 +4752,7 @@
       "type": "stat"
     }
   ],
-  "refresh": "10s",
+  "refresh": "",
   "schemaVersion": 38,
   "style": "dark",
   "tags": [
@@ -5370,7 +4765,7 @@
         "auto_count": "50",
         "auto_min": "10s",
         "current": {
-          "selected": false,
+          "selected": true,
           "text": "10s",
           "value": "10s"
         },
@@ -5491,12 +4886,12 @@
       {
         "allValue": "",
         "current": {
-          "selected": true,
+          "selected": false,
           "text": [
-            "All"
+            "nuoadmin-2.nuodb.internal"
           ],
           "value": [
-            "$__all"
+            "nuoadmin-2.nuodb.internal"
           ]
         },
         "datasource": {
@@ -5551,6 +4946,6 @@
   "timezone": "utc",
   "title": "NuoDB SQL Overview",
   "uid": "cul4kM9Vz",
-  "version": 74,
+  "version": 7,
   "weekStart": ""
 }
