@@ -47,11 +47,11 @@
       }
     ]
   },
-  "description": "NuoDB Summary",
+  "description": "NuoDB Records Affected",
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 22,
+  "id": 26,
   "links": [
     {
       "asDropdown": true,
@@ -94,23 +94,47 @@
   "panels": [
     {
       "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "fb12902f-919a-4aa9-89de-398bdfce52df"
+        "type": "influxdb",
+        "uid": "P948FE603F61DC036"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "#C0D8FF",
-            "mode": "fixed"
+            "mode": "palette-classic"
           },
           "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "color-text"
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 2,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
             },
-            "inspect": false
+            "lineInterpolation": "linear",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
-          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -118,152 +142,187 @@
               {
                 "color": "green",
                 "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
               }
             ]
-          },
-          "unit": "none"
+          }
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "ID"
+              "options": "total_statements.sum_deletions"
             },
             "properties": [
-              {
-                "id": "custom.hidden",
-                "value": true
-              },
-              {
-                "id": "unit",
-                "value": "string"
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "INDEXHITS"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 97
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "INDEXFETCHES"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 128
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "EXHAUSTIVEFETCHES"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 169
-              },
               {
                 "id": "displayName",
-                "value": "TABLEFETCHES"
+                "value": "Deletes"
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "INDEXBATCHFETCHES"
+              "options": "total_statements.sum_inserts"
             },
             "properties": [
-              {
-                "id": "custom.width",
-                "value": 203
-              },
               {
                 "id": "displayName",
-                "value": "#INDEXSCANS"
+                "value": "Inserts"
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "#INDEXSCANS"
+              "options": "total_statements.sum_updates"
             },
             "properties": [
-              {
-                "id": "custom.width",
-                "value": 120
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "TABLEFETCHES"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 128
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "NUMEXECUTES"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 129
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "LASTEXECUTED"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 176
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "EXHAUSTIVEBATCHFETCHES"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 120
-              },
               {
                 "id": "displayName",
-                "value": "#TABLESCANS"
+                "value": "Updates"
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "SQLSTRING"
+              "options": "total_statements.sum_recordsreturned"
+            },
+            "properties": [
+              {
+                "id": "displayName",
+                "value": "Selects"
+              }
+            ]
+          }
+        ]
+      },
+      "gridPos": {
+        "h": 4,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "interval": "$interval",
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P948FE603F61DC036"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "total_statements",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "SELECT sum(/(updates|inserts|deletions|recordsreturned)/) FROM \"autogen\".\"total_statements\" WHERE (\"db_name\"::tag =~ /^$database$/ AND \"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "updates"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "db_name::tag",
+              "operator": "=~",
+              "value": "/^$database$/"
+            },
+            {
+              "condition": "AND",
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$host$/"
+            }
+          ]
+        }
+      ],
+      "title": "Sql Rows Affected",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {}
+        }
+      ],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P948FE603F61DC036"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
+        },
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "sqlstring"
             },
             "properties": [
               {
@@ -271,29 +330,33 @@
                 "value": true
               },
               {
-                "id": "links",
-                "value": [
-                  {
-                    "title": "Statement Details",
-                    "url": "/d/f13dbb76-dc2a-42b9-af72-88700f6857b8/sql-statement-details?var-id=${__data.fields.ID}&${host:queryparam}"
-                  }
-                ]
+                "id": "custom.filterable",
+                "value": true
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "EXECTIME"
+              "options": "Last Executed"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 97
+                "value": 143
               },
               {
-                "id": "custom.hidden"
-              },
+                "id": "unit",
+                "value": "dateTimeAsIsoNoDateIfToday"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byRegexp",
+              "options": "/.*Time/"
+            },
+            "properties": [
               {
                 "id": "unit",
                 "value": "µs"
@@ -303,30 +366,220 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "REJECTEDINDEXHITS"
+              "options": "Number Executes"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 88
+                "value": 142
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ExecuteTime"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 104
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AvgTime"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 135
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "SQL String"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 866
               },
               {
-                "id": "displayName",
-                "value": "REJECTED"
+                "id": "custom.inspect",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Fetched"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Sorted"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Locked"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 100
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Evicted"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 103
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "Count"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 98
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TotalTime"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 110
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "AvgExecTime"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 117
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IndexHits"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 93
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "RejectedHits"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 113
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "IndexScans"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 103
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "TableScans"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 97
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "# IndexScans"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 116
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "# TableScans"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 105
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 12,
+        "h": 20,
         "w": 24,
         "x": 0,
-        "y": 0
+        "y": 4
       },
-      "id": 10,
-      "interval": "$interval",
-      "maxPerRow": 2,
+      "id": 1,
       "options": {
         "cellHeight": "sm",
         "footer": {
@@ -335,108 +588,179 @@
           "reducer": [
             "sum"
           ],
-          "show": true
+          "show": false
         },
-        "frameIndex": 1,
+        "frameIndex": 6,
         "showHeader": true,
         "sortBy": [
           {
             "desc": true,
-            "displayName": "NUMEXECUTES"
+            "displayName": "Last Executed"
           }
         ]
       },
-      "pluginVersion": "10.0.2",
-      "repeat": "host",
-      "repeatDirection": "v",
+      "pluginVersion": "10.0.3",
       "targets": [
         {
-          "body": "select LASTEXECUTED,\n        NUMEXECUTES,\n        EXECTIME,\n        INDEXHITS,\n        REJECTEDINDEXHITS,\n        INDEXFETCHES,\n        EXHAUSTIVEFETCHES,\n        INDEXBATCHFETCHES,\n        EXHAUSTIVEBATCHFETCHES,\n        SQLSTRING,\n        ID\n  from system.LOCALSTATEMENTCACHE\n where LASTEXECUTED > DATE_SUB(now(), INTERVAL $__interval_ms/1000 second)",
-          "cacheDurationSeconds": 0,
           "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "fb12902f-919a-4aa9-89de-398bdfce52df"
+            "type": "influxdb",
+            "uid": "P948FE603F61DC036"
           },
-          "fields": [
+          "groupBy": [
             {
-              "jsonPath": "$.rows[*][0]",
-              "name": "LASTEXECUTED",
+              "params": [
+                "$__interval"
+              ],
               "type": "time"
             },
             {
-              "jsonPath": "$.rows[*][1]",
-              "language": "jsonpath",
-              "name": "NUMEXECUTES"
-            },
-            {
-              "jsonPath": "$.rows[*][2]",
-              "language": "jsonpath",
-              "name": "EXECTIME"
-            },
-            {
-              "jsonPath": "$.rows[*][3]",
-              "language": "jsonpath",
-              "name": "INDEXHITS"
-            },
-            {
-              "jsonPath": "$.rows[*][4]",
-              "language": "jsonpath",
-              "name": "REJECTEDINDEXHITS"
-            },
-            {
-              "jsonPath": "$.rows[*][5]",
-              "language": "jsonpath",
-              "name": "INDEXFETCHES"
-            },
-            {
-              "jsonPath": "$.rows[*][6]",
-              "language": "jsonpath",
-              "name": "EXHAUSTIVEFETCHES"
-            },
-            {
-              "jsonPath": "$.rows[*][7]",
-              "language": "jsonpath",
-              "name": "INDEXBATCHFETCHES"
-            },
-            {
-              "jsonPath": "$.rows[*][8]",
-              "language": "jsonpath",
-              "name": "EXHAUSTIVEBATCHFETCHES"
-            },
-            {
-              "jsonPath": "$.rows[*][9]",
-              "language": "jsonpath",
-              "name": "SQLSTRING",
-              "type": "string"
-            },
-            {
-              "jsonPath": "$.rows[*][10]",
-              "language": "jsonpath",
-              "name": "ID",
-              "type": "string"
+              "params": [
+                "null"
+              ],
+              "type": "fill"
             }
           ],
-          "method": "POST",
-          "params": [
+          "measurement": "nuodb_statements",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "SELECT last(lastexecuted),last(id),sum(/(numexecutes|exectime|index|exhaustive)/) FROM \"autogen\".\"nuodb_statements\" WHERE $timeFilter GROUP BY sqlstring",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
             [
-              "dbname",
-              "$database"
-            ],
-            [
-              "hostname",
-              "$host"
+              {
+                "params": [
+                  "value"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
             ]
           ],
-          "queryParams": "",
-          "refId": "A",
-          "urlPath": "/query"
+          "tags": []
         }
       ],
-      "title": "Number Rows Returned/Updated ($host)",
+      "title": "SQL Statement Records",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "last_1": true,
+              "sum_collection_interval": true,
+              "sum_deletions": true,
+              "sum_evicted": true,
+              "sum_exhaustivebatchfetches": false,
+              "sum_exhaustivefetches": false,
+              "sum_indexbatchfetches": false,
+              "sum_indexfetches": false,
+              "sum_indexhits": false,
+              "sum_inserts": true,
+              "sum_locked": true,
+              "sum_numexecutes": false,
+              "sum_recordsfetched": false,
+              "sum_recordsreturned": true,
+              "sum_recordssorted": true,
+              "sum_rejectedindexhits": false,
+              "sum_replaces": true,
+              "sum_updatecount": true,
+              "sum_updates": true
+            },
+            "indexByName": {
+              "Time": 0,
+              "last": 1,
+              "last_1": 4,
+              "sqlstring": 11,
+              "sum_exectime": 3,
+              "sum_exhaustivebatchfetches": 10,
+              "sum_exhaustivefetches": 9,
+              "sum_indexbatchfetches": 8,
+              "sum_indexfetches": 7,
+              "sum_indexhits": 5,
+              "sum_numexecutes": 2,
+              "sum_rejectedindexhits": 6
+            },
+            "renameByName": {
+              "last": "Last Executed",
+              "last_1": "Id",
+              "sqlstring": "SQL String",
+              "sum_compiletime": "CompileTime",
+              "sum_evicted": "Evicted",
+              "sum_exectime": "ExecuteTime",
+              "sum_exhaustivebatchfetches": "# TableScans",
+              "sum_exhaustivefetches": "# IndexScans",
+              "sum_indexbatchfetches": "TableScans",
+              "sum_indexfetches": "IndexScans",
+              "sum_indexhits": "IndexHits",
+              "sum_locked": "Locked",
+              "sum_numexecutes": "Count",
+              "sum_recordsfetched": "Fetched",
+              "sum_recordssorted": "Sorted",
+              "sum_rejectedindexhits": "RejectedHits"
+            }
+          }
+        },
+        {
+          "id": "convertFieldType",
+          "options": {
+            "conversions": [
+              {
+                "dateFormat": "YYYYMMDDTHHmmss",
+                "destinationType": "time",
+                "targetField": "Last Executed"
+              }
+            ],
+            "fields": {}
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "alias": "AvgExecTime",
+            "binary": {
+              "left": "ExecuteTime",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "Count"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        },
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "AvgExecTime": true
+            },
+            "indexByName": {
+              "# IndexScans": 8,
+              "# TableScans": 9,
+              "AvgExecTime": 3,
+              "Count": 1,
+              "ExecuteTime": 2,
+              "IndexHits": 4,
+              "IndexScans": 6,
+              "Last Executed": 0,
+              "RejectedHits": 5,
+              "SQL String": 10,
+              "TableScans": 7
+            },
+            "renameByName": {}
+          }
+        }
+      ],
       "type": "table"
     }
   ],
-  "refresh": "30s",
+  "refresh": "",
   "schemaVersion": 38,
   "style": "dark",
   "tags": [
@@ -450,20 +774,20 @@
         "auto_min": "10s",
         "current": {
           "selected": false,
-          "text": "10s",
-          "value": "10s"
+          "text": "auto",
+          "value": "$__auto_interval_interval"
         },
         "hide": 0,
         "label": "interval",
         "name": "interval",
         "options": [
           {
-            "selected": false,
+            "selected": true,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
           {
-            "selected": true,
+            "selected": false,
             "text": "10s",
             "value": "10s"
           },
@@ -572,10 +896,10 @@
         "current": {
           "selected": true,
           "text": [
-            "All"
+            "nuoadmin-2.nuodb.internal"
           ],
           "value": [
-            "$__all"
+            "nuoadmin-2.nuodb.internal"
           ]
         },
         "datasource": {
@@ -602,8 +926,8 @@
     ]
   },
   "time": {
-    "from": "now-30m",
-    "to": "now"
+    "from": "2023-10-09T13:47:14.002Z",
+    "to": "2023-10-09T14:59:04.459Z"
   },
   "timepicker": {
     "refresh_intervals": [
@@ -632,7 +956,7 @@
   },
   "timezone": "",
   "title": "Sql Statement Indexes",
-  "uid": "c5af0e56-adeb-4e24-aab3-427e225c0559",
-  "version": 12,
+  "uid": "e047494e-25c5-4efe-8572-fa1551034ce4",
+  "version": 2,
   "weekStart": ""
 }

@@ -47,11 +47,11 @@
       }
     ]
   },
-  "description": "NuoDB Summary",
-  "editable": true,
+  "description": "Look at time spent in each sql client API for given time range",
+  "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 17,
+  "id": 15,
   "links": [
     {
       "asDropdown": true,
@@ -94,22 +94,46 @@
   "panels": [
     {
       "datasource": {
-        "type": "marcusolsson-json-datasource",
-        "uid": "fb12902f-919a-4aa9-89de-398bdfce52df"
+        "type": "influxdb",
+        "uid": "P7F1571328205BBA6"
       },
       "fieldConfig": {
         "defaults": {
           "color": {
-            "fixedColor": "super-light-blue",
-            "mode": "fixed"
+            "mode": "palette-classic"
           },
           "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "color-text"
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisGridShow": false,
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 0,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
             },
-            "inspect": false
+            "lineInterpolation": "linear",
+            "lineWidth": 1,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": false,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
           },
+          "links": [],
           "mappings": [],
           "thresholds": {
             "mode": "absolute",
@@ -120,37 +144,499 @@
               }
             ]
           },
-          "unit": "none"
+          "unit": "µs"
+        },
+        "overrides": []
+      },
+      "gridPos": {
+        "h": 6,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "hideTimeOverride": true,
+      "id": 1,
+      "links": [
+        {
+          "title": "message chart",
+          "url": "/d/f499edfc-76ed-4d7a-843d-e73e4b6a2ef4/sql-client-messages?${__url_time_range}&${__all_variables}&groups=All"
+        }
+      ],
+      "options": {
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": true
+        },
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
+        }
+      },
+      "targets": [
+        {
+          "alias": "Execute",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "SqlClientExecute",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(R) FROM (SELECT mean(\"rate\") AS R FROM \"SqlClientExecuteTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/ AND 'execute' =~ /^$msggroup$/ ) AND $timeFilter GROUP BY time($__interval) , startid fill(null)) GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "E",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            },
+            {
+              "condition": "AND",
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
+            }
+          ]
+        },
+        {
+          "alias": "Prepare",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "SqlClientConnectionTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(R) FROM (SELECT mean(\"rate\") AS R FROM \"SqlClientPrepareTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/  AND 'prepare' =~ /^$msggroup$/ ) AND $timeFilter GROUP BY time($__interval) , startid fill(null)) GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "D",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            },
+            {
+              "condition": "AND",
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
+            }
+          ]
+        },
+        {
+          "alias": "PrepareAndExecute",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "SqlClientConnectionTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(R) FROM (SELECT mean(\"rate\") AS R FROM \"SqlClientPrepareExecuteTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/  AND 'prepareandexecute' =~ /^$msggroup$/ ) AND $timeFilter GROUP BY time($__interval) , startid fill(null)) GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "G",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            },
+            {
+              "condition": "AND",
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
+            }
+          ]
+        },
+        {
+          "alias": "ResultSet",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "SqlClientConnectionTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(R) FROM (SELECT mean(\"rate\") AS R FROM \"SqlClientResultSetTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/  AND 'resultset' =~ /^$msggroup$/) AND $timeFilter GROUP BY time($__interval) , startid fill(null)) GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "C",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            },
+            {
+              "condition": "AND",
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
+            }
+          ]
+        },
+        {
+          "alias": "Transaction",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "SqlClientConnectionTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(R) FROM (SELECT mean(\"rate\") AS R FROM \"SqlClientTransactionTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/  AND 'transaction' =~ /^$msggroup$/) AND $timeFilter GROUP BY time($__interval) , startid fill(null)) GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "F",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            },
+            {
+              "condition": "AND",
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
+            }
+          ]
+        },
+        {
+          "alias": "Connection",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "SqlClientConnectionTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(R) FROM (SELECT mean(\"rate\") AS R FROM \"SqlClientConnectionTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/  AND 'connection' =~ /^$msggroup$/) AND $timeFilter GROUP BY time($__interval) , startid fill(null)) GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            },
+            {
+              "condition": "AND",
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
+            }
+          ]
+        },
+        {
+          "alias": "Database",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "hide": false,
+          "measurement": "SqlClientConnectionTime",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "query": "SELECT SUM(R) FROM (SELECT mean(\"rate\") AS R FROM \"SqlClientDatabaseTime\" WHERE (\"nodetype\" = 'Transaction' AND \"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/  AND 'database' =~ /^$msggroup$/) AND $timeFilter GROUP BY time($__interval) , startid fill(null)) GROUP BY time($__interval)",
+          "rawQuery": true,
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "rate"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            },
+            {
+              "condition": "AND",
+              "key": "db",
+              "operator": "=~",
+              "value": "/^$database$/"
+            }
+          ]
+        }
+      ],
+      "timeShift": "10s",
+      "title": "Duration",
+      "transformations": [],
+      "type": "timeseries"
+    },
+    {
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P948FE603F61DC036"
+      },
+      "fieldConfig": {
+        "defaults": {
+          "color": {
+            "mode": "thresholds"
+          },
+          "custom": {
+            "align": "auto",
+            "cellOptions": {
+              "type": "auto"
+            },
+            "inspect": false
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          }
         },
         "overrides": [
           {
             "matcher": {
               "id": "byName",
-              "options": "TypeGroup"
+              "options": "Duration"
             },
             "properties": [
               {
+                "id": "unit",
+                "value": "µs"
+              },
+              {
                 "id": "custom.width",
-                "value": 131
+                "value": 248
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "MsgType"
+              "options": "Duration / Count"
             },
             "properties": [
               {
-                "id": "custom.width",
-                "value": 253
+                "id": "unit",
+                "value": "µs"
               }
             ]
           },
           {
             "matcher": {
               "id": "byName",
-              "options": "Count"
+              "options": "MsgGroup"
             },
             "properties": [
               {
@@ -162,89 +648,163 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "Duration"
+              "options": "Count"
             },
             "properties": [
               {
-                "id": "unit",
-                "value": "µs"
+                "id": "custom.width",
+                "value": 139
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "MsgType"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 633
               }
             ]
           }
         ]
       },
       "gridPos": {
-        "h": 24,
-        "w": 12,
+        "h": 17,
+        "w": 24,
         "x": 0,
-        "y": 0
+        "y": 6
       },
-      "id": 10,
-      "maxPerRow": 2,
+      "id": 2,
       "options": {
         "cellHeight": "sm",
         "footer": {
           "countRows": false,
-          "fields": "",
+          "enablePagination": true,
+          "fields": [
+            "sum_count"
+          ],
           "reducer": [
             "sum"
           ],
-          "show": true
+          "show": false
         },
-        "frameIndex": 1,
         "showHeader": true,
-        "sortBy": []
+        "sortBy": [
+          {
+            "desc": true,
+            "displayName": "Duration"
+          }
+        ]
       },
       "pluginVersion": "10.0.3",
-      "repeat": "host",
-      "repeatDirection": "h",
       "targets": [
         {
-          "body": "select TYPE,\"GROUP\",COUNT,DURATION from system.localclientmessages order by DURATION desc",
-          "cacheDurationSeconds": 0,
           "datasource": {
-            "type": "marcusolsson-json-datasource",
-            "uid": "fb12902f-919a-4aa9-89de-398bdfce52df"
+            "type": "influxdb",
+            "uid": "P948FE603F61DC036"
           },
-          "fields": [
+          "groupBy": [
             {
-              "jsonPath": "$.rows[*][0]",
-              "name": "MsgType",
-              "type": "string"
+              "params": [
+                "group::tag"
+              ],
+              "type": "tag"
             },
             {
-              "jsonPath": "$.rows[*][1]",
-              "language": "jsonpath",
-              "name": "TypeGroup"
-            },
-            {
-              "jsonPath": "$.rows[*][2]",
-              "language": "jsonpath",
-              "name": "Count"
-            },
-            {
-              "jsonPath": "$.rows[*][3]",
-              "language": "jsonpath",
-              "name": "Duration"
+              "params": [
+                "type::tag"
+              ],
+              "type": "tag"
             }
           ],
-          "method": "POST",
-          "params": [
+          "measurement": "nuodb_messages",
+          "orderByTime": "ASC",
+          "policy": "autogen",
+          "query": "SELECT sum(*) FROM \"autogen\".\"nuodb_messages\" WHERE (\"host\"::tag =~ /^$host$/ AND \"db_name\"::tag =~ /^$database$/ AND \"group\"::tag =~ /^$msggroup$/ AND \"count\"::field !=0) AND $timeFilter GROUP BY \"group\"::tag, \"type\"::tag",
+          "rawQuery": true,
+          "refId": "A",
+          "resultFormat": "table",
+          "select": [
             [
-              "dbname",
-              "$database"
-            ],
-            [
-              "hostname",
-              "$host"
+              {
+                "params": [
+                  "count"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "sum"
+              }
             ]
           ],
-          "queryParams": "",
-          "refId": "A",
-          "urlPath": "/query"
+          "tags": [
+            {
+              "key": "host::tag",
+              "operator": "=~",
+              "value": "/^$host$/"
+            },
+            {
+              "condition": "AND",
+              "key": "db_name::tag",
+              "operator": "=~",
+              "value": "/^$database$/"
+            },
+            {
+              "condition": "AND",
+              "key": "count::field",
+              "operator": "!=",
+              "value": "0"
+            }
+          ]
         }
       ],
-      "title": "Client Messages ($host)",
+      "title": "Panel Title",
+      "transformations": [
+        {
+          "id": "organize",
+          "options": {
+            "excludeByName": {
+              "Time": true,
+              "sum_count_rate": true,
+              "sum_duration_rate": true
+            },
+            "indexByName": {
+              "Time": 0,
+              "group": 2,
+              "sum_count": 3,
+              "sum_count_rate": 4,
+              "sum_duration": 5,
+              "sum_duration_rate": 6,
+              "type": 1
+            },
+            "renameByName": {
+              "group": "MsgGroup",
+              "sum_count": "Count",
+              "sum_duration": "Duration",
+              "type": "MsgType"
+            }
+          }
+        },
+        {
+          "id": "calculateField",
+          "options": {
+            "binary": {
+              "left": "Duration",
+              "operator": "/",
+              "reducer": "sum",
+              "right": "Count"
+            },
+            "mode": "binary",
+            "reduce": {
+              "reducer": "sum"
+            }
+          }
+        }
+      ],
       "type": "table"
     }
   ],
@@ -410,6 +970,36 @@
         "tagsQuery": "",
         "type": "query",
         "useTags": false
+      },
+      {
+        "current": {
+          "selected": true,
+          "text": [
+            "execute",
+            "connection"
+          ],
+          "value": [
+            "execute",
+            "connection"
+          ]
+        },
+        "datasource": {
+          "type": "influxdb",
+          "uid": "P948FE603F61DC036"
+        },
+        "definition": "show tag values with key = \"group\"",
+        "hide": 0,
+        "includeAll": true,
+        "label": "MsgGroup",
+        "multi": true,
+        "name": "msggroup",
+        "options": [],
+        "query": "show tag values with key = \"group\"",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "type": "query"
       }
     ]
   },
@@ -418,6 +1008,7 @@
     "to": "now"
   },
   "timepicker": {
+    "hidden": false,
     "refresh_intervals": [
       "5s",
       "10s",
@@ -443,8 +1034,8 @@
     ]
   },
   "timezone": "",
-  "title": "Client Messages",
+  "title": "SQL Client Messages",
   "uid": "z35SM6j4z",
-  "version": 21,
+  "version": 10,
   "weekStart": ""
 }

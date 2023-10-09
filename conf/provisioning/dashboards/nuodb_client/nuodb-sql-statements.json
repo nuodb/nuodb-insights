@@ -37,7 +37,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 35,
+  "id": 20,
   "links": [
     {
       "asDropdown": true,
@@ -5727,6 +5727,6 @@
   "timezone": "",
   "title": "NuoDB SQL Statements",
   "uid": "df0d2b01-89ff-4108-bace-32f436204209",
-  "version": 56,
+  "version": 1,
   "weekStart": ""
 }

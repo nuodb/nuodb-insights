@@ -37,7 +37,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 34,
+  "id": 16,
   "links": [
     {
       "asDropdown": true,
@@ -863,6 +863,6 @@
   "timezone": "",
   "title": "SQL Execution Logs",
   "uid": "c9081118-5230-478d-b6e8-d76614395704",
-  "version": 14,
+  "version": 1,
   "weekStart": ""
 }

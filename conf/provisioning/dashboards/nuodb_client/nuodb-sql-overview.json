@@ -41,7 +41,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 16,
+  "id": 23,
   "links": [
     {
       "asDropdown": true,
@@ -1245,8 +1245,8 @@
           "links": [
             {
               "targetBlank": false,
-	      "title": "message chart",
-	      "url": "/d/f499edfc-76ed-4d7a-843d-e73e4b6a2ef4/sql-client-messages?${__url_time_range}&${__all_variables}&groups=All"
+              "title": "message chart",
+              "url": "/d/f499edfc-76ed-4d7a-843d-e73e4b6a2ef4/sql-client-messages?${__url_time_range}&${__all_variables}&groups=All"
             }
           ],
           "mappings": [],
@@ -2890,7 +2890,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/Cp_9O6C4k/sql-statement-operations?${__all_variables}&${__url_time_range}"
+          "url": "/d/ac1c1ab9-0112-43ec-8f23-78c625345906/sql-statement-operations?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -3044,7 +3044,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/Cp_9O6C4k/sql-statement-operations?${__all_variables}&${__url_time_range}"
+          "url": "/d/ac1c1ab9-0112-43ec-8f23-78c625345906/sql-statement-operations?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -3357,7 +3357,7 @@
       "links": [
         {
           "title": "Details by Statement ",
-          "url": "/d/Cp_9O6C4k/sql-statement-operations?${__all_variables}&${__url_time_range}"
+          "url": "/d/ac1c1ab9-0112-43ec-8f23-78c625345906/sql-statement-operations?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -3691,7 +3691,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/c5af0e56-adeb-4e24-aab3-427e225c0559/sql-statement-indexes?${__all_variables}&${__url_time_range}"
+          "url": "/d/e047494e-25c5-4efe-8572-fa1551034ce4/sql-statement-indexes?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -3798,7 +3798,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/c5af0e56-adeb-4e24-aab3-427e225c0559/sql-statement-indexes?${__all_variables}&${__url_time_range}"
+          "url": "/d/e047494e-25c5-4efe-8572-fa1551034ce4/sql-statement-indexes?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -3905,7 +3905,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/c5af0e56-adeb-4e24-aab3-427e225c0559/sql-statement-indexes?${__all_variables}&${__url_time_range}"
+          "url": "/d/e047494e-25c5-4efe-8572-fa1551034ce4/sql-statement-indexes?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -4012,7 +4012,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/c5af0e56-adeb-4e24-aab3-427e225c0559/sql-statement-indexes?${__all_variables}&${__url_time_range}"
+          "url": "/d/e047494e-25c5-4efe-8572-fa1551034ce4/sql-statement-indexes?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -4119,7 +4119,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/c5af0e56-adeb-4e24-aab3-427e225c0559/sql-statement-indexes?${__all_variables}&${__url_time_range}"
+          "url": "/d/e047494e-25c5-4efe-8572-fa1551034ce4/sql-statement-indexes?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -4227,7 +4227,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/c5af0e56-adeb-4e24-aab3-427e225c0559/sql-statement-indexes?${__all_variables}&${__url_time_range}"
+          "url": "/d/e047494e-25c5-4efe-8572-fa1551034ce4/sql-statement-indexes?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -4361,7 +4361,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/f1af96f4-c6b6-4813-9cab-39bda6df0650/sql-statement-records?${__all_variables}&${__url_time_range}"
+          "url": "/d/bceeb9dd-e8d6-474d-8b56-934d4f8e2f25/sql-statement-records?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -4467,7 +4467,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/f1af96f4-c6b6-4813-9cab-39bda6df0650/sql-statement-records?${__all_variables}&${__url_time_range}"
+          "url": "/d/bceeb9dd-e8d6-474d-8b56-934d4f8e2f25/sql-statement-records?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -4573,7 +4573,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/f1af96f4-c6b6-4813-9cab-39bda6df0650/sql-statement-records?${__all_variables}&${__url_time_range}"
+          "url": "/d/bceeb9dd-e8d6-474d-8b56-934d4f8e2f25/sql-statement-records?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -4679,7 +4679,7 @@
       "links": [
         {
           "title": "Details by Statement",
-          "url": "/d/f1af96f4-c6b6-4813-9cab-39bda6df0650/sql-statement-records?${__all_variables}&${__url_time_range}"
+          "url": "/d/bceeb9dd-e8d6-474d-8b56-934d4f8e2f25/sql-statement-records?${__all_variables}&${__url_time_range}"
         }
       ],
       "options": {
@@ -4946,6 +4946,6 @@
   "timezone": "utc",
   "title": "NuoDB SQL Overview",
   "uid": "cul4kM9Vz",
-  "version": 7,
+  "version": 1,
   "weekStart": ""
 }
