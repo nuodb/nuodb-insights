@@ -51,7 +51,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 26,
+  "id": 17,
   "links": [
     {
       "asDropdown": true,
@@ -412,6 +412,15 @@
               {
                 "id": "custom.inspect",
                 "value": true
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "d/a63c439d-870f-4674-b7c8-a62ce59b101f/sql-statement-viewer?${__url_time_range}&${__all_variables}&var-filter=id%7C%3D%7C${__data.fields.ID}"
+                  }
+                ]
               }
             ]
           },
@@ -567,7 +576,31 @@
             "properties": [
               {
                 "id": "custom.width",
-                "value": 105
+                "value": 109
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "#IndexScans"
+            },
+            "properties": [
+              {
+                "id": "custom.width",
+                "value": 125
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "ID"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
               }
             ]
           }
@@ -595,7 +628,7 @@
         "sortBy": [
           {
             "desc": true,
-            "displayName": "Last Executed"
+            "displayName": "ExecuteTime"
           }
         ]
       },
@@ -623,7 +656,7 @@
           "measurement": "nuodb_statements",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "SELECT last(lastexecuted),last(id),sum(/(numexecutes|exectime|index|exhaustive)/) FROM \"autogen\".\"nuodb_statements\" WHERE $timeFilter GROUP BY sqlstring",
+          "query": "SELECT last(lastexecuted),sum(/(numexecutes|exectime|index|exhaustive)/) FROM \"autogen\".\"nuodb_statements\" WHERE $timeFilter GROUP BY sqlstring,id",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -651,7 +684,7 @@
           "options": {
             "excludeByName": {
               "Time": true,
-              "last_1": true,
+              "last_1": false,
               "sum_collection_interval": true,
               "sum_deletions": true,
               "sum_evicted": true,
@@ -687,14 +720,14 @@
             },
             "renameByName": {
               "last": "Last Executed",
-              "last_1": "Id",
+              "last_1": "ID",
               "sqlstring": "SQL String",
               "sum_compiletime": "CompileTime",
               "sum_evicted": "Evicted",
               "sum_exectime": "ExecuteTime",
               "sum_exhaustivebatchfetches": "# TableScans",
-              "sum_exhaustivefetches": "# IndexScans",
-              "sum_indexbatchfetches": "TableScans",
+              "sum_exhaustivefetches": "TableScans",
+              "sum_indexbatchfetches": "#IndexScans",
               "sum_indexfetches": "IndexScans",
               "sum_indexhits": "IndexHits",
               "sum_locked": "Locked",
@@ -738,22 +771,26 @@
           "id": "organize",
           "options": {
             "excludeByName": {
-              "AvgExecTime": true
+              "AvgExecTime": true,
+              "ID": false
             },
             "indexByName": {
-              "# IndexScans": 8,
-              "# TableScans": 9,
-              "AvgExecTime": 3,
-              "Count": 1,
-              "ExecuteTime": 2,
-              "IndexHits": 4,
-              "IndexScans": 6,
-              "Last Executed": 0,
-              "RejectedHits": 5,
-              "SQL String": 10,
-              "TableScans": 7
+              "# TableScans": 10,
+              "#IndexScans": 9,
+              "AvgExecTime": 4,
+              "Count": 2,
+              "ExecuteTime": 3,
+              "ID": 0,
+              "IndexHits": 5,
+              "IndexScans": 7,
+              "Last Executed": 1,
+              "RejectedHits": 6,
+              "SQL String": 11,
+              "TableScans": 8
             },
-            "renameByName": {}
+            "renameByName": {
+              "id": "ID"
+            }
           }
         }
       ],
@@ -782,12 +819,12 @@
         "name": "interval",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "10s",
             "value": "10s"
           },
@@ -957,6 +994,6 @@
   "timezone": "",
   "title": "Sql Statement Indexes",
   "uid": "e047494e-25c5-4efe-8572-fa1551034ce4",
-  "version": 2,
+  "version": 9,
   "weekStart": ""
 }

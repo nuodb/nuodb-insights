@@ -4,7 +4,10 @@
       {
         "$$hashKey": "object:65",
         "builtIn": 1,
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
@@ -13,26 +16,36 @@
       },
       {
         "$$hashKey": "object:2934",
-        "datasource": "-- Grafana --",
+        "datasource": {
+          "type": "datasource",
+          "uid": "grafana"
+        },
         "enable": true,
         "hide": false,
-        "iconColor": "rgba(255, 96, 96, 1)",
+        "iconColor": "super-light-blue",
         "limit": 100,
         "name": "db annotations",
         "showIn": 0,
         "tags": [
           "$database"
         ],
+        "target": {
+          "limit": 100,
+          "matchAny": false,
+          "tags": [
+            "$database"
+          ],
+          "type": "tags"
+        },
         "type": "tags"
       }
     ]
   },
   "description": "NuoDB Summary",
   "editable": true,
-  "gnetId": null,
+  "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": null,
-  "iteration": 1616705608022,
+  "id": 6,
   "links": [
     {
       "asDropdown": true,
@@ -57,10 +70,14 @@
       "type": "dashboards"
     }
   ],
+  "liveNow": false,
   "panels": [
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P7F1571328205BBA6"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -69,6 +86,15 @@
       },
       "id": 8,
       "panels": [],
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Summary",
       "type": "row"
     },
@@ -77,11 +103,13 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "nuodb",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P7F1571328205BBA6"
+      },
       "description": "The left y-axis is for the stack bar graph that shows relative (in terms of cores) breakdown of where processing time is being spent.  The right y-axis and grey shadow area graph is an indication of the total number of cores available by all selected TEs.",
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -114,7 +142,7 @@
       },
       "paceLength": 10,
       "percentage": false,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "10.0.3",
       "pointradius": 2,
       "points": false,
       "renderer": "flot",
@@ -138,6 +166,10 @@
       "targets": [
         {
           "alias": "$measurement",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
           "groupBy": [
             {
               "params": [
@@ -177,6 +209,10 @@
         },
         {
           "alias": "$measurement",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
           "groupBy": [
             {
               "params": [
@@ -235,9 +271,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Summary",
       "tooltip": {
         "shared": true,
@@ -246,9 +280,7 @@
       },
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -259,7 +291,6 @@
           "format": "short",
           "label": "measurement relative to vCPU",
           "logBase": 1,
-          "max": null,
           "min": "0",
           "show": true
         },
@@ -268,19 +299,19 @@
           "format": "short",
           "label": "total number of vCPU",
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         }
       ],
       "yaxis": {
-        "align": false,
-        "alignLevel": null
+        "align": false
       }
     },
     {
       "collapsed": false,
-      "datasource": null,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P7F1571328205BBA6"
+      },
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -289,86 +320,155 @@
       },
       "id": 4,
       "panels": [],
-      "repeat": null,
+      "targets": [
+        {
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
+          "refId": "A"
+        }
+      ],
       "title": "Transactions",
       "type": "row"
     },
     {
-      "aliasColors": {},
-      "bars": false,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "nuodb",
-      "decimals": 1,
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P7F1571328205BBA6"
+      },
       "description": "the green line is relative to the left y-axis and displays the number of transactions committed per second.  Displayed below the x-axis relative to the right axis is an average (across all TEs) of the current number of transactions for the database at the time the metric was collected.   This measurement is a sum for the database as understood by the selected TEs.  At any point of time the understanding of which transactions are active will be slightly different in each TE.  The blue line is a calculation of the average number of transactions that were processing within the database for the colletion window (averaged across the display time window).   The data used to calculate this is collected only when a transaction is done processing.  So a transaction / statement that is in the database for a significant amount of time (for each a count on a very large table) will not skew this graph.  You'll see a big spike in the blue line when the long running statement ends.",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 10,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepAfter",
+            "lineWidth": 2,
+            "pointSize": 5,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "never",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "links": [],
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "short"
         },
-        "overrides": []
+        "overrides": [
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "active:current"
+            },
+            "properties": [
+              {
+                "id": "custom.drawStyle",
+                "value": "bars"
+              },
+              {
+                "id": "custom.fillOpacity",
+                "value": 100
+              },
+              {
+                "id": "color",
+                "value": {
+                  "fixedColor": "#E24D42",
+                  "mode": "fixed"
+                }
+              },
+              {
+                "id": "custom.lineWidth",
+                "value": 0
+              },
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
+              "options": "processing:average"
+            },
+            "properties": [
+              {
+                "id": "custom.transform",
+                "value": "negative-Y"
+              }
+            ]
+          }
+        ]
       },
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {},
       "gridPos": {
         "h": 7,
         "w": 24,
         "x": 0,
         "y": 10
       },
-      "hiddenSeries": false,
       "id": 2,
       "interval": "$interval",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": true
-      },
-      "lines": true,
-      "linewidth": 2,
       "links": [],
-      "nullPointMode": "connected",
       "options": {
-        "alertThreshold": true
-      },
-      "paceLength": 10,
-      "percentage": false,
-      "pluginVersion": "7.4.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:270",
-          "alias": "active:current",
-          "bars": true,
-          "color": "#E24D42",
-          "lines": false,
-          "transform": "negative-Y",
-          "yaxis": 2
+        "legend": {
+          "calcs": [
+            "mean",
+            "lastNotNull",
+            "max"
+          ],
+          "displayMode": "list",
+          "placement": "bottom",
+          "showLegend": false
         },
-        {
-          "$$hashKey": "object:271",
-          "alias": "processing:average",
-          "steppedLine": true,
-          "transform": "negative-Y",
-          "yaxis": 2
+        "tooltip": {
+          "mode": "multi",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": false,
-      "steppedLine": false,
+      },
+      "pluginVersion": "10.0.3",
       "targets": [
         {
           "alias": "commits",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -416,6 +516,10 @@
         },
         {
           "alias": "active:current",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
           "groupBy": [
             {
               "params": [
@@ -473,6 +577,10 @@
         },
         {
           "alias": "processing:average",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
           "groupBy": [
             {
               "params": [
@@ -524,64 +632,24 @@
           ]
         }
       ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
       "title": "Transactions",
-      "tooltip": {
-        "msResolution": true,
-        "shared": true,
-        "sort": 0,
-        "value_type": "cumulative"
-      },
       "transparent": true,
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:154",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:155",
-          "decimals": null,
-          "format": "short",
-          "label": "",
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": true,
-        "alignLevel": null
-      }
+      "type": "timeseries"
     },
     {
       "aliasColors": {},
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": "nuodb",
+      "datasource": {
+        "type": "influxdb",
+        "uid": "P7F1571328205BBA6"
+      },
       "description": "How many transactions are Busy (in database) relative to Idle (not in database) during the collection interval. Only valid for NuoDB 4.1+",
       "editable": true,
       "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
           "links": []
         },
         "overrides": []
@@ -617,7 +685,7 @@
       },
       "paceLength": 10,
       "percentage": true,
-      "pluginVersion": "7.4.2",
+      "pluginVersion": "10.0.3",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
@@ -639,6 +707,10 @@
       "targets": [
         {
           "alias": "Busy",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
           "groupBy": [
             {
               "params": [
@@ -697,6 +769,10 @@
         },
         {
           "alias": "Idle",
+          "datasource": {
+            "type": "influxdb",
+            "uid": "P7F1571328205BBA6"
+          },
           "groupBy": [
             {
               "params": [
@@ -749,9 +825,7 @@
         }
       ],
       "thresholds": [],
-      "timeFrom": null,
       "timeRegions": [],
-      "timeShift": null,
       "title": "Workload",
       "tooltip": {
         "msResolution": true,
@@ -762,9 +836,7 @@
       "transparent": true,
       "type": "graph",
       "xaxis": {
-        "buckets": null,
         "mode": "time",
-        "name": null,
         "show": true,
         "values": []
       },
@@ -773,15 +845,11 @@
           "$$hashKey": "object:3700",
           "decimals": 1,
           "format": "short",
-          "label": null,
           "logBase": 1,
-          "max": null,
-          "min": null,
           "show": true
         },
         {
           "$$hashKey": "object:3701",
-          "decimals": null,
           "format": "short",
           "label": "",
           "logBase": 1,
@@ -791,13 +859,12 @@
         }
       ],
       "yaxis": {
-        "align": true,
-        "alignLevel": null
+        "align": true
       }
     }
   ],
-  "refresh": "30s",
-  "schemaVersion": 27,
+  "refresh": "10s",
+  "schemaVersion": 38,
   "style": "dark",
   "tags": [
     "overview"
@@ -813,8 +880,6 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
-        "description": null,
-        "error": null,
         "hide": 0,
         "label": "interval",
         "name": "interval",
@@ -908,10 +973,11 @@
           "text": "All",
           "value": "All"
         },
-        "datasource": "nuodb",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "P7F1571328205BBA6"
+        },
         "definition": "",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": false,
         "label": "Database",
@@ -924,7 +990,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -940,10 +1005,11 @@
             "$__all"
           ]
         },
-        "datasource": "nuodb",
+        "datasource": {
+          "type": "influxdb",
+          "uid": "P7F1571328205BBA6"
+        },
         "definition": "",
-        "description": null,
-        "error": null,
         "hide": 0,
         "includeAll": true,
         "label": "Host",
@@ -956,7 +1022,6 @@
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
-        "tags": [],
         "tagsQuery": "",
         "type": "query",
         "useTags": false
@@ -994,6 +1059,7 @@
   },
   "timezone": "",
   "title": "NuoDB Overview",
-  "uid": null,
-  "version": 2
+  "uid": "c56279e1-b7f7-4df4-9f1a-95265a657bc2",
+  "version": 3,
+  "weekStart": ""
 }

@@ -2,7 +2,6 @@
   "annotations": {
     "list": [
       {
-        "$$hashKey": "object:35",
         "builtIn": 1,
         "datasource": "-- Grafana --",
         "enable": true,
@@ -10,28 +9,14 @@
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
         "type": "dashboard"
-      },
-      {
-        "$$hashKey": "object:5399",
-        "datasource": "-- Grafana --",
-        "enable": true,
-        "hide": false,
-        "iconColor": "rgba(255, 96, 96, 1)",
-        "limit": 100,
-        "name": "db annotations",
-        "showIn": 0,
-        "tags": [
-          "$database"
-        ],
-        "type": "tags"
       }
     ]
   },
   "editable": true,
   "gnetId": null,
   "graphTooltip": 1,
-  "id": 4,
-  "iteration": 1613062743905,
+  "id": 8,
+  "iteration": 1607091304027,
   "links": [
     {
       "asDropdown": true,
@@ -63,22 +48,17 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "The average amount of heap allocated memory  for each engine.",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "custom": {}
         },
         "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
-      "grid": {},
       "gridPos": {
         "h": 7,
-        "w": 12,
+        "w": 6,
         "x": 0,
         "y": 0
       },
@@ -86,22 +66,24 @@
       "id": 1,
       "interval": ">$interval",
       "legend": {
-        "alignAsTable": true,
         "avg": false,
-        "current": true,
-        "max": true,
-        "min": true,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": false,
+        "min": false,
         "show": false,
         "total": false,
-        "values": true
+        "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
+      "paceLength": 10,
       "percentage": false,
       "pluginVersion": "7.3.2",
       "pointradius": 5,
@@ -113,7 +95,7 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -130,19 +112,7 @@
             },
             {
               "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "db"
+                "pid"
               ],
               "type": "tag"
             },
@@ -153,8 +123,7 @@
               "type": "fill"
             }
           ],
-          "hide": false,
-          "measurement": "HeapAllocated",
+          "measurement": "/^$m1$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -178,23 +147,11 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         },
         {
-          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -211,19 +168,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -234,8 +179,7 @@
               "type": "fill"
             }
           ],
-          "hide": false,
-          "measurement": "HeapAllocated",
+          "measurement": "/^$m1$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -259,18 +203,6 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Storage"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         }
@@ -279,9 +211,8 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Memory Usage",
+      "title": "$m1",
       "tooltip": {
-        "msResolution": false,
         "shared": true,
         "sort": 0,
         "value_type": "individual"
@@ -296,20 +227,20 @@
       },
       "yaxes": [
         {
-          "format": "bytes",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "format": "bytes",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
-          "show": false
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
         }
       ],
       "yaxis": {
@@ -323,32 +254,28 @@
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "The average number of objects in memory for each engine.",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "custom": {}
         },
         "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
-      "grid": {},
       "gridPos": {
         "h": 7,
-        "w": 12,
-        "x": 12,
+        "w": 6,
+        "x": 6,
         "y": 0
       },
       "hiddenSeries": false,
-      "hideTimeOverride": true,
-      "id": 2,
+      "id": 5,
       "interval": ">$interval",
       "legend": {
         "avg": false,
         "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
         "max": false,
         "min": false,
         "show": false,
@@ -356,12 +283,13 @@
         "values": false
       },
       "lines": true,
-      "linewidth": 2,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
+      "paceLength": 10,
       "percentage": false,
       "pluginVersion": "7.3.2",
       "pointradius": 5,
@@ -373,12 +301,12 @@
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
               "params": [
-                "$interval"
+                "$__interval"
               ],
               "type": "time"
             },
@@ -390,19 +318,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -413,8 +329,7 @@
               "type": "fill"
             }
           ],
-          "hide": false,
-          "measurement": "Objects",
+          "measurement": "/^$m2$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -438,28 +353,16 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         },
         {
-          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
               "params": [
-                "$interval"
+                "$__interval"
               ],
               "type": "time"
             },
@@ -471,19 +374,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -494,8 +385,7 @@
               "type": "fill"
             }
           ],
-          "hide": false,
-          "measurement": "Objects",
+          "measurement": "/^$m2$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -519,18 +409,6 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Storage"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         }
@@ -539,9 +417,8 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Objects",
+      "title": "$m2",
       "tooltip": {
-        "msResolution": true,
         "shared": true,
         "sort": 0,
         "value_type": "individual"
@@ -560,7 +437,7 @@
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": "0",
+          "min": null,
           "show": true
         },
         {
@@ -579,51 +456,46 @@
     },
     {
       "aliasColors": {},
-      "bars": true,
+      "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Average number of objects created per second by each engine within the interval.  Only TEs create new objects.",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "custom": {}
         },
         "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
-      "grid": {},
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 6,
-        "x": 0,
-        "y": 7
+        "x": 12,
+        "y": 0
       },
       "hiddenSeries": false,
-      "id": 5,
+      "id": 6,
       "interval": ">$interval",
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
+        "avg": false,
+        "current": false,
         "hideEmpty": true,
         "hideZero": true,
-        "max": true,
-        "min": true,
+        "max": false,
+        "min": false,
         "show": false,
         "total": false,
-        "values": true
+        "values": false
       },
-      "lines": false,
-      "linewidth": 2,
+      "lines": true,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
+      "paceLength": 10,
       "percentage": false,
       "pluginVersion": "7.3.2",
       "pointradius": 5,
@@ -631,11 +503,11 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -652,19 +524,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -675,7 +535,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "ObjectsCreated",
+          "measurement": "/^$m3$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -684,7 +544,7 @@
             [
               {
                 "params": [
-                  "rate"
+                  "raw"
                 ],
                 "type": "field"
               },
@@ -699,23 +559,11 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         },
         {
-          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -732,19 +580,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -755,7 +591,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "ObjectsCreated",
+          "measurement": "/^$m3$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -764,7 +600,7 @@
             [
               {
                 "params": [
-                  "rate"
+                  "raw"
                 ],
                 "type": "field"
               },
@@ -779,18 +615,6 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Storage"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         }
@@ -799,9 +623,8 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Created",
+      "title": "$m3",
       "tooltip": {
-        "msResolution": false,
         "shared": true,
         "sort": 0,
         "value_type": "individual"
@@ -816,16 +639,14 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:758",
-          "format": "ops",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
-          "min": "0",
+          "min": null,
           "show": true
         },
         {
-          "$$hashKey": "object:759",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -841,70 +662,58 @@
     },
     {
       "aliasColors": {},
-      "bars": true,
+      "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Average number of objects dropped per second by each engine within the interval.   Objects are dropped by garbage collector to make room for new objects to be created or imported.",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "custom": {}
         },
         "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
-      "grid": {},
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 6,
-        "x": 6,
-        "y": 7
+        "x": 18,
+        "y": 0
       },
       "hiddenSeries": false,
-      "id": 6,
+      "id": 9,
       "interval": ">$interval",
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
+        "avg": false,
+        "current": false,
         "hideEmpty": true,
         "hideZero": true,
-        "max": true,
-        "min": true,
+        "max": false,
+        "min": false,
         "show": false,
         "total": false,
-        "values": true
+        "values": false
       },
-      "lines": false,
-      "linewidth": 2,
+      "lines": true,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
+      "paceLength": 10,
       "percentage": false,
       "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:6520",
-          "alias": "/^.*purged$/",
-          "stack": "B",
-          "transform": "negative-Y"
-        }
-      ],
+      "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -921,19 +730,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -944,7 +741,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "ObjectsDropped",
+          "measurement": "/^$m4$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -953,7 +750,7 @@
             [
               {
                 "params": [
-                  "rate"
+                  "raw"
                 ],
                 "type": "field"
               },
@@ -968,23 +765,11 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         },
         {
-          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1001,19 +786,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -1024,7 +797,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "ObjectsDropped",
+          "measurement": "/^$m4$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -1033,7 +806,7 @@
             [
               {
                 "params": [
-                  "rate"
+                  "raw"
                 ],
                 "type": "field"
               },
@@ -1048,18 +821,6 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Storage"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         }
@@ -1068,9 +829,8 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Dropped",
+      "title": "$m4",
       "tooltip": {
-        "msResolution": false,
         "shared": true,
         "sort": 0,
         "value_type": "individual"
@@ -1085,8 +845,7 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:6500",
-          "format": "ops",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1094,7 +853,6 @@
           "show": true
         },
         {
-          "$$hashKey": "object:6501",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -1110,68 +868,58 @@
     },
     {
       "aliasColors": {},
-      "bars": true,
+      "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Above the x-axis is the average number of objects per second loaded into each SM.  Below the x-axis list the number of objects reloaded into each SM.  An object is reloaded if it was purged from SM memory and a TE already has that object in memory.",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "custom": {}
         },
         "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
-      "grid": {},
       "gridPos": {
-        "h": 5,
+        "h": 7,
         "w": 6,
-        "x": 12,
+        "x": 0,
         "y": 7
       },
       "hiddenSeries": false,
       "id": 7,
       "interval": ">$interval",
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
+        "avg": false,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": false,
+        "min": false,
         "show": false,
         "total": false,
-        "values": true
+        "values": false
       },
-      "lines": false,
-      "linewidth": 2,
+      "lines": true,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
+      "paceLength": 10,
       "percentage": false,
       "pluginVersion": "7.3.2",
       "pointradius": 5,
       "points": false,
       "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:180",
-          "alias": "/.*:reloaded/i",
-          "stack": "A",
-          "transform": "negative-Y"
-        }
-      ],
+      "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "SM( host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):loaded",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1188,19 +936,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -1211,87 +947,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "ObjectsLoaded",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            }
-          ]
-        },
-        {
-          "alias": "SM( host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):reloaded",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ObjectsReloaded",
+          "measurement": "/^$m5$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1300,7 +956,63 @@
             [
               {
                 "params": [
-                  "rate"
+                  "raw"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            }
+          ]
+        },
+        {
+          "alias": "SM - $tag_host[$tag_pid]",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/^$m5$/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "raw"
                 ],
                 "type": "field"
               },
@@ -1315,18 +1027,6 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Storage"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         }
@@ -1335,9 +1035,8 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Loaded / Reloaded",
+      "title": "$m5",
       "tooltip": {
-        "msResolution": true,
         "shared": true,
         "sort": 0,
         "value_type": "individual"
@@ -1352,8 +1051,7 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:187",
-          "format": "ops",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1361,8 +1059,7 @@
           "show": true
         },
         {
-          "$$hashKey": "object:188",
-          "format": "Misc",
+          "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
@@ -1377,25 +1074,432 @@
     },
     {
       "aliasColors": {},
-      "bars": true,
+      "bars": false,
       "dashLength": 10,
       "dashes": false,
       "datasource": "nuodb",
-      "description": "Average number of objects purged from each SM.  An object is purged if the garbage collector needs to free up space and an object is removed from cache but still exist in cache within a TE. Below the x-axis is a count of the number of objects dropped that were in the purged state for each SM.",
-      "editable": true,
-      "error": false,
       "fieldConfig": {
         "defaults": {
-          "custom": {},
-          "links": []
+          "custom": {}
         },
         "overrides": []
       },
       "fill": 1,
       "fillGradient": 0,
-      "grid": {},
       "gridPos": {
-        "h": 5,
+        "h": 7,
+        "w": 6,
+        "x": 6,
+        "y": 7
+      },
+      "hiddenSeries": false,
+      "id": 10,
+      "interval": ">$interval",
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
+      "percentage": false,
+      "pluginVersion": "7.3.2",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "TE - $tag_host[$tag_pid]",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/^$m6$/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "raw"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            }
+          ]
+        },
+        {
+          "alias": "SM - $tag_host[$tag_pid]",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/^$m6$/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "raw"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$m6",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "nuodb",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
+        "w": 6,
+        "x": 12,
+        "y": 7
+      },
+      "hiddenSeries": false,
+      "id": 11,
+      "interval": ">$interval",
+      "legend": {
+        "avg": false,
+        "current": false,
+        "hideEmpty": true,
+        "hideZero": true,
+        "max": false,
+        "min": false,
+        "show": false,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "alertThreshold": true
+      },
+      "paceLength": 10,
+      "percentage": false,
+      "pluginVersion": "7.3.2",
+      "pointradius": 5,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "alias": "TE - $tag_host[$tag_pid]",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/^$m7$/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "A",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "raw"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Transaction"
+            }
+          ]
+        },
+        {
+          "alias": "SM - $tag_host[$tag_pid]",
+          "dsType": "influxdb",
+          "groupBy": [
+            {
+              "params": [
+                "$__interval"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "host"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "pid"
+              ],
+              "type": "tag"
+            },
+            {
+              "params": [
+                "null"
+              ],
+              "type": "fill"
+            }
+          ],
+          "measurement": "/^$m7$/",
+          "orderByTime": "ASC",
+          "policy": "default",
+          "refId": "B",
+          "resultFormat": "time_series",
+          "select": [
+            [
+              {
+                "params": [
+                  "raw"
+                ],
+                "type": "field"
+              },
+              {
+                "params": [],
+                "type": "mean"
+              }
+            ]
+          ],
+          "tags": [
+            {
+              "key": "nodetype",
+              "operator": "=",
+              "value": "Storage"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "$m7",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "nuodb",
+      "fieldConfig": {
+        "defaults": {
+          "custom": {}
+        },
+        "overrides": []
+      },
+      "fill": 1,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 7,
         "w": 6,
         "x": 18,
         "y": 7
@@ -1404,208 +1508,24 @@
       "id": 8,
       "interval": ">$interval",
       "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
-        "rightSide": false,
-        "show": false,
-        "total": false,
-        "values": true
-      },
-      "lines": false,
-      "linewidth": 2,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:7246",
-          "alias": "/.*dropped$/",
-          "stack": "B",
-          "transform": "negative-Y"
-        }
-      ],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):purged",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"ObjectsPurged\" WHERE (\"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
-          "rawQuery": true,
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid):dropped",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT mean(\"rate\") FROM \"ObjectsDroppedPurged\" WHERE (\"nodetype\" = 'Storage' AND \"host\" =~ /^$host$/ AND \"db\" =~ /^$database$/) AND $timeFilter GROUP BY time($__interval), \"host\", \"db\", \"nodeid\", \"startid\" fill(null)",
-          "rawQuery": true,
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Purged / Dropped Purged",
-      "tooltip": {
-        "msResolution": true,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:590",
-          "format": "ops",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:591",
-          "format": "short",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "nuodb",
-      "description": "Average number of objects per second imported into an engine.   Objects are imported into a TE when a TE needs an existing object that is not in its local cache.  Objects are imported into an SM when a TE creates new objects.",
-      "editable": true,
-      "error": false,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {},
-      "gridPos": {
-        "h": 5,
-        "w": 12,
-        "x": 0,
-        "y": 12
-      },
-      "hiddenSeries": false,
-      "id": 4,
-      "interval": ">$interval",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
+        "avg": false,
+        "current": false,
         "hideEmpty": true,
         "hideZero": true,
-        "max": true,
-        "min": true,
+        "max": false,
+        "min": false,
         "show": false,
         "total": false,
-        "values": true
+        "values": false
       },
-      "lines": false,
-      "linewidth": 2,
+      "lines": true,
+      "linewidth": 1,
       "links": [],
       "nullPointMode": "null",
       "options": {
         "alertThreshold": true
       },
+      "paceLength": 10,
       "percentage": false,
       "pluginVersion": "7.3.2",
       "pointradius": 5,
@@ -1613,11 +1533,11 @@
       "renderer": "flot",
       "seriesOverrides": [],
       "spaceLength": 10,
-      "stack": true,
+      "stack": false,
       "steppedLine": false,
       "targets": [
         {
-          "alias": "TE(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "TE - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1634,19 +1554,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -1657,7 +1565,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "ObjectsImported",
+          "measurement": "/^$m8$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "A",
@@ -1666,7 +1574,7 @@
             [
               {
                 "params": [
-                  "rate"
+                  "raw"
                 ],
                 "type": "field"
               },
@@ -1681,23 +1589,11 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         },
         {
-          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
+          "alias": "SM - $tag_host[$tag_pid]",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -1714,19 +1610,7 @@
             },
             {
               "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
+                "pid"
               ],
               "type": "tag"
             },
@@ -1737,7 +1621,7 @@
               "type": "fill"
             }
           ],
-          "measurement": "ObjectsImported",
+          "measurement": "/^$m8$/",
           "orderByTime": "ASC",
           "policy": "default",
           "refId": "B",
@@ -1746,7 +1630,7 @@
             [
               {
                 "params": [
-                  "rate"
+                  "raw"
                 ],
                 "type": "field"
               },
@@ -1761,18 +1645,6 @@
               "key": "nodetype",
               "operator": "=",
               "value": "Storage"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
             }
           ]
         }
@@ -1781,9 +1653,8 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Imported",
+      "title": "$m8",
       "tooltip": {
-        "msResolution": false,
         "shared": true,
         "sort": 0,
         "value_type": "individual"
@@ -1798,276 +1669,14 @@
       },
       "yaxes": [
         {
-          "$$hashKey": "object:692",
-          "format": "ops",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": null,
-          "show": true
-        },
-        {
-          "$$hashKey": "object:693",
           "format": "short",
           "label": null,
           "logBase": 1,
           "max": null,
           "min": null,
           "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false,
-        "alignLevel": null
-      }
-    },
-    {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
-      "datasource": "nuodb",
-      "description": "Average number of objects per second exported into an engine.   Objects are exported from a TE or SM when another engine needs an object that is not in its local cache.  A TE will export newly created objects to all SMs.",
-      "editable": true,
-      "error": false,
-      "fieldConfig": {
-        "defaults": {
-          "custom": {},
-          "links": []
-        },
-        "overrides": []
-      },
-      "fill": 1,
-      "fillGradient": 0,
-      "grid": {},
-      "gridPos": {
-        "h": 5,
-        "w": 12,
-        "x": 12,
-        "y": 12
-      },
-      "hiddenSeries": false,
-      "id": 3,
-      "interval": ">$interval",
-      "legend": {
-        "alignAsTable": true,
-        "avg": true,
-        "current": true,
-        "max": true,
-        "min": true,
-        "show": false,
-        "total": false,
-        "values": true
-      },
-      "lines": false,
-      "linewidth": 2,
-      "links": [],
-      "nullPointMode": "null",
-      "options": {
-        "alertThreshold": true
-      },
-      "percentage": false,
-      "pluginVersion": "7.3.2",
-      "pointradius": 5,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
-      "targets": [
-        {
-          "alias": "TE(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ObjectsExported",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            }
-          ]
         },
         {
-          "alias": "SM(host: $tag_host, db: $tag_db, nodeid: $tag_nodeid, startid: $tag_startid)",
-          "dsType": "influxdb",
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "host"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "nodeid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "startid"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "db"
-              ],
-              "type": "tag"
-            },
-            {
-              "params": [
-                "none"
-              ],
-              "type": "fill"
-            }
-          ],
-          "measurement": "ObjectsExported",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "B",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "rate"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Storage"
-            },
-            {
-              "condition": "AND",
-              "key": "host",
-              "operator": "=~",
-              "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "db",
-              "operator": "=~",
-              "value": "/^$database$/"
-            }
-          ]
-        }
-      ],
-      "thresholds": [],
-      "timeFrom": null,
-      "timeRegions": [],
-      "timeShift": null,
-      "title": "Exported",
-      "tooltip": {
-        "msResolution": false,
-        "shared": true,
-        "sort": 0,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "buckets": null,
-        "mode": "time",
-        "name": null,
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:1471",
-          "format": "ops",
-          "label": null,
-          "logBase": 1,
-          "max": null,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:1472",
           "format": "short",
           "label": null,
           "logBase": 1,
@@ -2082,23 +1691,22 @@
       }
     }
   ],
-  "refresh": "30s",
+  "refresh": "10s",
   "schemaVersion": 26,
   "style": "dark",
   "tags": [
-    "nuodb",
-    "memory"
+    "overview"
   ],
   "templating": {
     "list": [
       {
         "auto": true,
-        "auto_count": 50,
+        "auto_count": "50",
         "auto_min": "10s",
         "current": {
           "selected": false,
-          "text": "auto",
-          "value": "$__auto_interval_interval"
+          "text": "10s",
+          "value": "10s"
         },
         "error": null,
         "hide": 0,
@@ -2106,12 +1714,12 @@
         "name": "interval",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "10s",
             "value": "10s"
           },
@@ -2190,26 +1798,22 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
-          "text": [
-            "All"
-          ],
-          "value": [
-            "$__all"
-          ]
+          "selected": false,
+          "text": "RemoteCommitTime",
+          "value": "RemoteCommitTime"
         },
         "datasource": "nuodb",
         "definition": "",
         "error": null,
         "hide": 0,
-        "includeAll": true,
-        "label": "Database",
-        "multi": true,
-        "name": "database",
+        "includeAll": false,
+        "label": "m1",
+        "multi": false,
+        "name": "m1",
         "options": [],
-        "query": "select distinct(\"db\") from (select first(raw) from \"Milliseconds\" where $timeFilter GROUP BY \"db\")\n",
-        "refresh": 2,
-        "regex": ".*",
+        "query": "show measurements",
+        "refresh": 1,
+        "regex": "",
         "skipUrlSync": false,
         "sort": 0,
         "tagValuesQuery": "",
@@ -2221,7 +1825,196 @@
       {
         "allValue": ".*",
         "current": {
-          "selected": true,
+          "selected": false,
+          "text": "MessageSequencerMergeTime",
+          "value": "MessageSequencerMergeTime"
+        },
+        "datasource": "nuodb",
+        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "m2",
+        "multi": false,
+        "name": "m2",
+        "options": [],
+        "query": "show measurements",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "MessageSequencerSortTime",
+          "value": "MessageSequencerSortTime"
+        },
+        "datasource": "nuodb",
+        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "m3",
+        "multi": false,
+        "name": "m3",
+        "options": [],
+        "query": "show measurements",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "MessagesReceived",
+          "value": "MessagesReceived"
+        },
+        "datasource": "nuodb",
+        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "m4",
+        "multi": false,
+        "name": "m4",
+        "options": [],
+        "query": "show measurements",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "ArchiveReadTime",
+          "value": "ArchiveReadTime"
+        },
+        "datasource": "nuodb",
+        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "m5",
+        "multi": false,
+        "name": "m5",
+        "options": [],
+        "query": "show measurements",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "ArchiveQueue",
+          "value": "ArchiveQueue"
+        },
+        "datasource": "nuodb",
+        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "m6",
+        "multi": false,
+        "name": "m6",
+        "options": [],
+        "query": "show measurements",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "ArchiveFsyncTime",
+          "value": "ArchiveFsyncTime"
+        },
+        "datasource": "nuodb",
+        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "m7",
+        "multi": false,
+        "name": "m7",
+        "options": [],
+        "query": "show measurements",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": "JournalFsyncTime",
+          "value": "JournalFsyncTime"
+        },
+        "datasource": "nuodb",
+        "definition": "",
+        "error": null,
+        "hide": 0,
+        "includeAll": false,
+        "label": "m8",
+        "multi": false,
+        "name": "m8",
+        "options": [],
+        "query": "show measurements",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
           "text": [
             "All"
           ],
@@ -2230,16 +2023,47 @@
           ]
         },
         "datasource": "nuodb",
-        "definition": "",
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "error": null,
-        "hide": 0,
+        "hide": 2,
         "includeAll": true,
-        "label": "Host",
+        "label": null,
+        "multi": true,
+        "name": "database",
+        "options": [],
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
+        "refresh": 1,
+        "regex": ".*",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": ".*",
+        "current": {
+          "selected": false,
+          "text": [
+            "All"
+          ],
+          "value": [
+            "$__all"
+          ]
+        },
+        "datasource": "nuodb",
+        "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"db\" =~ /$database$/ ",
+        "error": null,
+        "hide": 2,
+        "includeAll": true,
+        "label": null,
         "multi": true,
         "name": "host",
         "options": [],
-        "query": "select distinct(\"host\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND db =~ /$database$/ GROUP BY \"host\")",
-        "refresh": 2,
+        "query": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"host\" WHERE \"db\" =~ /$database$/ ",
+        "refresh": 1,
         "regex": ".*",
         "skipUrlSync": false,
         "sort": 0,
@@ -2281,7 +2105,7 @@
     ]
   },
   "timezone": "",
-  "title": "Memory",
-  "uid": "cfafe07f-e755-498c-99fc-4dc56a06bb30",
+  "title": "Adhoc Query",
+  "uid": "cbe7ef0c-796f-4571-8402-cf44739852a1",
   "version": 1
 }

@@ -48,10 +48,10 @@
     ]
   },
   "description": "NuoDB Records Affected",
-  "editable": false,
+  "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 24,
+  "id": 23,
   "links": [
     {
       "asDropdown": true,
@@ -332,6 +332,15 @@
               {
                 "id": "custom.filterable",
                 "value": true
+              },
+              {
+                "id": "links",
+                "value": [
+                  {
+                    "title": "",
+                    "url": "d/a63c439d-870f-4674-b7c8-a62ce59b101f/sql-statement-viewer?${__url_time_range}&${__all_variables}&var-filter=id%7C%3D%7C${__data.fields.ID}"
+                  }
+                ]
               }
             ]
           },
@@ -402,13 +411,6 @@
           {
             "matcher": {
               "id": "byName",
-              "options": "SQL String"
-            },
-            "properties": []
-          },
-          {
-            "matcher": {
-              "id": "byName",
               "options": "Fetched"
             },
             "properties": [
@@ -469,12 +471,24 @@
           {
             "matcher": {
               "id": "byName",
+              "options": "ID"
+            },
+            "properties": [
+              {
+                "id": "custom.hidden",
+                "value": true
+              }
+            ]
+          },
+          {
+            "matcher": {
+              "id": "byName",
               "options": "TotalTime"
             },
             "properties": [
               {
                 "id": "custom.width",
-                "value": 110
+                "value": 98
               }
             ]
           }
@@ -530,7 +544,7 @@
           "measurement": "nuodb_statements",
           "orderByTime": "ASC",
           "policy": "autogen",
-          "query": "SELECT last(lastexecuted),last(id),sum(/(numexecutes|exectime|recordsfetched|locked|recordssorted|evicted)/) FROM \"autogen\".\"nuodb_statements\" WHERE $timeFilter GROUP BY sqlstring",
+          "query": "SELECT last(lastexecuted),sum(/(numexecutes|exectime|recordsfetched|locked|recordssorted|evicted)/) FROM \"autogen\".\"nuodb_statements\" WHERE $timeFilter GROUP BY sqlstring,id",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -557,6 +571,7 @@
           "id": "organize",
           "options": {
             "excludeByName": {
+              "ID": false,
               "Time": true,
               "last_1": true,
               "sum_collection_interval": true,
@@ -591,8 +606,10 @@
               "sum_recordssorted": 6
             },
             "renameByName": {
+              "ID": "",
+              "id": "ID",
               "last": "Last Executed",
-              "last_1": "Id",
+              "last_1": "",
               "sqlstring": "SQL String",
               "sum_compiletime": "CompileTime",
               "sum_evicted": "Evicted",
@@ -682,12 +699,12 @@
         "name": "interval",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "auto",
             "value": "$__auto_interval_interval"
           },
           {
-            "selected": false,
+            "selected": true,
             "text": "10s",
             "value": "10s"
           },
@@ -857,6 +874,6 @@
   "timezone": "",
   "title": "Sql Statement Records",
   "uid": "bceeb9dd-e8d6-474d-8b56-934d4f8e2f25",
-  "version": 6,
+  "version": 4,
   "weekStart": ""
 }

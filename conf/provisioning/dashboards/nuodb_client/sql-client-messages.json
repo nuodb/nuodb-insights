@@ -51,7 +51,7 @@
   "editable": false,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 15,
+  "id": 24,
   "links": [
     {
       "asDropdown": true,
@@ -974,14 +974,8 @@
       {
         "current": {
           "selected": true,
-          "text": [
-            "execute",
-            "connection"
-          ],
-          "value": [
-            "execute",
-            "connection"
-          ]
+          "text": [],
+          "value": []
         },
         "datasource": {
           "type": "influxdb",
@@ -1036,6 +1030,6 @@
   "timezone": "",
   "title": "SQL Client Messages",
   "uid": "f499edfc-76ed-4d7a-843d-e73e4b6a2ef4",
-  "version": 10,
+  "version": 2,
   "weekStart": ""
 }

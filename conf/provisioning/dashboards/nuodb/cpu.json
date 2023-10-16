@@ -32,7 +32,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": null,
+  "id": 2,
   "iteration": 1616443761599,
   "links": [
     {
@@ -3678,6 +3678,6 @@
   },
   "timezone": "",
   "title": "CPU",
-  "uid": null,
-  "version": 2
+  "uid": "dcc684e7-111e-4470-acab-e7bf1bf54042",
+  "version": 1
 }

@@ -37,7 +37,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 1,
-  "id": 16,
+  "id": 22,
   "links": [
     {
       "asDropdown": true,
@@ -103,76 +103,95 @@
       "type": "row"
     },
     {
-      "aliasColors": {},
-      "bars": true,
-      "dashLength": 10,
-      "dashes": false,
       "datasource": {
         "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
+        "uid": "P948FE603F61DC036"
       },
-      "description": "The left y-axis is for the stack bar graph that shows relative (in terms of cores) breakdown of where processing time is being spent.  The right y-axis and grey shadow area graph is an indication of the total number of cores available by all selected TEs.",
+      "description": "",
       "fieldConfig": {
         "defaults": {
-          "links": []
+          "color": {
+            "mode": "palette-classic"
+          },
+          "custom": {
+            "axisCenteredZero": false,
+            "axisColorMode": "text",
+            "axisLabel": "",
+            "axisPlacement": "auto",
+            "barAlignment": 0,
+            "drawStyle": "line",
+            "fillOpacity": 2,
+            "gradientMode": "none",
+            "hideFrom": {
+              "legend": false,
+              "tooltip": false,
+              "viz": false
+            },
+            "lineInterpolation": "stepBefore",
+            "lineStyle": {
+              "fill": "solid"
+            },
+            "lineWidth": 1,
+            "pointSize": 1,
+            "scaleDistribution": {
+              "type": "linear"
+            },
+            "showPoints": "auto",
+            "spanNulls": true,
+            "stacking": {
+              "group": "A",
+              "mode": "none"
+            },
+            "thresholdsStyle": {
+              "mode": "off"
+            }
+          },
+          "mappings": [],
+          "thresholds": {
+            "mode": "absolute",
+            "steps": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ]
+          },
+          "unit": "µs"
         },
         "overrides": []
       },
-      "fill": 1,
-      "fillGradient": 0,
       "gridPos": {
         "h": 4,
         "w": 24,
         "x": 0,
         "y": 1
       },
-      "hiddenSeries": false,
-      "id": 6,
+      "id": 12,
       "interval": "$interval",
-      "legend": {
-        "avg": false,
-        "current": false,
-        "max": false,
-        "min": false,
-        "show": false,
-        "total": false,
-        "values": false
-      },
-      "lines": false,
-      "linewidth": 1,
-      "nullPointMode": "null",
+      "links": [],
       "options": {
-        "alertThreshold": true
-      },
-      "paceLength": 10,
-      "percentage": false,
-      "pluginVersion": "10.0.3",
-      "pointradius": 2,
-      "points": false,
-      "renderer": "flot",
-      "seriesOverrides": [
-        {
-          "$$hashKey": "object:133",
-          "alias": "NumberCores",
-          "bars": false,
-          "color": "rgb(255, 255, 255)",
-          "fill": 1,
-          "lines": true,
-          "linewidth": 0,
-          "stack": false,
-          "steppedLine": true,
-          "yaxis": 2
+        "legend": {
+          "calcs": [],
+          "displayMode": "list",
+          "placement": "right",
+          "showLegend": false
+        },
+        "tooltip": {
+          "mode": "single",
+          "sort": "none"
         }
-      ],
-      "spaceLength": 10,
-      "stack": true,
-      "steppedLine": false,
+      },
+      "pluginVersion": "10.0.3",
       "targets": [
         {
-          "alias": "$measurement",
+          "alias": "ExecTime",
           "datasource": {
             "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
+            "uid": "P948FE603F61DC036"
           },
           "groupBy": [
             {
@@ -188,10 +207,10 @@
               "type": "fill"
             }
           ],
-          "hide": false,
+          "measurement": "nuodb_statements",
           "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(nthreads) as \"nthreads\" FROM (SELECT mean(raw) / 10000. as \"nthreads\" FROM \"Summary.Fetch\",\"Summary.Commit\",\"Summary.Sync\",\"Summary.Lock\",\"Summary.NtwkSend\",\"Summary.Throttle\",\"Summary.CPU\" WHERE $timeFilter AND nodetype = 'Transaction' AND host =~ /^$host$/ AND db =~ /^$database$/ GROUP BY time($__interval), \"pid\" fill(null)) GROUP BY time($__interval)",
+          "policy": "autogen",
+          "query": "SELECT max(avgexectime) FROM \"autogen\".\"nuodb_statements\" WHERE (\"db_name\"::tag =~ /^$database$/ AND \"host\"::tag =~ /^$host$/) AND \"id\"::tag =~ /^$statement$/ AND  $timeFilter GROUP BY time($__interval),sqlstring fill(0) ",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -199,51 +218,7 @@
             [
               {
                 "params": [
-                  "value"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "mean"
-              }
-            ]
-          ],
-          "tags": []
-        },
-        {
-          "alias": "$measurement",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "$__interval"
-              ],
-              "type": "time"
-            },
-            {
-              "params": [
-                "null"
-              ],
-              "type": "fill"
-            }
-          ],
-          "hide": false,
-          "measurement": "NumberCores",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "query": "SELECT sum(ncores) FROM (SELECT mean(\"raw\") as ncores FROM \"NumberCores\" WHERE (\"db\" =~ /^$database$/ AND \"host\" =~ /^$host$/ AND \"nodetype\" = 'Transaction') AND $timeFilter GROUP BY time($__interval), \"startid\" fill(null)) GROUP BY time($__interval)",
-          "rawQuery": true,
-          "refId": "C",
-          "resultFormat": "time_series",
-          "select": [
-            [
-              {
-                "params": [
-                  "raw"
+                  "exectime"
                 ],
                 "type": "field"
               },
@@ -255,60 +230,22 @@
           ],
           "tags": [
             {
-              "key": "db",
+              "key": "db_name::tag",
               "operator": "=~",
               "value": "/^$database$/"
             },
             {
               "condition": "AND",
-              "key": "host",
+              "key": "host::tag",
               "operator": "=~",
               "value": "/^$host$/"
-            },
-            {
-              "condition": "AND",
-              "key": "nodetype",
-              "operator": "=",
-              "value": "Transaction"
             }
           ]
         }
       ],
-      "thresholds": [],
-      "timeRegions": [],
-      "title": "Summary",
-      "tooltip": {
-        "shared": true,
-        "sort": 2,
-        "value_type": "individual"
-      },
-      "type": "graph",
-      "xaxis": {
-        "mode": "time",
-        "show": true,
-        "values": []
-      },
-      "yaxes": [
-        {
-          "$$hashKey": "object:150",
-          "decimals": 1,
-          "format": "short",
-          "label": "measurement relative to vCPU",
-          "logBase": 1,
-          "min": "0",
-          "show": true
-        },
-        {
-          "$$hashKey": "object:151",
-          "format": "short",
-          "label": "total number of vCPU",
-          "logBase": 1,
-          "show": true
-        }
-      ],
-      "yaxis": {
-        "align": false
-      }
+      "title": "SQL Execute Time - ${__interval} interval",
+      "transformations": [],
+      "type": "timeseries"
     },
     {
       "collapsed": false,
@@ -325,120 +262,8 @@
     },
     {
       "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
-      "fieldConfig": {
-        "defaults": {
-          "color": {
-            "mode": "thresholds"
-          },
-          "custom": {
-            "align": "auto",
-            "cellOptions": {
-              "type": "auto"
-            },
-            "inspect": true
-          },
-          "mappings": [],
-          "thresholds": {
-            "mode": "absolute",
-            "steps": [
-              {
-                "color": "green",
-                "value": null
-              },
-              {
-                "color": "red",
-                "value": 80
-              }
-            ]
-          },
-          "unit": "string"
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 2,
-        "w": 24,
-        "x": 0,
-        "y": 6
-      },
-      "id": 13,
-      "options": {
-        "cellHeight": "sm",
-        "footer": {
-          "countRows": false,
-          "fields": "",
-          "reducer": [
-            "sum"
-          ],
-          "show": false
-        },
-        "showHeader": false
-      },
-      "pluginVersion": "10.0.3",
-      "targets": [
-        {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
-          "groupBy": [
-            {
-              "params": [
-                "sqlstring::tag"
-              ],
-              "type": "tag"
-            }
-          ],
-          "measurement": "nuodb_statements",
-          "orderByTime": "ASC",
-          "policy": "autogen",
-          "refId": "A",
-          "resultFormat": "table",
-          "select": [
-            [
-              {
-                "params": [
-                  "numexecutes"
-                ],
-                "type": "field"
-              },
-              {
-                "params": [],
-                "type": "first"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "id::tag",
-              "operator": "=~",
-              "value": "/^$statement$/"
-            }
-          ]
-        }
-      ],
-      "transformations": [
-        {
-          "id": "organize",
-          "options": {
-            "excludeByName": {
-              "Time": true,
-              "first": true
-            },
-            "indexByName": {},
-            "renameByName": {}
-          }
-        }
-      ],
-      "type": "table"
-    },
-    {
-      "datasource": {
         "type": "loki",
-        "uid": "ddd2f51e-f7a2-4b0b-82fb-2c6385f3f6d3"
+        "uid": "P8E80F9AEF21F6940"
       },
       "fieldConfig": {
         "defaults": {
@@ -494,10 +319,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 6,
+        "h": 3,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 6
       },
       "id": 10,
       "interval": "$loginterval",
@@ -520,7 +345,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "ddd2f51e-f7a2-4b0b-82fb-2c6385f3f6d3"
+            "uid": "P8E80F9AEF21F6940"
           },
           "editorMode": "builder",
           "expr": "sum by(source) (count_over_time({source=\"executions\", statement=~\"$statement\", explainplan=~\"$execution\", db=\"$database\", hostname=~\"$host\"} |~ `$filter` | logfmt [$__interval]))",
@@ -534,14 +359,14 @@
     {
       "datasource": {
         "type": "loki",
-        "uid": "ddd2f51e-f7a2-4b0b-82fb-2c6385f3f6d3"
+        "uid": "P8E80F9AEF21F6940"
       },
       "description": "Output is limited to 2000 lines",
       "gridPos": {
         "h": 20,
         "w": 24,
         "x": 0,
-        "y": 14
+        "y": 9
       },
       "id": 11,
       "interval": "1s",
@@ -559,7 +384,7 @@
         {
           "datasource": {
             "type": "loki",
-            "uid": "ddd2f51e-f7a2-4b0b-82fb-2c6385f3f6d3"
+            "uid": "P8E80F9AEF21F6940"
           },
           "editorMode": "builder",
           "expr": "{source=\"executions\", statement=~\"$statement\", explainplan=~\"$execution\", db=\"$database\", hostname=~\"$host\"} |~ `$filter` | logfmt",
@@ -585,14 +410,14 @@
       {
         "auto": true,
         "auto_count": 100,
-        "auto_min": "10ms",
+        "auto_min": "1s",
         "current": {
           "selected": false,
           "text": "1s",
           "value": "1s"
         },
         "hide": 0,
-        "label": "interval",
+        "label": "loginterval",
         "name": "loginterval",
         "options": [],
         "query": "",
@@ -610,7 +435,7 @@
           "text": "auto",
           "value": "$__auto_interval_interval"
         },
-        "hide": 2,
+        "hide": 0,
         "label": "interval",
         "name": "interval",
         "options": [
@@ -767,7 +592,7 @@
         "name": "statement",
         "options": [
           {
-            "selected": true,
+            "selected": false,
             "text": "undefined",
             "value": "undefined"
           }
@@ -820,7 +645,7 @@
       {
         "datasource": {
           "type": "loki",
-          "uid": "ddd2f51e-f7a2-4b0b-82fb-2c6385f3f6d3"
+          "uid": "P8E80F9AEF21F6940"
         },
         "filters": [],
         "hide": 0,
@@ -863,6 +688,6 @@
   "timezone": "",
   "title": "SQL Execution Logs",
   "uid": "c9081118-5230-478d-b6e8-d76614395704",
-  "version": 1,
+  "version": 9,
   "weekStart": ""
 }
