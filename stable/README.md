@@ -68,7 +68,7 @@ The installation of the [`NuoDB Helm Charts`][8] and [`NuoDB Insights`](insights
 
 ### Installing a released version of NuoDB Insights
 
-The default repository for NuoDB is located at https://storage.googleapis.com/nuodb-charts and must be enabled.
+The default repository for NuoDB is located at https://nuodb.github.io/nuodb-helm-charts and must be enabled.
 
 To add the charts for your local client, run the `helm repo add` command below:
 

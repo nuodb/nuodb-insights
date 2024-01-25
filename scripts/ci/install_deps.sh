@@ -53,8 +53,8 @@ EOF
   if [[ $NUODB_HELM_CHARTS_VERSION =~ ^([0-9]+\.?){1,3}$ ]]; then
     # Use already released chart versions
     echo "Testing with NuoDB Helm Charts v${NUODB_HELM_CHARTS_VERSION}"
-    helm repo add nuodb https://storage.googleapis.com/nuodb-charts
-    helm repo add nuodb-incubator https://storage.googleapis.com/nuodb-charts-incubator
+    helm repo add nuodb https://nuodb.github.io/nuodb-helm-charts
+    helm repo add nuodb-incubator https://nuodb.github.io/nuodb-helm-charts/incubator
   else
     git clone https://github.com/nuodb/nuodb-helm-charts ../nuodb-helm-charts
     pushd ../nuodb-helm-charts
