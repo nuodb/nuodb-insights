@@ -1,7 +1,7 @@
 version: "3"
 services:
   nuoadmin1:
-    image: nuodb/nuodb-ce:latest
+    image: nuodb/nuodb:$NUODB_VERSION
     environment:
       NUODB_DOMAIN_ENTRYPOINT: nuoadmin1
     hostname: nuoadmin1
@@ -13,7 +13,7 @@ services:
           "nuocmd check servers --check-connected --check-converged --timeout 300",
         ]
   sm:
-    image: nuodb/nuodb-ce:latest
+    image: nuodb/nuodb:$NUODB_VERSION
     hostname: sm
     environment:
       NUOCMD_API_SERVER: nuoadmin1:8888
@@ -35,7 +35,7 @@ services:
         "goalie",
       ]
   te1:
-    image: nuodb/nuodb-ce:latest
+    image: nuodb/nuodb:$NUODB_VERSION
     hostname: te1
     environment:
       NUOCMD_API_SERVER: nuoadmin1:8888
@@ -53,7 +53,7 @@ services:
         "nuoadmin1",
       ]
   te2:
-    image: nuodb/nuodb-ce:latest
+    image: nuodb/nuodb:$NUODB_VERSION
     hostname: te2
     environment:
       NUOCMD_API_SERVER: nuoadmin1:8888
@@ -127,7 +127,7 @@ services:
       NUOCD_HOSTNAME: te2
       INFLUXDB_TOKEN: $INFLUXDB_ADMIN_TOKEN
       INFLUXDB_BUCKET: $INFLUXDB_BUCKET
-      INFLUXDB_ORG: $INFLUXDB_ORG}
+      INFLUXDB_ORG: $INFLUXDB_ORG
     pid: "service:te2"
   grafana:
     image: grafana/grafana:9.5.6
