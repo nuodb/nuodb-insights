@@ -89,7 +89,7 @@ Once logged into the interface, browse the available Dashboards and select the "
 ### Download the Docker Images
 
 ```
-docker pull nuodb/nuodb-ce:latest
+docker pull nuodb/nuodb:latest
 docker pull nuodb/nuodb-collector:latest
 docker pull influxdb:2.7
 docker pull grafana/grafana:9.5.6
