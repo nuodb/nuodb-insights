@@ -47,6 +47,9 @@ insights:
       nuodb_ext:
         database: nuodb_internal
         timeInterval: 30s
+      client:
+        database: client
+        timeInterval: 10s
   # Configure the NuoDB collector daemon.  A sidecar that collects metrics from the engine process and
   # forwards to configurable output.
   nuocollector:

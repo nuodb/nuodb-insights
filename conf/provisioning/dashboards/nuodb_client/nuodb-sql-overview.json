@@ -84,10 +84,7 @@
   "panels": [
     {
       "collapsed": true,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -97,10 +94,7 @@
       "id": 49,
       "panels": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -173,10 +167,7 @@
           "targets": [
             {
               "alias": "Full",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "P7F1571328205BBA6"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -229,10 +220,7 @@
             },
             {
               "alias": "Empty",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "P7F1571328205BBA6"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -289,10 +277,7 @@
           "type": "timeseries"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -365,10 +350,7 @@
           "targets": [
             {
               "alias": "Full",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "P7F1571328205BBA6"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -421,10 +403,7 @@
             },
             {
               "alias": "Empty",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "P7F1571328205BBA6"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -483,10 +462,7 @@
       ],
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "refId": "A"
         }
       ],
@@ -495,10 +471,7 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -509,10 +482,7 @@
       "panels": [],
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "refId": "A"
         }
       ],
@@ -520,10 +490,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -603,10 +570,7 @@
       "targets": [
         {
           "alias": "Execute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -659,10 +623,7 @@
         },
         {
           "alias": "Prepare",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -715,10 +676,7 @@
         },
         {
           "alias": "PrepareAndExecute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -771,10 +729,7 @@
         },
         {
           "alias": "ResultSet",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -827,10 +782,7 @@
         },
         {
           "alias": "Transaction",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -883,10 +835,7 @@
         },
         {
           "alias": "Connection",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -938,10 +887,7 @@
         },
         {
           "alias": "Database",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -998,10 +944,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1052,10 +995,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1104,10 +1044,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "description": "Average Time (within 1 second) spent by Client Connections active in database over interval",
       "fieldConfig": {
         "defaults": {
@@ -1160,10 +1097,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1226,10 +1160,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1290,10 +1221,7 @@
       "targets": [
         {
           "alias": "Execute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1346,10 +1274,7 @@
         },
         {
           "alias": "Prepare",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1402,10 +1327,7 @@
         },
         {
           "alias": "PrepareAndExecute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1458,10 +1380,7 @@
         },
         {
           "alias": "ResultSet",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1514,10 +1433,7 @@
         },
         {
           "alias": "Transaction",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1570,10 +1486,7 @@
         },
         {
           "alias": "Connection",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1625,10 +1538,7 @@
         },
         {
           "alias": "Database",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1685,10 +1595,7 @@
       "type": "piechart"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -1743,10 +1650,7 @@
       "targets": [
         {
           "alias": "Execute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1799,10 +1703,7 @@
         },
         {
           "alias": "Prepare",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1855,10 +1756,7 @@
         },
         {
           "alias": "PrepareAndExecute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1911,10 +1809,7 @@
         },
         {
           "alias": "ResultSet",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -1967,10 +1862,7 @@
         },
         {
           "alias": "Transaction",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2023,10 +1915,7 @@
         },
         {
           "alias": "Connection",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2078,10 +1967,7 @@
         },
         {
           "alias": "Database",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2138,10 +2024,7 @@
       "type": "piechart"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2220,10 +2103,7 @@
       "targets": [
         {
           "alias": "Execute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2276,10 +2156,7 @@
         },
         {
           "alias": "Prepare",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2332,10 +2209,7 @@
         },
         {
           "alias": "PrepareAndExecute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2388,10 +2262,7 @@
         },
         {
           "alias": "ResultSet",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2444,10 +2315,7 @@
         },
         {
           "alias": "Transaction",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2500,10 +2368,7 @@
         },
         {
           "alias": "Connection",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2555,10 +2420,7 @@
         },
         {
           "alias": "Database",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2616,10 +2478,7 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -2630,10 +2489,7 @@
       "panels": [],
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "refId": "A"
         }
       ],
@@ -2641,10 +2497,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2696,10 +2549,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2749,10 +2599,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2804,10 +2651,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2857,10 +2701,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2910,10 +2751,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -2959,10 +2797,7 @@
           ]
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3013,10 +2848,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3071,10 +2903,7 @@
       "targets": [
         {
           "alias": "Selects",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3121,10 +2950,7 @@
         },
         {
           "alias": "Inserts",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3171,10 +2997,7 @@
         },
         {
           "alias": "Updates",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3220,10 +3043,7 @@
         },
         {
           "alias": "Replace",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3270,10 +3090,7 @@
         },
         {
           "alias": "Deletes",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3324,10 +3141,7 @@
       "type": "piechart"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3379,10 +3193,7 @@
       "targets": [
         {
           "alias": "Selects",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3429,10 +3240,7 @@
         },
         {
           "alias": "Inserts",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3479,10 +3287,7 @@
         },
         {
           "alias": "Updates",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3528,10 +3333,7 @@
         },
         {
           "alias": "Replace",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3578,10 +3380,7 @@
         },
         {
           "alias": "Deletes",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3633,10 +3432,7 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -3647,10 +3443,7 @@
       "panels": [],
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "refId": "A"
         }
       ],
@@ -3658,10 +3451,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3712,10 +3502,7 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3765,10 +3552,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3819,10 +3603,7 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3872,10 +3653,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3926,10 +3704,7 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -3979,10 +3754,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4033,10 +3805,7 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -4086,10 +3855,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4140,10 +3906,7 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -4193,10 +3956,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "description": "",
       "fieldConfig": {
         "defaults": {
@@ -4248,10 +4008,7 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -4302,10 +4059,7 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -4318,10 +4072,7 @@
       "repeatDirection": "h",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "refId": "A"
         }
       ],
@@ -4329,10 +4080,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4382,10 +4130,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -4435,10 +4180,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4488,10 +4230,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -4541,10 +4280,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4594,10 +4330,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -4647,10 +4380,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4700,10 +4430,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -4863,10 +4590,7 @@
           "text": "test",
           "value": "test"
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "SHOW TAG VALUES FROM \"Milliseconds\" WITH KEY = \"db\"",
         "hide": 0,
         "includeAll": false,
@@ -4895,10 +4619,7 @@
             "nuoadmin-2.nuodb.internal"
           ]
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "select distinct(\"host\") from (select first(raw) from \"Milliseconds\" where $timeFilter AND db =~ /$database$/ AND nodetype = 'Transaction' GROUP BY \"host\")",
         "hide": 0,
         "includeAll": true,

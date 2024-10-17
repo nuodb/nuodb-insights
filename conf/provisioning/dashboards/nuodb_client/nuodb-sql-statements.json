@@ -75,10 +75,7 @@
       "id": 28,
       "panels": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -147,10 +144,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -174,8 +168,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as numexecutes, id from (SELECT mean(\"numexecutes\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as numexecutes, id from (SELECT mean(\"numexecutes\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -236,10 +230,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -308,10 +299,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -335,8 +323,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"exectime\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"exectime\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -397,10 +385,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -469,10 +454,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -496,8 +478,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"compiletime\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"compiletime\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -558,10 +540,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -630,10 +609,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -657,8 +633,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"recordsreturned\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"recordsreturned\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -719,10 +695,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -791,10 +764,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -818,8 +788,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"inserts\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"inserts\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -880,10 +850,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -952,10 +919,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -979,8 +943,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT sum(\"updates\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT sum(\"updates\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1041,10 +1005,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1113,10 +1074,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -1140,8 +1098,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"deletions\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"deletions\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1202,10 +1160,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1274,10 +1229,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -1301,8 +1253,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"replaces\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"replaces\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1363,10 +1315,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1435,10 +1384,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -1462,8 +1408,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"recordsfetched\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"recordsfetched\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1524,10 +1470,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "description": "",
           "fieldConfig": {
             "defaults": {
@@ -1624,16 +1567,13 @@
           "pluginVersion": "10.0.3",
           "targets": [
             {
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [],
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select \"id\",\"sqlstring\" FROM (SELECT \"id\",\"sqlstring\",last(\"exectime\") FROM \"autogen\".\"nuodb_statements\" WHERE $timeFilter GROUP BY \"id\", \"sqlstring\")",
+              "policy": "default",
+              "query": "select \"id\",\"sqlstring\" FROM (SELECT \"id\",\"sqlstring\",last(\"exectime\") FROM \"nuodb_statements\" WHERE $timeFilter GROUP BY \"id\", \"sqlstring\")",
               "rawQuery": true,
               "refId": "B",
               "resultFormat": "table",
@@ -1677,10 +1617,7 @@
           "type": "table"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1749,10 +1686,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -1776,8 +1710,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"indexhits\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/)  AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"indexhits\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/)  AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1838,10 +1772,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -1910,10 +1841,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -1937,8 +1865,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"locked\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"locked\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -1999,10 +1927,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2071,10 +1996,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -2098,8 +2020,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"rejectedhits\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"rejectedhits\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -2160,10 +2082,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2232,10 +2151,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -2259,8 +2175,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"sorted\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"sorted\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -2321,10 +2237,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2393,10 +2306,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -2420,8 +2330,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"indexfetches\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"indexfetches\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -2482,10 +2392,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2554,10 +2461,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -2581,8 +2485,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"evicted\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"evicted\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -2643,10 +2547,7 @@
           "type": "piechart"
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "fieldConfig": {
             "defaults": {
               "color": {
@@ -2715,10 +2616,7 @@
           "targets": [
             {
               "alias": "$tag_id",
-              "datasource": {
-                "type": "influxdb",
-                "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-              },
+              "datasource": "nuodb",
               "groupBy": [
                 {
                   "params": [
@@ -2742,8 +2640,8 @@
               "hide": false,
               "measurement": "nuodb_statements",
               "orderByTime": "ASC",
-              "policy": "autogen",
-              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"tablefetches\")  as value FROM \"autogen\".\"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
+              "policy": "default",
+              "query": "select top(\"value\",10) as value, id from (SELECT mean(\"tablefetches\")  as value FROM \"nuodb_statements\" WHERE (\"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY \"id\"::tag fill(null))",
               "rawQuery": true,
               "refId": "A",
               "resultFormat": "table",
@@ -2821,10 +2719,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -2877,10 +2772,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -2891,7 +2783,7 @@
           ],
           "measurement": "nuodb_statements",
           "orderByTime": "ASC",
-          "policy": "autogen",
+          "policy": "default",
           "refId": "A",
           "resultFormat": "table",
           "select": [
@@ -2933,10 +2825,7 @@
       "type": "table"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3021,10 +2910,7 @@
       "targets": [
         {
           "alias": "exectime",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -3075,10 +2961,7 @@
           ]
         },
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -3129,10 +3012,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3212,10 +3092,7 @@
       "targets": [
         {
           "alias": "exectime",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -3273,10 +3150,7 @@
         },
         {
           "alias": "compiletime",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -3339,10 +3213,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3421,10 +3292,7 @@
       "targets": [
         {
           "alias": "compiletime",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -3487,10 +3355,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3575,10 +3440,7 @@
       "targets": [
         {
           "alias": "numexecutes",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -3634,10 +3496,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3716,10 +3575,7 @@
       "targets": [
         {
           "alias": "value",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -3782,10 +3638,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -3863,10 +3716,7 @@
       "targets": [
         {
           "alias": "Selects",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -3925,10 +3775,7 @@
         },
         {
           "alias": "Inserts",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -3987,10 +3834,7 @@
         },
         {
           "alias": "Updates",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -4049,10 +3893,7 @@
         },
         {
           "alias": "Deletes",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -4115,10 +3956,7 @@
       "type": "bargauge"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4197,10 +4035,7 @@
       "targets": [
         {
           "alias": "indexhits",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -4263,10 +4098,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4345,10 +4177,7 @@
       "targets": [
         {
           "alias": "rejectedindexhits",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -4411,10 +4240,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4493,10 +4319,7 @@
       "targets": [
         {
           "alias": "indexfetches",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -4559,10 +4382,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4641,10 +4461,7 @@
       "targets": [
         {
           "alias": "exhautivefetches",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -4707,10 +4524,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4789,10 +4603,7 @@
       "targets": [
         {
           "alias": "indexbatchfetches",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -4855,10 +4666,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -4937,10 +4745,7 @@
       "targets": [
         {
           "alias": "exhautivebatchfetches",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -5003,10 +4808,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5061,10 +4863,7 @@
       "targets": [
         {
           "alias": "recordsfetched",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -5127,10 +4926,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5185,10 +4981,7 @@
       "targets": [
         {
           "alias": "locked",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -5251,10 +5044,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5309,10 +5099,7 @@
       "targets": [
         {
           "alias": "recordssorted",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -5375,10 +5162,7 @@
       "type": "stat"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -5433,10 +5217,7 @@
       "targets": [
         {
           "alias": "recordsevicted",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -5609,10 +5390,7 @@
           "text": "test",
           "value": "test"
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -5641,10 +5419,7 @@
             "$__all"
           ]
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -5668,10 +5443,7 @@
           "text": "10432982178702295000",
           "value": "10432982178702295000"
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "cdb0a5c8-a25e-4ddc-a047-9d8658d5249a"
-        },
+        "datasource": "client",
         "definition": "select distinct(\"id\") from (select first(numexecutes) from \"nuodb_statements\" where $timeFilter GROUP BY \"id\")",
         "hide": 0,
         "includeAll": false,

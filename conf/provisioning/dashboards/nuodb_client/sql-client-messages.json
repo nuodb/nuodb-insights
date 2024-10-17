@@ -93,10 +93,7 @@
   "liveNow": false,
   "panels": [
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -177,10 +174,7 @@
       "targets": [
         {
           "alias": "Execute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -233,10 +227,7 @@
         },
         {
           "alias": "Prepare",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -289,10 +280,7 @@
         },
         {
           "alias": "PrepareAndExecute",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -345,10 +333,7 @@
         },
         {
           "alias": "ResultSet",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -401,10 +386,7 @@
         },
         {
           "alias": "Transaction",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -457,10 +439,7 @@
         },
         {
           "alias": "Connection",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -512,10 +491,7 @@
         },
         {
           "alias": "Database",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -573,10 +549,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P948FE603F61DC036"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -702,10 +675,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P948FE603F61DC036"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -722,8 +692,8 @@
           ],
           "measurement": "nuodb_messages",
           "orderByTime": "ASC",
-          "policy": "autogen",
-          "query": "SELECT sum(*) FROM \"autogen\".\"nuodb_messages\" WHERE (\"host\"::tag =~ /^$host$/ AND \"db_name\"::tag =~ /^$database$/ AND \"group\"::tag =~ /^$msggroup$/ AND \"count\"::field !=0) AND $timeFilter GROUP BY \"group\"::tag, \"type\"::tag",
+          "policy": "default",
+          "query": "SELECT sum(*) FROM \"nuodb_messages\" WHERE (\"host\"::tag =~ /^$host$/ AND \"db_name\"::tag =~ /^$database$/ AND \"group\"::tag =~ /^$msggroup$/ AND \"count\"::field !=0) AND $timeFilter GROUP BY \"group\"::tag, \"type\"::tag",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -918,10 +888,7 @@
           "text": "test",
           "value": "test"
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -950,10 +917,7 @@
             "$__all"
           ]
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": true,
@@ -977,10 +941,7 @@
           "text": [],
           "value": []
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P948FE603F61DC036"
-        },
+        "datasource": "client",
         "definition": "show tag values with key = \"group\"",
         "hide": 0,
         "includeAll": true,

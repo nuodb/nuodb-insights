@@ -229,10 +229,7 @@
           "text": "test",
           "value": "test"
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -263,10 +260,7 @@
             "nuoadmin-2.nuodb.internal"
           ]
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": true,

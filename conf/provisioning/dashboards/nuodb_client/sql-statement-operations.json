@@ -93,10 +93,7 @@
   "liveNow": false,
   "panels": [
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P948FE603F61DC036"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -223,10 +220,7 @@
       },
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P948FE603F61DC036"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -243,8 +237,8 @@
           ],
           "measurement": "total_statements",
           "orderByTime": "ASC",
-          "policy": "autogen",
-          "query": "SELECT sum(/(updates|inserts|deletions|recordsreturned)/) FROM \"autogen\".\"total_statements\" WHERE (\"db_name\"::tag =~ /^$database$/ AND \"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
+          "policy": "default",
+          "query": "SELECT sum(/(updates|inserts|deletions|recordsreturned)/) FROM \"total_statements\" WHERE (\"db_name\"::tag =~ /^$database$/ AND \"host\"::tag =~ /^$host$/) AND $timeFilter GROUP BY time($__interval) fill(null)",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "time_series",
@@ -287,10 +281,7 @@
       "type": "timeseries"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P948FE603F61DC036"
-      },
+      "datasource": "client",
       "fieldConfig": {
         "defaults": {
           "color": {
@@ -572,10 +563,7 @@
       "pluginVersion": "10.0.3",
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P948FE603F61DC036"
-          },
+          "datasource": "client",
           "groupBy": [
             {
               "params": [
@@ -592,8 +580,8 @@
           ],
           "measurement": "nuodb_statements",
           "orderByTime": "ASC",
-          "policy": "autogen",
-          "query": "SELECT last(lastexecuted),last(id),sum(/(numexecutes|exectime|recordsreturned|inserts|updates|deletions|replaces)/) FROM \"autogen\".\"nuodb_statements\" WHERE $timeFilter AND db_name =~ /^$database$/ and host =~ /^$host$/ GROUP BY sqlstring,id",
+          "policy": "default",
+          "query": "SELECT last(lastexecuted),last(id),sum(/(numexecutes|exectime|recordsreturned|inserts|updates|deletions|replaces)/) FROM \"nuodb_statements\" WHERE $timeFilter AND db_name =~ /^$database$/ and host =~ /^$host$/ GROUP BY sqlstring,id",
           "rawQuery": true,
           "refId": "A",
           "resultFormat": "table",
@@ -839,10 +827,7 @@
           "text": "test",
           "value": "test"
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -871,10 +856,7 @@
             "nuoadmin-2.nuodb.internal"
           ]
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": true,

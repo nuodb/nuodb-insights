@@ -74,10 +74,7 @@
   "panels": [
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -88,10 +85,7 @@
       "panels": [],
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "refId": "A"
         }
       ],
@@ -103,10 +97,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "description": "The left y-axis is for the stack bar graph that shows relative (in terms of cores) breakdown of where processing time is being spent.  The right y-axis and grey shadow area graph is an indication of the total number of cores available by all selected TEs.",
       "fieldConfig": {
         "defaults": {
@@ -166,10 +157,7 @@
       "targets": [
         {
           "alias": "$measurement",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -209,10 +197,7 @@
         },
         {
           "alias": "$measurement",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -308,10 +293,7 @@
     },
     {
       "collapsed": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "gridPos": {
         "h": 1,
         "w": 24,
@@ -322,10 +304,7 @@
       "panels": [],
       "targets": [
         {
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "refId": "A"
         }
       ],
@@ -333,10 +312,7 @@
       "type": "row"
     },
     {
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "description": "the green line is relative to the left y-axis and displays the number of transactions committed per second.  Displayed below the x-axis relative to the right axis is an average (across all TEs) of the current number of transactions for the database at the time the metric was collected.   This measurement is a sum for the database as understood by the selected TEs.  At any point of time the understanding of which transactions are active will be slightly different in each TE.  The blue line is a calculation of the average number of transactions that were processing within the database for the colletion window (averaged across the display time window).   The data used to calculate this is collected only when a transaction is done processing.  So a transaction / statement that is in the database for a significant amount of time (for each a count on a very large table) will not skew this graph.  You'll see a big spike in the blue line when the long running statement ends.",
       "fieldConfig": {
         "defaults": {
@@ -465,10 +441,7 @@
       "targets": [
         {
           "alias": "commits",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "dsType": "influxdb",
           "groupBy": [
             {
@@ -516,10 +489,7 @@
         },
         {
           "alias": "active:current",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -577,10 +547,7 @@
         },
         {
           "alias": "processing:average",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -641,10 +608,7 @@
       "bars": true,
       "dashLength": 10,
       "dashes": false,
-      "datasource": {
-        "type": "influxdb",
-        "uid": "P7F1571328205BBA6"
-      },
+      "datasource": "client",
       "description": "How many transactions are Busy (in database) relative to Idle (not in database) during the collection interval. Only valid for NuoDB 4.1+",
       "editable": true,
       "error": false,
@@ -707,10 +671,7 @@
       "targets": [
         {
           "alias": "Busy",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -769,10 +730,7 @@
         },
         {
           "alias": "Idle",
-          "datasource": {
-            "type": "influxdb",
-            "uid": "P7F1571328205BBA6"
-          },
+          "datasource": "nuodb",
           "groupBy": [
             {
               "params": [
@@ -973,10 +931,7 @@
           "text": "All",
           "value": "All"
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": false,
@@ -1005,10 +960,7 @@
             "$__all"
           ]
         },
-        "datasource": {
-          "type": "influxdb",
-          "uid": "P7F1571328205BBA6"
-        },
+        "datasource": "nuodb",
         "definition": "",
         "hide": 0,
         "includeAll": true,
