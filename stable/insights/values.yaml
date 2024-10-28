@@ -33,6 +33,7 @@ influxdb:
       init-nuodb.sh: |+
         /usr/bin/influx -execute 'CREATE DATABASE nuodb WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'
         /usr/bin/influx -execute 'CREATE DATABASE nuodb_internal WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'
+        /usr/bin/influx -execute 'CREATE DATABASE nuodb_query WITH DURATION 365d REPLICATION 1 SHARD DURATION 1d NAME nuodbrp'
     
 insights:
   grafana:
@@ -47,6 +48,9 @@ insights:
       nuodb_ext:
         database: nuodb_internal
         timeInterval: 30s
+      nuodb_query:
+        database: nuodb_query
+        timeInterval: 10s
   # Configure the NuoDB collector daemon.  A sidecar that collects metrics from the engine process and
   # forwards to configurable output.
   nuocollector:
